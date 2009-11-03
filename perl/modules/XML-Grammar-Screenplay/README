@@ -1,0 +1,44 @@
+XML-Grammar-Screenplay
+
+This is a module implementing an XML grammar for screenplays. It contains:
+
+1. A converter from a well-formed plain text format to its custom XML format.
+
+2. A converter from its custom XML format to DocBook/XML.
+
+INSTALLATION
+
+To install this module, run the following commands:
+
+    perl Build.PL
+    ./Build
+    ./Build test
+    ./Build install
+
+
+SUPPORT AND DOCUMENTATION
+
+After installing, you can find documentation for this module with the perldoc command.
+
+    perldoc XML::Grammar::Screenplay
+
+You can also look for information at:
+
+    Search CPAN
+        http://search.cpan.org/dist/XML-Grammar-Screenplay
+
+    CPAN Request Tracker:
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-Grammar-Screenplay
+
+    AnnoCPAN, annotated CPAN documentation:
+        http://annocpan.org/dist/XML-Grammar-Screenplay
+
+    CPAN Ratings:
+        http://cpanratings.perl.org/d/XML-Grammar-Screenplay
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2007 Shlomi Fish
+
+This program is released under the following license: MIT X11.
+
