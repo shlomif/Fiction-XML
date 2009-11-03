@@ -43,6 +43,10 @@ my $db_converter = XML::Grammar::Fiction::ToDocBook->new({
 
 foreach my $fn (@tests)
 {
+    my $xpc = XML::LibXML::XPathContext->new();
+    $xpc->registerNs('x', q{http://www.w3.org/1999/xhtml});
+    $xpc->registerNs('db', q{http://docbook.org/ns/docbook});
+    
     my $xhtml_text = $converter->translate_to_html({
             source => { file => "t/data/xml/$fn.xml", },
             output => "string",
@@ -55,31 +59,26 @@ foreach my $fn (@tests)
         }
         );
 
-    my $parser = XML::LibXML->new();
+    # This is a closure that returns a closure (like shown in "On Lisp" :
+    # http://www.paulgraham.com/onlisptext.html ) for a finder in
+    # one of the documents
+    my $create_finder = sub {
+        my $text = shift;
 
-    $parser->load_ext_dtd(0);
+        my $parser = XML::LibXML->new();
 
-    my $doc = $parser->parse_string($xhtml_text);
+        $parser->load_ext_dtd(0);
 
-    my $db_parser = XML::LibXML->new();
+        my $doc = $parser->parse_string($text);
 
-    $db_parser->load_ext_dtd(0);
-
-    my $db_doc = $db_parser->parse_string($docbook_text);
-    
-    my $xpc = XML::LibXML::XPathContext->new();
-    $xpc->registerNs('x', q{http://www.w3.org/1999/xhtml});
-    $xpc->registerNs('db', q{http://docbook.org/ns/docbook});
-
-    my $xhtml_find = sub {
-        my $xpath = shift;
-        return $xpc->findnodes($xpath, $doc);
+        return sub {
+            my $xpath = shift;
+            return $xpc->findnodes($xpath, $doc);
+        };
     };
 
-    my $db_find = sub {
-        my $xpath = shift;
-        return $xpc->findnodes($xpath, $db_doc);
-    };
+    my $xhtml_find = $create_finder->($xhtml_text);
+    my $db_find = $create_finder->($docbook_text);
 
     # TEST*$num_texts
     is (
