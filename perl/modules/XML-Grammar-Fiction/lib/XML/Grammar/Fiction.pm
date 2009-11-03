@@ -1,30 +1,30 @@
-package XML::Grammar::Screenplay;
+package XML::Grammar::Fiction;
 
 use warnings;
 use strict;
 
 =head1 NAME
 
-XML::Grammar::Screenplay - CPAN distribution implementing an XML grammar for 
-screenplays.
+XML::Grammar::Fiction - CPAN distribution implementing an XML grammar 
+and a lightweight markup language for stories, novels and other fiction.
 
 =head1 VERSION
 
-Version 0.0600
+Version 0.0.1
 
 =cut
 
-our $VERSION = '0.0600';
+our $VERSION = '0.0.1';
 
 =head1 SYNOPSIS
 
-See L<XML::Grammar::Screenplay::FromProto>, 
-L<XML::Grammar::Screenplay::ToDocBook> and
-L<XML::Grammar::Screenplay::ToHTML>.
+See L<XML::Grammar::Fiction::FromProto>, 
+L<XML::Grammar::Fiction::ToDocBook> and
+L<XML::Grammar::Fiction::ToHTML>.
 
 =head1 DESCRIPTION
 
-XML::Grammar::Screenplay is a Perl module for:
+XML::Grammar::Fiction is a Perl module for:
 
 =over 4
 
@@ -35,9 +35,9 @@ XML::Grammar::Screenplay is a Perl module for:
 =back
 
 The best way to use it non-programatically is using
-L<XML::Grammar::Screenplay::App::FromProto>,
-L<XML::Grammar::Screenplay::App::ToDocBook> and
-L<XML::Grammar::Screenplay::App::ToHTML>, which are modules implementing
+L<XML::Grammar::Fiction::App::FromProto>,
+L<XML::Grammar::Fiction::App::ToDocBook> and
+L<XML::Grammar::Fiction::App::ToHTML>, which are modules implementing
 command line applications for their processing.
 
 The rest of this page will document the syntax of the custom textual format.
@@ -151,7 +151,7 @@ Shlomi Fish, L<http://www.shlomifish.org/>.
 
 Please report any bugs or feature requests to
 C<bug-xml-grammar-screenplay at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Screenplay>.
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Fiction>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
 
@@ -167,7 +167,7 @@ your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc XML::Grammar::Screenplay
+    perldoc XML::Grammar::Fiction
 
 You can also look for information at:
 
@@ -175,19 +175,19 @@ You can also look for information at:
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/XML-Grammar-Screenplay>
+L<http://annocpan.org/dist/XML-Grammar-Fiction>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/XML-Grammar-Screenplay>
+L<http://cpanratings.perl.org/d/XML-Grammar-Fiction>
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-Grammar-Screenplay>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-Grammar-Fiction>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/XML-Grammar-Screenplay>
+L<http://search.cpan.org/dist/XML-Grammar-Fiction>
 
 =back
 

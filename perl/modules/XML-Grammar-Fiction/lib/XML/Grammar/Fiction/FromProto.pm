@@ -1,27 +1,27 @@
-package XML::Grammar::Screenplay::FromProto;
+package XML::Grammar::Fiction::FromProto;
 
 use strict;
 use warnings;
 
 use Carp;
 
-use base 'XML::Grammar::Screenplay::Base';
+use base 'XML::Grammar::Fiction::Base';
 
 use XML::Writer;
 use HTML::Entities ();
 
-use XML::Grammar::Screenplay::FromProto::Nodes;
+use XML::Grammar::Fiction::FromProto::Nodes;
 
 use Moose;
 
-has "_parser" => ('isa' => "XML::Grammar::Screenplay::FromProto::Parser", 'is' => "rw");
+has "_parser" => ('isa' => "XML::Grammar::Fiction::FromProto::Parser", 'is' => "rw");
 has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
 my $screenplay_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/};
 
 =head1 NAME
 
-XML::Grammar::Screenplay::FromProto - module that converts well-formed
+XML::Grammar::Fiction::FromProto - module that converts well-formed
 text representing a screenplay to an XML format.
 
 =head1 VERSION
@@ -50,7 +50,7 @@ sub _init
     local $Parse::RecDescent::skip = "";
 
     my $parser_class = 
-        ($args->{parser_class} || "XML::Grammar::Screenplay::FromProto::Parser::QnD");
+        ($args->{parser_class} || "XML::Grammar::Fiction::FromProto::Parser::QnD");
 
     $self->_parser(
         $parser_class->new()
@@ -99,11 +99,11 @@ sub _get_text_start
 {
     my ($self, $elem) = @_;
 
-    if ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Saying"))
+    if ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying"))
     {
         return ["saying", 'character' => $elem->character()];
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Description"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Description"))
     {
         return ["description"];
     }
@@ -123,7 +123,7 @@ sub _write_elem
     {
         $self->_writer->characters($elem);
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Paragraph"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph"))
     {
         $self->_output_tag_with_childs(
             {
@@ -132,7 +132,7 @@ sub _write_elem
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Element"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Element"))
     {
         if (($elem->name() eq "s") || ($elem->name() eq "section"))
         {
@@ -160,7 +160,7 @@ sub _write_elem
         {
             $self->_writer->emptyTag("br");
         }
-        elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::InnerDesc"))
+        elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::InnerDesc"))
         {
             $self->_output_tag_with_childs(
                 {
@@ -170,7 +170,7 @@ sub _write_elem
             );
         }
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Text"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
     {
         $self->_output_tag_with_childs(
             {
@@ -179,7 +179,7 @@ sub _write_elem
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Comment"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Comment"))
     {
         $self->_writer->comment($elem->text());
     }

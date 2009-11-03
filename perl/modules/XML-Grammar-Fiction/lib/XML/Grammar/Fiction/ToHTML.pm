@@ -1,4 +1,4 @@
-package XML::Grammar::Screenplay::ToDocBook;
+package XML::Grammar::Fiction::ToHTML;
 
 use strict;
 use warnings;
@@ -8,25 +8,25 @@ use File::Spec;
 
 use XML::LibXSLT;
 
-use XML::Grammar::Screenplay::ConfigData;
+use XML::Grammar::Fiction::ConfigData;
 
 use XML::LibXML;
 use XML::LibXSLT;
 
-use base 'XML::Grammar::Screenplay::Base';
+use base 'XML::Grammar::Fiction::Base';
 
 use Moose;
 
 
 has '_data_dir' => (isa => 'Str', is => 'rw');
-has '_dtd' => (isa => 'XML::LibXML::Dtd', is => 'rw');
+has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
 has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
 has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
 
 =head1 NAME
 
-XML::Grammar::Screenplay::ToDocBook - module that converts the Screenplay
-XML to DocBook.
+XML::Grammar::Fiction::ToHTML - module that converts the Screenplay
+XML to HTML.
 
 =head1 VERSION
 
@@ -52,20 +52,20 @@ sub _init
     my ($self, $args) = @_;
 
     my $data_dir = $args->{'data_dir'} ||
-        XML::Grammar::Screenplay::ConfigData->config('extradata_install_path')->[0];
+        XML::Grammar::Fiction::ConfigData->config('extradata_install_path')->[0];
 
     $self->_data_dir($data_dir);
 
-    my $dtd =
-        XML::LibXML::Dtd->new(
-            "Screenplay XML 0.1.0",
+    my $rngschema =
+        XML::LibXML::RelaxNG->new(
+            location =>
             File::Spec->catfile(
                 $self->_data_dir(), 
-                "screenplay-xml.dtd"
+                "screenplay-xml.rng"
             ),
         );
 
-    $self->_dtd($dtd);
+    $self->_rng($rngschema);
 
     $self->_xml_parser(XML::LibXML->new());
 
@@ -74,7 +74,7 @@ sub _init
     my $style_doc = $self->_xml_parser()->parse_file(
             File::Spec->catfile(
                 $self->_data_dir(), 
-                "screenplay-xml-to-docbook.xslt"
+                "screenplay-xml-to-html.xslt"
             ),
         );
 
@@ -83,7 +83,7 @@ sub _init
     return 0;
 }
 
-=head2 $converter->translate_to_docbook({source => {file => $filename}, output => "string" })
+=head2 $converter->translate_to_html({source => {file => $filename}, output => "string" })
 
 Does the actual conversion. $filename is the filename to translate (currently
 the only available source). 
@@ -94,13 +94,29 @@ L<XML::LibXML> DOM object.
 
 =cut
 
-sub translate_to_docbook
+sub translate_to_html
 {
     my ($self, $args) = @_;
 
     my $source_dom =
         $self->_xml_parser()->parse_file($args->{source}->{file})
         ;
+
+    my $ret_code;
+
+    eval
+    {
+        $ret_code = $self->_rng()->validate($source_dom);
+    };
+
+    if (defined($ret_code) && ($ret_code == 0))
+    {
+        # It's OK.
+    }
+    else
+    {
+        confess "RelaxNG validation failed [\$ret_code == $ret_code ; $@]";
+    }
 
     my $stylesheet = $self->_stylesheet();
 

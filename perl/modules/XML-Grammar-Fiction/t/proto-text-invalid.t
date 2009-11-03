@@ -9,8 +9,8 @@ use Test::More tests => 1;
 
 use XML::LibXML;
 
-use XML::Grammar::Screenplay::FromProto;
-use XML::Grammar::Screenplay::FromProto::Parser::QnD;
+use XML::Grammar::Fiction::FromProto;
+use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
 sub load_xml
 {
@@ -26,8 +26,8 @@ sub load_xml
     return $contents;
 }
 
-my $grammar = XML::Grammar::Screenplay::FromProto->new({
-        parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
+my $grammar = XML::Grammar::Fiction::FromProto->new({
+        parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
     });
 
 eval {

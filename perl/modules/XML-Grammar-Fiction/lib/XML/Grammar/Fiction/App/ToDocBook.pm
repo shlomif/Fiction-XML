@@ -1,4 +1,4 @@
-package XML::Grammar::Screenplay::App::ToDocBook;
+package XML::Grammar::Fiction::App::ToDocBook;
 
 use strict;
 use warnings;
@@ -9,11 +9,11 @@ our @EXPORT = (qw(run));
 
 use Getopt::Long;
 
-use XML::Grammar::Screenplay::ToDocBook;
+use XML::Grammar::Fiction::ToDocBook;
 
 =head1 NAME
 
-XML::Grammar::Screenplay::App::ToDocBook - module implementing
+XML::Grammar::Fiction::App::ToDocBook - module implementing
 a command line application to convert a Screenplay XML file to docbook.
 
 =head1 FUNCTIONS
@@ -37,7 +37,7 @@ sub run
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
-    my $converter = XML::Grammar::Screenplay::ToDocBook->new();
+    my $converter = XML::Grammar::Fiction::ToDocBook->new();
 
     my $output_text = $converter->translate_to_docbook({
             source => { file => shift(@ARGV), },

@@ -21,7 +21,7 @@ use Config;
 
     # TEST
     ok (
-        !system($^X, "-MXML::Grammar::Screenplay::App::ToHTML",
+        !system($^X, "-MXML::Grammar::Fiction::App::ToHTML",
             "-e", "run()",
             "--",
             "-o", "temp.xhtml",
