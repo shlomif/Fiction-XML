@@ -46,6 +46,7 @@ t/data/xml/dialogue-with-several-paragraphs.xml
 t/data/xml/nested-s.xml
 t/data/xml/scenes-with-titles.xml
 t/data/xml/sections-and-paras.xml
+t/data/xml/sections-p-b-i.xml
 t/data/xml/two-nested-s.xml
 t/data/xml/with-brs.xml
 t/data/xml/with-comments.xml
