@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 16;
+use Test::More tests => 20;
 
 use File::Spec;
 
@@ -102,6 +102,22 @@ foreach my $fn (@tests)
         is ($title[0]->textContent(), "David vs. Goliath - Part I");
     }
 
+    {
+        my @title = $xhtml_find->(q{//x:html/x:head/x:title});
+
+        # TEST*$num_texts
+        is (
+            scalar(@title),
+            1,
+            "Found one global <x:title>",
+        );
+
+        # TEST*$num_texts
+        is ($title[0]->textContent(), "David vs. Goliath - Part I",
+            "XHTML <title> has good content"
+        );
+    }
+    
     # TEST*$num_texts
     ok (
         (scalar(() = $xhtml_find->(q{//x:div}))

@@ -16,7 +16,9 @@
 <xsl:template match="fic:body">
     <html>
         <head>
-            <title>Story</title>
+            <title>
+                <xsl:value-of select="fic:title" />
+            </title>
         </head>
         <body>
             <div class="screenplay">
