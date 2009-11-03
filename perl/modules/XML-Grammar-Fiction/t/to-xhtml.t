@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 8;
 
 use File::Spec;
 
@@ -13,6 +13,7 @@ use XML::Grammar::Fiction::ToHTML;
 
 my @tests = (qw(
         sections-and-paras
+        sections-p-b-i
     ));
 
 sub load_xml
@@ -29,7 +30,7 @@ sub load_xml
     return $contents;
 }
 
-# TEST:$num_texts=1
+# TEST:$num_texts=2
 
 my $converter = XML::Grammar::Fiction::ToHTML->new({
         data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
@@ -51,29 +52,52 @@ foreach my $fn (@tests)
     $xpc->registerNs('x', q{http://www.w3.org/1999/xhtml});
     # TEST*$num_texts
     is (
-        scalar(() = $xpc->find(q{//x:html}, $doc)),
+        scalar(() = $xpc->findnodes(q{//x:html}, $doc)),
         1,
         "Found one article with id index",
     );
 
     # TEST*$num_texts
     ok (
-        (scalar(() = $xpc->find(q{//x:div[@class='saying']}, $doc))
+        (scalar(() = $xpc->findnodes(q{//x:div}, $doc))
             >=
             1
         ),
         "Found role=description sections",
     );
 
-    # TEST*$num_texts
-    ok (
-        (scalar(() = $xpc->find(q{//x:div[@class='saying']/x:p/x:strong[@class='sayer']}, $doc))
-            >=
-            1
-        ),
-        "Found role=description sections",
-    );
 
+    # TEST:$num_with_styles=1;
+    if ($fn eq "sections-p-b-i")
+    {
+        my @elems;
+
+        @elems = $xpc->findnodes(q{//x:div/x:p/x:b}, $doc);
+        # TEST*$num_with_styles
+        is (
+            scalar(@elems),
+            1,
+            "Found bold tag",
+        );
+
+        # TEST*$num_with_styles
+        like ($elems[0]->toString(), qr{swear}, 
+            "Elem[0] is the right <b> tag."
+        );
+        
+        @elems = $xpc->findnodes(q{//x:div/x:p/x:i}, $doc);
+        # TEST*$num_with_styles
+        is (
+            scalar(@elems),
+            1,
+            "Found italic tag",
+        );
+
+        # TEST*$num_with_styles
+        like ($elems[0]->toString(), qr{David}, 
+            "<i>[0] contains the right contents."
+        );
+    }
 }
 
 1;

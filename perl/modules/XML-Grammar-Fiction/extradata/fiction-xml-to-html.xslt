@@ -39,7 +39,7 @@
         <xsl:element name="h{count(ancestor-or-self::fic:scene)}">
             <xsl:value-of select="title" />
         </xsl:element>
-        <xsl:apply-templates select="fic:scene|fic:p" />
+        <xsl:apply-templates select="fic:section|fic:p" />
     </div>
 </xsl:template>
 
@@ -47,6 +47,18 @@
     <p>
         <xsl:apply-templates/>
     </p>
+</xsl:template>
+
+<xsl:template match="fic:b">
+    <b>
+        <xsl:apply-templates/>
+    </b>
+</xsl:template>
+
+<xsl:template match="fic:i">
+    <i>
+        <xsl:apply-templates/>
+    </i>
 </xsl:template>
 
 </xsl:stylesheet>
