@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 16;
 
 use File::Spec;
 
@@ -87,6 +87,20 @@ foreach my $fn (@tests)
         1,
         "Found one article with id index",
     );
+
+    {
+        my @title = $db_find->(q{//db:article/db:info/db:title});
+
+        # TEST*$num_texts
+        is (
+            scalar(@title),
+            1,
+            "Found one global <db:title>",
+        );
+
+        # TEST*$num_texts
+        is ($title[0]->textContent(), "David vs. Goliath - Part I");
+    }
 
     # TEST*$num_texts
     ok (
