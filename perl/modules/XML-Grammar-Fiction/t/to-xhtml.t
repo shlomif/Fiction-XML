@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More tests => 12;
 
 use File::Spec;
 
@@ -68,6 +68,15 @@ foreach my $fn (@tests)
         "Found role=description sections",
     );
 
+    {
+        my @elems = $xpc->findnodes(q{//x:div[@xml:id="top"]/x:h2}, $doc);
+        # TEST*$num_texts
+        is (scalar(@elems), 1, "One element");
+
+        # TEST*$num_texts
+        is ($elems[0]->textContent(), "The Top Section", 
+            "<h2> element contains the right thing.");
+    }
 
     # TEST:$num_with_styles=1;
     if ($fn eq "sections-p-b-i")

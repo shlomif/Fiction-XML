@@ -37,8 +37,8 @@
             </xsl:attribute>
         </xsl:if>
         <!-- Make the title the title attribute or "ID" if does not exist. -->
-        <xsl:element name="h{count(ancestor-or-self::fic:scene)}">
-            <xsl:value-of select="title" />
+        <xsl:element name="h{count(ancestor-or-self::fic:section|ancestor-or-self::fic:body)}">
+            <xsl:value-of select="fic:title" />
         </xsl:element>
         <xsl:apply-templates select="fic:section|fic:p" />
     </div>
