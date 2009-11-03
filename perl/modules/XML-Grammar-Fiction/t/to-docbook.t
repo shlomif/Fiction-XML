@@ -14,7 +14,7 @@ use XML::LibXML;
 use XML::Grammar::Fiction::ToDocBook;
 
 my @tests = (qw(
-        with-internal-description
+        sections-and-paras
     ));
 
 sub load_xml

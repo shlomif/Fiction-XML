@@ -1,9 +1,9 @@
 Build.PL
 Changes
-extradata/screenplay-xml.dtd
 extradata/fiction-xml.rng
 extradata/fiction-xml-to-docbook.xslt
 extradata/fiction-xml-to-html.xslt
+extradata/screenplay-xml.dtd
 extradata/screenplay-xml-to-xsl-fo.xslt
 inc/Test/Run/Builder.pm
 inc/XML/Grammar/Builder.pm
@@ -45,13 +45,13 @@ t/data/proto-text/with-tags-inside-paragraphs.txt
 t/data/xml/dialogue-with-several-paragraphs.xml
 t/data/xml/nested-s.xml
 t/data/xml/scenes-with-titles.xml
+t/data/xml/sections-and-paras.xml
 t/data/xml/two-nested-s.xml
 t/data/xml/with-brs.xml
 t/data/xml/with-comments.xml
 t/data/xml/with-description.xml
 t/data/xml/with-dialogue.xml
 t/data/xml/with-entities.xml
-t/data/xml/with-internal-description.xml
 t/data/xml/with-multi-line-comments.xml
 t/data/xml/with-multi-para-desc.xml
 t/data/xml/with-tags-inside-paragraphs.xml
