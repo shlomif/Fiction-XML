@@ -58,4 +58,17 @@
     </para>
 </xsl:template>
 
+
+<xsl:template match="fic:b">
+    <emphasis role="bold">
+        <xsl:apply-templates/>
+    </emphasis>
+</xsl:template>
+
+<xsl:template match="fic:i">
+    <emphasis>
+        <xsl:apply-templates/>
+    </emphasis>
+</xsl:template>
+
 </xsl:stylesheet>
