@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 24;
+use Test::More tests => 28;
 
 use File::Spec;
 
@@ -146,33 +146,67 @@ foreach my $fn (@tests)
     # TEST:$num_with_styles=1;
     if ($fn eq "sections-p-b-i")
     {
-        my @elems;
+        {
+            my @elems;
 
-        @elems = $xhtml_find->(q{//x:div/x:p/x:b});
-        # TEST*$num_with_styles
-        is (
-            scalar(@elems),
-            1,
-            "Found bold tag",
-        );
+            @elems = $xhtml_find->(q{//x:div/x:p/x:b});
+            # TEST*$num_with_styles
+            is (
+                scalar(@elems),
+                1,
+                "Found bold tag",
+            );
 
-        # TEST*$num_with_styles
-        like ($elems[0]->toString(), qr{swear}, 
-            "Elem[0] is the right <b> tag."
-        );
-        
-        @elems = $xhtml_find->(q{//x:div/x:p/x:i});
-        # TEST*$num_with_styles
-        is (
-            scalar(@elems),
-            1,
-            "Found italic tag",
-        );
+            # TEST*$num_with_styles
+            like ($elems[0]->toString(), qr{swear}, 
+                "Elem[0] is the right <b> tag."
+            );
+            
+            @elems = $xhtml_find->(q{//x:div/x:p/x:i});
+            # TEST*$num_with_styles
+            is (
+                scalar(@elems),
+                1,
+                "Found italic tag",
+            );
 
-        # TEST*$num_with_styles
-        like ($elems[0]->toString(), qr{David}, 
-            "<i>[0] contains the right contents."
-        );
+            # TEST*$num_with_styles
+            like ($elems[0]->toString(), qr{David}, 
+                "<i>[0] contains the right contents."
+            );
+        }
+
+        {
+            my @elems;
+
+            @elems = $db_find->(q{//db:article/db:section/db:para/db:emphasis[@role="bold"]});
+            # TEST*$num_with_styles
+            is (
+                scalar(@elems),
+                1,
+                "DocBook: found bold tag",
+            );
+
+            # TEST*$num_with_styles
+            is ($elems[0]->textContent(), "swear", 
+                "Elem[0] is the right <emphasis role=bold> tag."
+            );
+            
+            @elems = $db_find->(
+                q{//db:article//db:section/db:para/db:emphasis[not(@role)]}
+            );
+            # TEST*$num_with_styles
+            is (
+                scalar(@elems),
+                1,
+                "Found italic tag",
+            );
+
+            # TEST*$num_with_styles
+            is ($elems[0]->textContent(), "David", 
+                "<i>[0] contains the right contents.",
+            );
+        }
     }
 }
 
