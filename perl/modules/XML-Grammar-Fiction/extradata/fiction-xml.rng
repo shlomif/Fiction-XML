@@ -12,6 +12,7 @@
             </element>
             <element name="fic:body">
                 <ref name="common_attrs" />
+                <ref name="title" />
                 <oneOrMore>
                     <ref name="section" />
                 </oneOrMore>
@@ -33,9 +34,7 @@
     <define name="section">
         <element name="fic:section">
             <ref name="common_attrs" />
-            <element name="fic:title">
-                <text />
-            </element>
+            <ref name="title" />
             <ref name="several_paras" />
             <zeroOrMore>
                 <ref name="section" />
@@ -65,6 +64,11 @@
     </define>
     <define name="i">
         <element name="fic:i">
+            <text />
+        </element>
+    </define>
+    <define name="title">
+        <element name="fic:title">
             <text />
         </element>
     </define>

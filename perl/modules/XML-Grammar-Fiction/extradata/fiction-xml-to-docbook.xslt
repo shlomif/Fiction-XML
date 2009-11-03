@@ -21,6 +21,11 @@
         <xsl:attribute name="xml:lang">
             <xsl:value-of select="@xml:lang" />
         </xsl:attribute>
+        <info>
+            <title>
+                <xsl:value-of select="fic:title" />
+            </title>
+        </info>
         <xsl:apply-templates select="fic:section" />
     </article>
 </xsl:template>
