@@ -21,11 +21,18 @@
             </title>
         </head>
         <body>
-            <div class="screenplay">
-            <xsl:attribute name="xml:id">
-                <xsl:value-of select="@xml:id" />
-            </xsl:attribute>
-            <xsl:apply-templates select="fic:section" />
+            <div class="fiction story">
+                <xsl:attribute name="xml:id">
+                    <xsl:value-of select="@xml:id" />
+                </xsl:attribute>                
+                <!-- TODO : duplicate code between here and fic:section.
+                    Abstract into a common functionality! 
+                -->
+                <xsl:element name="h{count(ancestor-or-self::fic:section|ancestor-or-self::fic:body)}">
+                    <xsl:value-of select="fic:title" />
+                </xsl:element>
+                
+                <xsl:apply-templates select="fic:section" />
             </div>
         </body>
     </html>
