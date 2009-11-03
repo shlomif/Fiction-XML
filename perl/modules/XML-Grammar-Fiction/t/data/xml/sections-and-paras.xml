@@ -4,6 +4,7 @@
     </head>
     <body xml:id="index">
     <section xml:id="top">
+    <title>The Top Section</title>
     <p>
         David and Goliath were standing by each other.    
     </p>
@@ -11,6 +12,7 @@
         David said unto Goliath: "I will shoot you."
     </p>
     <section xml:id="goliath">
+    <title>Goliath's Response</title>
     <p>
     Goliath was not amused.
     </p>
