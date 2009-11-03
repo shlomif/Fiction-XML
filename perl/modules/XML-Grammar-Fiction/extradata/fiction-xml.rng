@@ -33,6 +33,9 @@
     <define name="section">
         <element name="fic:section">
             <ref name="common_attrs" />
+            <element name="fic:title">
+                <text />
+            </element>
             <ref name="several_paras" />
             <zeroOrMore>
                 <ref name="section" />

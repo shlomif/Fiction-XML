@@ -46,6 +46,8 @@ foreach my $fn (@tests)
 
     my $parser = XML::LibXML->new();
 
+    $parser->load_ext_dtd(0);
+
     my $doc = $parser->parse_string($xhtml_text);
 
     my $xpc = XML::LibXML::XPathContext->new();
