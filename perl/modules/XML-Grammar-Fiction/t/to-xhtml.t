@@ -33,38 +33,50 @@ sub load_xml
 
 # TEST:$num_texts=2
 
-my $converter = XML::Grammar::Fiction::ToHTML->new({
-        data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
-    });
+my %converters =
+(
+    'xhtml' =>
+    {
+        class => "XML::Grammar::Fiction::ToHTML",
+        method => "translate_to_html",
+    },
+    'db' =>
+    {
+        class => "XML::Grammar::Fiction::ToDocBook",
+        method => "translate_to_docbook",
+    },
+);
 
-my $db_converter = XML::Grammar::Fiction::ToDocBook->new({
-        data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
-    });
+foreach my $conv_id (keys(%converters))
+{
+    my $h_ref = $converters{$conv_id};
+    $h_ref->{obj} = $h_ref->{class}->new(
+        {
+            data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
+        }
+    );
+}
 
 foreach my $fn (@tests)
 {
     my $xpc = XML::LibXML::XPathContext->new();
     $xpc->registerNs('x', q{http://www.w3.org/1999/xhtml});
     $xpc->registerNs('db', q{http://docbook.org/ns/docbook});
-    
-    my $xhtml_text = $converter->translate_to_html({
-            source => { file => "t/data/xml/$fn.xml", },
-            output => "string",
-        }
-        );
-
-    my $docbook_text = $db_converter->translate_to_docbook({
-            source => { file => "t/data/xml/$fn.xml", },
-            output => "string",
-        }
-        );
-
+   
     # This is a closure that returns a closure (like shown in "On Lisp" :
     # http://www.paulgraham.com/onlisptext.html ) for a finder in
     # one of the documents
     my $create_finder = sub {
-        my $text = shift;
+        my $format_id = shift;
 
+        my $format_hash = $converters{$format_id};
+        my $m = $format_hash->{method};
+        my $text = $format_hash->{'obj'}->$m(
+            {
+                source => { file => "t/data/xml/$fn.xml", },
+                output => "string",
+            }
+        );
         my $parser = XML::LibXML->new();
 
         $parser->load_ext_dtd(0);
@@ -77,8 +89,8 @@ foreach my $fn (@tests)
         };
     };
 
-    my $xhtml_find = $create_finder->($xhtml_text);
-    my $db_find = $create_finder->($docbook_text);
+    my $xhtml_find = $create_finder->("xhtml");
+    my $db_find = $create_finder->("db");
 
     # TEST*$num_texts
     is (
