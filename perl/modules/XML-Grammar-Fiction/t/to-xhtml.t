@@ -10,6 +10,7 @@ use File::Spec;
 use XML::LibXML;
 
 use XML::Grammar::Fiction::ToHTML;
+use XML::Grammar::Fiction::ToDocBook;
 
 my @tests = (qw(
         sections-and-paras
@@ -36,9 +37,19 @@ my $converter = XML::Grammar::Fiction::ToHTML->new({
         data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
     });
 
+my $db_converter = XML::Grammar::Fiction::ToDocBook->new({
+        data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
+    });
+
 foreach my $fn (@tests)
 {
     my $xhtml_text = $converter->translate_to_html({
+            source => { file => "t/data/xml/$fn.xml", },
+            output => "string",
+        }
+        );
+
+    my $docbook_text = $db_converter->translate_to_docbook({
             source => { file => "t/data/xml/$fn.xml", },
             output => "string",
         }
@@ -50,18 +61,36 @@ foreach my $fn (@tests)
 
     my $doc = $parser->parse_string($xhtml_text);
 
+    my $db_parser = XML::LibXML->new();
+
+    $db_parser->load_ext_dtd(0);
+
+    my $db_doc = $db_parser->parse_string($docbook_text);
+    
     my $xpc = XML::LibXML::XPathContext->new();
     $xpc->registerNs('x', q{http://www.w3.org/1999/xhtml});
+    $xpc->registerNs('db', q{http://docbook.org/ns/docbook});
+
+    my $xhtml_find = sub {
+        my $xpath = shift;
+        return $xpc->findnodes($xpath, $doc);
+    };
+
+    my $db_find = sub {
+        my $xpath = shift;
+        return $xpc->findnodes($xpath, $db_doc);
+    };
+
     # TEST*$num_texts
     is (
-        scalar(() = $xpc->findnodes(q{//x:html}, $doc)),
+        scalar(() = $xhtml_find->(q{//x:html})),
         1,
         "Found one article with id index",
     );
 
     # TEST*$num_texts
     ok (
-        (scalar(() = $xpc->findnodes(q{//x:div}, $doc))
+        (scalar(() = $xhtml_find->(q{//x:div}))
             >=
             1
         ),
@@ -69,7 +98,7 @@ foreach my $fn (@tests)
     );
 
     {
-        my @elems = $xpc->findnodes(q{//x:div[@xml:id="top"]/x:h2}, $doc);
+        my @elems = $xhtml_find->(q{//x:div[@xml:id="top"]/x:h2});
         # TEST*$num_texts
         is (scalar(@elems), 1, "One element");
 
@@ -83,7 +112,7 @@ foreach my $fn (@tests)
     {
         my @elems;
 
-        @elems = $xpc->findnodes(q{//x:div/x:p/x:b}, $doc);
+        @elems = $xhtml_find->(q{//x:div/x:p/x:b});
         # TEST*$num_with_styles
         is (
             scalar(@elems),
@@ -96,7 +125,7 @@ foreach my $fn (@tests)
             "Elem[0] is the right <b> tag."
         );
         
-        @elems = $xpc->findnodes(q{//x:div/x:p/x:i}, $doc);
+        @elems = $xhtml_find->(q{//x:div/x:p/x:i});
         # TEST*$num_with_styles
         is (
             scalar(@elems),
