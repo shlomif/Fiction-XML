@@ -51,14 +51,18 @@ foreach my $fn (@tests)
 
     my $doc = $parser->parse_string($docbook_text);
 
+    my $xc = XML::LibXML::XPathContext->new($doc);
+
+    $xc->registerNs('db', 'http://docbook.org/ns/docbook');
+
     is (
-        scalar(() = $doc->findnodes(q{//article[@id='index']})),
+        scalar(() = $xc->findnodes(q{//db:article[@xml:id='index']})),
         1,
         "Found one article with id index",
     );
 
     ok (
-        (scalar(() = $doc->findnodes(q{//section[@role='description']}))
+        (scalar(() = $xc->findnodes(q{//db:section}))
             >=
             1
         ),

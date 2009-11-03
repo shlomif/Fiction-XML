@@ -3,9 +3,9 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test::More skip_all => "Not implemented yet for XML-Grammar-Fortune";
 
-use Test::XML tests => 26;
+# use Test::XML tests => 26;
 
 use XML::LibXML;
 
@@ -50,7 +50,7 @@ my $grammar = XML::Grammar::Fiction::FromProto->new({
     });
 
 my $rngschema = XML::LibXML::RelaxNG->new(
-        location => "./extradata/screenplay-xml.rng" 
+        location => "./extradata/fiction-xml.rng" 
     );    
 
 my $xml_parser = XML::LibXML->new();

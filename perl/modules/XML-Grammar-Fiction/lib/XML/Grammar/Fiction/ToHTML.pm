@@ -61,7 +61,7 @@ sub _init
             location =>
             File::Spec->catfile(
                 $self->_data_dir(), 
-                "screenplay-xml.rng"
+                "fiction-xml.rng"
             ),
         );
 
@@ -74,7 +74,7 @@ sub _init
     my $style_doc = $self->_xml_parser()->parse_file(
             File::Spec->catfile(
                 $self->_data_dir(), 
-                "screenplay-xml-to-html.xslt"
+                "fiction-xml-to-html.xslt"
             ),
         );
 
@@ -93,6 +93,13 @@ the XML as a string, and a value of C<'xml'> returns the XML as an
 L<XML::LibXML> DOM object.
 
 =cut
+
+sub _undefize
+{
+    my $v = shift;
+
+    return defined($v) ? $v : "(undef)";
+}
 
 sub translate_to_html
 {
@@ -115,7 +122,9 @@ sub translate_to_html
     }
     else
     {
-        confess "RelaxNG validation failed [\$ret_code == $ret_code ; $@]";
+        confess "RelaxNG validation failed [\$ret_code == "
+            . _undefize($ret_code) . " ; $@]"
+            ;
     }
 
     my $stylesheet = $self->_stylesheet();

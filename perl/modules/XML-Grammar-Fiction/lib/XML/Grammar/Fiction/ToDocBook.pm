@@ -74,7 +74,7 @@ sub _init
     my $style_doc = $self->_xml_parser()->parse_file(
             File::Spec->catfile(
                 $self->_data_dir(), 
-                "screenplay-xml-to-docbook.xslt"
+                "fiction-xml-to-docbook.xslt"
             ),
         );
 
