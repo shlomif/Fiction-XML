@@ -3,9 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More;
-
-use Test::XML tests => 3;
+use Test::More tests => 3;
 
 use File::Spec;
 
@@ -14,7 +12,7 @@ use XML::LibXML;
 use XML::Grammar::Fiction::ToHTML;
 
 my @tests = (qw(
-        with-internal-description
+        sections-and-paras
     ));
 
 sub load_xml
