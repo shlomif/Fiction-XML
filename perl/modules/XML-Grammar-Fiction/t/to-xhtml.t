@@ -11,7 +11,7 @@ use File::Spec;
 
 use XML::LibXML;
 
-use XML::Grammar::Screenplay::ToHTML;
+use XML::Grammar::Fiction::ToHTML;
 
 my @tests = (qw(
         with-internal-description
@@ -33,7 +33,7 @@ sub load_xml
 
 # TEST:$num_texts=1
 
-my $converter = XML::Grammar::Screenplay::ToHTML->new({
+my $converter = XML::Grammar::Fiction::ToHTML->new({
         data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
     });
 

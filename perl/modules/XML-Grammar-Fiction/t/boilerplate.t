@@ -45,4 +45,4 @@ sub module_boilerplate_ok {
     );
 }
 
-module_boilerplate_ok('lib/XML/Grammar/Screenplay.pm');
+module_boilerplate_ok('lib/XML/Grammar/Fiction.pm');

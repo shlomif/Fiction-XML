@@ -1,15 +1,15 @@
-package XML::Grammar::Screenplay::FromProto::Parser::PRD;
+package XML::Grammar::Fiction::FromProto::Parser::PRD;
 
 use strict;
 use warnings;
 
-use base 'XML::Grammar::Screenplay::FromProto::Parser';
+use base 'XML::Grammar::Fiction::FromProto::Parser';
 
 use Parse::RecDescent;
 
 use Moose;
 
-use XML::Grammar::Screenplay::FromProto::Nodes;
+use XML::Grammar::Fiction::FromProto::Nodes;
 
 has "_p_rd" => ('isa' => "Parse::RecDescent", is => "rw");
 
@@ -37,7 +37,7 @@ tag_or_comment:   tag
                 | comment
 
 comment:    /<!--(.*?)-->/ms para_sep {
-    XML::Grammar::Screenplay::FromProto::Node::Comment->new(
+    XML::Grammar::Fiction::FromProto::Node::Comment->new(
         text => $1
     )
     }
@@ -51,9 +51,9 @@ plain_inner_text:  /([^\n<\[\]&]+\n?)+/ { $item[1] }
 
 inner_standalone_tag: /</ id attribute(s?) / *\/ *>/ space
     {
-        XML::Grammar::Screenplay::FromProto::Node::Element->new(
+        XML::Grammar::Fiction::FromProto::Node::Element->new(
             name => $item[2],
-            children => XML::Grammar::Screenplay::FromProto::Node::List->new(
+            children => XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => []
             ),
             attrs => $item[3]
@@ -67,9 +67,9 @@ inner_tag:         opening_tag  inner_text closing_tag {
         {
             Carp::confess("Tags do not match: $open->{name} and $close->{name}");
         }
-        XML::Grammar::Screenplay::FromProto::Node::Element->new(
+        XML::Grammar::Fiction::FromProto::Node::Element->new(
             name => $open->{name},
-            children => XML::Grammar::Screenplay::FromProto::Node::List->new(
+            children => XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => $inside
                 ),
             attrs => $open->{attrs},
@@ -78,8 +78,8 @@ inner_tag:         opening_tag  inner_text closing_tag {
 
 inner_desc:      /\[/ inner_text /\]/ {
         my $inside = $item[2];
-        XML::Grammar::Screenplay::FromProto::Node::InnerDesc->new(
-            children => XML::Grammar::Screenplay::FromProto::Node::List->new(
+        XML::Grammar::Fiction::FromProto::Node::InnerDesc->new(
+            children => XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => $inside
                 ),
             )
@@ -108,9 +108,9 @@ saying_first_para: addressing inner_text para_sep {
             my ($sayer, $what) = ($item[1], $item[2]);
             +{
              character => $sayer,
-             para => XML::Grammar::Screenplay::FromProto::Node::Paragraph->new(
+             para => XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
                 children =>
-                XML::Grammar::Screenplay::FromProto::Node::List->new(
+                XML::Grammar::Fiction::FromProto::Node::List->new(
                     contents => $what,
                     )
                 ),
@@ -118,9 +118,9 @@ saying_first_para: addressing inner_text para_sep {
             }
 
 saying_other_para: /^\++: /ms inner_text para_sep {
-        XML::Grammar::Screenplay::FromProto::Node::Paragraph->new(
+        XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
             children =>
-                XML::Grammar::Screenplay::FromProto::Node::List->new(
+                XML::Grammar::Fiction::FromProto::Node::List->new(
                     contents => $item[2],
                     ),
         )
@@ -130,9 +130,9 @@ speech_unit:  saying_first_para saying_other_para(s?)
     {
     my $first = $item[1];
     my $others = $item[2] || [];
-        XML::Grammar::Screenplay::FromProto::Node::Saying->new(
+        XML::Grammar::Fiction::FromProto::Node::Saying->new(
             character => $first->{character},
-            children => XML::Grammar::Screenplay::FromProto::Node::List->new(
+            children => XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => [ $first->{para}, @{$others} ],
                 ),
         )
@@ -145,15 +145,15 @@ desc_unit_inner: desc_para(s?) inner_text { [ @{$item[1]}, $item[2] ] }
 desc_unit: /^\[/ms desc_unit_inner /\]\s*$/ms para_sep {
         my $paragraphs = $item[2];
 
-        XML::Grammar::Screenplay::FromProto::Node::Description->new(
+        XML::Grammar::Fiction::FromProto::Node::Description->new(
             children => 
-                XML::Grammar::Screenplay::FromProto::Node::List->new(
+                XML::Grammar::Fiction::FromProto::Node::List->new(
                     contents =>
                 [
                 map { 
-                XML::Grammar::Screenplay::FromProto::Node::Paragraph->new(
+                XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
                     children =>
-                        XML::Grammar::Screenplay::FromProto::Node::List->new(
+                        XML::Grammar::Fiction::FromProto::Node::List->new(
                             contents => $_,
                             ),
                         )
@@ -163,10 +163,10 @@ desc_unit: /^\[/ms desc_unit_inner /\]\s*$/ms para_sep {
         )
     }
 
-text: text_unit(s) { XML::Grammar::Screenplay::FromProto::Node::List->new(
+text: text_unit(s) { XML::Grammar::Fiction::FromProto::Node::List->new(
         contents => $item[1]
         ) }
-      | space { XML::Grammar::Screenplay::FromProto::Node::List->new(
+      | space { XML::Grammar::Fiction::FromProto::Node::List->new(
         contents => []
         ) }
 
@@ -177,7 +177,7 @@ tag: space opening_tag space text space closing_tag space
         {
             Carp::confess("Tags do not match: $open->{name} and $close->{name}");
         }
-        XML::Grammar::Screenplay::FromProto::Node::Element->new(
+        XML::Grammar::Fiction::FromProto::Node::Element->new(
             name => $open->{name},
             children => $inside,
             attrs => $open->{attrs},
@@ -224,7 +224,7 @@ sub process_text
 
 =head1 NAME
 
-XML::Grammar::Screenplay::FromProto::Parser - base class for parsers of the
+XML::Grammar::Fiction::FromProto::Parser - base class for parsers of the
 ScreenplayXML proto-text.
 
 B<For internal use only>.

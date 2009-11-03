@@ -7,10 +7,10 @@ use lib File::Spec->catdir(File::Spec->curdir(), "inc");
 use XML::Grammar::Builder;
 
 my $builder = XML::Grammar::Builder->new(
-    module_name         => 'XML::Grammar::Screenplay',
+    module_name         => 'XML::Grammar::Fiction',
     license             => 'mit',
     dist_author         => 'Shlomi Fish <shlomif@cpan.org>',
-    dist_version_from   => 'lib/XML/Grammar/Screenplay.pm',
+    dist_version_from   => 'lib/XML/Grammar/Fiction.pm',
     build_requires => {
         'File::Find' => 0,
         'Test::More' => 0,
@@ -28,14 +28,14 @@ my $builder = XML::Grammar::Builder->new(
         'XML::LibXSLT' => 0,
         'XML::Writer' => 0,
     },
-    add_to_cleanup      => [ 'XML-Grammar-Screenplay-*' ],
+    add_to_cleanup      => [ 'XML-Grammar-Fiction-*' ],
     create_makefile_pl => 'passthrough',
     meta_merge =>
     {
         resources =>
         {
-            repository => "https://svn.berlios.de/svnroot/repos/web-cpan/XML-Grammar-Screenplay/",
-            homepage => "http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/",
+            repository => "https://svn.berlios.de/svnroot/repos/web-cpan/XML-Grammar-Fiction/",
+            homepage => "http://web-cpan.berlios.de/modules/XML-Grammar-Fiction/",
         },
         keywords =>
         [
@@ -46,10 +46,13 @@ my $builder = XML::Grammar::Builder->new(
             "grammar",
             "movies",
             "parsing",
-            "screenplay",
-            "screenplays",
-            "script",
-            "scripts",
+            "fiction",
+            "story",
+            "stories",
+            "noveilla",
+            "noveillas",
+            "novels",
+            "novel",
             "writing",
             "xml",
             "xml-libxml",

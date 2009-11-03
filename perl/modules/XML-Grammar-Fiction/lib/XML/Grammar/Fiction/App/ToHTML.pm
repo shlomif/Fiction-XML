@@ -1,4 +1,4 @@
-package XML::Grammar::Screenplay::App::ToHTML;
+package XML::Grammar::Fiction::App::ToHTML;
 
 use strict;
 use warnings;
@@ -9,11 +9,11 @@ our @EXPORT = (qw(run));
 
 use Getopt::Long;
 
-use XML::Grammar::Screenplay::ToHTML;
+use XML::Grammar::Fiction::ToHTML;
 
 =head1 NAME
 
-XML::Grammar::Screenplay::App::ToHTML - module implementing
+XML::Grammar::Fiction::App::ToHTML - module implementing
 a command line application to convert a Screenplay XML file to HTML
 
 =head1 FUNCTIONS
@@ -37,7 +37,7 @@ sub run
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
-    my $converter = XML::Grammar::Screenplay::ToHTML->new();
+    my $converter = XML::Grammar::Fiction::ToHTML->new();
 
     my $output_text = $converter->translate_to_html({
             source => { file => shift(@ARGV), },

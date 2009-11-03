@@ -1,15 +1,15 @@
-package XML::Grammar::Screenplay::FromProto::Parser;
+package XML::Grammar::Fiction::FromProto::Parser;
 
 use strict;
 use warnings;
 
-use base 'XML::Grammar::Screenplay::Base';
+use base 'XML::Grammar::Fiction::Base';
 
 1;
 
 =head1 NAME
 
-XML::Grammar::Screenplay::FromProto::Parser - base class for parsers of the
+XML::Grammar::Fiction::FromProto::Parser - base class for parsers of the
 ScreenplayXML proto-text.
 
 B<For internal use only>.

@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More tests => 3;
 
-use XML::Grammar::Screenplay::FromProto::Parser::QnD;
+use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
 {
     my $text = <<"EOF";
@@ -15,7 +15,7 @@ Hello <s id="top">
 </s>
 EOF
 
-    my $parser = XML::Grammar::Screenplay::FromProto::Parser::QnD->new();
+    my $parser = XML::Grammar::Fiction::FromProto::Parser::QnD->new();
 
     $parser->_setup_text($text);
 
@@ -37,7 +37,7 @@ voila the row kala:
 </s>
 EOF
 
-    my $parser = XML::Grammar::Screenplay::FromProto::Parser::QnD->new();
+    my $parser = XML::Grammar::Fiction::FromProto::Parser::QnD->new();
 
     $parser->_setup_text($text);
 
@@ -58,7 +58,7 @@ EOF
 </s>
 EOF
 
-    my $parser = XML::Grammar::Screenplay::FromProto::Parser::QnD->new();
+    my $parser = XML::Grammar::Fiction::FromProto::Parser::QnD->new();
 
     $parser->_setup_text($text);
 

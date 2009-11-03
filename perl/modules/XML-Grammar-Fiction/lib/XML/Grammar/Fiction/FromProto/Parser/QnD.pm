@@ -1,9 +1,9 @@
-package XML::Grammar::Screenplay::FromProto::Parser::QnD;
+package XML::Grammar::Fiction::FromProto::Parser::QnD;
 
 use strict;
 use warnings;
 
-use base 'XML::Grammar::Screenplay::FromProto::Parser';
+use base 'XML::Grammar::Fiction::FromProto::Parser';
 
 use Moose;
 
@@ -153,12 +153,12 @@ sub _parse_text
     if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
     {
         return 
-            XML::Grammar::Screenplay::FromProto::Node::List->new(
+            XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => []
             );
     }
 
-    return XML::Grammar::Screenplay::FromProto::Node::List->new(
+    return XML::Grammar::Fiction::FromProto::Node::List->new(
         contents => \@ret,
         );
 }
@@ -204,9 +204,9 @@ sub _parse_inner_desc
     );
 
     return
-        XML::Grammar::Screenplay::FromProto::Node::InnerDesc->new(
+        XML::Grammar::Fiction::FromProto::Node::InnerDesc->new(
             start => $start_line,
-            children => XML::Grammar::Screenplay::FromProto::Node::List->new(
+            children => XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => $inside
             ),
         );
@@ -224,9 +224,9 @@ sub _parse_inner_tag
         $self->_skip_space();
 
         return        
-            XML::Grammar::Screenplay::FromProto::Node::Element->new(
+            XML::Grammar::Fiction::FromProto::Node::Element->new(
                 name => $open->{name},
-                children => XML::Grammar::Screenplay::FromProto::Node::List->new(
+                children => XML::Grammar::Fiction::FromProto::Node::List->new(
                     contents => []
                 ),
                 attrs => $open->{attrs},
@@ -244,9 +244,9 @@ sub _parse_inner_tag
             . "line $open->{line}"
         );
     }
-    return XML::Grammar::Screenplay::FromProto::Node::Element->new(
+    return XML::Grammar::Fiction::FromProto::Node::Element->new(
         name => $open->{name},
-        children => XML::Grammar::Screenplay::FromProto::Node::List->new(
+        children => XML::Grammar::Fiction::FromProto::Node::List->new(
             contents => $inside
             ),
         attrs => $open->{attrs},
@@ -388,9 +388,9 @@ sub _parse_saying_first_para
     return
     +{
          character => $sayer,
-         para => XML::Grammar::Screenplay::FromProto::Node::Paragraph->new(
+         para => XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
             children =>
-            XML::Grammar::Screenplay::FromProto::Node::List->new(
+            XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => $what,
                 )
             ),
@@ -426,9 +426,9 @@ sub _parse_saying_other_para
     my $what = $self->_parse_inner_text();
 
     return
-        XML::Grammar::Screenplay::FromProto::Node::Paragraph->new(
+        XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
             children =>
-            XML::Grammar::Screenplay::FromProto::Node::List->new(
+            XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents => $what,
                 )
         );
@@ -447,10 +447,10 @@ sub _parse_speech_unit
     }
 
     return
-        XML::Grammar::Screenplay::FromProto::Node::Saying->new(
+        XML::Grammar::Fiction::FromProto::Node::Saying->new(
             character => $first->{character},
             children => 
-                XML::Grammar::Screenplay::FromProto::Node::List->new(
+                XML::Grammar::Fiction::FromProto::Node::List->new(
                     contents => [ $first->{para}, @others ],
                 ),
         );
@@ -496,15 +496,15 @@ sub _parse_desc_unit
         Carp::confess (qq{Description ("[ ... ]") that started on line $start_line does not terminate anywhere.});
     }
 
-    return XML::Grammar::Screenplay::FromProto::Node::Description->new(
+    return XML::Grammar::Fiction::FromProto::Node::Description->new(
         children => 
-            XML::Grammar::Screenplay::FromProto::Node::List->new(
+            XML::Grammar::Fiction::FromProto::Node::List->new(
                 contents =>
             [
             map { 
-            XML::Grammar::Screenplay::FromProto::Node::Paragraph->new(
+            XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
                 children =>
-                    XML::Grammar::Screenplay::FromProto::Node::List->new(
+                    XML::Grammar::Fiction::FromProto::Node::List->new(
                         contents => $_,
                         ),
                     )
@@ -597,7 +597,7 @@ sub _parse_top_level_tag
         my $text = $self->_consume_up_to(qr{-->});
 
         return
-            XML::Grammar::Screenplay::FromProto::Node::Comment->new(
+            XML::Grammar::Fiction::FromProto::Node::Comment->new(
                 text => $text
             );
     }
@@ -621,7 +621,7 @@ sub _parse_top_level_tag
             . "and $close->{name} on line $close->{line}"
         );
     }
-    return XML::Grammar::Screenplay::FromProto::Node::Element->new(
+    return XML::Grammar::Fiction::FromProto::Node::Element->new(
         name => $open->{name},
         children => $inside,
         attrs => $open->{attrs},
@@ -708,7 +708,7 @@ sub process_text
 
 =head1 NAME
 
-XML::Grammar::Screenplay::FromProto::Parser::QnD - Quick and Dirty parser
+XML::Grammar::Fiction::FromProto::Parser::QnD - Quick and Dirty parser
 for the Screenplay-XML proto-text.
 
 B<For internal use only>.

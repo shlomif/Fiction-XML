@@ -1,4 +1,4 @@
-package XML::Grammar::Screenplay::ConfigData;
+package XML::Grammar::Fiction::ConfigData;
 
 use strict;
 use warnings;

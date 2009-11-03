@@ -1,11 +1,11 @@
-package XML::Grammar::Screenplay::Base;
+package XML::Grammar::Fiction::Base;
 
 use strict;
 use warnings;
 
 =head1 NAME
 
-XML::Grammar::Screenplay::Base - base class for XML::Grammar::Screenplay
+XML::Grammar::Fiction::Base - base class for XML::Grammar::Fiction
 classes.
 
 =head1 METHODS
