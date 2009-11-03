@@ -27,7 +27,7 @@ sub load_xml
 }
 
 my $rngschema = XML::LibXML::RelaxNG->new(
-        location => "./extradata/screenplay-xml.rng" 
+        location => "./extradata/fiction-xml.rng" 
     );
 
 my @tests = (qw(

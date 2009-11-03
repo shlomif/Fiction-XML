@@ -61,5 +61,16 @@ sub do_test_run_tests
     return $test_run->run();
 }
 
+sub ACTION_tags
+{
+    return 
+        system(qw(
+            ctags -f tags --recurse --totals
+    		--exclude=blib/** --exclude=t/lib/**
+    		--exclude=.svn --exclude='*~'
+    		--languages=Perl --langmap=Perl:+.t
+    ));
+}
+
 1;
 

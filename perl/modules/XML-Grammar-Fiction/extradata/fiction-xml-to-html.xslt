@@ -1,0 +1,52 @@
+<xsl:stylesheet version = '1.0'
+    xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
+    xmlns:fic="http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/"
+     >
+
+<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"
+ doctype-public="-//W3C//DTD XHTML 1.1//EN"
+ doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
+ />
+
+<xsl:template match="/">
+        <xsl:apply-templates select="//fic:body" />  
+</xsl:template>
+
+<xsl:template match="fic:body">
+    <html>
+        <head>
+            <title>Story</title>
+        </head>
+        <body>
+            <div class="screenplay">
+            <xsl:attribute name="xml:id">
+                <xsl:value-of select="@xml:id" />
+            </xsl:attribute>
+            <xsl:apply-templates select="fic:section" />
+            </div>
+        </body>
+    </html>
+</xsl:template>
+
+<xsl:template match="fic:section">
+    <div class="fiction section">
+        <xsl:if test="@xml:id">
+            <xsl:attribute name="xml:id">
+                <xsl:value-of select="@xml:id" />
+            </xsl:attribute>
+        </xsl:if>
+        <!-- Make the title the title attribute or "ID" if does not exist. -->
+        <xsl:element name="h{count(ancestor-or-self::fic:scene)}">
+            <xsl:value-of select="title" />
+        </xsl:element>
+        <xsl:apply-templates select="fic:scene|fic:p" />
+    </div>
+</xsl:template>
+
+<xsl:template match="fic:p">
+    <p>
+        <xsl:apply-templates/>
+    </p>
+</xsl:template>
+
+</xsl:stylesheet>
