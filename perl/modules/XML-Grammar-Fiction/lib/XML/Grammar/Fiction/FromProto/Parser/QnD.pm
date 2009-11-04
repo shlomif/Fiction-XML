@@ -10,6 +10,8 @@ use Moose;
 has "_curr_line_idx" => (isa => "Int", is => "rw");
 has "_lines" => (isa => "ArrayRef", is => "rw");
 
+use XML::Grammar::Fiction::FromProto::Nodes qw(_new_node);
+
 sub _curr_line :lvalue
 {
     my $self = shift;
@@ -63,6 +65,26 @@ sub _skip_space
 }
 
 my $id_regex = '[a-zA-Z_\-]+';
+
+sub _create_elem
+{
+    my $open = shift;
+
+    return
+        _new_node(
+            {
+                t => "Element",
+                name => $open->{name},
+                children => _new_node(
+                    {
+                        t => "List",
+                        contents => []
+                    },
+                ),
+                attrs => $open->{attrs},
+            }
+        );
+}
 
 sub _parse_opening_tag
 {
@@ -153,13 +175,20 @@ sub _parse_text
     if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
     {
         return 
-            XML::Grammar::Fiction::FromProto::Node::List->new(
-                contents => []
+            _new_node(
+                {
+                    t => 'List',
+                    contents => []
+                }
             );
     }
 
-    return XML::Grammar::Fiction::FromProto::Node::List->new(
-        contents => \@ret,
+    return 
+        _new_node(
+            {
+                t => "List",
+                contents => \@ret,
+            }
         );
 }
 
@@ -204,13 +233,18 @@ sub _parse_inner_desc
     );
 
     return
-        XML::Grammar::Fiction::FromProto::Node::InnerDesc->new(
-            start => $start_line,
-            children => XML::Grammar::Fiction::FromProto::Node::List->new(
-                contents => $inside
-            ),
+        _new_node(
+            {
+                t => "InnerDesc",
+                start => $start_line,
+                children => _new_node->(
+                    {
+                        t => "List",
+                        contents => $inside,
+                    }
+                ),
+            }
         );
- 
 }
 
 sub _parse_inner_tag
@@ -223,14 +257,7 @@ sub _parse_inner_tag
     {
         $self->_skip_space();
 
-        return        
-            XML::Grammar::Fiction::FromProto::Node::Element->new(
-                name => $open->{name},
-                children => XML::Grammar::Fiction::FromProto::Node::List->new(
-                    contents => []
-                ),
-                attrs => $open->{attrs},
-            );
+        return _create_elem($open);
     }
 
     my $inside = $self->_parse_inner_text();
@@ -244,13 +271,7 @@ sub _parse_inner_tag
             . "line $open->{line}"
         );
     }
-    return XML::Grammar::Fiction::FromProto::Node::Element->new(
-        name => $open->{name},
-        children => XML::Grammar::Fiction::FromProto::Node::List->new(
-            contents => $inside
-            ),
-        attrs => $open->{attrs},
-        );
+    return _create_elem($open);
 }
 
 sub _parse_inner_text
