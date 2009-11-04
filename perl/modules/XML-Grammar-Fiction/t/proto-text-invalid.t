@@ -44,7 +44,7 @@ my $got_xml = $grammar->convert(
 my $err = $@;
 
 # TEST
-like ($err, qr{inner-desc.*?addressing},
+like ($err, qr{Tags do not match: start on line 1 and wrong-finish-tag},
    "Tried to put an inner-desc inside an addressing "
 );
 

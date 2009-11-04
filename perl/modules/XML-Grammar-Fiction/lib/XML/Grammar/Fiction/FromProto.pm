@@ -14,10 +14,13 @@ use XML::Grammar::Fiction::FromProto::Nodes;
 
 use Moose;
 
+use List::Util (qw(first));
+
 has "_parser" => ('isa' => "XML::Grammar::Fiction::FromProto::Parser", 'is' => "rw");
 has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
-my $screenplay_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/};
+my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
+my $xml_ns = "http://www.w3.org/XML/1998/namespace";
 
 =head1 NAME
 
@@ -72,7 +75,7 @@ sub _output_tag
     my ($self, $args) = @_;
 
     my @start = @{$args->{start}};
-    $self->_writer->startTag([$screenplay_ns,$start[0]], @start[1..$#start]);
+    $self->_writer->startTag([$fiction_ns,$start[0]], @start[1..$#start]);
 
     $args->{in}->($self, $args);
 
@@ -127,14 +130,38 @@ sub _write_elem
     {
         $self->_output_tag_with_childs(
             {
-               start => ["para"],
+               start => ["p"],
                 elem => $elem,
             },
         );
     }
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::List"))
+    {
+        foreach my $child (@{$elem->contents()})
+        {
+            $self->_write_elem({elem => $child, });
+        }
+    }
     elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Element"))
     {
-        if (($elem->name() eq "s") || ($elem->name() eq "section"))
+        if ($elem->name() eq "title")
+        {
+            my $list = $elem->_get_childs()->[0];
+            my $p = $list->contents()->[0];
+            $self->_output_tag(
+                {
+                    start => ["title"],
+                    in => sub {
+                        $self->_write_elem(
+                            {
+                                elem => $p->_get_childs()->[0],
+                            }                            
+                        ),
+                    },
+                },
+            );
+        }
+        elsif ($elem->name() eq "s")
         {
             $self->_write_scene({scene => $elem});
         }
@@ -202,12 +229,9 @@ sub _write_scene
             Carp::confess("Unspecified id for scene!");
         }
 
-        my $title = $scene->lookup_attr("title");
-        my @t = (defined($title) ? (title => $title) : ());
-
         $self->_output_tag_with_childs(
             {
-                'start' => ["scene", id => $id, @t],
+                'start' => ["section", [$xml_ns, "id"] => $id],
                 elem => $scene,
             }
         );
@@ -247,6 +271,48 @@ sub _calc_tree
     return $self->_parser->process_text($self->_read_file($filename));
 }
 
+sub _write_body
+{
+    my $self = shift;
+    my $args = shift;
+
+    my $body = $args->{'body'};
+
+    my $tag = $body->name;
+    if ($tag ne "body")
+    {
+        confess "Improper body tag - should be '<body>'!";
+    }
+
+    my $id = $body->lookup_attr("id");
+
+=begin foo
+    my $title =
+        first
+        { $_->name() eq "title" }
+        @{$body->_get_childs()}
+        ;
+
+    my @t = 
+    (
+          defined($title)
+        ? (title => $title->_get_childs()->[0])
+        : ()
+    );
+=end foo
+
+=cut
+
+    $self->_output_tag_with_childs(
+        {
+            'start' => ["body", [$xml_ns, "id"] => $id],
+            elem => $body,
+        }
+    );
+
+    return;
+}
+
 sub convert
 {
     my ($self, $args) = @_;
@@ -272,24 +338,21 @@ sub convert
         NAMESPACES => 1,
         PREFIX_MAP =>
         {
-             $screenplay_ns => "",
+             $fiction_ns => "",
+             $xml_ns => "xml",
         }
     );
 
     $writer->xmlDecl("utf-8");
     $writer->doctype("document", undef, "screenplay-xml.dtd");
-    $writer->startTag([$screenplay_ns, "document"]);
-    $writer->startTag([$screenplay_ns, "head"]);
+    $writer->startTag([$fiction_ns, "document"]);
+    $writer->startTag([$fiction_ns, "head"]);
     $writer->endTag();
-    $writer->startTag([$screenplay_ns, "body"], "id" => "index",);
 
     # Now we're inside the body.
     $self->_writer($writer);
 
-    $self->_write_scene({scene => $tree});
-
-    # Ending the body
-    $writer->endTag();
+    $self->_write_body({body => $tree});
 
     $writer->endTag();
     

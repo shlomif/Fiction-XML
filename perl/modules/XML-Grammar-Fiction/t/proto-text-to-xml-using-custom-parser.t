@@ -3,9 +3,9 @@
 use strict;
 use warnings;
 
-use Test::More skip_all => "Not implemented yet for XML-Grammar-Fortune";
+use Test::More tests => 2;
 
-# use Test::XML tests => 26;
+use Test::XML;
 
 use XML::LibXML;
 
@@ -43,7 +43,9 @@ my @tests = (qw(
         with-brs
     ));
 
-# TEST:$num_texts=13
+@tests = (qw(sections-and-paras));
+
+# TEST:$num_texts=1
 
 my $grammar = XML::Grammar::Fiction::FromProto->new({
         parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
@@ -51,7 +53,7 @@ my $grammar = XML::Grammar::Fiction::FromProto->new({
 
 my $rngschema = XML::LibXML::RelaxNG->new(
         location => "./extradata/fiction-xml.rng" 
-    );    
+    );
 
 my $xml_parser = XML::LibXML->new();
 $xml_parser->validation(0);
