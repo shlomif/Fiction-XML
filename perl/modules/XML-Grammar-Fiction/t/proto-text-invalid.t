@@ -26,9 +26,7 @@ sub load_xml
     return $contents;
 }
 
-my $grammar = XML::Grammar::Fiction::FromProto->new({
-        parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
-    });
+my $grammar = XML::Grammar::Fiction::FromProto->new({});
 
 eval {
 my $got_xml = $grammar->convert(
