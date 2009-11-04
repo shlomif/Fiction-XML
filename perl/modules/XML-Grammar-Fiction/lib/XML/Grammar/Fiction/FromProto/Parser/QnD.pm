@@ -131,6 +131,19 @@ sub _new_para
     );
 }
 
+sub _new_text
+{
+    my $self = shift;
+    my $contents = shift;
+
+    return $self->_new_node(
+        {
+            t => "Text",
+            children => $self->_new_list($contents),
+        }
+    );
+}
+
 sub _parse_opening_tag
 {
     my $self = shift;
@@ -413,6 +426,8 @@ sub _parse_inner_text
     return \@contents;
 }
 
+=begin unused_code
+
 # TODO : _parse_saying_first_para and _parse_saying_other_para are
 # very similar - abstract them into one function.
 sub _parse_saying_first_para
@@ -556,6 +571,10 @@ sub _parse_desc_unit
     });
 }
 
+=end unused_code
+
+=cut
+
 sub _parse_non_tag_text_unit
 {
     my $self = shift;
@@ -564,18 +583,33 @@ sub _parse_non_tag_text_unit
 
     if (pos($$l) < length($$l))
     {
-        my $text = $self->_consume_up_to(qr{\<}ms);
+        my $text = $self->_consume_up_to(qr{(?:\<|^\n?$)}ms);
 
         $l = $self->_curr_line_ref();
+
+        my $ret_elem = $self->_new_text([$text]);
+        my $is_para_end = 0;
+
+        # Demote the cursor to before the < of the tag.
+        #
         if (pos($$l) > 0)
         {
             pos($$l)--;
+            if (substr($$l, pos($$l), 1) eq "\n")
+            {
+                $is_para_end = 1;
+            }
+        }
+        else
+        {
+            $is_para_end = 1;
         }
 
-        my @paras = split(/\n{2,}/, $text);
-        return $self->_new_list(
-            [ map { $self->_new_para([$_]) } @paras]
-        );
+        return
+        {
+            elem => $ret_elem,
+            para_end => $is_para_end,
+        };
     }
     else
     {
@@ -588,6 +622,7 @@ sub _parse_non_tag_text_unit
 sub _parse_text_unit
 {
     my $self = shift;
+
     my $space = $self->_consume(qr{\s});
 
     my $l = $self->_curr_line_ref();
@@ -615,7 +650,40 @@ sub _parse_text_unit
     }
     else
     {
-        return $self->_parse_non_tag_text_unit();
+        my @ret;
+
+        my $status;
+
+        my $is_para = (pos($$l) == 0);
+
+        PARSE_NON_TAG_TEXT_UNIT:
+        while (my $status = $self->_parse_non_tag_text_unit())
+        {
+            my $elem = $status->{'elem'};
+            my $is_para_end = $status->{'para_end'};
+
+            push @ret, $elem;
+            if ($is_para_end)
+            {
+                last PARSE_NON_TAG_TEXT_UNIT;
+            }
+            else
+            {
+                if (defined(my $text_unit = $self->_parse_text_unit()))
+                {
+                    push @ret, $text_unit;
+                }
+                else
+                {
+                    last PARSE_NON_TAG_TEXT_UNIT;
+                }
+            }
+        }
+        return
+            $is_para 
+            ? $self->_new_para(\@ret)
+            : $self->_new_list(\@ret)
+            ;
     }
 }
 
