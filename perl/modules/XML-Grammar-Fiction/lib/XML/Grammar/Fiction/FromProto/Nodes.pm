@@ -5,23 +5,6 @@ use warnings;
 
 use List::Util ();
 
-use Sub::Exporter -setup => {
-    exports => [qw(_new_node)],
-};
-
-sub _new_node
-{
-    my $args = shift;
-
-    # t == type
-    my $class = 
-        "XML::Grammar::Fiction::FromProto::Node::"
-        . delete($args->{'t'})
-        ;
-
-    return $class->new(%$args);
-}
-
 package XML::Grammar::Fiction::FromProto::Node;
 
 use Moose;

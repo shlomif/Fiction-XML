@@ -10,7 +10,8 @@ use Moose;
 has "_curr_line_idx" => (isa => "Int", is => "rw");
 has "_lines" => (isa => "ArrayRef", is => "rw");
 
-use XML::Grammar::Fiction::FromProto::Nodes qw(_new_node);
+use XML::Grammar::Fiction::FromProto::Nodes;
+
 
 sub _curr_line :lvalue
 {
@@ -66,13 +67,28 @@ sub _skip_space
 
 my $id_regex = '[a-zA-Z_\-]+';
 
+
+sub _new_node
+{
+    my $self = shift;
+    my $args = shift;
+
+    # t == type
+    my $class = 
+        "XML::Grammar::Fiction::FromProto::Node::"
+        . delete($args->{'t'})
+        ;
+
+    return $class->new(%$args);
+}
+
 sub _create_elem
 {
     my $self = shift;
     my $open = shift;
     my $children =
         shift || 
-        _new_node(
+        $self->_new_node(
             {
                 t => "List",
                 contents => []
@@ -80,7 +96,7 @@ sub _create_elem
         );
 
     return
-        _new_node(
+        $self->_new_node(
             {
                 t => "Element",
                 name => $open->{name},
@@ -95,7 +111,7 @@ sub _new_list
     my $self = shift;
     my $contents = shift;
 
-    return _new_node(
+    return $self->_new_node(
         {
             t => "List",
             contents => $contents,
@@ -108,7 +124,7 @@ sub _new_para
     my $self = shift;
     my $contents = shift;
 
-    return _new_node(
+    return $self->_new_node(
         {
             t => "Paragraph",
             children => $self->_new_list($contents),
@@ -205,7 +221,7 @@ sub _parse_text
     if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
     {
         return 
-            _new_node(
+            $self->_new_node(
                 {
                     t => 'List',
                     contents => []
@@ -214,7 +230,7 @@ sub _parse_text
     }
 
     return 
-        _new_node(
+        $self->_new_node(
             {
                 t => "List",
                 contents => \@ret,
@@ -263,7 +279,7 @@ sub _parse_inner_desc
     );
 
     return
-        _new_node(
+        $self->_new_node(
             {
                 t => "InnerDesc",
                 start => $start_line,
@@ -487,7 +503,7 @@ sub _parse_speech_unit
     }
 
     return
-        _new_node({
+        $self->_new_node({
                 t => "Saying",
                 character => $first->{character},
                 children => 
@@ -535,7 +551,7 @@ sub _parse_desc_unit
         Carp::confess (qq{Description ("[ ... ]") that started on line $start_line does not terminate anywhere.});
     }
 
-    return _new_node({
+    return $self->_new_node({
             t => "Description",
             children => $self->_new_list(
             [
@@ -628,7 +644,7 @@ sub _parse_top_level_tag
     {
         my $text = $self->_consume_up_to(qr{-->});
 
-        return _new_node({ t => "Comment", text => $text, });
+        return $self->_new_node({ t => "Comment", text => $text, });
     }
 
     my $open = $self->_parse_opening_tag();
