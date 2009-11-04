@@ -68,6 +68,7 @@ my $id_regex = '[a-zA-Z_\-]+';
 
 sub _create_elem
 {
+    my $self = shift;
     my $open = shift;
 
     return
@@ -283,7 +284,7 @@ sub _parse_inner_tag
     {
         $self->_skip_space();
 
-        return _create_elem($open);
+        return $self->_create_elem($open);
     }
 
     my $inside = $self->_parse_inner_text();
@@ -297,7 +298,7 @@ sub _parse_inner_tag
             . "line $open->{line}"
         );
     }
-    return _create_elem($open);
+    return $self->_create_elem($open);
 }
 
 sub _parse_inner_text
