@@ -487,11 +487,12 @@ sub _parse_speech_unit
     }
 
     return
-        XML::Grammar::Fiction::FromProto::Node::Saying->new(
-            character => $first->{character},
-            children => 
-                $self->_new_list([ $first->{para}, @others ]),
-        );
+        _new_node({
+                t => "Saying",
+                character => $first->{character},
+                children => 
+                    $self->_new_list([ $first->{para}, @others ]),
+        });
 }
 
 sub _parse_desc_unit
@@ -534,16 +535,15 @@ sub _parse_desc_unit
         Carp::confess (qq{Description ("[ ... ]") that started on line $start_line does not terminate anywhere.});
     }
 
-    return XML::Grammar::Fiction::FromProto::Node::Description->new(
-        children => 
-        $self->_new_list(
+    return _new_node({
+            t => "Description",
+            children => $self->_new_list(
             [
                 map { 
                 $self->_new_para($_),
                 } @paragraphs
-            ],
-        )
-    );
+            ],),
+    });
 }
 
 sub _parse_non_tag_text_unit
@@ -628,10 +628,7 @@ sub _parse_top_level_tag
     {
         my $text = $self->_consume_up_to(qr{-->});
 
-        return
-            XML::Grammar::Fiction::FromProto::Node::Comment->new(
-                text => $text
-            );
+        return _new_node({ t => "Comment", text => $text, });
     }
 
     my $open = $self->_parse_opening_tag();
