@@ -69,6 +69,8 @@ package XML::Grammar::Fiction::FromProto::Node::List;
 
 use Moose;
 
+extends("XML::Grammar::Fiction::FromProto::Node");
+
 has 'contents' => (isa => "ArrayRef", is => "rw");
 
 package XML::Grammar::Fiction::FromProto::Node::Text;

@@ -102,11 +102,11 @@ sub _get_text_start
 {
     my ($self, $elem) = @_;
 
-    if ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying"))
+    if ($elem->_short_isa("Saying"))
     {
         return ["saying", 'character' => $elem->character()];
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Description"))
+    elsif ($elem->_short_isa("Description"))
     {
         return ["description"];
     }
@@ -126,14 +126,14 @@ sub _write_elem
     {
         $self->_writer->characters($elem);
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
+    elsif ($elem->_short_isa("Text"))
     {
         foreach my $child (@{$elem->_get_childs()})
         {
             $self->_write_elem({ elem => $child,},);
         }
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph"))
+    elsif ($elem->_short_isa("Paragraph"))
     {
         $self->_output_tag_with_childs(
             {
@@ -142,14 +142,14 @@ sub _write_elem
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::List"))
+    elsif ($elem->_short_isa("List"))
     {
         foreach my $child (@{$elem->contents()})
         {
             $self->_write_elem({elem => $child, });
         }
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Element"))
+    elsif ($elem->_short_isa("Element"))
     {
         if ($elem->name() eq "title")
         {
@@ -204,7 +204,7 @@ sub _write_elem
         {
             $self->_writer->emptyTag("br");
         }
-        elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::InnerDesc"))
+        elsif ($elem->_short_isa("InnerDesc"))
         {
             $self->_output_tag_with_childs(
                 {
@@ -214,7 +214,7 @@ sub _write_elem
             );
         }
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
+    elsif ($elem->_short_isa("Text"))
     {
         $self->_output_tag_with_childs(
             {
@@ -223,7 +223,7 @@ sub _write_elem
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Comment"))
+    elsif ($elem->_short_isa("Comment"))
     {
         $self->_writer->comment($elem->text());
     }
