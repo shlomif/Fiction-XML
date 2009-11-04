@@ -86,9 +86,7 @@ sub _create_elem
 {
     my $self = shift;
     my $open = shift;
-    my $children =
-        shift || 
-        $self->_new_list([]);
+    my $children = shift || $self->_new_empty_list();
 
     return
         $self->_new_node(
@@ -99,6 +97,12 @@ sub _create_elem
                 attrs => $open->{attrs},
             }
         );
+}
+
+sub _new_empty_list
+{
+    my $self = shift;
+    return $self->_new_list([]);
 }
 
 sub _new_list
@@ -215,7 +219,7 @@ sub _parse_text
     # If it's whitespace - return an empty list.
     if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
     {
-        return $self->_new_list([]);
+        return $self->_new_empty_list();
     }
 
     return $self->_new_list(\@ret);
