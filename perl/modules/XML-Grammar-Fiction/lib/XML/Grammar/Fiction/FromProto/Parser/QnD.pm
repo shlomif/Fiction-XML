@@ -88,12 +88,7 @@ sub _create_elem
     my $open = shift;
     my $children =
         shift || 
-        $self->_new_node(
-            {
-                t => "List",
-                contents => []
-            },
-        );
+        $self->_new_list([]);
 
     return
         $self->_new_node(
@@ -220,22 +215,10 @@ sub _parse_text
     # If it's whitespace - return an empty list.
     if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
     {
-        return 
-            $self->_new_node(
-                {
-                    t => 'List',
-                    contents => []
-                }
-            );
+        return $self->_new_list([]);
     }
 
-    return 
-        $self->_new_node(
-            {
-                t => "List",
-                contents => \@ret,
-            }
-        );
+    return $self->_new_list(\@ret);
 }
 
 sub _consume_paragraph
@@ -283,12 +266,7 @@ sub _parse_inner_desc
             {
                 t => "InnerDesc",
                 start => $start_line,
-                children => _new_node->(
-                    {
-                        t => "List",
-                        contents => $inside,
-                    }
-                ),
+                children => $self->_new_list($inside),
             }
         );
 }
