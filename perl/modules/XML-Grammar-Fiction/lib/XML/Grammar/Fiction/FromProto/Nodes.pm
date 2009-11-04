@@ -29,6 +29,17 @@ sub _get_childs
     return $childs || [];
 }
 
+sub _short_isa
+{
+    my $self = shift;
+    my $isa_classish = shift;
+
+    return
+        $self->isa(
+            "XML::Grammar::Fiction::FromProto::Node::$isa_classish"
+        );
+}
+
 package XML::Grammar::Fiction::FromProto::Node::Element;
 
 use Moose;
