@@ -70,18 +70,21 @@ sub _create_elem
 {
     my $self = shift;
     my $open = shift;
+    my $children =
+        shift || 
+        _new_node(
+            {
+                t => "List",
+                contents => []
+            },
+        );
 
     return
         _new_node(
             {
                 t => "Element",
                 name => $open->{name},
-                children => _new_node(
-                    {
-                        t => "List",
-                        contents => []
-                    },
-                ),
+                children => $children,
                 attrs => $open->{attrs},
             }
         );
@@ -650,11 +653,7 @@ sub _parse_top_level_tag
             . "and $close->{name} on line $close->{line}"
         );
     }
-    return XML::Grammar::Fiction::FromProto::Node::Element->new(
-        name => $open->{name},
-        children => $inside,
-        attrs => $open->{attrs},
-        );
+    return $self->_create_elem($open, $inside);
 }
 
 sub _consume
