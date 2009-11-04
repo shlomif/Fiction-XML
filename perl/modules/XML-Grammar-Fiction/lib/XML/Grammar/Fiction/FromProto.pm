@@ -126,6 +126,13 @@ sub _write_elem
     {
         $self->_writer->characters($elem);
     }
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
+    {
+        foreach my $child (@{$elem->_get_childs()})
+        {
+            $self->_write_elem({ elem => $child,},);
+        }
+    }
     elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph"))
     {
         $self->_output_tag_with_childs(
@@ -146,15 +153,16 @@ sub _write_elem
     {
         if ($elem->name() eq "title")
         {
+            # TODO :
+            # Eliminate the Law-of-Demeter-syndrome here.
             my $list = $elem->_get_childs()->[0];
-            my $p = $list->contents()->[0];
             $self->_output_tag(
                 {
                     start => ["title"],
                     in => sub {
                         $self->_write_elem(
                             {
-                                elem => $p->_get_childs()->[0],
+                                elem => $list,
                             }                            
                         ),
                     },
@@ -178,11 +186,20 @@ sub _write_elem
         {
             $self->_output_tag_with_childs(
                 {
-                    start => ["bold"],
+                    start => ["b"],
                     elem => $elem,
                 }
             );
         }
+        elsif ($elem->name() eq "i")
+        {
+            $self->_output_tag_with_childs(
+                {
+                    start => ["i"],
+                    elem => $elem,
+                }
+            );
+        }        
         elsif ($elem->name() eq "br")
         {
             $self->_writer->emptyTag("br");

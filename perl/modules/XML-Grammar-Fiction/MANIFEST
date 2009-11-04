@@ -33,6 +33,7 @@ t/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
 t/data/proto-text/nested-s.txt
 t/data/proto-text/scenes-with-titles.txt
 t/data/proto-text/sections-and-paras.txt
+t/data/proto-text/sections-p-b-i.txt
 t/data/proto-text/two-nested-s.txt
 t/data/proto-text/with-brs.txt
 t/data/proto-text/with-comments.txt
