@@ -86,6 +86,19 @@ sub _create_elem
         );
 }
 
+sub _new_list
+{
+    my $self = shift;
+    my $contents = shift;
+
+    return _new_node(
+        {
+            t => "List",
+            contents => $contents,
+        }
+    );
+}
+
 sub _parse_opening_tag
 {
     my $self = shift;
@@ -411,9 +424,7 @@ sub _parse_saying_first_para
          character => $sayer,
          para => XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
             children =>
-            XML::Grammar::Fiction::FromProto::Node::List->new(
-                contents => $what,
-                )
+            $self->_new_list($what),
             ),
     };
 }
@@ -449,9 +460,7 @@ sub _parse_saying_other_para
     return
         XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
             children =>
-            XML::Grammar::Fiction::FromProto::Node::List->new(
-                contents => $what,
-                )
+            $self->_new_list($what),
         );
 }
 
@@ -471,9 +480,7 @@ sub _parse_speech_unit
         XML::Grammar::Fiction::FromProto::Node::Saying->new(
             character => $first->{character},
             children => 
-                XML::Grammar::Fiction::FromProto::Node::List->new(
-                    contents => [ $first->{para}, @others ],
-                ),
+                $self->_new_list([ $first->{para}, @others ]),
         );
 }
 
@@ -519,19 +526,15 @@ sub _parse_desc_unit
 
     return XML::Grammar::Fiction::FromProto::Node::Description->new(
         children => 
-            XML::Grammar::Fiction::FromProto::Node::List->new(
-                contents =>
+        $self->_new_list(
             [
-            map { 
-            XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
-                children =>
-                    XML::Grammar::Fiction::FromProto::Node::List->new(
-                        contents => $_,
-                        ),
-                    )
-            } @paragraphs
+                map { 
+                XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
+                children => $self->_new_list($_),
+                )
+                } @paragraphs
             ],
-        ),
+        )
     );
 }
 
