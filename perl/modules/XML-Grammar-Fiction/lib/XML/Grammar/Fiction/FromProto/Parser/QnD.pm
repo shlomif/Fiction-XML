@@ -142,8 +142,10 @@ sub _parse_opening_tag
             # line
             my $l = shift;
 
-            if ($$l !~ m{\G<($id_regex)}g)
+            my $p = pos($$l);
+            if ($$l !~ m{\G<($id_regex)}cg)
             {
+                print "Before : " . substr($$l, 0, $p) . "\n";
                 Carp::confess("Cannot match opening tag at line " . $self->_get_line_num());
             }
             my $id = $1;
@@ -201,6 +203,7 @@ sub _parse_closing_tag
             return
             {
                 name => $1,
+                line => $self->_get_line_num(),
             };
         }
     );
@@ -238,7 +241,7 @@ sub _parse_inner_desc
 {
     my $self = shift;
 
-    my $start_line = $self->_get_line_num();
+    my $start_line = $self->_curr_line_idx();
 
     # Skip the [
     $self->_with_curr_line(
@@ -258,8 +261,9 @@ sub _parse_inner_desc
             if ($$l !~ m{\G\]}g)
             {
                 Carp::confess (
-                      "Inner description that started on line $start_line did "
-                    . "not terminate with a \"]\"!"
+                      "Inner description that started on line "
+                      . ($start_line+1) 
+                      . " did not terminate with a \"]\"!"
                 );
             }
         }
@@ -393,7 +397,11 @@ sub _parse_inner_text
     {
         if (!defined(${$self->_next_line_ref()}))
         {
-            Carp::confess "End of file in an addressing paragraph starting at $start_line";
+            Carp::confess 
+            (
+                "End of file in an addressing paragraph starting at "
+                . ($start_line+1)
+            );
         }
     }
 
@@ -530,7 +538,11 @@ sub _parse_desc_unit
 
     if ($is_end)
     {
-        Carp::confess (qq{Description ("[ ... ]") that started on line $start_line does not terminate anywhere.});
+        Carp::confess (
+            qq{Description ("[ ... ]") that started on line }
+            . ($start_line+1) . 
+            qq{does not terminate anywhere.}
+        );
     }
 
     return $self->_new_node({
@@ -548,31 +560,26 @@ sub _parse_non_tag_text_unit
 {
     my $self = shift;
 
-    if (pos(${$self->_curr_line_ref()}) == 0)
+    my $l = $self->_curr_line_ref();
+
+    if (pos($$l) < length($$l))
     {
-        return $self->_with_curr_line(
-            sub {
-                my $l = shift;
-                if (substr($$l, 0, 1) eq "[")
-                {
-                    return $self->_parse_desc_unit();
-                }
-                elsif ($$l =~ m{\A[^:]+:})
-                {
-                    return $self->_parse_speech_unit();
-                }
-                else
-                {
-                    Carp::confess ("Line " . $self->_curr_line_idx() . 
-                        " is not a description or a saying."
-                    );
-                }
-            }
+        my $text = $self->_consume_up_to(qr{\<}ms);
+
+        $l = $self->_curr_line_ref();
+        if (pos($$l) > 0)
+        {
+            pos($$l)--;
+        }
+
+        my @paras = split(/\n{2,}/, $text);
+        return $self->_new_list(
+            [ map { $self->_new_para([$_]) } @paras]
         );
     }
     else
     {
-        Carp::confess ("Line " . $self->_curr_line_idx() . 
+        Carp::confess ("Line " . $self->_get_line_num() . 
             " has leading whitespace."
             );
     }
@@ -583,15 +590,21 @@ sub _parse_text_unit
     my $self = shift;
     my $space = $self->_consume(qr{\s});
 
-    if ($self->_curr_line() =~ m{\G<})
+    my $l = $self->_curr_line_ref();
+    my $orig_pos = pos($$l);
+
+    if ($$l =~ m{\G<}cg)
     {
         # If it's a tag.
 
         # TODO : implement the comment handling.
         # We have a tag.
 
+        my $is_closing_tag = ($$l =~ m{\G/}cg);
+        pos($$l) = $orig_pos;
+
         # If it's a closing tag - then backtrack.
-        if ($self->_curr_line() =~ m{\G</})
+        if ($is_closing_tag)
         {
             return undef;
         }
@@ -664,8 +677,7 @@ sub _consume
     }
     continue
     {
-        $self->_next_line_ref();
-        $l = $self->_curr_line_ref();
+        $l = $self->_next_line_ref();
     }
 
     if (defined($$l) && ($$l =~ m[\G(${match_regex}*)]cg))
@@ -698,8 +710,7 @@ sub _consume_up_to
     }
     continue
     {
-        $self->_next_line_ref();
-        $l = $self->_curr_line_ref();
+        $l = $self->_next_line_ref();
     }
 
     return $return_value;
@@ -715,7 +726,7 @@ sub _setup_text
 
     $self->_curr_line_idx(0);
 
-    $self->_curr_line() =~ m{\A}g;
+    ${$self->_curr_line_ref()} =~ m{\A}g;
 
     return;
 }
