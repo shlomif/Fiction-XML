@@ -99,6 +99,19 @@ sub _new_list
     );
 }
 
+sub _new_para
+{
+    my $self = shift;
+    my $contents = shift;
+
+    return _new_node(
+        {
+            t => "Paragraph",
+            children => $self->_new_list($contents),
+        }
+    );
+}
+
 sub _parse_opening_tag
 {
     my $self = shift;
@@ -422,10 +435,7 @@ sub _parse_saying_first_para
     return
     +{
          character => $sayer,
-         para => XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
-            children =>
-            $self->_new_list($what),
-            ),
+         para => $self->_new_para($what),
     };
 }
 
@@ -457,11 +467,7 @@ sub _parse_saying_other_para
 
     my $what = $self->_parse_inner_text();
 
-    return
-        XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
-            children =>
-            $self->_new_list($what),
-        );
+    return $self->_new_para($what);
 }
 
 sub _parse_speech_unit
@@ -529,9 +535,7 @@ sub _parse_desc_unit
         $self->_new_list(
             [
                 map { 
-                XML::Grammar::Fiction::FromProto::Node::Paragraph->new(
-                children => $self->_new_list($_),
-                )
+                $self->_new_para($_),
                 } @paragraphs
             ],
         )
