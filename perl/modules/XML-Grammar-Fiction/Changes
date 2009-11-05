@@ -1,6 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
-0.0.1       TODO : FILL IN.
+0.0.1       Thu Nov  5 18:59:27 IST 2009
         - Forked from XML-Grammar-Screenplay-0.0600+trunk.
         - Changed to the Fiction proto-text format and XML format.
         - Changed the tests to be in accordance with the new semantics.
