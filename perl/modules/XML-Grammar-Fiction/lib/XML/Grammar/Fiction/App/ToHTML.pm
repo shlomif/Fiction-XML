@@ -13,8 +13,13 @@ use XML::Grammar::Fiction::ToHTML;
 
 =head1 NAME
 
-XML::Grammar::Fiction::App::ToHTML - module implementing
-a command line application to convert a Screenplay XML file to HTML
+XML::Grammar::Fiction::App::ToHTML - command line app-in-a-module to convert
+Fiction-XML file to HTML
+
+=head1 SYNOPSIS
+
+    perl -MXML::Grammar::Fiction::App::ToHTML -e 'run()' -- \
+	-o "$OUTPUT_FILE" "$INPUT_FILE"
 
 =head1 FUNCTIONS
 

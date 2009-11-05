@@ -14,14 +14,13 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
 =head1 NAME
 
-XML::Grammar::Fiction::App::FromProto - module implementing
-a command line application to convert a well-formed text to
-Screenplay XML.
+XML::Grammar::Fiction::App::FromProto - command line app-in-a-module
+to convert from a well-formed plaintext format to Fiction-XML.
 
 =head1 SYNOPSIS
 
     perl -MXML::Grammar::Fiction::App::FromProto -e 'run()' -- \
-	-o $@ $<
+	-o "$OUTPUT_FILE" "$INPUT_FILE"
 
 =head1 FUNCTIONS
 

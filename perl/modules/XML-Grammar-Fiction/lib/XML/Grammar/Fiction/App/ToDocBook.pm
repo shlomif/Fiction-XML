@@ -13,8 +13,13 @@ use XML::Grammar::Fiction::ToDocBook;
 
 =head1 NAME
 
-XML::Grammar::Fiction::App::ToDocBook - module implementing
-a command line application to convert a Screenplay XML file to docbook.
+XML::Grammar::Fiction::App::ToDocBook - command line app-in-a-module
+to convert a Fiction XML file to DocBook 5.
+
+=head1 SYNOPSIS
+
+    perl -MXML::Grammar::Fiction::App::ToDocBook -e 'run()' -- \
+	-o "$OUTPUT_FILE" "$INPUT_FILE"
 
 =head1 FUNCTIONS
 
