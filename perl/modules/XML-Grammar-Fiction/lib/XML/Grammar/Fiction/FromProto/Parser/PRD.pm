@@ -246,7 +246,7 @@ Shlomi Fish, L<http://www.shlomifish.org/>.
 =head1 BUGS
 
 Please report any bugs or feature requests to
-C<bug-xml-grammar-screenplay at rt.cpan.org>, or through the web interface at
+C<bug-xml-grammar-fiction at rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Screenplay>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
