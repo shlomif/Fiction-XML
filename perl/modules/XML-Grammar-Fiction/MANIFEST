@@ -1,4 +1,5 @@
 Build.PL
+bump-version-number.pl
 Changes
 extradata/fiction-xml.rng
 extradata/fiction-xml-to-docbook.xslt
