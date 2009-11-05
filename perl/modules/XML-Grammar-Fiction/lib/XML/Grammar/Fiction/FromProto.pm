@@ -362,7 +362,6 @@ sub convert
     );
 
     $writer->xmlDecl("utf-8");
-    $writer->doctype("document", undef, "screenplay-xml.dtd");
     $writer->startTag([$fiction_ns, "document"]);
     $writer->startTag([$fiction_ns, "head"]);
     $writer->endTag();
