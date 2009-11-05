@@ -12,6 +12,20 @@ has "_lines" => (isa => "ArrayRef", is => "rw");
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
+=head1 NAME
+
+XML::Grammar::Fiction::FromProto::Parser::QnD - Quick and Dirty parser
+for the Fiction-XML proto-text.
+
+B<For internal use only>.
+
+=head1 VERSION
+
+Version 0.0.1
+
+=cut
+
+our $VERSION = '0.0.1';
 
 sub _curr_line :lvalue
 {
@@ -807,13 +821,6 @@ sub process_text
 
     return $self->_start();
 }
-
-=head1 NAME
-
-XML::Grammar::Fiction::FromProto::Parser::QnD - Quick and Dirty parser
-for the Fiction-XML proto-text.
-
-B<For internal use only>.
 
 =head1 METHODS
 
