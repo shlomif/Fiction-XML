@@ -362,7 +362,7 @@ sub convert
     );
 
     $writer->xmlDecl("utf-8");
-    $writer->startTag([$fiction_ns, "document"]);
+    $writer->startTag([$fiction_ns, "document"], "version" => "0.2");
     $writer->startTag([$fiction_ns, "head"]);
     $writer->endTag();
 

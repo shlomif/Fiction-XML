@@ -7,6 +7,9 @@
     <start>
         <element name="fic:document">
             <ref name="common_attrs" />
+            <attribute name="version">
+                <text />
+            </attribute>
             <element name="fic:head">
                 <empty/>
             </element>
