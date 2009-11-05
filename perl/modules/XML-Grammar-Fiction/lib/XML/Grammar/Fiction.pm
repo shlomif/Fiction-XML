@@ -140,15 +140,25 @@ your bug as I make changes.
 This will allow a friendlier diagnostic. Carp::confess was implemented due to
 laziness on the programmers' part.
 
+=item * Merge the duplicate code from XML-Grammar-Screenplay
+
+XML::Grammar::Fiction was forked from L<XML::Grammar::Screenplay>
+and they still share a lot of common code. This needs to be merged in time.
+
+=item * Refactor the Prototext parser and other parts.
+
+Currently the code is relatively hairy and easy-to-break. Try to refactor it.
+
 =back
 
 =head1 MOTIVATION
 
-I wrote this CPAN distribution so I'll have a convenient way to edit a story
-I'm writing in Hebrew and other fiction like that, as OpenOffice.org caused
-me many problems, and I found editing bi-directional DocBook/XML to be
-painful with either gvim or KDE 4's kate, so I opted for a more plain-texty
-format.
+I (= Shlomi Fish) originated this CPAN distribution (after forking 
+L<XML:Grammar::Screenplay> which was similar enough) so I'll have a convenient
+way to edit a story I'm writing in Hebrew and similar fiction, as 
+OpenOffice.org caused me many problems, and I found editing bi-directional 
+DocBook/XML to be painful with either gvim or KDE 4's kate, so I opted for a
+more plain-texty format.
 
 I hope a lightweight markup language like that for fiction (and possibly
 other types of manuscripts) will prove useful for other writers. At the
