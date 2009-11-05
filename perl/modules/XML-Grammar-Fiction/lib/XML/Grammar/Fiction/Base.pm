@@ -8,6 +8,14 @@ use warnings;
 XML::Grammar::Fiction::Base - base class for XML::Grammar::Fiction
 classes.
 
+=head1 VERSION
+
+Version 0.0.1
+
+=cut
+
+our $VERSION = '0.0.1';
+
 =head1 METHODS
 
 =head2 $package->new({%args});

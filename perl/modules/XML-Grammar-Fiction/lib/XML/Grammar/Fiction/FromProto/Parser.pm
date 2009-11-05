@@ -14,6 +14,14 @@ Fiction-XML proto-text.
 
 B<For internal use only>.
 
+=head1 VERSION
+
+Version 0.0.1
+
+=cut
+
+our $VERSION = '0.0.1';
+
 =head1 AUTHOR
 
 Shlomi Fish, L<http://www.shlomifish.org/>.

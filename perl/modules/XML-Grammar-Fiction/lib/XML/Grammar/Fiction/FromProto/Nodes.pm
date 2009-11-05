@@ -5,6 +5,19 @@ use warnings;
 
 use List::Util ();
 
+=head1 NAME
+
+XML::Grammar::Fiction::FromProto::Nodes - contains several nodes for
+use in XML::Grammar::Fiction::FromProto.
+
+=head1 VERSION
+
+Version 0.0.1
+
+=cut
+
+our $VERSION = '0.0.1';
+
 package XML::Grammar::Fiction::FromProto::Node;
 
 use Moose;
@@ -119,11 +132,6 @@ extends("XML::Grammar::Fiction::FromProto::Node");
 has "text" => (isa => "Str", is => "rw");
 
 1;
-
-=head1 NAME
-
-XML::Grammar::Fiction::FromProto::Nodes - contains several nodes for
-use in XML::Grammar::Fiction::FromProto.
 
 =head1 DESCRIPTION
 
