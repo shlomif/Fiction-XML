@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<document xmlns="http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/">
+<document xmlns="http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/" version="0.2">
     <head>
     </head>
     <body xml:id="index">
