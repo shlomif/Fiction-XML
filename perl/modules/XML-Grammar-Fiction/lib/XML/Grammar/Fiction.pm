@@ -135,6 +135,11 @@ your bug as I make changes.
 
 =item * Check that SGML entities work properly.
 
+=item * Convert the parsing errors from Carp::confess to Exception::Class
+
+This will allow a friendlier diagnostic. Carp::confess was implemented due to
+laziness on the programmers' part.
+
 =back
 
 =head1 MOTIVATION
