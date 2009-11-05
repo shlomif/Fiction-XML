@@ -10,7 +10,7 @@ use base 'XML::Grammar::Fiction::Base';
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser - base class for parsers of the
-ScreenplayXML proto-text.
+Fiction-XML proto-text.
 
 B<For internal use only>.
 

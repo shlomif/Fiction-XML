@@ -811,7 +811,7 @@ sub process_text
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::QnD - Quick and Dirty parser
-for the Screenplay-XML proto-text.
+for the Fiction-XML proto-text.
 
 B<For internal use only>.
 
