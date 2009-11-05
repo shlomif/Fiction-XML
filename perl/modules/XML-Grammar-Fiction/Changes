@@ -1,3 +1,11 @@
+Revision history for XML-Grammar-Fiction.
+
+0.0.1       TODO : FILL IN.
+        - Forked from XML-Grammar-Screenplay-0.0600+trunk.
+        - Changed to the Fiction proto-text format and XML format.
+        - Changed the tests to be in accordance with the new semantics.
+        - First CPAN release.
+
 Revision history for XML-Grammar-Screenplay
 
         - Added the resources and keywords to the Build.PL and META.yml.
