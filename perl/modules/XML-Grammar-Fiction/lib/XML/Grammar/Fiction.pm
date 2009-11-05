@@ -24,7 +24,8 @@ L<XML::Grammar::Fiction::ToHTML>.
 
 =head1 DESCRIPTION
 
-XML::Grammar::Fiction is a Perl module for:
+XML::Grammar::Fiction is a CPAN distribution that facilitates writing prose
+fiction (= stories, novels, novellas, etc.). What it does is:
 
 =over 4
 
@@ -46,17 +47,16 @@ The rest of this page will document the syntax of the custom textual format.
 
 =head2 Scenes
 
-Scenes are placed in XML-like tags of C<< <section> ... </section> >> or
+Sections are placed in XML-like tags of C<< <section> ... </section> >> or
 abbreviated as C<< <s> ... </s> >>. Opening tags in the format may have 
 attributes whose keys are plaintext and whose values are surrounded by
 double quotes. (Single-quotes are not supported).
 
-The scene tag must have an C<id> attribute (for anchors, etc.) and could
-have an optional C<title> attribute. If the title is not specified, it will
-default to the ID.
+The section tag must have an C<id> attribute (for anchors, etc.) and could
+contain an optional (but highly recommended) C<< <title> >> sub-tag. If the 
+title is not specified, it will default to the ID.
 
-Scenes may be B<nested>. There cannot be any sayings or descriptions (see below)
-except inside scenes.
+Sections may be B<nested>. 
 
 =head2 Text
 
@@ -70,8 +70,8 @@ Regular text
 
 =item 2. XML-like tags.
 
-Supported tags are C<< <b> >> for bold tags, C<< <a href="..."> >> for
-hyperlinks, and an empty C<< <br /> >> tag for line-breaks.
+Supported tags are C<< <b> >> for bold text, and C<< <i> >> for italic
+text.
 
 =item 3. Entities
 
@@ -79,38 +79,29 @@ The text format supports SGML-like entities such as C<< &amp; >>,
 C<< &lt; >>, C<< &quot; >> and all other entities that are supported by 
 L<HTML::Entities>.
 
-=item 4. Text between [ ... ]
+=item 4. Supported initial characters
 
-Text between square brackets (C<[ ... ]>) is reserved for descriptions
-or inline descriptions (see below).
+The following characters can start a regular paragraph:
 
-=back 
+=over 4
 
-=head2 Sayings
+=item * Any alphanumeric character.
 
-The first paragraph when a character talks starts with the name of the
-character followed by a colon (C<:>) and the rest of the text. Like this:
+=item * Some special characters:
 
-    David: Goliath, I'm going to kill you! You'll see -
-    I will.
+The characters C<"> (double quotes), C<'> (single quotes), etc. are supported.
 
-If a character says more than one paragraph, the next paragraph should start
-with any number of "+"-signs followed by a colon:
+=item * XML/SGML entities.
 
-    David: Goliath, I'm going to kill you! You'll see -
-    I will.
+XML/SGML entities are also supported at the start. 
 
-    ++++: I will sling you and bing you till infinity!
+=back
 
-=head2 Descriptions.
+All other characters are reserved for special markup in the future. If you
+need to use them at the beginning of the paragraph you can escape them with
+a backslash (C<\>) or their SGML/XML entity (e.g: C<&qout;>).
 
-Descriptions that are not part of saying start with a C<[> at the first
-character of a line and extend till the next C<]>. They can span several
-paragraphs.
-
-There are also internal descriptions to the saying which are placed
-inside the paragraph of the saying and describe what happens while the
-character talks. 
+=back
 
 =head2 EXAMPLES
 
@@ -118,30 +109,11 @@ Examples can be found in the C<t/data> directory, and here:
 
 =over 4
 
-=item * The One with the Fountainhead
+=item * The Pope Died on Sunday
 
-L<http://www.shlomifish.org/humour/TOWTF/>
-
-=item * Humanity - The Movie
-
-L<http://www.shlomifish.org/humour/humanity/>
-
-=item * Star Trek - "We The Living Dead"
-
-L<http://www.shlomifish.org/humour/Star-Trek/We-the-Living-Dead/>
+L<http://www.shlomifish.org/humour/Pope/>
 
 =back
-
-=head1 DEBUGGING
-
-When trying to convert the well-formed text to XML, one will often 
-encounter an obscure "Parse Error". This is caused by L<Parse::RecDescent>,
-which is used for parsing. The best way I found to deal with it is to
-gradually eliminate parts of the document until the offending markup is
-isolated.
-
-In the future, I plan on writing a custom parser that will provide better
-diagnostics and will hopefully also be faster.
 
 =head1 AUTHOR
 
@@ -150,7 +122,7 @@ Shlomi Fish, L<http://www.shlomifish.org/>.
 =head1 BUGS
 
 Please report any bugs or feature requests to
-C<bug-xml-grammar-screenplay at rt.cpan.org>, or through the web interface at
+C<bug-xml-grammar-fiction at rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Fiction>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
@@ -159,9 +131,26 @@ your bug as I make changes.
 
 =over 4
 
-=item * Empty
+=item * Implement the correct handlind of leading special characters in lines.
+
+=item * Check that SGML entities work properly.
 
 =back
+
+=head1 MOTIVATION
+
+I wrote this CPAN distribution so I'll have a convenient way to edit a story
+I'm writing in Hebrew and other fiction like that, as OpenOffice.org caused
+me many problems, and I found editing bi-directional DocBook/XML to be
+painful with either gvim or KDE 4's kate, so I opted for a more plain-texty
+format.
+
+I hope a lightweight markup language like that for fiction (and possibly
+other types of manuscripts) will prove useful for other writers. At the
+moment, a lot of stuff in the proto-text format is subject to change,
+so you'll need to accept that some modifications to your sources will be
+required in the future. I hope you still find it useful and let me know
+if you need any feature or bug-fix.
 
 =head1 SUPPORT
 
