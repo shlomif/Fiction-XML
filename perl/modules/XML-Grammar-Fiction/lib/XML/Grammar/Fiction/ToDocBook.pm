@@ -19,22 +19,21 @@ use Moose;
 
 
 has '_data_dir' => (isa => 'Str', is => 'rw');
-has '_dtd' => (isa => 'XML::LibXML::Dtd', is => 'rw');
 has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
 has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
 
 =head1 NAME
 
-XML::Grammar::Fiction::ToDocBook - module that converts the Screenplay
-XML to DocBook.
+XML::Grammar::Fiction::ToDocBook - module that converts the Fiction-XML to 
+DocBook 5.
 
 =head1 VERSION
 
-Version 0.0600
+Version 0.0.1
 
 =cut
 
-our $VERSION = '0.0600';
+our $VERSION = '0.0.1';
 
 =head2 new()
 
@@ -55,17 +54,6 @@ sub _init
         XML::Grammar::Fiction::ConfigData->config('extradata_install_path')->[0];
 
     $self->_data_dir($data_dir);
-
-    my $dtd =
-        XML::LibXML::Dtd->new(
-            "Screenplay XML 0.1.0",
-            File::Spec->catfile(
-                $self->_data_dir(), 
-                "screenplay-xml.dtd"
-            ),
-        );
-
-    $self->_dtd($dtd);
 
     $self->_xml_parser(XML::LibXML->new());
 
