@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 28;
+use Test::More tests => 30;
 
 use File::Spec;
 
@@ -216,6 +216,26 @@ foreach my $fn (@tests)
             # TEST*$num_with_styles
             is ($elems[0]->textContent(), "David", 
                 "<i>[0] contains the right contents.",
+            );
+        }
+
+        # Test the DocBook/XML incorporation of the <title> tag.
+        {
+            my @elems;
+
+            @elems = $db_find->(
+                q{//db:section[@xml:id='goliath']/db:info/db:title}
+            );
+            # TEST*$num_with_styles
+            is (
+                scalar(@elems),
+                1,
+                "DocBook: found one title tag",
+            );
+
+            # TEST*$num_with_styles
+            is ($elems[0]->textContent(), "Goliath's Response", 
+                "title#goliath contains the right content.",
             );
         }
     }

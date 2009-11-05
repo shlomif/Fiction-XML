@@ -39,8 +39,8 @@
         <info>
         <title>
             <xsl:choose>
-                <xsl:when test="title">
-                    <xsl:value-of select="title" />
+                <xsl:when test="fic:title">
+                    <xsl:value-of select="fic:title" />
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="@xml:id" />
