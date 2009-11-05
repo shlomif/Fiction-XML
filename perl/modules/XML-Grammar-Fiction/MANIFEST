@@ -13,7 +13,6 @@ lib/XML/Grammar/Fiction/App/ToHTML.pm
 lib/XML/Grammar/Fiction/Base.pm
 lib/XML/Grammar/Fiction/FromProto/Nodes.pm
 lib/XML/Grammar/Fiction/FromProto/Parser.pm
-lib/XML/Grammar/Fiction/FromProto/Parser/PRD.pm
 lib/XML/Grammar/Fiction/FromProto/Parser/QnD.pm
 lib/XML/Grammar/Fiction/FromProto.pm
 lib/XML/Grammar/Fiction.pm
@@ -23,6 +22,7 @@ Makefile.PL
 MANIFEST
 META.yml # Will be created by "make dist"
 README
+rejects/lib/XML/Grammar/Fiction/FromProto/Parser/PRD.pm
 rejects/proto-text-to-xml.t
 t/00-load.t
 t/app-to-html.t
