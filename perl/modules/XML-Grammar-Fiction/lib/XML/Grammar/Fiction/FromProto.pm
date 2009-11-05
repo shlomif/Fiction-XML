@@ -25,7 +25,7 @@ my $xml_ns = "http://www.w3.org/XML/1998/namespace";
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto - module that converts well-formed
-text representing a screenplay to an XML format.
+text representing prose to an XML format.
 
 =head1 VERSION
 
@@ -64,7 +64,8 @@ sub _init
 
 =head2 $self->convert({ source => { file => $path_to_file } })
 
-Converts the file $path_to_file to XML and returns it.
+Converts the file $path_to_file to XML and returns it. Throws an exception
+on failure.
 
 =cut
 
