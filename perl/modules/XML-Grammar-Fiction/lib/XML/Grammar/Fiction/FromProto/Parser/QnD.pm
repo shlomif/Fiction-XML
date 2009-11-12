@@ -361,18 +361,19 @@ sub _parse_inner_text
             }
             elsif ($which_tag eq "entity")
             {
-                $self->_with_curr_line(
-                    sub {
-                        my $l = shift;
-                        if ($$l !~ m{\G(\&\w+;)}g)
-                        {
-                            Carp::confess("Cannot match entity (e.g: \"&quot;\") at line " .
-                                $self->_get_line_num()
-                            );
-                        }
-                        push @contents, HTML::Entities::decode_entities($1);
-                    }
-                );
+                my $l = $self->_curr_line_ref();
+
+                if (my ($text) = ($$l =~ m{\G(\&\w+;)}g))
+                {
+                    push @contents, HTML::Entities::decode_entities($text);
+                }
+                else
+                {
+                    Carp::confess("Cannot match entity (e.g: \"&quot;\") at line " .
+                        $self->_get_line_num()
+                    );
+                }
+
                 redo CONTENTS_LOOP;
             }
         }
