@@ -41,6 +41,15 @@ sub _curr_line_ref
     return \($self->_lines()->[$self->_curr_line_idx()]);
 }
 
+sub _curr_line_and_pos
+{
+    my $self = shift;
+
+    my $l = $self->_curr_line_ref();
+
+    return ($l, pos($$l));
+}
+
 sub _with_curr_line
 {
     my ($self, $sub_ref) = @_;
@@ -162,10 +171,7 @@ sub _parse_opening_tag
 {
     my $self = shift;
 
-    # $l is a reference to the string of the current line
-
-    my $l = $self->_curr_line_ref();
-    my $p = pos($$l);
+    my ($l, $p) = $self->_curr_line_and_pos();
 
     if ($$l !~ m{\G<($id_regex)}cg)
     {
@@ -214,21 +220,18 @@ sub _parse_closing_tag
 {
     my $self = shift;
 
-    return $self->_with_curr_line(
-        sub {
-            my $l = shift;
-            if ($$l !~ m{\G</($id_regex)>}g)
-            {
-                Carp::confess("Cannot match closing tag at line ". $self->_get_line_num());
-            }
+    my $l = $self->_curr_line_ref();
 
-            return
-            {
-                name => $1,
-                line => $self->_get_line_num(),
-            };
-        }
-    );
+    if ($$l !~ m{\G</($id_regex)>}g)
+    {
+        Carp::confess("Cannot match closing tag at line ". $self->_get_line_num());
+    }
+
+    return
+    {
+        name => $1,
+        line => $self->_get_line_num(),
+    };
 }
 
 sub _parse_text
