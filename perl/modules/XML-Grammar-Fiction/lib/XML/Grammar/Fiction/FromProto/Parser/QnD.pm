@@ -162,50 +162,45 @@ sub _parse_opening_tag
 {
     my $self = shift;
 
-    # Now Lisp got nothing on us.
-    return $self->_with_curr_line(
-        sub {
-            # $l is a reference to the string of the current
-            # line
-            my $l = shift;
+    # $l is a reference to the string of the current line
 
-            my $p = pos($$l);
-            if ($$l !~ m{\G<($id_regex)}cg)
-            {
-                print "Before : " . substr($$l, 0, $p) . "\n";
-                Carp::confess("Cannot match opening tag at line " . $self->_get_line_num());
-            }
-            my $id = $1;
+    my $l = $self->_curr_line_ref();
+    my $p = pos($$l);
 
-            my @attrs;
+    if ($$l !~ m{\G<($id_regex)}cg)
+    {
+        print "Before : " . substr($$l, 0, $p) . "\n";
+        Carp::confess("Cannot match opening tag at line " . $self->_get_line_num());
+    }
+    my $id = $1;
 
-            while ($$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg)
-            {
-                push @attrs, { 'key' => $1, 'value' => $2, };
-            }
+    my @attrs;
 
-            my $is_standalone = 0;
-            if ($$l =~ m{\G\s*/\s*>}cg)
-            {
-                $is_standalone = 1;
-            }
-            elsif ($$l !~ m{\G>}g)
-            {
-                Carp::confess (
-                    "Cannot match the \">\" of the opening tag at line " 
-                        . $self->_get_line_num()
-                );
-            }
-            
-            return
-            {
-                name => $id,
-                is_standalone => $is_standalone,
-                line => $self->_get_line_num(),
-                attrs => \@attrs,
-            };
-        }
-    );
+    while ($$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg)
+    {
+        push @attrs, { 'key' => $1, 'value' => $2, };
+    }
+
+    my $is_standalone = 0;
+    if ($$l =~ m{\G\s*/\s*>}cg)
+    {
+        $is_standalone = 1;
+    }
+    elsif ($$l !~ m{\G>}g)
+    {
+        Carp::confess (
+            "Cannot match the \">\" of the opening tag at line " 
+                . $self->_get_line_num()
+        );
+    }
+    
+    return
+    {
+        name => $id,
+        is_standalone => $is_standalone,
+        line => $self->_get_line_num(),
+        attrs => \@attrs,
+    };
 }
 
 sub _get_line_num
