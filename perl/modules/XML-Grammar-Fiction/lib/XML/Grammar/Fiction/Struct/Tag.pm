@@ -23,6 +23,8 @@ our $VERSION = '0.0.1';
 
 has 'name' => (is => "rw", isa => "Str");
 has 'line' => (is => "rw", isa => "Int");
+has 'is_standalone' => (is => "rw", isa => "Bool");
+has 'attrs' => (is => "rw", isa => "ArrayRef");
 
 =head1 METHODS
 
@@ -33,6 +35,14 @@ The tag's name.
 =head2 $self->line()
 
 The tag's line number.
+
+=head2 $self->is_standalone()
+
+Determines whether it's a standalone tag or not. (if it's an opening tag).
+
+=head2 $self->attrs()
+
+The attributes of the opening tag in an array.
 
 =head1 AUTHOR
 
