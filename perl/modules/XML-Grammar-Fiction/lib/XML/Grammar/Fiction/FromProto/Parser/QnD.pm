@@ -289,6 +289,37 @@ sub _parse_inner_tag
     return $self->_create_elem($open);
 }
 
+sub _find_next_inner_text
+{
+    my $self = shift;
+
+    my $which_tag;
+    my $text = "";
+
+    my $l = $self->_curr_line_ref();
+
+    # Apparently, perl does not always returns true in this
+    # case, so we need the defined($1) ? $1 : "" workaround.
+    $$l =~ m{\G([^\<\[\]\&]*)}cgms;
+
+    $text .= (defined($1) ? $1 : "");
+
+    if ($$l =~ m{\G\&})
+    {
+        $which_tag = "entity";
+    }                
+    elsif ($$l =~ m{\G(?:</|\])})
+    {
+        $which_tag = "close";
+    }
+    elsif ($$l =~ m{\G<})
+    {
+        $which_tag = "open_tag";
+    }
+
+    return ($which_tag, $text);
+}
+
 sub _parse_inner_text
 {
     my $self = shift;
@@ -302,32 +333,9 @@ sub _parse_inner_text
     CONTENTS_LOOP:
     while ($self->_curr_line() ne "\n")
     {
-        my $which_tag;
-        # We need this to avoid appending the rest of the first line 
-        $self->_with_curr_line(
-            sub {
-                my $l = shift;
-                
-                # Apparently, perl does not always returns true in this
-                # case, so we need the defined($1) ? $1 : "" workaround.
-                $$l =~ m{\G([^\<\[\]\&]*)}cgms;
+        my ($which_tag, $text_to_append) = $self->_find_next_inner_text();
 
-                $curr_text .= (defined($1) ? $1 : "");
-
-                if ($$l =~ m{\G\&})
-                {
-                    $which_tag = "entity";
-                }                
-                elsif ($$l =~ m{\G(?:</|\])})
-                {
-                    $which_tag = "close";
-                }
-                elsif ($$l =~ m{\G<})
-                {
-                    $which_tag = "open_tag";
-                }
-            }
-        );
+        $curr_text .= $text_to_append;
 
         push @contents, $curr_text;
 
