@@ -25,6 +25,7 @@ META.yml # Will be created by "make dist"
 README
 rejects/lib/XML/Grammar/Fiction/FromProto/Parser/PRD.pm
 rejects/proto-text-to-xml.t
+rejects/QnD.pm
 t/00-load.t
 t/app-to-html.t
 t/boilerplate.t
