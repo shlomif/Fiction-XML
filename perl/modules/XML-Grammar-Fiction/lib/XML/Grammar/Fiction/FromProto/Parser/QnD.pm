@@ -12,6 +12,7 @@ has "_lines" => (isa => "ArrayRef", is => "rw");
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
+use XML::Grammar::Fiction::Struct::Tag;
 use XML::Grammar::Fiction::Err;
 
 =head1 NAME
@@ -681,13 +682,6 @@ Copyright 2007 Shlomi Fish, all rights reserved.
 This program is released under the following license: MIT X11.
 
 =cut
-
-package XML::Grammar::Fiction::Struct::Tag;
-
-use Moose;
-
-has 'name' => (is => "rw", isa => "Str");
-has 'line' => (is => "rw", isa => "Int");
 
 1;
 
