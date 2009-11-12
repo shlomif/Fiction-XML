@@ -269,7 +269,7 @@ sub _parse_inner_tag
 
     my $open = $self->_parse_opening_tag();
 
-    if ($open->{is_standalone})
+    if ($open->is_standalone())
     {
         $self->_skip_space();
 
