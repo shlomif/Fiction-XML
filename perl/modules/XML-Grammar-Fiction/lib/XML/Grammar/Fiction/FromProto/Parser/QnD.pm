@@ -520,13 +520,22 @@ sub _curr_line_matches
     return ($$l =~ $re);
 }
 
+sub _line_starts_with
+{
+    my ($self, $re) = @_;
+
+    my $l = $self->_curr_line_ref();
+
+    return $$l =~ m{\G$re}cg;
+}
+
 sub _parse_top_level_tag
 {
     my $self = shift;
 
     $self->_skip_space();
 
-    if ($self->_with_curr_line(sub { my $l = shift; return $$l =~ m{\G<!--}cg}))
+    if ($self->_line_starts_with(qr{<!--}))
     {
         my $text = $self->_consume_up_to(qr{-->});
 
