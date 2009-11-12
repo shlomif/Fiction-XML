@@ -45,7 +45,7 @@ sub _with_curr_line
 {
     my ($self, $sub_ref) = @_;
 
-    return $sub_ref->(\($self->_lines()->[$self->_curr_line_idx()]));
+    return $sub_ref->( $self->_curr_line_ref() );
 }
 
 sub _next_line_ref
