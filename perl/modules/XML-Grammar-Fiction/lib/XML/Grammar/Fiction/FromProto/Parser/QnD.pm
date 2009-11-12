@@ -12,6 +12,8 @@ has "_lines" => (isa => "ArrayRef", is => "rw");
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
+use XML::Grammar::Fiction::Err;
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::QnD - Quick and Dirty parser
@@ -556,11 +558,19 @@ sub _parse_top_level_tag
 
     if ($open->{name} ne $close->{name})
     {
-        Carp::confess("Tags do not match: " 
-            . "$open->{name} on line $open->{line} "
-            . "and $close->{name} on line $close->{line}"
+        XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
+            error => "Tags do not match",
+            opening_tag => XML::Grammar::Fiction::Struct::Tag->new(
+                name => $open->{name},
+                line => $open->{line},
+            ),
+            closing_tag => XML::Grammar::Fiction::Struct::Tag->new(
+                name => $close->{name},
+                line => $close->{line},
+            ),
         );
     }
+
     return $self->_create_elem($open, $inside);
 }
 
@@ -671,6 +681,13 @@ Copyright 2007 Shlomi Fish, all rights reserved.
 This program is released under the following license: MIT X11.
 
 =cut
+
+package XML::Grammar::Fiction::Struct::Tag;
+
+use Moose;
+
+has 'name' => (is => "rw", isa => "Str");
+has 'line' => (is => "rw", isa => "Int");
 
 1;
 

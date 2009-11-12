@@ -3,11 +3,11 @@
 use strict;
 use warnings;
 
-use Test::More;
-
-use Test::More tests => 1;
+use Test::More tests => 4;
 
 use XML::LibXML;
+
+use Exception::Class;
 
 use XML::Grammar::Fiction::FromProto;
 use XML::Grammar::Fiction::FromProto::Parser::QnD;
@@ -39,11 +39,32 @@ my $got_xml = $grammar->convert(
 );
 };
 
-my $err = $@;
+my $err = Exception::Class->caught(
+    "XML::Grammar::Fiction::Err::Parse::TagsMismatch"
+);
 
 # TEST
-like ($err, qr{Tags do not match: start on line 1 and wrong-finish-tag},
-   "Tried to put an inner-desc inside an addressing "
+ok ($err, "TagsMismatch was caught");
+
+# TEST
+like(
+    $err->error(),
+    qr{\ATags do not match},
+    "Text is OK."
+);
+
+# TEST
+is(
+    $err->opening_tag()->name(),
+    "start",
+    "Opening tag-name is OK.",
+);
+
+# TEST
+is(
+    $err->opening_tag()->line(),
+    1,
+    "Opening line is OK.",
 );
 
 1;
