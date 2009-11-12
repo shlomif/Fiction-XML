@@ -12,20 +12,6 @@ use Exception::Class;
 use XML::Grammar::Fiction::FromProto;
 use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path;
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>
-    }
-    close($in);
-    return $contents;
-}
-
 my $grammar = XML::Grammar::Fiction::FromProto->new({});
 
 eval {
