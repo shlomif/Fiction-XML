@@ -14,57 +14,58 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
 my $grammar = XML::Grammar::Fiction::FromProto->new({});
 
-eval {
-my $got_xml = $grammar->convert(
-    {
-        source =>
+{
+    eval {
+    my $got_xml = $grammar->convert(
         {
-            file => "t/data/proto-text-invalid/inner-desc-inside-char-addressing.txt",
-        },
-    }
-);
-};
+            source =>
+            {
+                file => "t/data/proto-text-invalid/inner-desc-inside-char-addressing.txt",
+            },
+        }
+    );
+    };
 
-my $err = Exception::Class->caught(
-    "XML::Grammar::Fiction::Err::Parse::TagsMismatch"
-);
+    my $err = Exception::Class->caught(
+        "XML::Grammar::Fiction::Err::Parse::TagsMismatch"
+    );
 
-# TEST
-ok ($err, "TagsMismatch was caught");
+    # TEST
+    ok ($err, "TagsMismatch was caught");
 
-# TEST
-like(
-    $err->error(),
-    qr{\ATags do not match},
-    "Text is OK."
-);
+    # TEST
+    like(
+        $err->error(),
+        qr{\ATags do not match},
+        "Text is OK."
+    );
 
-# TEST
-is(
-    $err->opening_tag()->name(),
-    "start",
-    "Opening tag-name is OK.",
-);
+    # TEST
+    is(
+        $err->opening_tag()->name(),
+        "start",
+        "Opening tag-name is OK.",
+    );
 
-# TEST
-is(
-    $err->opening_tag()->line(),
-    1,
-    "Opening line is OK.",
-);
+    # TEST
+    is(
+        $err->opening_tag()->line(),
+        1,
+        "Opening line is OK.",
+    );
 
-# TEST
-is(
-    $err->closing_tag()->name(),
-    "wrong-finish-tag",
-    "Opening tag-name is OK.",
-);
+    # TEST
+    is(
+        $err->closing_tag()->name(),
+        "wrong-finish-tag",
+        "Opening tag-name is OK.",
+    );
 
-# TEST
-is(
-    $err->closing_tag()->line(),
-    3,
-    "Opening line is OK.",
-);
-
+    # TEST
+    is(
+        $err->closing_tag()->line(),
+        3,
+        "Opening line is OK.",
+    );
+}
 1;
