@@ -170,6 +170,22 @@ sub _new_text
     );
 }
 
+sub _parse_opening_tag_attrs
+{
+    my $self = shift;
+
+    my $l = $self->_curr_line_ref();
+
+    my @attrs;
+
+    while (my ($name, $val) = $$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg)
+    {
+        push @attrs, { 'key' => $name, 'value' => $val, };
+    }
+
+    return \@attrs;
+}
+
 sub _parse_opening_tag
 {
     my $self = shift;
@@ -183,12 +199,7 @@ sub _parse_opening_tag
     }
     my $id = $1;
 
-    my @attrs;
-
-    while ($$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg)
-    {
-        push @attrs, { 'key' => $1, 'value' => $2, };
-    }
+    my $attrs = $self->_parse_opening_tag_attrs();
 
     my $is_standalone = 0;
     if ($$l =~ m{\G\s*/\s*>}cg)
@@ -207,7 +218,7 @@ sub _parse_opening_tag
         name => $id,
         is_standalone => $is_standalone,
         line => $self->_get_line_num(),
-        attrs => \@attrs,
+        attrs => $attrs,
     );
 }
 
