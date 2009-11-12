@@ -262,48 +262,6 @@ sub _consume_paragraph
     return $self->_parse_inner_text();
 }
 
-sub _parse_inner_desc
-{
-    my $self = shift;
-
-    my $start_line = $self->_curr_line_idx();
-
-    # Skip the [
-    $self->_with_curr_line(
-        sub {
-            my $l = shift;
-
-            $$l =~ m{\G\[}g;
-        }
-    );
-
-    my $inside = $self->_parse_inner_text();
-
-    $self->_with_curr_line(
-        sub {
-            my $l = shift;
-
-            if ($$l !~ m{\G\]}g)
-            {
-                Carp::confess (
-                      "Inner description that started on line "
-                      . ($start_line+1) 
-                      . " did not terminate with a \"]\"!"
-                );
-            }
-        }
-    );
-
-    return
-        $self->_new_node(
-            {
-                t => "InnerDesc",
-                start => $start_line,
-                children => $self->_new_list($inside),
-            }
-        );
-}
-
 sub _parse_inner_tag
 {
     my $self = shift;
@@ -356,11 +314,7 @@ sub _parse_inner_text
 
                 $curr_text .= (defined($1) ? $1 : "");
 
-                if ($$l =~ m{\G\[})
-                {
-                    $which_tag = "open_desc";
-                }
-                elsif ($$l =~ m{\G\&})
+                if ($$l =~ m{\G\&})
                 {
                     $which_tag = "entity";
                 }                
@@ -385,13 +339,10 @@ sub _parse_inner_text
         }
         else
         {
-            if (($which_tag eq "open_desc") || ($which_tag eq "open_tag"))
+            if ($which_tag eq "open_tag")
             {
-                push @contents, 
-                    (($which_tag eq "open_tag")
-                        ? $self->_parse_inner_tag()
-                        : $self->_parse_inner_desc()
-                    );
+                push @contents, $self->_parse_inner_tag();
+
                 # Avoid skipping to the next line.
                 # Gotta love teh Perl!
                 redo CONTENTS_LOOP;
