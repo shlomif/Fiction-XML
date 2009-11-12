@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 6;
 
 use XML::LibXML;
 
@@ -64,6 +64,20 @@ is(
 is(
     $err->opening_tag()->line(),
     1,
+    "Opening line is OK.",
+);
+
+# TEST
+is(
+    $err->closing_tag()->name(),
+    "wrong-finish-tag",
+    "Opening tag-name is OK.",
+);
+
+# TEST
+is(
+    $err->closing_tag()->line(),
+    3,
     "Opening line is OK.",
 );
 
