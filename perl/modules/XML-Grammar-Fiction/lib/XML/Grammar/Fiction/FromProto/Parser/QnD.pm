@@ -118,9 +118,9 @@ sub _create_elem
         $self->_new_node(
             {
                 t => "Element",
-                name => $open->{name},
+                name => $open->name(),
                 children => $children,
-                attrs => $open->{attrs},
+                attrs => $open->attrs(),
             }
         );
 }
