@@ -25,6 +25,7 @@ my $builder = XML::Grammar::Builder->new(
     {
         'Carp' => 0,
         'Data::Dumper' => 0,
+        'Exception::Class' => 0,
         'Getopt::Long' => 0,
         'HTML::Entities' => 0,
         'List::Util' => 0,
