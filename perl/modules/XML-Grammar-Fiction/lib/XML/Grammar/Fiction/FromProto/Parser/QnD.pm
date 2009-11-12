@@ -203,13 +203,12 @@ sub _parse_opening_tag
         );
     }
     
-    return
-    {
+    return XML::Grammar::Fiction::Struct::Tag->new(
         name => $id,
         is_standalone => $is_standalone,
         line => $self->_get_line_num(),
         attrs => \@attrs,
-    };
+    );
 }
 
 sub _get_line_num
@@ -230,11 +229,10 @@ sub _parse_closing_tag
         Carp::confess("Cannot match closing tag at line ". $self->_get_line_num());
     }
 
-    return
-    {
+    return XML::Grammar::Fiction::Struct::Tag->new(
         name => $1,
         line => $self->_get_line_num(),
-    };
+    )
 }
 
 sub _parse_text
@@ -557,18 +555,12 @@ sub _parse_top_level_tag
 
     $self->_skip_space();
 
-    if ($open->{name} ne $close->{name})
+    if ($open->name() ne $close->name())
     {
         XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
             error => "Tags do not match",
-            opening_tag => XML::Grammar::Fiction::Struct::Tag->new(
-                name => $open->{name},
-                line => $open->{line},
-            ),
-            closing_tag => XML::Grammar::Fiction::Struct::Tag->new(
-                name => $close->{name},
-                line => $close->{line},
-            ),
+            opening_tag => $open,
+            closing_tag => $close,
         );
     }
 
