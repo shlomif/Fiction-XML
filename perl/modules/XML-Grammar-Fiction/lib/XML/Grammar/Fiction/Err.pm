@@ -38,6 +38,10 @@ use Exception::Class
         {
             isa => "XML::Grammar::Fiction::Err::Parse::LineError",
         },
+        "XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax" =>
+        {
+            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+        },
     )
     ;
 1;
