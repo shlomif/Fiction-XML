@@ -194,8 +194,11 @@ sub _parse_opening_tag
 
     if ($$l !~ m{\G<($id_regex)}cg)
     {
-        print "Before : " . substr($$l, 0, $p) . "\n";
-        Carp::confess("Cannot match opening tag at line " . $self->_get_line_num());
+        # print "Before : " . substr($$l, 0, $p) . "\n";
+        XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag->throw(
+            error => "Cannot match opening tag.",
+            'line' => $self->_get_line_num(),
+        );
     }
     my $id = $1;
 

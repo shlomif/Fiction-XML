@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More tests => 8;
 
 use XML::LibXML;
 
@@ -12,9 +12,9 @@ use Exception::Class;
 use XML::Grammar::Fiction::FromProto;
 use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
-my $grammar = XML::Grammar::Fiction::FromProto->new({});
 
 {
+    my $grammar = XML::Grammar::Fiction::FromProto->new({});
     eval {
     my $got_xml = $grammar->convert(
         {
@@ -68,4 +68,36 @@ my $grammar = XML::Grammar::Fiction::FromProto->new({});
         "Opening line is OK.",
     );
 }
+
+{
+    my $grammar = XML::Grammar::Fiction::FromProto->new({});
+
+    my $got_xml;
+
+    eval {
+        $got_xml = $grammar->convert(
+        {
+            source =>
+            {
+                file => "t/data/proto-text-invalid/not-start-with-tag.txt",
+            },
+        }
+    );
+    };
+
+    my $err = Exception::Class->caught(
+        "XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag"
+    );
+
+    # TEST
+    ok ($err, "CannotMatchOpeningTag was caught");
+
+    # TEST
+    like(
+        $err->error(),
+        qr{\ACannot match opening tag.},
+        "Text is OK."
+    );
+}
+
 1;
