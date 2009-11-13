@@ -30,6 +30,12 @@ use Exception::Class
             isa => "XML::Grammar::Fiction::Err::Base",
             fields => [qw(line)],
         },
+        # TODO : Merge with XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag
+        "XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket" =>
+        {
+            isa => "XML::Grammar::Fiction::Err::Base",
+            fields => [qw(line)],
+        }
     )
     ;
 1;
