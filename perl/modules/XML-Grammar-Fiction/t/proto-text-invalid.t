@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More tests => 11;
 
 use XML::LibXML;
 
@@ -99,5 +99,47 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         "Text is OK."
     );
 }
+
+
+{
+    my $grammar = XML::Grammar::Fiction::FromProto->new({});
+
+    my $got_xml;
+
+    eval {
+        $got_xml = $grammar->convert(
+        {
+            source =>
+            {
+                file => "t/data/proto-text-invalid/no-right-angle.txt",
+            },
+        }
+    );
+    };
+
+    my $err_proto = $@;
+
+    my $err = Exception::Class->caught(
+        "XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket"
+    );
+
+    # TEST
+    ok ($err, "NoRightAngleBracket was matched.");
+
+    # TEST
+    like(
+        $err->error(),
+        qr{\ACannot match the \">\" of the opening tag},
+        "Text is OK."
+    );
+
+    # TEST
+    is (
+        $err->line(),
+        1,
+        "Line is 1 as expected."
+    );
+}
+
 
 1;

@@ -211,9 +211,9 @@ sub _parse_opening_tag
     }
     elsif ($$l !~ m{\G>}g)
     {
-        Carp::confess (
-            "Cannot match the \">\" of the opening tag at line " 
-                . $self->_get_line_num()
+        XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket->throw(
+            error => "Cannot match the \">\" of the opening tag",
+            'line' => $self->_get_line_num(),
         );
     }
     

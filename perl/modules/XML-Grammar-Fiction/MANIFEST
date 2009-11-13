@@ -34,6 +34,7 @@ t/boilerplate.t
 t/data/docbook/with-internal-description.docbook.xml
 t/data/proto-text/dialogue-with-several-paragraphs.txt
 t/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
+t/data/proto-text-invalid/no-right-angle.txt
 t/data/proto-text-invalid/not-start-with-tag.txt
 t/data/proto-text/nested-s.txt
 t/data/proto-text/scenes-with-titles.txt
