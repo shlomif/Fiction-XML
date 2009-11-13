@@ -240,7 +240,10 @@ sub _parse_closing_tag
 
     if ($$l !~ m{\G</($id_regex)>}g)
     {
-        Carp::confess("Cannot match closing tag at line ". $self->_get_line_num());
+        XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax->throw(
+            error => "Cannot match closing tag",
+            line => $self->_get_line_num(),
+        );
     }
 
     return XML::Grammar::Fiction::Struct::Tag->new(

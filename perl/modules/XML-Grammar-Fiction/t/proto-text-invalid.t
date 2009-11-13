@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 11;
+use Test::More tests => 14;
 
 use XML::LibXML;
 
@@ -141,5 +141,44 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
     );
 }
 
+{
+    my $grammar = XML::Grammar::Fiction::FromProto->new({});
+
+    my $got_xml;
+
+    eval {
+        $got_xml = $grammar->convert(
+        {
+            source =>
+            {
+                file => "t/data/proto-text-invalid/wrong-close-tag.txt",
+            },
+        }
+    );
+    };
+
+    my $err_proto = $@;
+
+    my $err = Exception::Class->caught(
+        "XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax"
+    );
+
+    # TEST
+    ok ($err, "WrongClosingTagSyntax was matched.");
+
+    # TEST
+    like(
+        $err->error(),
+        qr{\ACannot match closing tag},
+        "Cannot match closing tag."
+    );
+
+    # TEST
+    is (
+        $err->line(),
+        3,
+        "Line is 1 as expected."
+    );
+}
 
 1;
