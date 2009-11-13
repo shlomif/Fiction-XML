@@ -25,17 +25,19 @@ use Exception::Class
             isa => "XML::Grammar::Fiction::Err::Base", 
             fields => [qw(opening_tag closing_tag)],
         },
-        "XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag" =>
+        "XML::Grammar::Fiction::Err::Parse::LineError" =>
         {
             isa => "XML::Grammar::Fiction::Err::Base",
             fields => [qw(line)],
         },
-        # TODO : Merge with XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag
+        "XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag" =>
+        {
+            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+        },
         "XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket" =>
         {
-            isa => "XML::Grammar::Fiction::Err::Base",
-            fields => [qw(line)],
-        }
+            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+        },
     )
     ;
 1;
