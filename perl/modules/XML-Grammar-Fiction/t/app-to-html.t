@@ -3,8 +3,7 @@
 use strict;
 use warnings;
 
-# use Test::More tests => 1;
-use Test::More skip_all => "Not working in XML-Grammar-Fiction now";
+use Test::More tests => 1;
 use File::Spec;
 
 use Config;
@@ -27,7 +26,7 @@ use Config;
             "--",
             "-o", "temp.xhtml",
             File::Spec->catdir(File::Spec->curdir(), 
-                "t", "data", "xml", "nested-s.xml"
+                "t", "data", "xml", "sections-and-paras.xml",
             )
         ),
         "Testing App::ToHTML",
