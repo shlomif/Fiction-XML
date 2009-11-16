@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 20;
+use Test::More tests => 23;
 
 use XML::LibXML;
 
@@ -236,6 +236,46 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         $err->closing_tag()->line(),
         11,
         "Opening line is OK.",
+    );
+}
+
+{
+    my $grammar = XML::Grammar::Fiction::FromProto->new({});
+
+    my $got_xml;
+
+    eval {
+        $got_xml = $grammar->convert(
+        {
+            source =>
+            {
+                file => "t/data/proto-text-invalid/leading-space.txt",
+            },
+        }
+    );
+    };
+
+    my $err_proto = $@;
+
+    my $err = Exception::Class->caught(
+        "XML::Grammar::Fiction::Err::Parse::LeadingSpace"
+    );
+
+    # TEST
+    ok ($err, "LeadingSpace was matched.");
+
+    # TEST
+    like(
+        $err->error(),
+        qr{\ALeading space},
+        "Cannot match closing tag."
+    );
+
+    # TEST
+    is (
+        $err->line(),
+        12,
+        "Line is 1 as expected."
     );
 }
 
