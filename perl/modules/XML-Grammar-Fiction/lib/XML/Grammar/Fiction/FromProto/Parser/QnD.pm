@@ -297,11 +297,13 @@ sub _parse_inner_tag
 
     my $close = $self->_parse_closing_tag();
 
-    if ($open->{name} ne $close->{name})
+    if ($open->name() ne $close->name())
     {
-        Carp::confess("Opening and closing tags do not match: " 
-            . "$open->{name} and $close->{name} on element starting at "
-            . "line $open->{line}"
+        Carp::confess(
+            sprintf(("Opening and closing tags do not match: "
+                . "%s and %s on element starting at line %d"),
+                $open->name(), $close->name(), $open->line()
+            )
         );
     }
     return $self->_create_elem($open);
