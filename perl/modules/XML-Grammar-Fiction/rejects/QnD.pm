@@ -175,3 +175,81 @@ sub _parse_inner_tag
     return $self->_create_elem($open);
 }
 
+sub _parse_inner_text
+{
+    my $self = shift;
+
+    my @contents;
+
+    my $start_line = $self->_curr_line_idx();
+
+    my $curr_text = "";
+
+    CONTENTS_LOOP:
+    while ($self->_curr_line() ne "\n")
+    {
+        my ($which_tag, $text_to_append) = $self->_find_next_inner_text();
+
+        $curr_text .= $text_to_append;
+
+        push @contents, $curr_text;
+
+        $curr_text = "";
+
+        if (!defined($which_tag))
+        {
+            # Do nothing - a tag was not detected.
+        }
+        else
+        {
+            if ($which_tag eq "open_tag")
+            {
+                push @contents, $self->_parse_inner_tag();
+
+                # Avoid skipping to the next line.
+                # Gotta love teh Perl!
+                redo CONTENTS_LOOP;
+            }
+            elsif ($which_tag eq "close")
+            {
+                last CONTENTS_LOOP;
+            }
+            elsif ($which_tag eq "entity")
+            {
+                my $l = $self->_curr_line_ref();
+
+                if (my ($text) = ($$l =~ m{\G(\&\w+;)}g))
+                {
+                    push @contents, HTML::Entities::decode_entities($text);
+                }
+                else
+                {
+                    Carp::confess("Cannot match entity (e.g: \"&quot;\") at line " .
+                        $self->_get_line_num()
+                    );
+                }
+
+                redo CONTENTS_LOOP;
+            }
+        }
+    }
+    continue
+    {
+        if (!defined(${$self->_next_line_ref()}))
+        {
+            Carp::confess 
+            (
+                "End of file in an addressing paragraph starting at "
+                . ($start_line+1)
+            );
+        }
+    }
+
+    if (length($curr_text) > 0)
+    {
+        push @contents, $curr_text;
+    }
+
+    return \@contents;
+}
+
