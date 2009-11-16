@@ -37,6 +37,7 @@ t/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
 t/data/proto-text-invalid/no-right-angle.txt
 t/data/proto-text-invalid/not-start-with-tag.txt
 t/data/proto-text-invalid/wrong-close-tag.txt
+t/data/proto-text-invalid/wrong-closing-inner-tag.txt
 t/data/proto-text/nested-s.txt
 t/data/proto-text/scenes-with-titles.txt
 t/data/proto-text/sections-and-paras.txt
