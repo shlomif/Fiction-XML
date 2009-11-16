@@ -146,3 +146,32 @@ sub _parse_desc_unit
     });
 }
 
+sub _parse_inner_tag
+{
+    my $self = shift;
+
+    my $open = $self->_parse_opening_tag();
+
+    if ($open->is_standalone())
+    {
+        $self->_skip_space();
+
+        return $self->_create_elem($open);
+    }
+
+    my $inside = $self->_parse_inner_text();
+
+    my $close = $self->_parse_closing_tag();
+
+    if ($open->name() ne $close->name())
+    {
+        XML::Grammar::Fiction::Err::Parse::InnerTagsMismatch->throw(
+            error => "Inline tags do not match",
+            opening_tag => $open,
+            closing_tag => $close,
+        );
+    }
+
+    return $self->_create_elem($open);
+}
+

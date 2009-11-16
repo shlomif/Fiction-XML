@@ -80,7 +80,7 @@ sub _start
 {
     my $self = shift;
 
-    return $self->_parse_top_level_tag();
+    return $self->_parse_tag();
 }
 
 # Skip the whitespace.
@@ -271,44 +271,6 @@ sub _parse_text
     return $self->_new_list(\@ret);
 }
 
-sub _consume_paragraph
-{
-    my $self = shift;
-
-    $self->_skip_space();
-
-    return $self->_parse_inner_text();
-}
-
-sub _parse_inner_tag
-{
-    my $self = shift;
-
-    my $open = $self->_parse_opening_tag();
-
-    if ($open->is_standalone())
-    {
-        $self->_skip_space();
-
-        return $self->_create_elem($open);
-    }
-
-    my $inside = $self->_parse_inner_text();
-
-    my $close = $self->_parse_closing_tag();
-
-    if ($open->name() ne $close->name())
-    {
-        Carp::confess(
-            sprintf(("Opening and closing tags do not match: "
-                . "%s and %s on element starting at line %d"),
-                $open->name(), $close->name(), $open->line()
-            )
-        );
-    }
-    return $self->_create_elem($open);
-}
-
 sub _find_next_inner_text
 {
     my $self = shift;
@@ -488,7 +450,7 @@ sub _parse_text_unit
         }
         else
         {
-            return $self->_parse_top_level_tag();
+            return $self->_parse_tag();
         }
     }
     else
@@ -549,7 +511,7 @@ sub _line_starts_with
     return $$l =~ m{\G$re}cg;
 }
 
-sub _parse_top_level_tag
+sub _parse_tag
 {
     my $self = shift;
 

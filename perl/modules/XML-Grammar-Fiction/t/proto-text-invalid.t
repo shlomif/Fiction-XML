@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 14;
+use Test::More tests => 20;
 
 use XML::LibXML;
 
@@ -178,6 +178,64 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         $err->line(),
         3,
         "Line is 1 as expected."
+    );
+}
+
+{
+    my $grammar = XML::Grammar::Fiction::FromProto->new({});
+    eval {
+    my $got_xml = $grammar->convert(
+        {
+            source =>
+            {
+                file => "t/data/proto-text-invalid/wrong-closing-inner-tag.txt",
+            },
+        }
+    );
+    };
+
+    my $err_raw = $@;
+
+    my $err = Exception::Class->caught(
+        "XML::Grammar::Fiction::Err::Parse::TagsMismatch"
+    );
+
+    # TEST
+    ok ($err, "TagsMismatch was caught");
+
+    # TEST
+    like(
+        $err->error(),
+        qr{\ATags do not match},
+        "Text is OK."
+    );
+
+    # TEST
+    is(
+        $err->opening_tag()->name(),
+        "b",
+        "Opening tag-name is OK.",
+    );
+
+    # TEST
+    is(
+        $err->opening_tag()->line(),
+        11,
+        "Opening line is OK.",
+    );
+
+    # TEST
+    is(
+        $err->closing_tag()->name(),
+        "i",
+        "closing tag.",
+    );
+
+    # TEST
+    is(
+        $err->closing_tag()->line(),
+        11,
+        "Opening line is OK.",
     );
 }
 
