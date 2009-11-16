@@ -69,6 +69,19 @@ sub _next_line_ref
     return $self->_curr_line_ref();
 }
 
+sub _check_if_line_starts_with_whitespace
+{
+    my $self = shift;
+
+    if (${$self->_curr_line_ref()} =~ m{\A[ \t]})
+    {
+        XML::Grammar::Fiction::Err::Parse::LeadingSpace->throw(
+            error => "Leading space detected in the text.",
+            'line' => $self->_get_line_num(),
+        );
+    }
+}
+
 sub _init
 {
     my $self = shift;
@@ -88,7 +101,7 @@ sub _skip_space
 {
     my $self = shift;
 
-    $self->_consume(qr{\s});
+    $self->_consume(qr{[ \t]});
 }
 
 my $id_regex = '[a-zA-Z_\-]+';
@@ -309,42 +322,33 @@ sub _parse_non_tag_text_unit
 
     my $l = $self->_curr_line_ref();
 
-    if (pos($$l) < length($$l))
+    my $text = $self->_consume_up_to(qr{(?:\<|^\n?$)}ms);
+
+    $l = $self->_curr_line_ref();
+
+    my $ret_elem = $self->_new_text([$text]);
+    my $is_para_end = 0;
+
+    # Demote the cursor to before the < of the tag.
+    #
+    if (pos($$l) > 0)
     {
-        my $text = $self->_consume_up_to(qr{(?:\<|^\n?$)}ms);
-
-        $l = $self->_curr_line_ref();
-
-        my $ret_elem = $self->_new_text([$text]);
-        my $is_para_end = 0;
-
-        # Demote the cursor to before the < of the tag.
-        #
-        if (pos($$l) > 0)
-        {
-            pos($$l)--;
-            if (substr($$l, pos($$l), 1) eq "\n")
-            {
-                $is_para_end = 1;
-            }
-        }
-        else
+        pos($$l)--;
+        if (substr($$l, pos($$l), 1) eq "\n")
         {
             $is_para_end = 1;
         }
-
-        return
-        {
-            elem => $ret_elem,
-            para_end => $is_para_end,
-        };
     }
     else
     {
-        Carp::confess ("Line " . $self->_get_line_num() . 
-            " has leading whitespace."
-            );
+        $is_para_end = 1;
     }
+
+    return
+    {
+        elem => $ret_elem,
+        para_end => $is_para_end,
+    };
 }
 
 sub _parse_text_unit
@@ -485,6 +489,7 @@ sub _consume
     continue
     {
         $l = $self->_next_line_ref();
+        $self->_check_if_line_starts_with_whitespace();
     }
 
     if (defined($$l) && ($$l =~ m[\G(${match_regex}*)]cg))
@@ -518,6 +523,7 @@ sub _consume_up_to
     continue
     {
         $l = $self->_next_line_ref();
+        $self->_check_if_line_starts_with_whitespace();
     }
 
     return $return_value;

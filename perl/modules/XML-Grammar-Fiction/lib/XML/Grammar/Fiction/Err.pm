@@ -30,6 +30,10 @@ use Exception::Class
             isa => "XML::Grammar::Fiction::Err::Base",
             fields => [qw(line)],
         },
+        "XML::Grammar::Fiction::Err::Parse::LeadingSpace" =>
+        {
+            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+        },        
         "XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag" =>
         {
             isa => "XML::Grammar::Fiction::Err::Parse::LineError",
