@@ -32,7 +32,7 @@ my $got_xml = $grammar->convert(
 if (defined($output_fn))
 {
     open my $out, ">", $output_fn
-        or confess "Cannot open file \"$output_fn\" for writing!";
+        or die "Cannot open file \"$output_fn\" for writing - $!!";
     print {$out} $got_xml;
     close($out)
 }
