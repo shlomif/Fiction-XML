@@ -100,13 +100,22 @@ sub _undefize
     return defined($v) ? $v : "(undef)";
 }
 
-sub translate_to_html
+sub _calc_and_ret_dom_without_validate
 {
-    my ($self, $args) = @_;
+    my $self = shift;
+    my $args = shift;
 
-    my $source_dom =
+    return
         $self->_xml_parser()->parse_file($args->{source}->{file})
         ;
+}
+
+sub _get_dom_from_source
+{
+    my $self = shift;
+    my $args = shift;
+  
+    my $source_dom = $self->_calc_and_ret_dom_without_validate($args);
 
     my $ret_code;
 
@@ -125,6 +134,15 @@ sub translate_to_html
             . _undefize($ret_code) . " ; $@]"
             ;
     }
+
+    return $source_dom;
+}
+
+sub translate_to_html
+{
+    my ($self, $args) = @_;
+
+    my $source_dom = $self->_get_dom_from_source($args);
 
     my $stylesheet = $self->_stylesheet();
 
