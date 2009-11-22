@@ -148,13 +148,13 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
     eval {
         $got_xml = $grammar->convert(
-        {
-            source =>
             {
-                file => "t/data/proto-text-invalid/wrong-close-tag.txt",
-            },
-        }
-    );
+                source =>
+                {
+                    file => "t/data/proto-text-invalid/wrong-close-tag.txt",
+                },
+            }
+        );
     };
 
     my $err_proto = $@;
