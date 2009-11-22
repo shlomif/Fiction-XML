@@ -82,10 +82,23 @@ sub _init
     return 0;
 }
 
-=head2 $converter->translate_to_html({source => {file => $filename}, output => "string" })
+=head2 translate_to_html
 
-Does the actual conversion. $filename is the filename to translate (currently
-the only available source). 
+=over 4
+
+=item * my $xhtml_source = $converter->translate_to_html({source => {file => $filename}, output => "string" })
+
+=item * my $xhtml_source = $converter->translate_to_html({source => {string_ref => \$buffer}, output => "string" })
+
+=item * my $xhtml_dom = $converter->translate_to_html({source => {file => $filename}, output => "xml" })
+
+=back
+
+Does the actual conversion. The C<'source'> argument points to a hash-ref with
+keys and values for the source. If C<'file'> is specified there it points to the
+filename to translate (currently the only available source). If 
+C<'string_ref'> is specified it points to a reference to a string, with the
+contents of the source XML.
 
 The C<'output'> key specifies the return value. A value of C<'string'> returns 
 the XML as a string, and a value of C<'xml'> returns the XML as an 
@@ -105,8 +118,12 @@ sub _calc_and_ret_dom_without_validate
     my $self = shift;
     my $args = shift;
 
+    my $source = $args->{source};
+
     return
-        $self->_xml_parser()->parse_file($args->{source}->{file})
+        exists($source->{'string_ref'})
+            ? $self->_xml_parser()->parse_string(${$source->{'string_ref'}}) 
+            : $self->_xml_parser()->parse_file($source->{'file'})
         ;
 }
 
