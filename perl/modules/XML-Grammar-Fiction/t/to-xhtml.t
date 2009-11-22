@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 30;
+use Test::More tests => 32;
 
 use File::Spec;
 
@@ -71,12 +71,29 @@ foreach my $fn (@tests)
 
         my $format_hash = $converters{$format_id};
         my $m = $format_hash->{method};
+
+        my $xml_fn = "t/data/xml/$fn.xml";
+
         my $text = $format_hash->{'obj'}->$m(
             {
-                source => { file => "t/data/xml/$fn.xml", },
+                source => { file => $xml_fn, },
                 output => "string",
             }
         );
+        if ($format_id eq "xhtml")
+        {
+            my $file_contents = load_xml($xml_fn);
+            my $from_string_text =
+                $format_hash->{'obj'}->$m(
+                {
+                    source => { string_ref => \$file_contents, },
+                    output => "string",
+                }
+            );
+
+            # TEST*$num_texts
+            is ($from_string_text, $text, "From-string-ref text is OK.")
+        }
         my $parser = XML::LibXML->new();
 
         $parser->load_ext_dtd(0);
