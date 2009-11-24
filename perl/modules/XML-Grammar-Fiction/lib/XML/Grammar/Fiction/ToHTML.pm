@@ -90,7 +90,9 @@ sub _init
 
 =item * my $xhtml_source = $converter->translate_to_html({source => {string_ref => \$buffer}, output => "string" })
 
-=item * my $xhtml_dom = $converter->translate_to_html({source => {file => $filename}, output => "xml" })
+=item * my $xhtml_dom = $converter->translate_to_html({source => {file => $filename}, output => "dom" })
+
+=item * my $xhtml_dom = $converter->translate_to_html({source => {dom => $libxml_dom}, output => "dom" })
 
 =back
 
@@ -98,10 +100,11 @@ Does the actual conversion. The C<'source'> argument points to a hash-ref with
 keys and values for the source. If C<'file'> is specified there it points to the
 filename to translate (currently the only available source). If 
 C<'string_ref'> is specified it points to a reference to a string, with the
-contents of the source XML.
+contents of the source XML. If C<'dom'> is specified then it points to an XML
+DOM as parsed or constructed by XML::LibXML.
 
 The C<'output'> key specifies the return value. A value of C<'string'> returns 
-the XML as a string, and a value of C<'xml'> returns the XML as an 
+the XML as a string, and a value of C<'dom'> returns the XML as an 
 L<XML::LibXML> DOM object.
 
 =cut
@@ -121,9 +124,11 @@ sub _calc_and_ret_dom_without_validate
     my $source = $args->{source};
 
     return
-        exists($source->{'string_ref'})
-            ? $self->_xml_parser()->parse_string(${$source->{'string_ref'}}) 
-            : $self->_xml_parser()->parse_file($source->{'file'})
+          exists($source->{'dom'})
+        ? $source->{'dom'}
+        : exists($source->{'string_ref'})
+        ? $self->_xml_parser()->parse_string(${$source->{'string_ref'}}) 
+        : $self->_xml_parser()->parse_file($source->{'file'})
         ;
 }
 
@@ -171,7 +176,7 @@ sub translate_to_html
     {
         return $stylesheet->output_string($results);
     }
-    elsif ($medium eq "xml")
+    elsif ($medium eq "dom")
     {
         return $results;
     }
