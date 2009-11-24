@@ -4,13 +4,6 @@ use strict;
 use warnings;
 
 use Carp;
-use File::Spec;
-
-use XML::LibXSLT;
-
-
-use XML::LibXML;
-use XML::LibXSLT;
 
 use Moose;
 

@@ -4,23 +4,10 @@ use strict;
 use warnings;
 
 use Carp;
-use File::Spec;
-
-use XML::LibXSLT;
-
-use XML::Grammar::Fiction::ConfigData;
-
-use XML::LibXML;
-use XML::LibXSLT;
-
-use base 'XML::Grammar::Fiction::Base';
 
 use Moose;
 
-
-has '_data_dir' => (isa => 'Str', is => 'rw');
-has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
-has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
+extends ("XML::Grammar::Fiction::RendererBase");
 
 =head1 NAME
 
@@ -46,38 +33,44 @@ Internal - (to settle pod-coverage.).
 
 =cut
 
-sub _init
+sub _get_relaxng_base_path
 {
-    my ($self, $args) = @_;
+    my $self = shift;
 
-    my $data_dir = $args->{'data_dir'} ||
-        XML::Grammar::Fiction::ConfigData->config('extradata_install_path')->[0];
-
-    $self->_data_dir($data_dir);
-
-    $self->_xml_parser(XML::LibXML->new());
-
-    my $xslt = XML::LibXSLT->new();
-
-    my $style_doc = $self->_xml_parser()->parse_file(
-            File::Spec->catfile(
-                $self->_data_dir(), 
-                "fiction-xml-to-docbook.xslt"
-            ),
-        );
-
-    $self->_stylesheet($xslt->parse_stylesheet($style_doc));
-
-    return 0;
+    return "fiction-xml.rng";
 }
 
-=head2 $converter->translate_to_docbook({source => {file => $filename}, output => "string" })
 
-Does the actual conversion. $filename is the filename to translate (currently
-the only available source). 
+sub _get_xslt_base_path
+{
+    my $self = shift;
+
+    return "fiction-xml-to-docbook.xslt";
+}
+
+=head2 translate_to_docbook
+
+=over 4
+
+=item * my $xhtml_source = $converter->translate_to_docbook({source => {file => $filename}, output => "string" })
+
+=item * my $xhtml_source = $converter->translate_to_docbook({source => {string_ref => \$buffer}, output => "string" })
+
+=item * my $xhtml_dom = $converter->translate_to_docbook({source => {file => $filename}, output => "dom" })
+
+=item * my $xhtml_dom = $converter->translate_to_docbook({source => {dom => $libxml_dom}, output => "dom" })
+
+=back
+
+Does the actual conversion. The C<'source'> argument points to a hash-ref with
+keys and values for the source. If C<'file'> is specified there it points to the
+filename to translate (currently the only available source). If 
+C<'string_ref'> is specified it points to a reference to a string, with the
+contents of the source XML. If C<'dom'> is specified then it points to an XML
+DOM as parsed or constructed by XML::LibXML.
 
 The C<'output'> key specifies the return value. A value of C<'string'> returns 
-the XML as a string, and a value of C<'xml'> returns the XML as an 
+the XML as a string, and a value of C<'dom'> returns the XML as an 
 L<XML::LibXML> DOM object.
 
 =cut
@@ -86,28 +79,7 @@ sub translate_to_docbook
 {
     my ($self, $args) = @_;
 
-    my $source_dom =
-        $self->_xml_parser()->parse_file($args->{source}->{file})
-        ;
-
-    my $stylesheet = $self->_stylesheet();
-
-    my $results = $stylesheet->transform($source_dom);
-
-    my $medium = $args->{output};
-
-    if ($medium eq "string")
-    {
-        return $stylesheet->output_string($results);
-    }
-    elsif ($medium eq "xml")
-    {
-        return $results;
-    }
-    else
-    {
-        confess "Unknown medium";
-    }
+    return $self->generic_translate($args);
 }
 
 =head1 AUTHOR
