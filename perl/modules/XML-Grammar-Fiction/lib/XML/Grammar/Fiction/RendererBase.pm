@@ -98,17 +98,17 @@ sub _init
     return 0;
 }
 
-=head2 translate_to_html
+=head2 generic_translate
 
 =over 4
 
-=item * my $xhtml_source = $converter->translate_to_html({source => {file => $filename}, output => "string" })
+=item * my $final_source = $converter->generic_translate({source => {file => $filename}, output => "string" })
 
-=item * my $xhtml_source = $converter->translate_to_html({source => {string_ref => \$buffer}, output => "string" })
+=item * my $final_source = $converter->generic_translate({source => {string_ref => \$buffer}, output => "string" })
 
-=item * my $xhtml_dom = $converter->translate_to_html({source => {file => $filename}, output => "dom" })
+=item * my $final_dom = $converter->generic_translate({source => {file => $filename}, output => "dom" })
 
-=item * my $xhtml_dom = $converter->translate_to_html({source => {dom => $libxml_dom}, output => "dom" })
+=item * my $final_dom = $converter->generic_translate({source => {dom => $libxml_dom}, output => "dom" })
 
 =back
 
@@ -176,7 +176,7 @@ sub _get_dom_from_source
     return $source_dom;
 }
 
-sub translate_to_html
+sub generic_translate
 {
     my ($self, $args) = @_;
 
