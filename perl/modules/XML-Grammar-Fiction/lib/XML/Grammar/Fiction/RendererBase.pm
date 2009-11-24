@@ -1,4 +1,4 @@
-package XML::Grammar::Fiction::ToHTML;
+package XML::Grammar::Fiction::RendererBase;
 
 use strict;
 use warnings;
@@ -8,17 +8,24 @@ use File::Spec;
 
 use XML::LibXSLT;
 
+use XML::Grammar::Fiction::ConfigData;
 
 use XML::LibXML;
 use XML::LibXSLT;
 
+use base 'XML::Grammar::Fiction::Base';
+
 use Moose;
 
-extends ("XML::Grammar::Fiction::RendererBase");
+has '_data_dir' => (isa => 'Str', is => 'rw');
+has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
+has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
+has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
 
 =head1 NAME
 
-XML::Grammar::Fiction::ToHTML - module that converts the Fiction-XML to HTML.
+XML::Grammar::Fiction::RendererBase - base module for Fiction-XML-to-something
+renderers
 
 =head1 VERSION
 
@@ -39,19 +46,56 @@ Internal - (to settle pod-coverage.).
 
 =cut
 
-sub _get_relaxng_base_path
+sub _get_default_data_dir
 {
     my $self = shift;
 
-    return "fiction-xml.rng";
+    return XML::Grammar::Fiction::ConfigData->config('extradata_install_path')->[0];
 }
 
-
-sub _get_xslt_base_path
+sub _get_rng_schema
 {
     my $self = shift;
 
-    return "fiction-xml-to-html.xslt";
+    return
+        XML::LibXML::RelaxNG->new(
+            location =>
+            File::Spec->catfile(
+                $self->_data_dir(), 
+                $self->_get_relaxng_base_path(),
+            ),
+        );
+}
+
+sub _get_stylesheet
+{
+    my $self = shift;
+
+    my $xslt = XML::LibXSLT->new();
+
+    my $style_doc = $self->_xml_parser()->parse_file(
+            File::Spec->catfile(
+                $self->_data_dir(), 
+                $self->_get_xslt_base_path(),
+            ),
+        );
+
+    return $xslt->parse_stylesheet($style_doc);
+}
+
+sub _init
+{
+    my ($self, $args) = @_;
+
+    $self->_data_dir($args->{'data_dir'} || $self->_get_default_data_dir());
+
+    $self->_rng($self->_get_rng_schema());
+
+    $self->_xml_parser(XML::LibXML->new());
+
+    $self->_stylesheet($self->_get_stylesheet());
+
+    return 0;
 }
 
 =head2 translate_to_html
