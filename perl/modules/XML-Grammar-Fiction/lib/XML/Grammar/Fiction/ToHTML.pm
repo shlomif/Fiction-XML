@@ -81,81 +81,11 @@ L<XML::LibXML> DOM object.
 
 =cut
 
-sub _undefize
-{
-    my $v = shift;
-
-    return defined($v) ? $v : "(undef)";
-}
-
-sub _calc_and_ret_dom_without_validate
-{
-    my $self = shift;
-    my $args = shift;
-
-    my $source = $args->{source};
-
-    return
-          exists($source->{'dom'})
-        ? $source->{'dom'}
-        : exists($source->{'string_ref'})
-        ? $self->_xml_parser()->parse_string(${$source->{'string_ref'}}) 
-        : $self->_xml_parser()->parse_file($source->{'file'})
-        ;
-}
-
-sub _get_dom_from_source
-{
-    my $self = shift;
-    my $args = shift;
-  
-    my $source_dom = $self->_calc_and_ret_dom_without_validate($args);
-
-    my $ret_code;
-
-    eval
-    {
-        $ret_code = $self->_rng()->validate($source_dom);
-    };
-
-    if (defined($ret_code) && ($ret_code == 0))
-    {
-        # It's OK.
-    }
-    else
-    {
-        confess "RelaxNG validation failed [\$ret_code == "
-            . _undefize($ret_code) . " ; $@]"
-            ;
-    }
-
-    return $source_dom;
-}
-
 sub translate_to_html
 {
     my ($self, $args) = @_;
 
-    my $source_dom = $self->_get_dom_from_source($args);
-
-    my $stylesheet = $self->_stylesheet();
-
-    my $results = $stylesheet->transform($source_dom);
-
-    my $medium = $args->{output};
-
-    if ($medium eq "string")
-    {
-        return $stylesheet->output_string($results);
-    }
-    elsif ($medium eq "dom")
-    {
-        return $results;
-    }
-    else
-    {
-        confess "Unknown medium";
-    }
+    return $self->generic_translate($args);
 }
 
 =head1 AUTHOR
