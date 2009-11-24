@@ -7,7 +7,7 @@ use Carp;
 
 use Moose;
 
-extends ("XML::Grammar::Fiction::RendererBase");
+extends ("XML::Grammar::Fiction::RNG_Renderer");
 
 =head1 NAME
 
@@ -32,14 +32,6 @@ at that point.
 Internal - (to settle pod-coverage.).
 
 =cut
-
-sub _get_relaxng_base_path
-{
-    my $self = shift;
-
-    return "fiction-xml.rng";
-}
-
 
 sub _get_xslt_base_path
 {

@@ -19,6 +19,7 @@ lib/XML/Grammar/Fiction/FromProto/Parser/QnD.pm
 lib/XML/Grammar/Fiction/FromProto.pm
 lib/XML/Grammar/Fiction.pm
 lib/XML/Grammar/Fiction/RendererBase.pm
+lib/XML/Grammar/Fiction/RNG_Renderer.pm
 lib/XML/Grammar/Fiction/Struct/Tag.pm
 lib/XML/Grammar/Fiction/ToDocBook.pm
 lib/XML/Grammar/Fiction/ToHTML.pm
