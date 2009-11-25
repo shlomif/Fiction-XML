@@ -560,6 +560,28 @@ sub _handle_event
     return;
 }
 
+sub _handle_non_tag_text
+{
+    my $self = shift;
+
+    if (! @{$self->_tags_stack()} )
+    {
+        XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag->throw(
+            error => "Cannot match opening tag.",
+            'line' => $self->_get_line_num(),
+        );
+    }
+
+    my $contents = $self->_parse_text();
+
+    foreach my $event (@$contents)
+    {
+        $self->_handle_event($event);
+    }
+
+    return;
+}
+
 sub _parse_tags
 {
     my $self = shift;
@@ -645,20 +667,7 @@ sub _parse_tags
         }
         else
         {
-            if (! @{$self->_tags_stack()} )
-            {
-                XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag->throw(
-                    error => "Cannot match opening tag.",
-                    'line' => $self->_get_line_num(),
-                );
-            }
-            
-            my $contents = $self->_parse_text();
-
-            foreach my $event (@$contents)
-            {
-                $self->_handle_event($event);
-            }
+            $self->_handle_non_tag_text();
         }
     }
 
