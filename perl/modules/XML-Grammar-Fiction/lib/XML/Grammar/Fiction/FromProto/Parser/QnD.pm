@@ -476,6 +476,55 @@ sub _line_starts_with
     return $$l =~ m{\G$re}cg;
 }
 
+sub _handle_event
+{
+    my $self = shift;
+    my $event = shift;
+
+    if (  exists($event->{'tag'})
+        && $event->{'tag'} eq "para"
+    )
+    {
+        if ($event->{'type'} eq "open")
+        {
+            my $new_elem = 
+                XML::Grammar::Fiction::Struct::Tag::Para->new(
+                    name => "p",
+                    is_standalone => 0,
+                    line => $self->_get_line_num(),
+                    attrs => [],
+                );
+
+            $new_elem->children([]);
+
+            push @{$self->_tags_stack()}, $new_elem; 
+
+            $self->_in_para(1);
+        }
+        else
+        {
+            my $open = pop(@{$self->_tags_stack()});
+
+            my $new_elem =
+                $self->_new_para(
+                    $open->detach_children(),
+                );
+
+            $self->_tags_stack->[-1]->append_children([ $new_elem ]);
+
+            $self->_in_para(0);
+        }
+    }
+    elsif ($event->{'type'} eq "elem")
+    {
+        $self->_tags_stack->[-1]->append_children(
+            [ $event->{'elem'} ],
+        );
+    }
+
+    return;
+}
+
 sub _parse_tags
 {
     my $self = shift;
@@ -573,46 +622,7 @@ sub _parse_tags
 
             foreach my $event (@$contents)
             {
-                if (  exists($event->{'tag'})
-                    && $event->{'tag'} eq "para"
-                )
-                {
-                    if ($event->{'type'} eq "open")
-                    {
-                        my $new_elem = 
-                            XML::Grammar::Fiction::Struct::Tag::Para->new(
-                                name => "p",
-                                is_standalone => 0,
-                                line => $self->_get_line_num(),
-                                attrs => [],
-                            );
-
-                        $new_elem->children([]);
-
-                        push @{$self->_tags_stack()}, $new_elem; 
-
-                        $self->_in_para(1);
-                    }
-                    else
-                    {
-                        my $open = pop(@{$self->_tags_stack()});
-
-                        my $new_elem =
-                            $self->_new_para(
-                                $open->detach_children(),
-                            );
-
-                        $self->_tags_stack->[-1]->append_children([ $new_elem ]);
-
-                        $self->_in_para(0);
-                    }
-                }
-                elsif ($event->{'type'} eq "elem")
-                {
-                    $self->_tags_stack->[-1]->append_children(
-                        [ $event->{'elem'} ],
-                    );
-                }
+                $self->_handle_event($event);
             }
         }
     }
