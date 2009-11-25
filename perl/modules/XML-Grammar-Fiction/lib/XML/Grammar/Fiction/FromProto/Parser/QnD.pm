@@ -582,6 +582,55 @@ sub _handle_non_tag_text
     return;
 }
 
+sub _handle_open_tag
+{
+    my $self = shift;
+
+    my $open = $self->_parse_opening_tag();
+
+    $open->children([]);
+
+    push @{$self->_tags_stack()}, $open;
+
+    return;
+}
+
+sub _handle_close_tag
+{
+    my $self = shift;
+
+    my $close = $self->_parse_closing_tag();
+
+    $self->_skip_space();
+
+    my $open = pop(@{$self->_tags_stack()});
+
+    if ($open->name() ne $close->name())
+    {
+        XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
+            error => "Tags do not match",
+            opening_tag => $open,
+            closing_tag => $close,
+        );
+    }
+
+    my $new_elem = 
+        $self->_create_elem(
+            $open, 
+            $self->_new_list($open->detach_children()),
+        );
+
+    if (@{$self->_tags_stack()})
+    {
+        $self->_tags_stack->[-1]->append_children([ $new_elem ]);
+        return;
+    }
+    else
+    {
+        return $new_elem;
+    }
+}
+
 sub _parse_tags
 {
     my $self = shift;
@@ -625,45 +674,14 @@ sub _parse_tags
         # Check if it's a closing tag.
         if ($is_close)
         {
-            my $close = $self->_parse_closing_tag();
-    
-            $self->_skip_space();
-
-            my $open = pop(@{$self->_tags_stack()});
-    
-            if ($open->name() ne $close->name())
+            if ($ret_tag = $self->_handle_close_tag())
             {
-                XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
-                    error => "Tags do not match",
-                    opening_tag => $open,
-                    closing_tag => $close,
-                );
-            }
-
-            my $new_elem = 
-                $self->_create_elem(
-                    $open, 
-                    $self->_new_list($open->detach_children()),
-                );
-
-            if (@{$self->_tags_stack()})
-            {
-                $self->_tags_stack->[-1]->append_children([ $new_elem ]);
-                redo TAGS_LOOP;
-            }
-            else
-            {
-                $ret_tag = $new_elem;
                 last TAGS_LOOP;
             }
         }
         elsif ($is_tag_cond)
         {
-            my $open = $self->_parse_opening_tag();
-
-            $open->children([]);
-
-            push @{$self->_tags_stack()}, $open;
+            $self->_handle_open_tag();
         }
         else
         {
