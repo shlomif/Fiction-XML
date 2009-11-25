@@ -44,6 +44,7 @@ t/data/proto-text-invalid/wrong-closing-inner-tag.txt
 t/data/proto-text/nested-s.txt
 t/data/proto-text/scenes-with-titles.txt
 t/data/proto-text/sections-and-paras.txt
+t/data/proto-text/sections-p-b-i-comments.txt
 t/data/proto-text/sections-p-b-i.txt
 t/data/proto-text/two-nested-s.txt
 t/data/proto-text/with-brs.txt
@@ -59,6 +60,7 @@ t/data/xml/dialogue-with-several-paragraphs.xml
 t/data/xml/nested-s.xml
 t/data/xml/scenes-with-titles.xml
 t/data/xml/sections-and-paras.xml
+t/data/xml/sections-p-b-i-comments.xml
 t/data/xml/sections-p-b-i.xml
 t/data/xml/two-nested-s.xml
 t/data/xml/with-brs.xml
