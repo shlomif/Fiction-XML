@@ -1,5 +1,17 @@
 Revision history for XML-Grammar-Fiction.
 
+0.0.2       Wed Nov 25 11:55:41 IST 2009
+        - Various refactorings / code cleanup:
+            - removed old methods.
+            - got rid of the _with_curr_line() anti-abstrcation.
+            - converted the parsing exceptions to Exception-Class 
+            ( see lib/XML/Grammar/Fiction/Err.pm )
+            - Extract the Struct/Tag.pm helper class.
+            - extracted the lib/XML/Grammar/Fiction/RendererBase.pm
+            and lib/XML/Grammar/Fiction/RNG_Renderer.pm base classes.
+            - Convert the proto-text parser (::Parser::QnD) to a 
+            non-procedurally recursive one and extracted many methods from it.
+
 0.0.1       Thu Nov  5 18:59:27 IST 2009
         - Forked from XML-Grammar-Screenplay-0.0600+trunk.
         - Changed to the Fiction proto-text format and XML format.
