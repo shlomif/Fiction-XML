@@ -409,39 +409,47 @@ sub _parse_text_unit
     }
 }
 
-sub _generate_text_unit_events
+sub _generate_tag_event
 {
     my $self = shift;
-
-    my $space = $self->_consume(qr{\s});
 
     my $l = $self->_curr_line_ref();
     my $orig_pos = pos($$l);
 
-    if ($$l =~ m{\G<}cg)
+    if (my ($tag_opener) = $$l =~ m{\G(<(?:/)?)}cg)
     {
         # If it's a tag.
 
         # TODO : implement the comment handling.
         # We have a tag.
 
-        my $is_closing_tag = ($$l =~ m{\G/}cg);
+        my $is_closing_tag = $tag_opener =~ m{/};
+
         pos($$l) = $orig_pos;
 
-        # If it's a closing tag - then backtrack.
-        if ($is_closing_tag)
-        {
-            $self->_enqueue_event({'type' => "close"});
-            return;
-        }
-        else
-        {
-            $self->_enqueue_event({'type' => "open"});
-            return;
-        }
+        $self->_enqueue_event(
+            {'type' => ($is_closing_tag ? "close" : "open")}
+        );
+
+        return 1;
     }
     else
     {
+        return;
+    }
+}
+
+sub _generate_text_unit_events
+{
+    my $self = shift;
+
+    my $space = $self->_consume(qr{\s});
+
+    if (! $self->_generate_tag_event())
+    {
+        my $l = $self->_curr_line_ref();
+        my $orig_pos = pos($$l);
+        
         my $is_para = (pos($$l) == 0);
 
         my $status = $self->_parse_non_tag_text_unit();
@@ -462,8 +470,8 @@ sub _generate_text_unit_events
             $self->_enqueue_event({ type => "close", tag => "para" });
             $in_para = 0;
         }
-        return;
     }
+    return;
 }
 
 sub _curr_line_matches
