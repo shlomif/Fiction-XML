@@ -58,14 +58,14 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
     is(
         $err->closing_tag()->name(),
         "wrong-finish-tag",
-        "Opening tag-name is OK.",
+        "Closing tag-name is OK.",
     );
 
     # TEST
     is(
         $err->closing_tag()->line(),
         3,
-        "Opening line is OK.",
+        "Closing line is OK.",
     );
 }
 

@@ -5,6 +5,7 @@ use warnings;
 
 use Moose;
 
+use XML::Grammar::Fiction::FromProto::Nodes;
 
 =head1 NAME
 
@@ -25,6 +26,34 @@ has 'name' => (is => "rw", isa => "Str");
 has 'line' => (is => "rw", isa => "Int");
 has 'is_standalone' => (is => "rw", isa => "Bool");
 has 'attrs' => (is => "rw", isa => "ArrayRef");
+has 'children' => (
+    is => "rw", 
+    isa => "Maybe[ArrayRef]",
+);
+
+sub append_children
+{
+    my ($self, $children) = @_;
+
+    push @{$self->children()}, @$children;
+}
+
+sub detach_children
+{
+    my $self = shift;
+
+    my $children = $self->children();
+
+    $self->children(undef);
+
+    return $children;
+}
+
+package XML::Grammar::Fiction::Struct::Tag::Para;
+
+use Moose;
+
+extends("XML::Grammar::Fiction::Struct::Tag");
 
 =head1 METHODS
 
@@ -43,6 +72,18 @@ Determines whether it's a standalone tag or not. (if it's an opening tag).
 =head2 $self->attrs()
 
 The attributes of the opening tag in an array.
+
+=head2 $self->children()
+
+A placeholder for the element's children.
+
+=head2 $self->append_children(\@children)
+
+Append more elements to the children.
+
+=head2 my $children = $self->detach_children()
+
+Detaches the children and returns them as an array reference.
 
 =head1 AUTHOR
 

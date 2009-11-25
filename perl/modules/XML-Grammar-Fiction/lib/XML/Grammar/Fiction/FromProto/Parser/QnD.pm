@@ -9,6 +9,10 @@ use Moose;
 
 has "_curr_line_idx" => (isa => "Int", is => "rw");
 has "_lines" => (isa => "ArrayRef", is => "rw");
+has "_tags_stack" => (isa => "ArrayRef", is => "rw");
+has "_result_tag" => (isa => "XML::Grammar::Fiction::FromProto::Node::Element", is => "rw");
+has "_events_queue" => (isa => "ArrayRef", is => "rw", default => sub { []; });
+has "_in_para" => (isa => "Bool", is => "rw");
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
@@ -29,6 +33,20 @@ Version 0.0.1
 =cut
 
 our $VERSION = '0.0.1';
+
+sub _enqueue_event
+{
+    my ($self, $event) = @_;
+   
+    push (@{$self->_events_queue()}, $event);
+}
+
+sub _extract_event
+{
+    my $self = shift;
+
+    return shift(@{$self->_events_queue()});
+}
 
 sub _curr_line :lvalue
 {
@@ -86,6 +104,8 @@ sub _init
 {
     my $self = shift;
 
+    $self->_events_queue([]);
+
     return 0;
 }
 
@@ -93,7 +113,7 @@ sub _start
 {
     my $self = shift;
 
-    return $self->_parse_tag();
+    return $self->_parse_tags();
 }
 
 # Skip the whitespace.
@@ -262,7 +282,7 @@ sub _parse_closing_tag
     return XML::Grammar::Fiction::Struct::Tag->new(
         name => $1,
         line => $self->_get_line_num(),
-    )
+    );
 }
 
 sub _parse_text
@@ -270,10 +290,19 @@ sub _parse_text
     my $self = shift;
 
     my @ret;
-    while (defined(my $unit = $self->_parse_text_unit()))
+    while (my $unit = $self->_parse_text_unit())
     {
         push @ret, $unit;
+        my $type = $unit->{'type'};
+        if (($type eq "close") || ($type eq "open"))
+        {
+            push @ret, @{$self->_events_queue()};
+            $self->_events_queue([]);
+            return \@ret;
+        }
     }
+
+=begin Removed
 
     # If it's whitespace - return an empty list.
     if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
@@ -282,6 +311,11 @@ sub _parse_text
     }
 
     return $self->_new_list(\@ret);
+
+=end Removed
+
+=cut
+
 }
 
 sub _find_next_inner_text
@@ -355,6 +389,21 @@ sub _parse_text_unit
 {
     my $self = shift;
 
+    if (defined(my $event  = $self->_extract_event()))
+    {
+        return $event;
+    }
+    else
+    {
+        $self->_generate_text_unit_events();
+        return $self->_extract_event();
+    }
+}
+
+sub _generate_text_unit_events
+{
+    my $self = shift;
+
     my $space = $self->_consume(qr{\s});
 
     my $l = $self->_curr_line_ref();
@@ -373,49 +422,38 @@ sub _parse_text_unit
         # If it's a closing tag - then backtrack.
         if ($is_closing_tag)
         {
-            return undef;
+            $self->_enqueue_event({'type' => "close"});
+            return;
         }
         else
         {
-            return $self->_parse_tag();
+            $self->_enqueue_event({'type' => "open"});
+            return;
         }
     }
     else
     {
-        my @ret;
-
-        my $status;
-
         my $is_para = (pos($$l) == 0);
 
-        PARSE_NON_TAG_TEXT_UNIT:
-        while (my $status = $self->_parse_non_tag_text_unit())
-        {
-            my $elem = $status->{'elem'};
-            my $is_para_end = $status->{'para_end'};
+        my $status = $self->_parse_non_tag_text_unit();
+        my $elem = $status->{'elem'};
+        my $is_para_end = $status->{'para_end'};
 
-            push @ret, $elem;
-            if ($is_para_end)
-            {
-                last PARSE_NON_TAG_TEXT_UNIT;
-            }
-            else
-            {
-                if (defined(my $text_unit = $self->_parse_text_unit()))
-                {
-                    push @ret, $text_unit;
-                }
-                else
-                {
-                    last PARSE_NON_TAG_TEXT_UNIT;
-                }
-            }
+        my $in_para = $self->_in_para();
+        if ($is_para && !$in_para)
+        {
+            $self->_enqueue_event({type => "open", tag => "para"});
+            $in_para = 1;
         }
-        return
-            $is_para 
-            ? $self->_new_para(\@ret)
-            : $self->_new_list(\@ret)
-            ;
+
+        $self->_enqueue_event({type => "elem", elem => $elem});
+
+        if ($is_para_end && $in_para)
+        {
+            $self->_enqueue_event({ type => "close", tag => "para" });
+            $in_para = 0;
+        }
+        return;
     }
 }
 
@@ -438,41 +476,153 @@ sub _line_starts_with
     return $$l =~ m{\G$re}cg;
 }
 
-sub _parse_tag
+sub _parse_tags
 {
     my $self = shift;
 
+    $self->_tags_stack([]);
+
     $self->_skip_space();
 
-    if ($self->_line_starts_with(qr{<!--}))
-    {
-        my $text = $self->_consume_up_to(qr{-->});
+    $self->_in_para(0);
 
-        return $self->_new_node({ t => "Comment", text => $text, });
+    my $run_once = 1;
+
+    my $ret_tag;
+
+    TAGS_LOOP:
+    while ($run_once || @{$self->_tags_stack()})
+    {
+        $run_once = 0;
+
+        if ($self->_line_starts_with(qr{<!--}))
+        {
+            my $text = $self->_consume_up_to(qr{-->});
+
+            $self->_tags_stacks->[-1]->append_children(
+                [
+                    $self->_new_node({ t => "Comment", text => $text, })
+                ]
+            );
+            redo TAGS_LOOP;
+        }
+
+        $self->_skip_space();
+
+        my ($l, $p) = $self->_curr_line_and_pos();
+
+        my $is_tag_cond = ($$l =~ m{\G<}cg);
+        my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
+
+        pos($$l) = $p;
+
+        # Check if it's a closing tag.
+        if ($is_close)
+        {
+            my $close = $self->_parse_closing_tag();
+    
+            $self->_skip_space();
+
+            my $open = pop(@{$self->_tags_stack()});
+    
+            if ($open->name() ne $close->name())
+            {
+                XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
+                    error => "Tags do not match",
+                    opening_tag => $open,
+                    closing_tag => $close,
+                );
+            }
+
+            my $new_elem = 
+                $self->_create_elem(
+                    $open, 
+                    $self->_new_list($open->detach_children()),
+                );
+
+            if (@{$self->_tags_stack()})
+            {
+                $self->_tags_stack->[-1]->append_children([ $new_elem ]);
+                redo TAGS_LOOP;
+            }
+            else
+            {
+                $ret_tag = $new_elem;
+                last TAGS_LOOP;
+            }
+        }
+        elsif ($is_tag_cond)
+        {
+            my $open = $self->_parse_opening_tag();
+
+            $open->children([]);
+
+            push @{$self->_tags_stack()}, $open;
+        }
+        else
+        {
+            if (! @{$self->_tags_stack()} )
+            {
+                XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag->throw(
+                    error => "Cannot match opening tag.",
+                    'line' => $self->_get_line_num(),
+                );
+            }
+            
+            my $contents = $self->_parse_text();
+
+            foreach my $event (@$contents)
+            {
+                if (  exists($event->{'tag'})
+                    && $event->{'tag'} eq "para"
+                )
+                {
+                    my $start_para = sub {
+                        my $new_elem = 
+                            XML::Grammar::Fiction::Struct::Tag::Para->new(
+                                name => "p",
+                                is_standalone => 0,
+                                line => $self->_get_line_num(),
+                                attrs => [],
+                            );
+
+                        $new_elem->children([]);
+
+                        push @{$self->_tags_stack()}, $new_elem; 
+
+                        $self->_in_para(1);
+                    };
+                    if ($event->{'type'} eq "open")
+                    {
+                        $start_para->();
+                    }
+                    else
+                    {
+                        my $open = pop(@{$self->_tags_stack()});
+
+                        my $new_elem =
+                            $self->_new_para(
+                                $open->detach_children(),
+                            );
+
+                        $self->_tags_stack->[-1]->append_children([ $new_elem ]);
+
+                        $self->_in_para(0);
+
+                        # $start_para->();
+                    }
+                }
+                elsif ($event->{'type'} eq "elem")
+                {
+                    $self->_tags_stack->[-1]->append_children(
+                        [ $event->{'elem'} ],
+                    );
+                }
+            }
+        }
     }
 
-    my $open = $self->_parse_opening_tag();
-
-    $self->_skip_space();
-
-    my $inside = $self->_parse_text();
-
-    $self->_skip_space();
-
-    my $close = $self->_parse_closing_tag();
-
-    $self->_skip_space();
-
-    if ($open->name() ne $close->name())
-    {
-        XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
-            error => "Tags do not match",
-            opening_tag => $open,
-            closing_tag => $close,
-        );
-    }
-
-    return $self->_create_elem($open, $inside);
+    return $ret_tag;
 }
 
 sub _consume
