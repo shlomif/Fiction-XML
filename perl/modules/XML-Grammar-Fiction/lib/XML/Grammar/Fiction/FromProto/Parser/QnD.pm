@@ -631,6 +631,20 @@ sub _handle_close_tag
     }
 }
 
+sub _look_ahead_for_tag
+{
+    my $self = shift;
+
+    my ($l, $p) = $self->_curr_line_and_pos();
+
+    my $is_tag_cond = ($$l =~ m{\G<}cg);
+    my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
+
+    pos($$l) = $p;
+
+    return ($is_tag_cond, $is_close);
+}
+
 sub _parse_tags
 {
     my $self = shift;
@@ -664,12 +678,7 @@ sub _parse_tags
 
         $self->_skip_space();
 
-        my ($l, $p) = $self->_curr_line_and_pos();
-
-        my $is_tag_cond = ($$l =~ m{\G<}cg);
-        my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
-
-        pos($$l) = $p;
+        my ($is_tag_cond, $is_close) = $self->_look_ahead_for_tag();
 
         # Check if it's a closing tag.
         if ($is_close)
