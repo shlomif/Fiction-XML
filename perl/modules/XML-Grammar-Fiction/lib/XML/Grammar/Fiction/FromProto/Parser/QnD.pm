@@ -645,6 +645,28 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
+sub _look_ahead_for_comment
+{
+    my $self = shift;
+
+    if ($self->_line_starts_with(qr{<!--}))
+    {
+        my $text = $self->_consume_up_to(qr{-->});
+
+        $self->_tags_stacks->[-1]->append_children(
+            [
+                $self->_new_node({ t => "Comment", text => $text, })
+            ]
+        );
+
+        return 1;
+    }
+    else
+    {
+        return;
+    }
+}
+
 sub _parse_tags
 {
     my $self = shift;
@@ -655,27 +677,15 @@ sub _parse_tags
 
     $self->_in_para(0);
 
-    my $run_once = 1;
-
     my $ret_tag;
 
     TAGS_LOOP:
-    while ($run_once || @{$self->_tags_stack()})
+    while (1)
     {
-        $run_once = 0;
-
-        if ($self->_line_starts_with(qr{<!--}))
+        if ($self->_look_ahead_for_comment())
         {
-            my $text = $self->_consume_up_to(qr{-->});
-
-            $self->_tags_stacks->[-1]->append_children(
-                [
-                    $self->_new_node({ t => "Comment", text => $text, })
-                ]
-            );
             redo TAGS_LOOP;
         }
-
         $self->_skip_space();
 
         my ($is_tag_cond, $is_close) = $self->_look_ahead_for_tag();
