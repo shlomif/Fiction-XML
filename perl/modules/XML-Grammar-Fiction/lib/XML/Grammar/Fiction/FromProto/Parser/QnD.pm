@@ -508,7 +508,7 @@ sub _handle_close_para
             $open->detach_children(),
         );
 
-    $self->_tags_stack->[-1]->append_children([ $new_elem ]);
+    $self->_tags_stack->[-1]->append_child( $new_elem );
 
     $self->_in_para(0);
 
@@ -537,9 +537,7 @@ sub _handle_elem_event
 {
     my ($self, $event) = @_;
 
-    $self->_tags_stack->[-1]->append_children(
-        [ $event->{'elem'} ],
-    );
+    $self->_tags_stack->[-1]->append_child( $event->{'elem'});
 
     return;
 }
@@ -622,7 +620,7 @@ sub _handle_close_tag
 
     if (@{$self->_tags_stack()})
     {
-        $self->_tags_stack->[-1]->append_children([ $new_elem ]);
+        $self->_tags_stack->[-1]->append_child($new_elem);
         return;
     }
     else
@@ -653,10 +651,8 @@ sub _look_ahead_for_comment
     {
         my $text = $self->_consume_up_to(qr{-->});
 
-        $self->_tags_stack->[-1]->append_children(
-            [
-                $self->_new_node({ t => "Comment", text => $text, })
-            ]
+        $self->_tags_stack->[-1]->append_child(
+            $self->_new_node({ t => "Comment", text => $text, })
         );
 
         return 1;
