@@ -476,44 +476,60 @@ sub _line_starts_with
     return $$l =~ m{\G$re}cg;
 }
 
+sub _handle_paragraph_event
+{
+    my $self = shift;
+    my $event = shift;
+
+    if ($event->{'type'} eq "open")
+    {
+        my $new_elem = 
+            XML::Grammar::Fiction::Struct::Tag::Para->new(
+                name => "p",
+                is_standalone => 0,
+                line => $self->_get_line_num(),
+                attrs => [],
+            );
+
+        $new_elem->children([]);
+
+        push @{$self->_tags_stack()}, $new_elem; 
+
+        $self->_in_para(1);
+    }
+    else
+    {
+        my $open = pop(@{$self->_tags_stack()});
+
+        my $new_elem =
+            $self->_new_para(
+                $open->detach_children(),
+            );
+
+        $self->_tags_stack->[-1]->append_children([ $new_elem ]);
+
+        $self->_in_para(0);
+    }
+
+    return;
+}
+
+sub _is_event_a_para
+{
+    my $self = shift;
+    my $event = shift;
+
+    return exists($event->{'tag'}) && ($event->{'tag'} eq "para");
+}
+
 sub _handle_event
 {
     my $self = shift;
     my $event = shift;
 
-    if (  exists($event->{'tag'})
-        && $event->{'tag'} eq "para"
-    )
+    if ($self->_is_event_a_para($event))
     {
-        if ($event->{'type'} eq "open")
-        {
-            my $new_elem = 
-                XML::Grammar::Fiction::Struct::Tag::Para->new(
-                    name => "p",
-                    is_standalone => 0,
-                    line => $self->_get_line_num(),
-                    attrs => [],
-                );
-
-            $new_elem->children([]);
-
-            push @{$self->_tags_stack()}, $new_elem; 
-
-            $self->_in_para(1);
-        }
-        else
-        {
-            my $open = pop(@{$self->_tags_stack()});
-
-            my $new_elem =
-                $self->_new_para(
-                    $open->detach_children(),
-                );
-
-            $self->_tags_stack->[-1]->append_children([ $new_elem ]);
-
-            $self->_in_para(0);
-        }
+        $self->_handle_paragraph_event($event);
     }
     elsif ($event->{'type'} eq "elem")
     {
