@@ -577,7 +577,8 @@ sub _parse_tags
                     && $event->{'tag'} eq "para"
                 )
                 {
-                    my $start_para = sub {
+                    if ($event->{'type'} eq "open")
+                    {
                         my $new_elem = 
                             XML::Grammar::Fiction::Struct::Tag::Para->new(
                                 name => "p",
@@ -591,10 +592,6 @@ sub _parse_tags
                         push @{$self->_tags_stack()}, $new_elem; 
 
                         $self->_in_para(1);
-                    };
-                    if ($event->{'type'} eq "open")
-                    {
-                        $start_para->();
                     }
                     else
                     {
@@ -608,8 +605,6 @@ sub _parse_tags
                         $self->_tags_stack->[-1]->append_children([ $new_elem ]);
 
                         $self->_in_para(0);
-
-                        # $start_para->();
                     }
                 }
                 elsif ($event->{'type'} eq "elem")
