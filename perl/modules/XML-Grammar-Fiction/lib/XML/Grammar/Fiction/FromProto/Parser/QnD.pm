@@ -653,7 +653,7 @@ sub _look_ahead_for_comment
     {
         my $text = $self->_consume_up_to(qr{-->});
 
-        $self->_tags_stacks->[-1]->append_children(
+        $self->_tags_stack->[-1]->append_children(
             [
                 $self->_new_node({ t => "Comment", text => $text, })
             ]
