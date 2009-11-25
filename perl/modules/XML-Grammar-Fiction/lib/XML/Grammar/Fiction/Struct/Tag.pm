@@ -36,6 +36,15 @@ sub append_children
     my ($self, $children) = @_;
 
     push @{$self->children()}, @$children;
+
+    return;
+}
+
+sub append_child
+{
+    my ($self, $child) = @_;
+
+    return $self->append_children( [ $child ] );
 }
 
 sub detach_children
@@ -80,6 +89,10 @@ A placeholder for the element's children.
 =head2 $self->append_children(\@children)
 
 Append more elements to the children.
+
+=head2 $self->append_child($child)
+
+Appends a single child. Uses C<append_children()> .
 
 =head2 my $children = $self->detach_children()
 
