@@ -10,7 +10,6 @@ use Moose;
 has "_curr_line_idx" => (isa => "Int", is => "rw");
 has "_lines" => (isa => "ArrayRef", is => "rw");
 has "_tags_stack" => (isa => "ArrayRef", is => "rw");
-has "_result_tag" => (isa => "XML::Grammar::Fiction::FromProto::Node::Element", is => "rw");
 has "_events_queue" => (isa => "ArrayRef", is => "rw", default => sub { []; });
 has "_in_para" => (isa => "Bool", is => "rw");
 
