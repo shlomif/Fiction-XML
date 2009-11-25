@@ -235,7 +235,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
     is(
         $err->closing_tag()->line(),
         11,
-        "Opening line is OK.",
+        "Closing tag line is OK.",
     );
 }
 
