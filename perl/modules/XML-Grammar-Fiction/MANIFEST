@@ -1,6 +1,7 @@
 Build.PL
 bump-version-number.pl
 Changes
+contrib/docbook-to-fiction-xml-txt.pl
 extradata/fiction-xml.rng
 extradata/fiction-xml-to-docbook.xslt
 extradata/fiction-xml-to-html.xslt
