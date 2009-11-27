@@ -1,6 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
         - Add the script contrib/docbook-to-fiction-xml-txt.pl .
+        - Add delimiting empty lines to a =begin ... =end block to settle
+        some versions of t/pod.t
+            - Thanks to SREZIC.
 
 0.0.2       Wed Nov 25 11:55:41 IST 2009
         - Various refactorings / code cleanup:
