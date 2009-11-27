@@ -305,6 +305,7 @@ sub _write_body
     my $id = $body->lookup_attr("id");
 
 =begin foo
+
     my $title =
         first
         { $_->name() eq "title" }
@@ -317,6 +318,7 @@ sub _write_body
         ? (title => $title->_get_childs()->[0])
         : ()
     );
+
 =end foo
 
 =cut
