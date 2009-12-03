@@ -29,6 +29,7 @@ MANIFEST
 META.yml # Will be created by "make dist"
 README
 rejects/lib/XML/Grammar/Fiction/FromProto/Parser/PRD.pm
+rejects/lib/XML/Grammar/Fiction/RendererBase.pm
 rejects/proto-text-to-xml.t
 rejects/QnD.pm
 t/00-load.t

@@ -13,14 +13,53 @@ use XML::Grammar::Fiction::ConfigData;
 use XML::LibXML;
 use XML::LibXSLT;
 
-use base 'XML::Grammar::Fiction::Base';
-
 use Moose;
 
-has '_data_dir' => (isa => 'Str', is => 'rw');
-has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
-has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
-has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
+has '_data_dir' =>
+(
+    isa => 'Str', 
+    is => 'rw',
+    lazy => 1,
+    init_arg => "data_dir",
+    default => sub {
+        my $self = shift;
+
+        return $self->_get_default_data_dir();
+    },
+);
+has '_rng' =>
+(
+    isa => 'XML::LibXML::RelaxNG', 
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+
+        return $self->_get_rng_schema();
+    },
+);
+
+has '_xml_parser' => 
+(
+    isa => "XML::LibXML", 
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        return XML::LibXML->new();
+    },
+);
+
+has '_stylesheet' => 
+(
+    isa => "XML::LibXSLT::StylesheetWrapper", 
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+
+        return $self->_get_stylesheet();
+    },
+);
 
 =head1 NAME
 
@@ -83,20 +122,7 @@ sub _get_stylesheet
     return $xslt->parse_stylesheet($style_doc);
 }
 
-sub _init
-{
-    my ($self, $args) = @_;
 
-    $self->_data_dir($args->{'data_dir'} || $self->_get_default_data_dir());
-
-    $self->_rng($self->_get_rng_schema());
-
-    $self->_xml_parser(XML::LibXML->new());
-
-    $self->_stylesheet($self->_get_stylesheet());
-
-    return 0;
-}
 
 =head2 generic_translate
 
