@@ -3,9 +3,9 @@ package XML::Grammar::Fiction::FromProto::Parser::QnD;
 use strict;
 use warnings;
 
-use base 'XML::Grammar::Fiction::FromProto::Parser';
-
 use Moose;
+
+extends("XML::Grammar::Fiction::FromProto::Parser");
 
 has "_curr_line_idx" => (isa => "Int", is => "rw");
 has "_lines" => (isa => "ArrayRef", is => "rw");
@@ -106,15 +106,6 @@ sub _check_if_line_starts_with_whitespace
             'line' => $self->_get_line_num(),
         );
     }
-}
-
-sub _init
-{
-    my $self = shift;
-
-    $self->_events_queue([]);
-
-    return 0;
 }
 
 sub _start
