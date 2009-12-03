@@ -5,8 +5,6 @@ use warnings;
 
 use Carp;
 
-use base 'XML::Grammar::Fiction::Base';
-
 use XML::Writer;
 use HTML::Entities ();
 
@@ -16,7 +14,24 @@ use Moose;
 
 use List::Util (qw(first));
 
-has "_parser" => ('isa' => "XML::Grammar::Fiction::FromProto::Parser", 'is' => "rw");
+has '_parser_class' =>
+(
+    is => "ro",
+    isa => "Str",
+    init_arg => "parser_class",
+    default => "XML::Grammar::Fiction::FromProto::Parser::QnD",
+);
+
+has "_parser" => (
+    'isa' => "XML::Grammar::Fiction::FromProto::Parser", 
+    'is' => "rw",
+    lazy => 1,
+    default => sub { 
+        my $self = shift; 
+        return $self->_parser_class->new();
+    },
+);
+
 has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
 my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
@@ -45,22 +60,6 @@ at that point.
 Internal - (to settle pod-coverage.).
 
 =cut
-
-sub _init
-{
-    my ($self, $args) = @_;
-
-    local $Parse::RecDescent::skip = "";
-
-    my $parser_class = 
-        ($args->{parser_class} || "XML::Grammar::Fiction::FromProto::Parser::QnD");
-
-    $self->_parser(
-        $parser_class->new()
-    );
-
-    return 0;
-}
 
 =head2 $self->convert({ source => { file => $path_to_file } })
 
