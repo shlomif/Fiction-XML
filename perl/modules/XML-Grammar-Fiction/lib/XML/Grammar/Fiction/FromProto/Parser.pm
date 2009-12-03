@@ -3,9 +3,7 @@ package XML::Grammar::Fiction::FromProto::Parser;
 use strict;
 use warnings;
 
-use base 'XML::Grammar::Fiction::Base';
-
-1;
+use Moose;
 
 =head1 NAME
 
@@ -43,3 +41,6 @@ Copyright 2007 Shlomi Fish, all rights reserved.
 This program is released under the following license: MIT X11.
 
 =cut
+
+1;
+
