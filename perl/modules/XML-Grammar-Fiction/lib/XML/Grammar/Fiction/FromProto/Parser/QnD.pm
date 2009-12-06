@@ -10,7 +10,18 @@ extends("XML::Grammar::Fiction::FromProto::Parser");
 has "_curr_line_idx" => (isa => "Int", is => "rw");
 has "_lines" => (isa => "ArrayRef", is => "rw");
 has "_tags_stack" => (isa => "ArrayRef", is => "rw");
-has "_events_queue" => (isa => "ArrayRef", is => "rw", default => sub { []; });
+has "_events_queue" =>
+(
+    isa => "ArrayRef",
+    is => "rw", 
+    default => sub { []; },
+    traits => ['Array'],
+    handles =>
+    {
+        _enqueue_event => 'push',
+        _extract_event => 'shift',
+    },
+);
 has "_in_para" => (isa => "Bool", is => "rw");
 
 use XML::Grammar::Fiction::FromProto::Nodes;
@@ -32,20 +43,6 @@ Version 0.0.3
 =cut
 
 our $VERSION = '0.0.3';
-
-sub _enqueue_event
-{
-    my ($self, $event) = @_;
-   
-    push (@{$self->_events_queue()}, $event);
-}
-
-sub _extract_event
-{
-    my $self = shift;
-
-    return shift(@{$self->_events_queue()});
-}
 
 sub _add_to_top_tag
 {
