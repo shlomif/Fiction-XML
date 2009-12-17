@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 23;
+use Test::More tests => 26;
 
 use XML::LibXML;
 
@@ -276,6 +276,46 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         $err->line(),
         12,
         "Line is 1 as expected."
+    );
+}
+
+{
+    my $grammar = XML::Grammar::Fiction::FromProto->new({});
+
+    my $got_xml;
+
+    eval {
+        $got_xml = $grammar->convert(
+        {
+            source =>
+            {
+                file => "t/data/proto-text-invalid/leading-space-at-para-start.txt",
+            },
+        }
+    );
+    };
+
+    my $err_proto = $@;
+
+    my $err = Exception::Class->caught(
+        "XML::Grammar::Fiction::Err::Parse::LeadingSpace"
+    );
+
+    # TEST
+    ok ($err, "LeadingSpace at para start was matched.");
+
+    # TEST
+    like(
+        $err->error(),
+        qr{\ALeading space},
+        "LeadingSpace at para start error."
+    );
+
+    # TEST
+    is (
+        $err->line(),
+        14,
+        "LeadingSpace Line is 14 as expected."
     );
 }
 
