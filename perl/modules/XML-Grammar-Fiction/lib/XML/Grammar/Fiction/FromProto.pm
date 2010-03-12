@@ -44,11 +44,11 @@ text representing prose to an XML format.
 
 =head1 VERSION
 
-Version 0.0.3
+Version 0.0.4
 
 =cut
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 =head2 new()
 

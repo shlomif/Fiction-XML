@@ -10,11 +10,11 @@ and a lightweight markup language for stories, novels and other fiction.
 
 =head1 VERSION
 
-Version 0.0.3
+Version 0.0.4
 
 =cut
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 =head1 SYNOPSIS
 
