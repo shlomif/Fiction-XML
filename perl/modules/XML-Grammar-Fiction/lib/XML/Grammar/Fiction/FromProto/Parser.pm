@@ -14,11 +14,11 @@ B<For internal use only>.
 
 =head1 VERSION
 
-Version 0.0.3
+Version 0.0.4
 
 =cut
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 =head1 AUTHOR
 
