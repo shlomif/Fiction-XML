@@ -5,8 +5,6 @@
     xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <xsl:output method="xml" encoding="UTF-8" indent="yes"
- doctype-public="-//OASIS//DTD DocBook XML V4.3//EN"
- doctype-system="/usr/share/sgml/docbook/xml-dtd-4.3/docbookx.dtd"
  />
 
 <xsl:template match="/">
