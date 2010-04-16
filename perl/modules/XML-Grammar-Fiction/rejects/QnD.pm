@@ -3,6 +3,13 @@ package rejects::QnD;
 use strict;
 use warnings;
 
+sub _curr_line :lvalue
+{
+    my $self = shift;
+
+    return $self->_lines()->[$self->_curr_line_idx()];
+}
+
 # TODO : _parse_saying_first_para and _parse_saying_other_para are
 # very similar - abstract them into one function.
 sub _parse_saying_first_para
@@ -252,4 +259,5 @@ sub _parse_inner_text
 
     return \@contents;
 }
+
 

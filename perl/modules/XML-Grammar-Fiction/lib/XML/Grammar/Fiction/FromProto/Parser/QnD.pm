@@ -53,13 +53,6 @@ sub _add_to_top_tag
     return;
 }
 
-sub _curr_line :lvalue
-{
-    my $self = shift;
-
-    return $self->_lines()->[$self->_curr_line_idx()];
-}
-
 sub _curr_line_ref
 {
     my $self = shift;
