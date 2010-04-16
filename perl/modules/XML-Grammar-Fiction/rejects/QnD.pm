@@ -10,6 +10,13 @@ sub _curr_line :lvalue
     return $self->_lines()->[$self->_curr_line_idx()];
 }
 
+sub _with_curr_line
+{
+    my ($self, $sub_ref) = @_;
+
+    return $sub_ref->( $self->_curr_line_ref() );
+}
+
 # TODO : _parse_saying_first_para and _parse_saying_other_para are
 # very similar - abstract them into one function.
 sub _parse_saying_first_para

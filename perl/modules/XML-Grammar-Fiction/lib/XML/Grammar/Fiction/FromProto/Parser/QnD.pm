@@ -69,13 +69,6 @@ sub _curr_line_and_pos
     return ($l, pos($$l));
 }
 
-sub _with_curr_line
-{
-    my ($self, $sub_ref) = @_;
-
-    return $sub_ref->( $self->_curr_line_ref() );
-}
-
 sub _next_line_ref
 {
     my $self = shift;
