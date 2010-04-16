@@ -51,19 +51,6 @@ sub _add_to_top_tag
     return;
 }
 
-sub _check_if_line_starts_with_whitespace
-{
-    my $self = shift;
-
-    if (${$self->_curr_line_ref()} =~ m{\A[ \t]})
-    {
-        XML::Grammar::Fiction::Err::Parse::LeadingSpace->throw(
-            error => "Leading space detected in the text.",
-            'line' => $self->_get_line_num(),
-        );
-    }
-}
-
 sub _start
 {
     my $self = shift;
