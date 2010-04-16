@@ -199,6 +199,19 @@ sub _new_text
     );
 }
 
+sub _new_comment
+{
+    my $self = shift;
+    my $text = shift;
+
+    return $self->_new_node(
+        {
+            t => "Comment",
+            text => $text,
+        }
+    );
+}
+
 sub _parse_opening_tag_attrs
 {
     my $self = shift;
@@ -657,7 +670,7 @@ sub _look_ahead_for_comment
         my $text = $self->_consume_up_to(qr{-->});
 
         $self->_add_to_top_tag(
-            $self->_new_node({ t => "Comment", text => $text, })
+            $self->_new_comment($text),
         );
 
         return 1;
