@@ -770,7 +770,6 @@ sub _setup_text
     my ($self, $text) = @_;
 
     # We include the lines trailing newlines for safety.
-    # $self->_lines([$text =~ m{\A([^\n]*\n?)*\z}ms]);
     $self->_lines([split(/^/, $text)]);
 
     $self->_curr_line_idx(0);
