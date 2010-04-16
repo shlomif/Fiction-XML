@@ -5,10 +5,8 @@ use warnings;
 
 use Moose;
 
-extends("XML::Grammar::Fiction::FromProto::Parser");
+extends("XML::Grammar::Fiction::FromProto::Parser::LineIterator");
 
-has "_curr_line_idx" => (isa => "Int", is => "rw");
-has "_lines" => (isa => "ArrayRef", is => "rw");
 has "_tags_stack" => (isa => "ArrayRef", is => "rw");
 has "_events_queue" =>
 (
@@ -53,31 +51,6 @@ sub _add_to_top_tag
     return;
 }
 
-sub _curr_line_ref
-{
-    my $self = shift;
-
-    return \($self->_lines()->[$self->_curr_line_idx()]);
-}
-
-sub _curr_line_and_pos
-{
-    my $self = shift;
-
-    my $l = $self->_curr_line_ref();
-
-    return ($l, pos($$l));
-}
-
-sub _next_line_ref
-{
-    my $self = shift;
-
-    $self->_curr_line_idx($self->_curr_line_idx()+1);
-
-    return $self->_curr_line_ref();
-}
-
 sub _check_if_line_starts_with_whitespace
 {
     my $self = shift;
@@ -96,14 +69,6 @@ sub _start
     my $self = shift;
 
     return $self->_parse_tags();
-}
-
-# Skip the whitespace.
-sub _skip_space
-{
-    my $self = shift;
-
-    $self->_consume(qr{[ \t]});
 }
 
 my $id_regex = '[a-zA-Z_\-]+';
@@ -460,25 +425,6 @@ sub _generate_text_unit_events
     return;
 }
 
-sub _curr_line_matches
-{
-    my $self = shift;
-    my $re = shift;
-
-    my $l = $self->_curr_line_ref();
-
-    return ($$l =~ $re);
-}
-
-sub _line_starts_with
-{
-    my ($self, $re) = @_;
-
-    my $l = $self->_curr_line_ref();
-
-    return $$l =~ m{\G$re}cg;
-}
-
 sub _handle_open_para
 {
     my ($self, $event) = @_;
@@ -709,74 +655,6 @@ sub _parse_tags
     }
 
     return $ret_tag;
-}
-
-sub _consume
-{
-    my ($self, $match_regex) = @_;
-
-    my $return_value = "";
-    my $l = $self->_curr_line_ref();
-
-    while (defined($$l) && ($$l =~ m[\G(${match_regex}*)\z]cgms))
-    {
-        $return_value .= $$l;
-    }
-    continue
-    {
-        $l = $self->_next_line_ref();
-        $self->_check_if_line_starts_with_whitespace();
-    }
-
-    if (defined($$l) && ($$l =~ m[\G(${match_regex}*)]cg))
-    {
-        $return_value .= $1;
-    }
-
-    return $return_value;
-}
-
-# TODO : copied and pasted from _consume - abstract
-sub _consume_up_to
-{
-    my ($self, $match_regex) = @_;
-
-    my $return_value = "";
-    my $l = $self->_curr_line_ref();
-
-    LINE_LOOP:
-    while (defined($$l))
-    {
-        my $verdict = ($$l =~ m[\G(.*?)((?:${match_regex})|\z)]cgms);
-        $return_value .= $1;
-        
-        # Find if it matched the regex.
-        if (length($2) > 0)
-        {
-            last LINE_LOOP;
-        }
-    }
-    continue
-    {
-        $l = $self->_next_line_ref();
-        $self->_check_if_line_starts_with_whitespace();
-    }
-
-    return $return_value;
-}
-
-sub _setup_text
-{
-    my ($self, $text) = @_;
-
-    # We include the lines trailing newlines for safety.
-    $self->_lines([split(/^/, $text)]);
-
-    $self->_curr_line_idx(0);
-
-    ${$self->_curr_line_ref()} =~ m{\A}g;
-
-    return;
 }
 
 sub process_text
