@@ -15,6 +15,7 @@ lib/XML/Grammar/Fiction/App/ToHTML.pm
 lib/XML/Grammar/Fiction/Base.pm
 lib/XML/Grammar/Fiction/Err.pm
 lib/XML/Grammar/Fiction/FromProto/Nodes.pm
+lib/XML/Grammar/Fiction/FromProto/Parser/LineIterator.pm
 lib/XML/Grammar/Fiction/FromProto/Parser.pm
 lib/XML/Grammar/Fiction/FromProto/Parser/QnD.pm
 lib/XML/Grammar/Fiction/FromProto.pm
