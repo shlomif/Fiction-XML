@@ -87,15 +87,25 @@ sub _get_line_num
     return $self->_curr_line_idx()+1;
 }
 
+sub throw_text_error
+{
+    my ($self, $error_class, $text) = @_;
+
+    return $error_class->throw(
+        error => $text,
+        line => $self->_get_line_num(),    
+    );
+}
+
 sub _check_if_line_starts_with_whitespace
 {
     my $self = shift;
 
     if (${$self->_curr_line_ref()} =~ m{\A[ \t]})
     {
-        XML::Grammar::Fiction::Err::Parse::LeadingSpace->throw(
-            error => "Leading space detected in the text.",
-            'line' => $self->_get_line_num(),
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::LeadingSpace',
+            "Leading space detected in the text.",
         );
     }
 }
@@ -169,6 +179,11 @@ sub _setup_text
 }
 
 =head1 METHODS
+
+=head2 $self->throw_text_error($exception_class, $text)
+
+Throws the Error class $exception_class with the text $text (and the current
+line number.
 
 =head2 $self->meta()
 
