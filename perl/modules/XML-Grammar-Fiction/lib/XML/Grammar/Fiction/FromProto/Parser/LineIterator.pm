@@ -42,7 +42,7 @@ sub curr_pos
     return pos(${$self->_curr_line_ref()});
 }
 
-sub _curr_line_and_pos
+sub curr_line_and_pos
 {
     my $self = shift;
 
@@ -187,9 +187,25 @@ sub _setup_text
 
 =head1 METHODS
 
-=head2 $self->curr_pos()
+=head2 my $pos = $self->curr_pos()
 
 Returns the current position (using pos($$l)) of the current line.
+
+=head2 my ($line_ref, $pos) = $self->curr_line_and_pos();
+
+Convenience method to return the line reference and the position.
+
+For example:
+
+    # Check for a tag.
+    my ($l_ref, $p) = $self->curr_line_and_pos();
+
+    my $is_tag_cond = ($$l_ref =~ m{\G<}cg);
+    my $is_close = $is_tag_cond && ($$l_ref =~ m{\G/}cg);
+
+    pos($$l) = $p;
+
+    return ($is_tag_cond, $is_close);
 
 =head2 $self->throw_text_error($exception_class, $text)
 
