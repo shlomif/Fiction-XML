@@ -572,7 +572,7 @@ sub _look_ahead_for_comment
 {
     my $self = shift;
 
-    if ($self->_line_starts_with(qr{<!--}))
+    if ($self->curr_line_continues_with(qr{<!--}))
     {
         my $text = $self->_consume_up_to(qr{-->});
 

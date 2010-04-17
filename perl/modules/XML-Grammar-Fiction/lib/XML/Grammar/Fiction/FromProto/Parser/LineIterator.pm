@@ -181,6 +181,23 @@ sub skip_space
     $self->_consume(qr{[ \t]});
 }
 
+=head2 $self->curr_line_continues_with($regex)
+
+Matches the current line with $regex starting from the current position and 
+returns the result. The position remains at the original position if the 
+regular expression does not match (using C< qr//cg >).
+
+=cut
+
+sub curr_line_continues_with
+{
+    my ($self, $re) = @_;
+
+    my $l = $self->curr_line_ref();
+
+    return $$l =~ m{\G$re}cg;
+}
+
 =head2 $self->throw_text_error($exception_class, $text)
 
 Throws the Error class $exception_class with the text $text (and the current
@@ -197,15 +214,6 @@ sub throw_text_error
         error => $text,
         line => $self->_get_line_num(),    
     );
-}
-
-sub _line_starts_with
-{
-    my ($self, $re) = @_;
-
-    my $l = $self->curr_line_ref();
-
-    return $$l =~ m{\G$re}cg;
 }
 
 sub _get_line_num
