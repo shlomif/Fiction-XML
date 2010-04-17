@@ -12,7 +12,6 @@ extends("XML::Grammar::Fiction::FromProto::Parser");
 has "_curr_line_idx" => (isa => "Int", is => "rw");
 has "_lines" => (isa => "ArrayRef", is => "rw");
 
-
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::LineIterator - line iterator base
@@ -20,20 +19,51 @@ class for the parser.
 
 B<For internal use only>.
 
-=head1 VERSION
-
-Version 0.0.4
-
 =cut
 
 our $VERSION = '0.0.4';
 
-sub _curr_line_ref
-{
-    my $self = shift;
+=head1 VERSION
 
-    return \($self->_lines()->[$self->_curr_line_idx()]);
+Version 0.0.4
+
+=head1 SYNOPSIS
+
+B<TODO:> write one.
+
+=head1 DESCRIPTION
+
+This is a line iterator that is useful to handle text (e.g: out of a file)
+and process it incrementally.
+
+=head1 METHODS
+
+=head2 $self->setup_text($multi_line_text)
+
+Use $multi_line_text as the text to process, populate the lines array
+with it and reset the other variables.
+
+=cut
+
+sub setup_text
+{
+    my ($self, $text) = @_;
+
+    # We include the lines trailing newlines for safety.
+    $self->_lines([split(/^/, $text)]);
+
+    $self->_curr_line_idx(0);
+
+    ${$self->_curr_line_ref()} =~ m{\A}g;
+
+    return;
 }
+
+=head2 my $pos = $self->curr_pos()
+
+Returns the current position (using pos($$l)) of the current line.
+
+=cut
 
 sub curr_pos
 {
@@ -42,12 +72,52 @@ sub curr_pos
     return pos(${$self->_curr_line_ref()});
 }
 
+=head2 my ($line_ref, $pos) = $self->curr_line_and_pos();
+
+Convenience method to return the line reference and the position.
+
+For example:
+
+    # Check for a tag.
+    my ($l_ref, $p) = $self->curr_line_and_pos();
+
+    my $is_tag_cond = ($$l_ref =~ m{\G<}cg);
+    my $is_close = $is_tag_cond && ($$l_ref =~ m{\G/}cg);
+
+    pos($$l) = $p;
+
+    return ($is_tag_cond, $is_close);
+
+=cut
+
 sub curr_line_and_pos
 {
     my $self = shift;
 
     return ($self->_curr_line_ref(), $self->curr_pos());
 }
+
+=head2 my $line_copy_ref = $self->curr_line_copy()
+
+Returns a reference to a copy of the current line that is allowed to be 
+tempered with (by assigning to pos() or in a different way.). The line is
+returned as a reference so to avoid destroying its pos() value.
+
+For example:
+
+    sub _look_ahead_for_tag
+    {
+        my $self = shift;
+
+        my $l = $self->curr_line_copy();
+
+        my $is_tag_cond = ($$l =~ m{\G<}cg);
+        my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
+
+        return ($is_tag_cond, $is_close);
+    }
+
+=cut
 
 sub curr_line_copy
 {
@@ -58,6 +128,30 @@ sub curr_line_copy
     pos($l) = $self->curr_pos();
     
     return \$l;
+}
+
+=head2 $self->throw_text_error($exception_class, $text)
+
+Throws the Error class $exception_class with the text $text (and the current
+line number.
+
+=cut
+
+sub throw_text_error
+{
+    my ($self, $error_class, $text) = @_;
+
+    return $error_class->throw(
+        error => $text,
+        line => $self->_get_line_num(),    
+    );
+}
+
+sub _curr_line_ref
+{
+    my $self = shift;
+
+    return \($self->_lines()->[$self->_curr_line_idx()]);
 }
 
 sub _next_line_ref
@@ -103,15 +197,6 @@ sub _get_line_num
     return $self->_curr_line_idx()+1;
 }
 
-sub throw_text_error
-{
-    my ($self, $error_class, $text) = @_;
-
-    return $error_class->throw(
-        error => $text,
-        line => $self->_get_line_num(),    
-    );
-}
 
 sub _check_if_line_starts_with_whitespace
 {
@@ -181,72 +266,6 @@ sub _consume_up_to
 
     return $return_value;
 }
-
-sub setup_text
-{
-    my ($self, $text) = @_;
-
-    # We include the lines trailing newlines for safety.
-    $self->_lines([split(/^/, $text)]);
-
-    $self->_curr_line_idx(0);
-
-    ${$self->_curr_line_ref()} =~ m{\A}g;
-
-    return;
-}
-
-=head1 METHODS
-
-=head2 $self->setup_text($multi_line_text)
-
-Use $multi_line_text as the text to process, populate the lines array
-with it and reset the other variables.
-
-=head2 my $pos = $self->curr_pos()
-
-Returns the current position (using pos($$l)) of the current line.
-
-=head2 my ($line_ref, $pos) = $self->curr_line_and_pos();
-
-Convenience method to return the line reference and the position.
-
-For example:
-
-    # Check for a tag.
-    my ($l_ref, $p) = $self->curr_line_and_pos();
-
-    my $is_tag_cond = ($$l_ref =~ m{\G<}cg);
-    my $is_close = $is_tag_cond && ($$l_ref =~ m{\G/}cg);
-
-    pos($$l) = $p;
-
-    return ($is_tag_cond, $is_close);
-
-=head2 my $line_copy_ref = $self->curr_line_copy()
-
-Returns a reference to a copy of the current line that is allowed to be 
-tempered with (by assigning to pos() or in a different way.). The line is
-returned as a reference so to avoid destroying its pos() value.
-
-For example:
-
-    sub _look_ahead_for_tag
-    {
-        my $self = shift;
-
-        my $l = $self->curr_line_copy();
-
-        my $is_tag_cond = ($$l =~ m{\G<}cg);
-        my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
-
-        return ($is_tag_cond, $is_close);
-    }
-
-=head2 $self->throw_text_error($exception_class, $text)
-
-Throws the Error class $exception_class with the text $text (and the current
-line number.
 
 =head2 $self->meta()
 
