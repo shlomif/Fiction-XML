@@ -174,12 +174,12 @@ sub _parse_opening_tag
 
     if ($$l !~ m{\G<($id_regex)}cg)
     {
-        # print "Before : " . substr($$l, 0, $p) . "\n";
-        XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag->throw(
-            error => "Cannot match opening tag.",
-            'line' => $self->_get_line_num(),
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag',
+            "Cannot match opening tag.",
         );
     }
+
     my $id = $1;
 
     my $attrs = $self->_parse_opening_tag_attrs();
@@ -191,9 +191,9 @@ sub _parse_opening_tag
     }
     elsif ($$l !~ m{\G>}g)
     {
-        XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket->throw(
-            error => "Cannot match the \">\" of the opening tag",
-            'line' => $self->_get_line_num(),
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket',
+            "Cannot match the \">\" of the opening tag",
         );
     }
     
@@ -205,13 +205,6 @@ sub _parse_opening_tag
     );
 }
 
-sub _get_line_num
-{
-    my $self = shift;
-
-    return $self->_curr_line_idx()+1;
-}
-
 sub _parse_closing_tag
 {
     my $self = shift;
@@ -220,9 +213,9 @@ sub _parse_closing_tag
 
     if ($$l !~ m{\G</($id_regex)>}g)
     {
-        XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax->throw(
-            error => "Cannot match closing tag",
-            line => $self->_get_line_num(),
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax',
+            "Cannot match closing tag",
         );
     }
 
@@ -500,9 +493,9 @@ sub _handle_non_tag_text
 
     if (! @{$self->_tags_stack()} )
     {
-        XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag->throw(
-            error => "Cannot match opening tag.",
-            'line' => $self->_get_line_num(),
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag',
+            "Cannot match opening tag.",
         );
     }
 
