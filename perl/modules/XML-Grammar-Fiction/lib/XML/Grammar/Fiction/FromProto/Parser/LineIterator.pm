@@ -35,13 +35,18 @@ sub _curr_line_ref
     return \($self->_lines()->[$self->_curr_line_idx()]);
 }
 
+sub curr_pos
+{
+    my $self = shift;
+
+    return pos(${$self->_curr_line_ref()});
+}
+
 sub _curr_line_and_pos
 {
     my $self = shift;
 
-    my $l = $self->_curr_line_ref();
-
-    return ($l, pos($$l));
+    return ($self->_curr_line_ref(), $self->curr_pos());
 }
 
 sub _next_line_ref
@@ -181,6 +186,10 @@ sub _setup_text
 }
 
 =head1 METHODS
+
+=head2 $self->curr_pos()
+
+Returns the current position (using pos($$l)) of the current line.
 
 =head2 $self->throw_text_error($exception_class, $text)
 
