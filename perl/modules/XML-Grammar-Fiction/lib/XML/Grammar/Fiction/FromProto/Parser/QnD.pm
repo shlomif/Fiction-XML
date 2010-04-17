@@ -296,7 +296,7 @@ sub _parse_non_tag_text_unit
 
     my $l = $self->curr_line_ref();
 
-    my $text = $self->_consume_up_to(qr{(?:\<|^\n?$)}ms);
+    my $text = $self->consume_up_to(qr{(?:\<|^\n?$)}ms);
 
     $l = $self->curr_line_ref();
 
@@ -574,7 +574,7 @@ sub _look_ahead_for_comment
 
     if ($self->curr_line_continues_with(qr{<!--}))
     {
-        my $text = $self->_consume_up_to(qr{-->});
+        my $text = $self->consume_up_to(qr{-->});
 
         $self->_add_to_top_tag(
             $self->_new_comment($text),
