@@ -379,7 +379,6 @@ sub _generate_text_unit_events
     if (! $self->_generate_tag_event())
     {
         my $l = $self->_curr_line_ref();
-        my $orig_pos = pos($$l);
         
         my $is_para = (pos($$l) == 0);
 
