@@ -225,7 +225,7 @@ sub throw_text_error
 
     return $error_class->throw(
         error => $text,
-        line => $self->line_num(),    
+        line => $self->line_num(),
     );
 }
 
