@@ -80,6 +80,13 @@ sub _line_starts_with
     return $$l =~ m{\G$re}cg;
 }
 
+sub _get_line_num
+{
+    my $self = shift;
+
+    return $self->_curr_line_idx()+1;
+}
+
 sub _check_if_line_starts_with_whitespace
 {
     my $self = shift;
