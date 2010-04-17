@@ -260,6 +260,43 @@ sub consume
     return $return_value;
 }
 
+=head2 $self->consume_up_to($regex)
+
+Consume up to the point where $regex matches.
+
+=cut
+
+# TODO : copied and pasted from _consume - abstract
+sub consume_up_to
+{
+    my ($self, $match_regex) = @_;
+
+    my $return_value = "";
+    my $l = $self->curr_line_ref();
+
+    LINE_LOOP:
+    while (defined($$l))
+    {
+        # We assign to a scalar for scalar context, but we're not making
+        # use of the variable.
+        my $verdict = ($$l =~ m[\G(.*?)((?:${match_regex})|\z)]cgms);
+        $return_value .= $1;
+        
+        # Find if it matched the regex.
+        if (length($2) > 0)
+        {
+            last LINE_LOOP;
+        }
+    }
+    continue
+    {
+        $l = $self->next_line_ref();
+        $self->_check_if_line_starts_with_whitespace();
+    }
+
+    return $return_value;
+}
+
 =head2 $self->throw_text_error($exception_class, $text)
 
 Throws the Error class $exception_class with the text $text (and the current
@@ -291,36 +328,6 @@ sub _check_if_line_starts_with_whitespace
     }
 }
 
-# TODO : copied and pasted from _consume - abstract
-sub _consume_up_to
-{
-    my ($self, $match_regex) = @_;
-
-    my $return_value = "";
-    my $l = $self->curr_line_ref();
-
-    LINE_LOOP:
-    while (defined($$l))
-    {
-        # We assign to a scalar for scalar context, but we're not making
-        # use of the variable.
-        my $verdict = ($$l =~ m[\G(.*?)((?:${match_regex})|\z)]cgms);
-        $return_value .= $1;
-        
-        # Find if it matched the regex.
-        if (length($2) > 0)
-        {
-            last LINE_LOOP;
-        }
-    }
-    continue
-    {
-        $l = $self->next_line_ref();
-        $self->_check_if_line_starts_with_whitespace();
-    }
-
-    return $return_value;
-}
 
 =head2 $self->meta()
 
