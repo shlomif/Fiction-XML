@@ -179,6 +179,23 @@ sub skip_space
     my $self = shift;
 
     $self->_consume(qr{[ \t]});
+
+    return;
+}
+
+=head2 $self->skip_multiline_space()
+
+Skip multiline space.
+
+=cut
+
+sub skip_multiline_space
+{
+    my $self = shift;
+
+    $self->_consume(qr{\s});
+
+    return;
 }
 
 =head2 $self->curr_line_continues_with($regex)

@@ -374,7 +374,7 @@ sub _generate_text_unit_events
 {
     my $self = shift;
 
-    my $space = $self->_consume(qr{\s});
+    $self->skip_multiline_space();
 
     if (! $self->_generate_tag_event())
     {
