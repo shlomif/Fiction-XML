@@ -182,7 +182,7 @@ sub _consume_up_to
     return $return_value;
 }
 
-sub _setup_text
+sub setup_text
 {
     my ($self, $text) = @_;
 
@@ -197,6 +197,11 @@ sub _setup_text
 }
 
 =head1 METHODS
+
+=head2 $self->setup_text($multi_line_text)
+
+Use $multi_line_text as the text to process, populate the lines array
+with it and reset the other variables.
 
 =head2 my $pos = $self->curr_pos()
 

@@ -17,7 +17,7 @@ EOF
 
     my $parser = XML::Grammar::Fiction::FromProto::Parser::QnD->new();
 
-    $parser->_setup_text($text);
+    $parser->setup_text($text);
 
     my $ret = $parser->_consume(qr{[^<]});
 
@@ -39,7 +39,7 @@ EOF
 
     my $parser = XML::Grammar::Fiction::FromProto::Parser::QnD->new();
 
-    $parser->_setup_text($text);
+    $parser->setup_text($text);
 
     my $ret = $parser->_consume(qr{[^<]});
 
@@ -60,7 +60,7 @@ EOF
 
     my $parser = XML::Grammar::Fiction::FromProto::Parser::QnD->new();
 
-    $parser->_setup_text($text);
+    $parser->setup_text($text);
 
     my $ret = $parser->_parse_opening_tag();
 

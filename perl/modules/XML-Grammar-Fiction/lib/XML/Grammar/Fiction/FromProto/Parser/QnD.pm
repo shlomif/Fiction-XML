@@ -636,7 +636,7 @@ sub process_text
 {   
     my ($self, $text) = @_;
 
-    $self->_setup_text($text);
+    $self->setup_text($text);
 
     return $self->_start();
 }
