@@ -152,6 +152,21 @@ sub curr_line_copy
     return \$l;
 }
 
+=head2 my $line_ref = $self->next_line_ref()
+
+Advance the line pointer and return the next line.
+
+=cut
+
+sub next_line_ref
+{
+    my $self = shift;
+
+    $self->_curr_line_idx($self->_curr_line_idx()+1);
+
+    return $self->curr_line_ref();
+}
+
 =head2 $self->throw_text_error($exception_class, $text)
 
 Throws the Error class $exception_class with the text $text (and the current
@@ -167,15 +182,6 @@ sub throw_text_error
         error => $text,
         line => $self->_get_line_num(),    
     );
-}
-
-sub _next_line_ref
-{
-    my $self = shift;
-
-    $self->_curr_line_idx($self->_curr_line_idx()+1);
-
-    return $self->curr_line_ref();
 }
 
 # Skip the whitespace.
@@ -239,7 +245,7 @@ sub _consume
     }
     continue
     {
-        $l = $self->_next_line_ref();
+        $l = $self->next_line_ref();
         $self->_check_if_line_starts_with_whitespace();
     }
 
@@ -275,7 +281,7 @@ sub _consume_up_to
     }
     continue
     {
-        $l = $self->_next_line_ref();
+        $l = $self->next_line_ref();
         $self->_check_if_line_starts_with_whitespace();
     }
 
