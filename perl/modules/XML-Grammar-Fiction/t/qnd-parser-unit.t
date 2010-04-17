@@ -19,10 +19,10 @@ EOF
 
     $parser->setup_text($text);
 
-    my $ret = $parser->_consume(qr{[^<]});
+    my $ret = $parser->consume(qr{[^<]});
 
     # TEST
-    is ($ret, "Hello ", "_consume works for first line");
+    is ($ret, "Hello ", "consume works for first line");
 }
 
 {
@@ -41,11 +41,11 @@ EOF
 
     $parser->setup_text($text);
 
-    my $ret = $parser->_consume(qr{[^<]});
+    my $ret = $parser->consume(qr{[^<]});
 
     # TEST
     is ($ret, "Hello\nvoila the row kala:\n", 
-        "_consume works for several lines");
+        "consume works for several lines");
 }
 
 {

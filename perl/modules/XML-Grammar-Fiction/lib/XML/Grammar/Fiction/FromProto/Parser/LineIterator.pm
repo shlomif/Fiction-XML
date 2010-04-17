@@ -178,7 +178,7 @@ sub skip_space
 {
     my $self = shift;
 
-    $self->_consume(qr{[ \t]});
+    $self->consume(qr{[ \t]});
 
     return;
 }
@@ -193,7 +193,7 @@ sub skip_multiline_space
 {
     my $self = shift;
 
-    $self->_consume(qr{\s});
+    $self->consume(qr{\s});
 
     return;
 }
@@ -229,6 +229,37 @@ sub line_num
     return $self->_curr_line_idx()+1;
 }
 
+=head2 $self->consume($regex)
+
+Consume as much text as $regex matches.
+
+=cut
+
+sub consume
+{
+    my ($self, $match_regex) = @_;
+
+    my $return_value = "";
+    my $l = $self->curr_line_ref();
+
+    while (defined($$l) && ($$l =~ m[\G(${match_regex}*)\z]cgms))
+    {
+        $return_value .= $$l;
+    }
+    continue
+    {
+        $l = $self->next_line_ref();
+        $self->_check_if_line_starts_with_whitespace();
+    }
+
+    if (defined($$l) && ($$l =~ m[\G(${match_regex}*)]cg))
+    {
+        $return_value .= $1;
+    }
+
+    return $return_value;
+}
+
 =head2 $self->throw_text_error($exception_class, $text)
 
 Throws the Error class $exception_class with the text $text (and the current
@@ -258,31 +289,6 @@ sub _check_if_line_starts_with_whitespace
             "Leading space detected in the text.",
         );
     }
-}
-
-sub _consume
-{
-    my ($self, $match_regex) = @_;
-
-    my $return_value = "";
-    my $l = $self->curr_line_ref();
-
-    while (defined($$l) && ($$l =~ m[\G(${match_regex}*)\z]cgms))
-    {
-        $return_value .= $$l;
-    }
-    continue
-    {
-        $l = $self->next_line_ref();
-        $self->_check_if_line_starts_with_whitespace();
-    }
-
-    if (defined($$l) && ($$l =~ m[\G(${match_regex}*)]cg))
-    {
-        $return_value .= $1;
-    }
-
-    return $return_value;
 }
 
 # TODO : copied and pasted from _consume - abstract
