@@ -146,6 +146,8 @@ sub _consume_up_to
     LINE_LOOP:
     while (defined($$l))
     {
+        # We assign to a scalar for scalar context, but we're not making
+        # use of the variable.
         my $verdict = ($$l =~ m[\G(.*?)((?:${match_regex})|\z)]cgms);
         $return_value .= $1;
         
