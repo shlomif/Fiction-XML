@@ -9,7 +9,7 @@ use XML::Grammar::Fiction::Err;
 
 extends("XML::Grammar::Fiction::FromProto::Parser");
 
-has "_curr_line_idx" => (isa => "Int", is => "rw");
+has "_curr_line_idx" => (isa => "Int", is => "rw", reader => "line_idx",);
 has "_lines" => (isa => "ArrayRef", is => "rw");
 
 =head1 NAME
@@ -215,6 +215,11 @@ sub curr_line_continues_with
     return $$l =~ m{\G$re}cg;
 }
 
+=head2 my $line_number = $self->line_idx()
+
+Returns the line index as an integer. It starts from 0 for the 
+first line (like in Perl lines.)
+
 =head2 my $line_number = $self->line_num()
 
 Returns the line number as an integer. It starts from 1 for the 
@@ -235,6 +240,20 @@ Consume as much text as $regex matches.
 
 =cut
 
+sub _next_line_ref_wo_leading_space
+{
+    my $self = shift;
+
+    my $l = $self->next_line_ref();
+
+    if (defined($$l))
+    {
+        $self->_check_if_line_starts_with_whitespace()
+    }
+
+    return $l;
+}
+
 sub consume
 {
     my ($self, $match_regex) = @_;
@@ -248,8 +267,7 @@ sub consume
     }
     continue
     {
-        $l = $self->next_line_ref();
-        $self->_check_if_line_starts_with_whitespace();
+        $l = $self->_next_line_ref_wo_leading_space();
     }
 
     if (defined($$l) && ($$l =~ m[\G(${match_regex}*)]cg))
@@ -290,8 +308,7 @@ sub consume_up_to
     }
     continue
     {
-        $l = $self->next_line_ref();
-        $self->_check_if_line_starts_with_whitespace();
+        $l = $self->_next_line_ref_wo_leading_space();
     }
 
     return $return_value;
