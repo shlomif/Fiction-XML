@@ -525,7 +525,7 @@ sub _handle_close_tag
 
     my $close = $self->_parse_closing_tag();
 
-    $self->_skip_space();
+    $self->skip_space();
 
     my $open = pop(@{$self->_tags_stack()});
 
@@ -594,7 +594,7 @@ sub _parse_tags
 
     $self->_tags_stack([]);
 
-    $self->_skip_space();
+    $self->skip_space();
 
     $self->_in_para(0);
 
@@ -607,7 +607,7 @@ sub _parse_tags
         {
             redo TAGS_LOOP;
         }
-        $self->_skip_space();
+        $self->skip_space();
 
         my ($is_tag_cond, $is_close) = $self->_look_ahead_for_tag();
 
