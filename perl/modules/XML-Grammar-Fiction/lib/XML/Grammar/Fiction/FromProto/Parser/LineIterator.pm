@@ -167,10 +167,25 @@ sub next_line_ref
     return $self->curr_line_ref();
 }
 
+=head2 $self->skip_space()
+
+Skip whitespace (spaces and tabs) from the current position onwards.
+
+=cut
+
+# Skip the whitespace.
+sub skip_space
+{
+    my $self = shift;
+
+    $self->_consume(qr{[ \t]});
+}
+
 =head2 $self->throw_text_error($exception_class, $text)
 
 Throws the Error class $exception_class with the text $text (and the current
 line number.
+
 
 =cut
 
@@ -182,14 +197,6 @@ sub throw_text_error
         error => $text,
         line => $self->_get_line_num(),    
     );
-}
-
-# Skip the whitespace.
-sub _skip_space
-{
-    my $self = shift;
-
-    $self->_consume(qr{[ \t]});
 }
 
 sub _curr_line_matches
