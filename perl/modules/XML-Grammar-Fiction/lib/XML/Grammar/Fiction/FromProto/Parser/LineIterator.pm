@@ -54,9 +54,31 @@ sub setup_text
 
     $self->_curr_line_idx(0);
 
-    ${$self->_curr_line_ref()} =~ m{\A}g;
+    ${$self->curr_line_ref()} =~ m{\A}g;
 
     return;
+}
+
+=head2 $line_ref = $self->curr_line_ref()
+
+Returns a reference to the current line (a string).
+
+For example:
+
+    my $l_ref = $self->curr_line_ref();
+
+    if ($$l_ref !~ m{\G<tag>}g)
+    {
+        die "Could not match tag.";
+    }
+
+=cut
+
+sub curr_line_ref
+{
+    my $self = shift;
+
+    return \($self->_lines()->[$self->_curr_line_idx()]);
 }
 
 =head2 my $pos = $self->curr_pos()
@@ -69,7 +91,7 @@ sub curr_pos
 {
     my $self = shift;
 
-    return pos(${$self->_curr_line_ref()});
+    return pos(${$self->curr_line_ref()});
 }
 
 =head2 my ($line_ref, $pos) = $self->curr_line_and_pos();
@@ -94,7 +116,7 @@ sub curr_line_and_pos
 {
     my $self = shift;
 
-    return ($self->_curr_line_ref(), $self->curr_pos());
+    return ($self->curr_line_ref(), $self->curr_pos());
 }
 
 =head2 my $line_copy_ref = $self->curr_line_copy()
@@ -123,7 +145,7 @@ sub curr_line_copy
 {
     my $self = shift;
 
-    my $l = ${$self->_curr_line_ref()} . "";
+    my $l = ${$self->curr_line_ref()} . "";
 
     pos($l) = $self->curr_pos();
     
@@ -147,20 +169,13 @@ sub throw_text_error
     );
 }
 
-sub _curr_line_ref
-{
-    my $self = shift;
-
-    return \($self->_lines()->[$self->_curr_line_idx()]);
-}
-
 sub _next_line_ref
 {
     my $self = shift;
 
     $self->_curr_line_idx($self->_curr_line_idx()+1);
 
-    return $self->_curr_line_ref();
+    return $self->curr_line_ref();
 }
 
 # Skip the whitespace.
@@ -176,7 +191,7 @@ sub _curr_line_matches
     my $self = shift;
     my $re = shift;
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     return ($$l =~ $re);
 }
@@ -185,7 +200,7 @@ sub _line_starts_with
 {
     my ($self, $re) = @_;
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     return $$l =~ m{\G$re}cg;
 }
@@ -202,7 +217,7 @@ sub _check_if_line_starts_with_whitespace
 {
     my $self = shift;
 
-    if (${$self->_curr_line_ref()} =~ m{\A[ \t]})
+    if (${$self->curr_line_ref()} =~ m{\A[ \t]})
     {
         $self->throw_text_error(
             'XML::Grammar::Fiction::Err::Parse::LeadingSpace',
@@ -216,7 +231,7 @@ sub _consume
     my ($self, $match_regex) = @_;
 
     my $return_value = "";
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     while (defined($$l) && ($$l =~ m[\G(${match_regex}*)\z]cgms))
     {
@@ -242,7 +257,7 @@ sub _consume_up_to
     my ($self, $match_regex) = @_;
 
     my $return_value = "";
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     LINE_LOOP:
     while (defined($$l))

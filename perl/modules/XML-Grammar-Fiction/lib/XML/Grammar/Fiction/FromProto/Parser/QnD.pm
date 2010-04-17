@@ -154,7 +154,7 @@ sub _parse_opening_tag_attrs
 {
     my $self = shift;
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     my @attrs;
 
@@ -170,7 +170,7 @@ sub _parse_opening_tag
 {
     my $self = shift;
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     if ($$l !~ m{\G<($id_regex)}cg)
     {
@@ -209,7 +209,7 @@ sub _parse_closing_tag
 {
     my $self = shift;
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     if ($$l !~ m{\G</($id_regex)>}g)
     {
@@ -265,7 +265,7 @@ sub _find_next_inner_text
     my $which_tag;
     my $text = "";
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     # Apparently, perl does not always returns true in this
     # case, so we need the defined($1) ? $1 : "" workaround.
@@ -294,11 +294,11 @@ sub _parse_non_tag_text_unit
 {
     my $self = shift;
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
 
     my $text = $self->_consume_up_to(qr{(?:\<|^\n?$)}ms);
 
-    $l = $self->_curr_line_ref();
+    $l = $self->curr_line_ref();
 
     my $ret_elem = $self->_new_text([$text]);
     my $is_para_end = 0;
@@ -344,7 +344,7 @@ sub _generate_tag_event
 {
     my $self = shift;
 
-    my $l = $self->_curr_line_ref();
+    my $l = $self->curr_line_ref();
     my $orig_pos = pos($$l);
 
     if (my ($tag_opener) = $$l =~ m{\G(<(?:/)?)}cg)
