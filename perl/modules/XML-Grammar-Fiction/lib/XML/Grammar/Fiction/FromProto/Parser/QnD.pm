@@ -378,9 +378,7 @@ sub _generate_text_unit_events
 
     if (! $self->_generate_tag_event())
     {
-        my $l = $self->_curr_line_ref();
-        
-        my $is_para = (pos($$l) == 0);
+        my $is_para = ($self->curr_pos() == 0);
 
         my $status = $self->_parse_non_tag_text_unit();
         my $elem = $status->{'elem'};
