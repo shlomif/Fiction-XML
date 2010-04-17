@@ -199,16 +199,6 @@ sub throw_text_error
     );
 }
 
-sub _curr_line_matches
-{
-    my $self = shift;
-    my $re = shift;
-
-    my $l = $self->curr_line_ref();
-
-    return ($$l =~ $re);
-}
-
 sub _line_starts_with
 {
     my ($self, $re) = @_;

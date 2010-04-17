@@ -267,4 +267,14 @@ sub _parse_inner_text
     return \@contents;
 }
 
+sub _curr_line_matches
+{
+    my $self = shift;
+    my $re = shift;
+
+    my $l = $self->curr_line_ref();
+
+    return ($$l =~ $re);
+}
+
 
