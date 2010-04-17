@@ -170,7 +170,7 @@ sub _parse_opening_tag
 {
     my $self = shift;
 
-    my ($l, $p) = $self->_curr_line_and_pos();
+    my $l = $self->_curr_line_ref();
 
     if ($$l !~ m{\G<($id_regex)}cg)
     {
