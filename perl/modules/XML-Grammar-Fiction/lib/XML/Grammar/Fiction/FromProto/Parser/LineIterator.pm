@@ -198,11 +198,24 @@ sub curr_line_continues_with
     return $$l =~ m{\G$re}cg;
 }
 
+=head2 my $line_number = $self->line_num()
+
+Returns the line number as an integer. It starts from 1 for the 
+first line (like in file lines.)
+
+=cut
+
+sub line_num
+{
+    my $self = shift;
+
+    return $self->_curr_line_idx()+1;
+}
+
 =head2 $self->throw_text_error($exception_class, $text)
 
 Throws the Error class $exception_class with the text $text (and the current
 line number.
-
 
 =cut
 
@@ -212,15 +225,8 @@ sub throw_text_error
 
     return $error_class->throw(
         error => $text,
-        line => $self->_get_line_num(),    
+        line => $self->line_num(),    
     );
-}
-
-sub _get_line_num
-{
-    my $self = shift;
-
-    return $self->_curr_line_idx()+1;
 }
 
 

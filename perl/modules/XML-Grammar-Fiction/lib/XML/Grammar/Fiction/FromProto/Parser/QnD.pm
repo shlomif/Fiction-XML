@@ -200,7 +200,7 @@ sub _parse_opening_tag
     return XML::Grammar::Fiction::Struct::Tag->new(
         name => $id,
         is_standalone => $is_standalone,
-        line => $self->_get_line_num(),
+        line => $self->line_num(),
         attrs => $attrs,
     );
 }
@@ -221,7 +221,7 @@ sub _parse_closing_tag
 
     return XML::Grammar::Fiction::Struct::Tag->new(
         name => $1,
-        line => $self->_get_line_num(),
+        line => $self->line_num(),
     );
 }
 
@@ -410,7 +410,7 @@ sub _handle_open_para
         XML::Grammar::Fiction::Struct::Tag::Para->new(
             name => "p",
             is_standalone => 0,
-            line => $self->_get_line_num(),
+            line => $self->line_num(),
             attrs => [],
         );
 
