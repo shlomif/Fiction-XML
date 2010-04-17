@@ -560,12 +560,10 @@ sub _look_ahead_for_tag
 {
     my $self = shift;
 
-    my ($l, $p) = $self->curr_line_and_pos();
+    my $l = $self->curr_line_copy();
 
     my $is_tag_cond = ($$l =~ m{\G<}cg);
     my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
-
-    pos($$l) = $p;
 
     return ($is_tag_cond, $is_close);
 }

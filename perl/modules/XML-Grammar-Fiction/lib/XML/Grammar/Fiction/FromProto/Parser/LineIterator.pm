@@ -49,6 +49,17 @@ sub curr_line_and_pos
     return ($self->_curr_line_ref(), $self->curr_pos());
 }
 
+sub curr_line_copy
+{
+    my $self = shift;
+
+    my $l = ${$self->_curr_line_ref()} . "";
+
+    pos($l) = $self->curr_pos();
+    
+    return \$l;
+}
+
 sub _next_line_ref
 {
     my $self = shift;
@@ -206,6 +217,26 @@ For example:
     pos($$l) = $p;
 
     return ($is_tag_cond, $is_close);
+
+=head2 my $line_copy_ref = $self->curr_line_copy()
+
+Returns a reference to a copy of the current line that is allowed to be 
+tempered with (by assigning to pos() or in a different way.). The line is
+returned as a reference so to avoid destroying its pos() value.
+
+For example:
+
+    sub _look_ahead_for_tag
+    {
+        my $self = shift;
+
+        my $l = $self->curr_line_copy();
+
+        my $is_tag_cond = ($$l =~ m{\G<}cg);
+        my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
+
+        return ($is_tag_cond, $is_close);
+    }
 
 =head2 $self->throw_text_error($exception_class, $text)
 
