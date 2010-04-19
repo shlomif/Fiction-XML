@@ -18,6 +18,7 @@ has "_tags_stack" =>
     handles =>
     {
         '_push_tag' => 'push',
+        '_grep_tags_stack' => 'grep',
     },
 );
 
