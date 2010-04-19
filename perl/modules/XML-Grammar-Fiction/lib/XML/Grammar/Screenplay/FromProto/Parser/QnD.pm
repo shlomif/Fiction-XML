@@ -138,12 +138,6 @@ sub _create_elem
         );
 }
 
-sub _new_empty_list
-{
-    my $self = shift;
-    return $self->_new_list([]);
-}
-
 sub _new_list
 {
     my $self = shift;
