@@ -44,6 +44,11 @@ sub ACTION_distruntest {
   chdir $start_dir;
 }
 
+sub get_test_run_test_files
+{
+    return [glob("t/*.t")]
+}
+
 sub do_test_run_tests
 {
     my $self = shift;
@@ -53,7 +58,7 @@ sub do_test_run_tests
     my $test_run =
         Test::Run::CmdLine::Iface->new(
             {
-                'test_files' => [glob("t/*.t")],
+                'test_files' => $self->get_test_run_test_files(),
             }   
             # 'backend_params' => $self->_get_backend_params(),
         );
