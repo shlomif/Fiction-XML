@@ -393,7 +393,7 @@ sub _handle_open_para
 
     $new_elem->children([]);
 
-    push @{$self->_tags_stack()}, $new_elem; 
+    $self->_push_tag($new_elem);
 
     $self->_in_para(1);
 
@@ -491,7 +491,7 @@ sub _handle_open_tag
 
     $open->children([]);
 
-    push @{$self->_tags_stack()}, $open;
+    $self->_push_tag($open);
 
     return;
 }

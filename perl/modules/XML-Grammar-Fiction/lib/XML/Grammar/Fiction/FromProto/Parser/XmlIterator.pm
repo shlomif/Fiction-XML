@@ -9,7 +9,17 @@ use XML::Grammar::Fiction::Err;
 
 extends("XML::Grammar::Fiction::FromProto::Parser::LineIterator");
 
-has "_tags_stack" => (isa => "ArrayRef", is => "rw", default => sub { [] },);
+has "_tags_stack" =>
+(
+    isa => "ArrayRef",
+    is => "rw",
+    default => sub { [] },
+    traits => ['Array'],
+    handles =>
+    {
+        '_push_tag' => 'push',
+    },
+);
 
 has "_events_queue" =>
 (
