@@ -164,6 +164,8 @@ sub next_line_ref
 
     $self->_curr_line_idx($self->_curr_line_idx()+1);
 
+    pos(${$self->curr_line_ref()}) = 0;
+
     return $self->curr_line_ref();
 }
 
