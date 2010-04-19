@@ -44,6 +44,13 @@ sub _add_to_top_tag
     return;
 }
 
+# TODO : Maybe move to a different sub-class or role.
+sub _new_empty_list
+{
+    my $self = shift;
+    return $self->_new_list([]);
+}
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base
