@@ -5,21 +5,8 @@ use warnings;
 
 use Moose;
 
-extends("XML::Grammar::Fiction::FromProto::Parser::LineIterator");
+extends("XML::Grammar::Fiction::FromProto::Parser::XmlIterator");
 
-has "_tags_stack" => (isa => "ArrayRef", is => "rw");
-has "_events_queue" =>
-(
-    isa => "ArrayRef",
-    is => "rw", 
-    default => sub { []; },
-    traits => ['Array'],
-    handles =>
-    {
-        _enqueue_event => 'push',
-        _extract_event => 'shift',
-    },
-);
 has "_in_para" => (isa => "Bool", is => "rw");
 
 use XML::Grammar::Fiction::FromProto::Nodes;
@@ -42,15 +29,6 @@ Version 0.0.4
 
 our $VERSION = '0.0.4';
 
-sub _add_to_top_tag
-{
-    my ($self, $child) = @_;
-
-    $self->_tags_stack->[-1]->append_child($child);
-
-    return;
-}
-
 sub _start
 {
     my $self = shift;
@@ -59,7 +37,6 @@ sub _start
 }
 
 my $id_regex = '[a-zA-Z_\-]+';
-
 
 sub _new_node
 {
@@ -591,8 +568,6 @@ sub _look_ahead_for_comment
 sub _parse_tags
 {
     my $self = shift;
-
-    $self->_tags_stack([]);
 
     $self->skip_space();
 
