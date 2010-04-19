@@ -4,9 +4,9 @@ use warnings;
 use File::Spec;
 use lib File::Spec->catdir(File::Spec->curdir(), "inc");
 
-use XML::Grammar::Builder;
+use XML::Grammar::Fiction::Builder;
 
-my $builder = XML::Grammar::Builder->new(
+my $builder = XML::Grammar::Fiction::Builder->new(
     module_name         => 'XML::Grammar::Fiction',
     license             => 'mit',
     dist_author         => 'Shlomi Fish <shlomif@cpan.org>',
