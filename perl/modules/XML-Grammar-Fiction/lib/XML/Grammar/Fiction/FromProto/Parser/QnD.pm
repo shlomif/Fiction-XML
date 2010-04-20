@@ -452,13 +452,7 @@ sub _handle_non_tag_text
 {
     my $self = shift;
 
-    if (! @{$self->_tags_stack()} )
-    {
-        $self->throw_text_error(
-            'XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag',
-            "Cannot match opening tag.",
-        );
-    }
+    $self->_check_for_open_tag();
 
     my $contents = $self->_parse_text();
 
