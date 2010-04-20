@@ -405,17 +405,6 @@ sub _handle_close_para
     return;
 }
 
-sub _handle_paragraph_event
-{
-    my ($self, $event) = @_;
-
-    return 
-          $event->{'type'} eq "open"
-        ? $self->_handle_open_para($event)
-        : $self->_handle_close_para($event)
-        ;
-}
-
 sub _handle_elem_event
 {
     my ($self, $event) = @_;
