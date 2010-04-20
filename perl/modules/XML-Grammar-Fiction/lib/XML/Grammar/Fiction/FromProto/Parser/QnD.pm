@@ -434,27 +434,11 @@ sub _handle_open_tag
     return;
 }
 
-sub _handle_close_tag
-{
+before '_handle_close_tag' => sub { 
     my $self = shift;
 
-    my $close = $self->_parse_closing_tag();
-
     $self->skip_space();
-
-    my $open = $self->_pop_tag;
-
-    if ($open->name() ne $close->name())
-    {
-        XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
-            error => "Tags do not match",
-            opening_tag => $open,
-            closing_tag => $close,
-        );
-    }
-
-    return $self->_merge_tag($open);
-}
+};
 
 sub _look_ahead_for_tag
 {
