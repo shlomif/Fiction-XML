@@ -51,6 +51,21 @@ sub _new_empty_list
     return $self->_new_list([]);
 }
 
+sub _check_for_open_tag
+{
+    my $self = shift;
+
+    if (! @{$self->_tags_stack()} )
+    {
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag',
+            "Cannot match opening tag.",
+        );
+    }
+
+    return;
+}
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base
