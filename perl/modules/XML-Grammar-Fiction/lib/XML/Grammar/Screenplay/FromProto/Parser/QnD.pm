@@ -704,9 +704,7 @@ sub _handle_event
 {
     my ($self, $event) = @_;
 
-    if (  exists($event->{'tag'})
-        && $event->{'tag'} eq "para"
-    )
+    if ($self->_is_event_a_para($event))
     {
         if ($event->{'type'} eq "open")
         {

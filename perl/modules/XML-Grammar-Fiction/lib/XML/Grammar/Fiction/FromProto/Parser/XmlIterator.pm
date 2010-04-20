@@ -75,6 +75,13 @@ sub _check_for_open_tag
     return;
 }
 
+sub _is_event_a_para
+{
+    my ($self, $event) = @_;
+
+    return exists($event->{'tag'}) && ($event->{'tag'} eq "para");
+}
+
 sub _handle_non_tag_text
 {
     my $self = shift;

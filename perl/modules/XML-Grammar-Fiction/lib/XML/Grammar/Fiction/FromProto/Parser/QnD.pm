@@ -416,13 +416,6 @@ sub _handle_paragraph_event
         ;
 }
 
-sub _is_event_a_para
-{
-    my ($self, $event) = @_;
-
-    return exists($event->{'tag'}) && ($event->{'tag'} eq "para");
-}
-
 sub _handle_elem_event
 {
     my ($self, $event) = @_;
