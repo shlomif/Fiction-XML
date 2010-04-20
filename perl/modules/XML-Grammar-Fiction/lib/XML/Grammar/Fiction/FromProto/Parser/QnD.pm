@@ -534,10 +534,7 @@ sub _parse_all
         }
         elsif ($is_tag_cond)
         {
-            if ($ret_tag = $self->_handle_open_tag())
-            {
-                last TAGS_LOOP;
-            }
+            $self->_handle_open_tag();
         }
         else
         {
