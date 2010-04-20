@@ -795,6 +795,35 @@ sub _handle_open_tag
     return;
 }
 
+sub _handle_close_tag
+{
+    my $self = shift;
+
+    $self->_close_top_tags();
+
+    my $close = $self->_parse_closing_tag();
+
+    my $open = $self->_pop_tag();
+
+    if ($open->name() ne $close->name())
+    {
+        XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
+            error => "Tags do not match",
+            opening_tag => $open,
+            closing_tag => $close,
+        );
+    }
+
+    if (defined(my $top_elem = $self->_merge_tag($open)))
+    {
+        return $top_elem;
+    }
+    else
+    {
+        return;
+    }
+}
+
 sub _parse_all
 {
     my $self = shift;
@@ -860,29 +889,9 @@ sub _parse_all
         # Check if it's a closing tag.
         if ($is_close)
         {
-            $self->_close_top_tags();
-
-            my $close = $self->_parse_closing_tag();
-
-            my $open = $self->_pop_tag();
-    
-            if ($open->name() ne $close->name())
+            if ($ret_tag = $self->_handle_close_tag())
             {
-                XML::Grammar::Fiction::Err::Parse::TagsMismatch->throw(
-                    error => "Tags do not match",
-                    opening_tag => $open,
-                    closing_tag => $close,
-                );
-            }
-
-            if (defined(my $top_elem = $self->_merge_tag($open)))
-            {
-                $ret_tag = $top_elem;
                 last TAGS_LOOP;
-            }
-            else
-            {
-                redo TAGS_LOOP;
             }
         }
         elsif ($is_tag_cond)
