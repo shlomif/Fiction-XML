@@ -89,6 +89,13 @@ sub _is_event_a_para
     return exists($event->{'tag'}) && ($event->{'tag'} eq "para");
 }
 
+sub _is_event_elem
+{
+    my ($self, $event) = @_;
+
+    return $event->{'type'} eq "elem";
+}
+
 sub _handle_paragraph_event
 {
     my ($self, $event) = @_;
@@ -98,6 +105,15 @@ sub _handle_paragraph_event
         ? $self->_handle_open_para($event)
         : $self->_handle_close_para($event)
         ;
+}
+
+sub _handle_elem_event
+{
+    my ($self, $event) = @_;
+
+    $self->_add_to_top_tag( $event->{'elem'});
+
+    return;
 }
 
 sub _handle_non_tag_text

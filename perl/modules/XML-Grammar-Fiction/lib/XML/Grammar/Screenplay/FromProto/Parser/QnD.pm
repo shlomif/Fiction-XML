@@ -762,9 +762,9 @@ sub _handle_event
     {
         $self->_handle_saying_event($event);
     }
-    elsif ($event->{'type'} eq "elem")
+    elsif ($self->_is_event_elem($event))
     {
-        $self->_add_to_top_tag( $event->{'elem'} );
+        $self->_handle_elem_event($event);
     }
 
     return;
