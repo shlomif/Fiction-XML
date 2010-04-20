@@ -714,6 +714,42 @@ sub _handle_open_para
     return $self->_start_para();
 }
 
+sub _open_saying
+{
+    my $self = shift;
+    my $event = shift;
+
+    my $new_tag =
+        XML::Grammar::Screenplay::Struct::Tag->new(
+            {
+                name => "saying",
+                is_standalone => 0,
+                # TODO : propagate the correct line_num
+                # from the called-to layers.
+                line => $self->line_num(),
+                attrs => [{key => "character", value => $event->{_elem}->character()}],
+            }
+        );
+
+    $new_tag->children([]);
+
+    $self->_push_tag($new_tag);
+
+    $self->_in_saying(1);
+
+    return;
+}
+
+sub _handle_saying_event
+{
+    my ($self, $event) = @_;
+
+    return
+        $event->{'type'} eq "open"
+        ? $self->_open_saying($event)
+        : $self->_close_saying();
+}
+
 sub _handle_event
 {
     my ($self, $event) = @_;
@@ -724,30 +760,7 @@ sub _handle_event
     }
     elsif ($self->_is_event_a_saying($event))
     {
-        if ($event->{'type'} eq "open")
-        {
-            my $new_tag =
-                XML::Grammar::Screenplay::Struct::Tag->new(
-                    {
-                        name => "saying",
-                        is_standalone => 0,
-                        # TODO : propagate the correct line_num
-                        # from the called-to layers.
-                        line => $self->line_num(),
-                        attrs => [{key => "character", value => $event->{_elem}->character()}],
-                    }
-                );
-
-            $new_tag->children([]);
-
-            $self->_push_tag($new_tag);
-
-            $self->_in_saying(1);
-        }
-        else
-        {
-            $self->_close_saying();
-        }
+        $self->_handle_saying_event($event);
     }
     elsif ($event->{'type'} eq "elem")
     {
