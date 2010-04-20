@@ -776,9 +776,9 @@ sub _handle_open_tag
     # too.
     if ($open->is_standalone())
     {
-        if (defined(my $top_elem = $self->_merge_tag($open)))
+        if (defined($self->_merge_tag($open)))
         {
-            return $top_elem;
+            Carp::confess ("Top element/tag cannot be standalone.");
         }
         else
         {
