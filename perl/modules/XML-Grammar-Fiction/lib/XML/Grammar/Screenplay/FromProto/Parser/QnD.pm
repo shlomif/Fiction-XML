@@ -43,11 +43,10 @@ sub _top_is_saying
     return $self->_in_saying() && ($self->_tags_stack->[-1]->name() eq "saying");
 }
 
-sub _pop_tag
-{
-    my $self = shift;
+around '_pop_tag' => sub {
+    my ($orig, $self) = @_;
 
-    my $open = pop(@{$self->_tags_stack()});
+    my $open = $self->$orig();
 
     if ($open->name() eq "saying")
     {
@@ -55,7 +54,7 @@ sub _pop_tag
     }
 
     return $open;
-}
+};
 
 sub _count_tags_in_stack
 {

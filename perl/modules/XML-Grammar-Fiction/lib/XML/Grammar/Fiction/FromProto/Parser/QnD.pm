@@ -391,7 +391,7 @@ sub _handle_close_para
 {
     my ($self, $event) = @_;
 
-    my $open = pop(@{$self->_tags_stack()});
+    my $open = $self->_pop_tag;
 
     my $new_elem =
         $self->_new_para(
@@ -485,7 +485,7 @@ sub _handle_close_tag
 
     $self->skip_space();
 
-    my $open = pop(@{$self->_tags_stack()});
+    my $open = $self->_pop_tag;
 
     if ($open->name() ne $close->name())
     {

@@ -20,6 +20,7 @@ has "_tags_stack" =>
         '_push_tag' => 'push',
         '_grep_tags_stack' => 'grep',
         '_tag_stack_is_empty' => 'is_empty',
+        '_pop_tag' => 'pop',
     },
 );
 
