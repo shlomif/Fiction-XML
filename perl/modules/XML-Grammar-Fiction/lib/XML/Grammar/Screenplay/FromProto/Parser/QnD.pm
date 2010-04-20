@@ -700,6 +700,60 @@ sub _close_top_tags
     return;
 }
 
+sub _handle_event
+{
+    my ($self, $event) = @_;
+
+    if (  exists($event->{'tag'})
+        && $event->{'tag'} eq "para"
+    )
+    {
+        if ($event->{'type'} eq "open")
+        {
+            $self->_start_para();
+        }
+        else
+        {
+            $self->_close_para();
+        }
+    }
+    elsif (  exists($event->{'tag'})
+        && $event->{'tag'} eq "saying"
+    )
+    {
+        if ($event->{'type'} eq "open")
+        {
+            my $new_tag =
+                XML::Grammar::Screenplay::Struct::Tag->new(
+                    {
+                        name => "saying",
+                        is_standalone => 0,
+                        # TODO : propagate the correct line_num
+                        # from the called-to layers.
+                        line => $self->line_num(),
+                        attrs => [{key => "character", value => $event->{_elem}->character()}],
+                    }
+                );
+
+            $new_tag->children([]);
+
+            $self->_push_tag($new_tag);
+
+            $self->_in_saying(1);
+        }
+        else
+        {
+            $self->_close_saying();
+        }
+    }
+    elsif ($event->{'type'} eq "elem")
+    {
+        $self->_add_to_top_tag( $event->{'elem'} );
+    }
+
+    return;
+}
+
 sub _handle_non_tag_text
 {
     my $self = shift;
@@ -710,52 +764,7 @@ sub _handle_non_tag_text
 
     foreach my $event (@$contents)
     {
-        if (  exists($event->{'tag'})
-            && $event->{'tag'} eq "para"
-        )
-        {
-            if ($event->{'type'} eq "open")
-            {
-                $self->_start_para();
-            }
-            else
-            {
-                $self->_close_para();
-            }
-        }
-        elsif (  exists($event->{'tag'})
-            && $event->{'tag'} eq "saying"
-        )
-        {
-            if ($event->{'type'} eq "open")
-            {
-                my $new_tag =
-                    XML::Grammar::Screenplay::Struct::Tag->new(
-                        {
-                            name => "saying",
-                            is_standalone => 0,
-                            # TODO : propagate the correct line_num
-                            # from the called-to layers.
-                            line => $self->line_num(),
-                            attrs => [{key => "character", value => $event->{_elem}->character()}],
-                        }
-                    );
-
-                $new_tag->children([]);
-
-                $self->_push_tag($new_tag);
-
-                $self->_in_saying(1);
-            }
-            else
-            {
-                $self->_close_saying();
-            }
-        }
-        elsif ($event->{'type'} eq "elem")
-        {
-            $self->_add_to_top_tag( $event->{'elem'} );
-        }
+        $self->_handle_event($event);
     }
 
     return;
