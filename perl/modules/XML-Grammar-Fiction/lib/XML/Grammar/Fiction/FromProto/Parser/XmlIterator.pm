@@ -155,6 +155,28 @@ sub _look_for_and_handle_tag
     return;
 }
 
+sub _merge_tag
+{
+    my $self = shift;
+    my $open_tag = shift;
+
+    my $new_elem = 
+        $self->_create_elem(
+            $open_tag, 
+            $self->_new_list($open_tag->detach_children()),
+        );
+
+    if (! $self->_tag_stack_is_empty())
+    {
+        $self->_add_to_top_tag($new_elem);
+        return;
+    }
+    else
+    {
+        return $new_elem;
+    }
+}
+
 sub _look_ahead_for_comment
 {
     my $self = shift;

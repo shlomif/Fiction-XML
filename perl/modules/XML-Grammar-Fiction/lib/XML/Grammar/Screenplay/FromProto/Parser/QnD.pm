@@ -580,28 +580,6 @@ sub _generate_text_unit_events
     }
 }
 
-sub _merge_tag
-{
-    my $self = shift;
-    my $open_tag = shift;
-
-    my $new_elem = 
-        $self->_create_elem(
-            $open_tag, 
-            $self->_new_list($open_tag->detach_children()),
-        );
-
-    if (@{$self->_tags_stack()})
-    {
-        $self->_add_to_top_tag($new_elem);
-        return;
-    }
-    else
-    {
-        return $new_elem;
-    }
-}
-
 sub _close_saying
 {
     my $self = shift;
@@ -814,14 +792,7 @@ sub _handle_close_tag
         );
     }
 
-    if (defined(my $top_elem = $self->_merge_tag($open)))
-    {
-        return $top_elem;
-    }
-    else
-    {
-        return;
-    }
+    return $self->_merge_tag($open);
 }
 
 sub _look_ahead_for_tag

@@ -453,22 +453,7 @@ sub _handle_close_tag
         );
     }
 
-    my $new_elem = 
-        $self->_create_elem(
-            $open, 
-            $self->_new_list($open->detach_children()),
-        );
-
-    if (@{$self->_tags_stack()})
-    {
-        $self->_add_to_top_tag($new_elem);
-
-        return;
-    }
-    else
-    {
-        return $new_elem;
-    }
+    return $self->_merge_tag($open);
 }
 
 sub _look_ahead_for_tag
