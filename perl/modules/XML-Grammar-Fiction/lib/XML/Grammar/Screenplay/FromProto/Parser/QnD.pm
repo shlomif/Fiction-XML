@@ -856,15 +856,10 @@ sub _parse_all
             Carp::confess (qq{Reached EOF.});
         }
         
-
-        if ($self->curr_line_continues_with(qr{<!--}))
+        if ($self->_look_ahead_for_comment())
         {
-            my $text = $self->consume_up_to(qr{-->});
-
-            $self->_add_to_top_tag( $self->_new_comment($text) );
             redo TAGS_LOOP;
         }
-
 
         my ($l, $p) = $self->curr_line_and_pos();
 
