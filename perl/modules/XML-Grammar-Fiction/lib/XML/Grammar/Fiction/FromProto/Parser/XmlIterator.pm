@@ -21,6 +21,7 @@ has "_tags_stack" =>
         '_grep_tags_stack' => 'grep',
         '_tag_stack_is_empty' => 'is_empty',
         '_pop_tag' => 'pop',
+        '_get_tag' => 'get',
     },
 );
 
@@ -37,11 +38,17 @@ has "_events_queue" =>
     },
 );
 
+sub _top_tag
+{
+    my $self = shift;
+    return $self->_get_tag(-1);
+}
+
 sub _add_to_top_tag
 {
     my ($self, $child) = @_;
 
-    $self->_tags_stack->[-1]->append_child($child);
+    $self->_top_tag->append_child($child);
 
     return;
 }
