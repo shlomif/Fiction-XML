@@ -131,6 +131,30 @@ sub _handle_non_tag_text
 
     return;
 }
+
+
+sub _look_for_and_handle_tag
+{
+    my $self = shift;
+
+    my ($is_tag_cond, $is_close) = $self->_look_ahead_for_tag();
+
+    # Check if it's a closing tag.
+    if ($is_close)
+    {
+        return $self->_handle_close_tag();
+    }
+    elsif ($is_tag_cond)
+    {
+        $self->_handle_open_tag();
+    }
+    else
+    {
+        $self->_handle_non_tag_text();
+    }
+    return;
+}
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base

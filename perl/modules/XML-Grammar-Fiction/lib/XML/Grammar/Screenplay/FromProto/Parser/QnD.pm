@@ -845,16 +845,11 @@ sub _parse_all
 
     $self->_in_para(0);
 
-    my $run_once = 1;
-
     my $ret_tag;
 
-
     TAGS_LOOP:
-    while ($run_once || @{$self->_tags_stack()})
+    while (!defined($ret_tag) || @{$self->_tags_stack()})
     {
-        $run_once = 0;
-
         # This is an assert.
         if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
         {
@@ -895,24 +890,7 @@ sub _parse_all
             next TAGS_LOOP;            
         }
         
-        my ($is_tag_cond, $is_close) = $self->_look_ahead_for_tag();
-
-        # Check if it's a closing tag.
-        if ($is_close)
-        {
-            if ($ret_tag = $self->_handle_close_tag())
-            {
-                last TAGS_LOOP;
-            }
-        }
-        elsif ($is_tag_cond)
-        {
-            $self->_handle_open_tag();
-        }
-        else
-        {
-            $self->_handle_non_tag_text();
-        }
+        $ret_tag = $self->_look_for_and_handle_tag();
     }
 
     return $ret_tag;
