@@ -75,6 +75,13 @@ sub _check_for_open_tag
     return;
 }
 
+sub _is_event_a_saying
+{
+    my ($self, $event) = @_;
+
+    return exists($event->{'tag'}) && ($event->{'tag'} eq "saying");
+}
+
 sub _is_event_a_para
 {
     my ($self, $event) = @_;
@@ -86,7 +93,7 @@ sub _handle_paragraph_event
 {
     my ($self, $event) = @_;
 
-    return 
+    return
           $event->{'type'} eq "open"
         ? $self->_handle_open_para($event)
         : $self->_handle_close_para($event)
