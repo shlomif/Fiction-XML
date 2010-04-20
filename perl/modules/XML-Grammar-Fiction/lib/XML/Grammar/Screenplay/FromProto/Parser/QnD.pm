@@ -887,15 +887,6 @@ sub _parse_all
     return $ret_tag;
 }
 
-sub process_text
-{   
-    my ($self, $text) = @_;
-
-    $self->setup_text($text);
-
-    return $self->_parse_all();
-}
-
 =head1 NAME
 
 XML::Grammar::Screenplay::FromProto::Parser::QnD - Quick and Dirty parser

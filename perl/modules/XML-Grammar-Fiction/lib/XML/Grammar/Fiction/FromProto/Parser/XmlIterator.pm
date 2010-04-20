@@ -77,6 +77,20 @@ XML-like grammars.
 
 =head1 METHODS
 
+=head2 $self->process_text($string)
+
+Processes the text and returns the parse tree.
+
+=cut
+
+sub process_text
+{   
+    my ($self, $text) = @_;
+
+    $self->setup_text($text);
+
+    return $self->_parse_all();
+}
 
 =head2 $self->meta()
 
