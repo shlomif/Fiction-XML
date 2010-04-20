@@ -19,6 +19,7 @@ has "_tags_stack" =>
     {
         '_push_tag' => 'push',
         '_grep_tags_stack' => 'grep',
+        '_tag_stack_is_empty' => 'is_empty',
     },
 );
 
@@ -55,7 +56,7 @@ sub _check_for_open_tag
 {
     my $self = shift;
 
-    if (! @{$self->_tags_stack()} )
+    if ($self->_tag_stack_is_empty())
     {
         $self->throw_text_error(
             'XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag',
