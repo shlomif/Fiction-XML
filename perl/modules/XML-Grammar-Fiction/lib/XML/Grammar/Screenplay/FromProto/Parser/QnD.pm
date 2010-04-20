@@ -824,6 +824,19 @@ sub _handle_close_tag
     }
 }
 
+sub _look_ahead_for_tag
+{
+    my $self = shift;
+
+    my $l = $self->curr_line_copy();
+
+    my $is_tag_cond = ($$l =~ m{\G([<\[\]])});
+
+    my $is_close = $is_tag_cond && ($$l =~ m{\G(?:</|\])});
+
+    return ($is_tag_cond, $is_close);
+}
+
 sub _parse_all
 {
     my $self = shift;
@@ -882,9 +895,7 @@ sub _parse_all
             next TAGS_LOOP;            
         }
         
-        my $is_tag_cond = ($$l =~ m{\G([<\[\]])});
-
-        my $is_close = $is_tag_cond && ($$l =~ m{\G(?:</|\])});
+        my ($is_tag_cond, $is_close) = $self->_look_ahead_for_tag();
 
         # Check if it's a closing tag.
         if ($is_close)
