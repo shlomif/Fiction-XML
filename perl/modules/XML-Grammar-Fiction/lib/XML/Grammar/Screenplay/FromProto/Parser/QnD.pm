@@ -764,6 +764,37 @@ sub _handle_event
     return;
 }
 
+sub _handle_open_tag
+{
+    my $self = shift;
+
+    my $open = $self->_parse_opening_tag();
+
+    $open->children([]);
+
+    # TODO : add the check for is_standalone in XML-Grammar-Fiction
+    # too.
+    if ($open->is_standalone())
+    {
+        if (defined(my $top_elem = $self->_merge_tag($open)))
+        {
+            return $top_elem;
+        }
+        else
+        {
+            return;
+        }
+    }
+    $self->_push_tag($open);
+
+    if ($open->name() eq "desc")
+    {
+        $self->_start_para();
+    }
+
+    return;
+}
+
 sub _parse_all
 {
     my $self = shift;
@@ -856,30 +887,7 @@ sub _parse_all
         }
         elsif ($is_tag_cond)
         {
-            my $open = $self->_parse_opening_tag();
-
-            $open->children([]);
-
-            # TODO : add the check for is_standalone in XML-Grammar-Fiction
-            # too.
-            if ($open->is_standalone())
-            {
-                if (defined(my $top_elem = $self->_merge_tag($open)))
-                {
-                    $ret_tag = $top_elem;
-                    last TAGS_LOOP;
-                }
-                else
-                {
-                    redo TAGS_LOOP;
-                }
-            }
-            $self->_push_tag($open);
-
-            if ($open->name() eq "desc")
-            {
-                $self->_start_para();
-            }
+            $self->_handle_open_tag();
         }
         else
         {
