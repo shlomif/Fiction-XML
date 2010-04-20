@@ -92,13 +92,6 @@ sub _init
     return 0;
 }
 
-sub _start
-{
-    my $self = shift;
-
-    return $self->_parse_top_level_tag();
-}
-
 my $id_regex = '[a-zA-Z_\-]+';
 
 
@@ -708,7 +701,7 @@ sub _close_top_tags
     return;
 }
 
-sub _parse_top_level_tag
+sub _parse_all
 {
     my $self = shift;
 
@@ -900,7 +893,7 @@ sub process_text
 
     $self->setup_text($text);
 
-    return $self->_start();
+    return $self->_parse_all();
 }
 
 =head1 NAME

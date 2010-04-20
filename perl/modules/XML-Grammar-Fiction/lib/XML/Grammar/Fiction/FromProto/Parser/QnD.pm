@@ -29,13 +29,6 @@ Version 0.0.4
 
 our $VERSION = '0.0.4';
 
-sub _start
-{
-    my $self = shift;
-
-    return $self->_parse_tags();
-}
-
 my $id_regex = '[a-zA-Z_\-]+';
 
 sub _new_node
@@ -559,7 +552,7 @@ sub _look_ahead_for_comment
     }
 }
 
-sub _parse_tags
+sub _parse_all
 {
     my $self = shift;
 
@@ -607,7 +600,7 @@ sub process_text
 
     $self->setup_text($text);
 
-    return $self->_start();
+    return $self->_parse_all();
 }
 
 =head1 METHODS
