@@ -576,12 +576,6 @@ sub _generate_text_unit_events
             $was_already_enqueued = 1;
         }
 
-        if ($is_para_end && $in_para)
-        {
-            # $self->_enqueue_event({ type => "close", tag => "para" });
-            $in_para = 0;
-        }
-
         return;
     }
 }
