@@ -405,15 +405,6 @@ sub _handle_close_para
     return;
 }
 
-sub _handle_elem_event
-{
-    my ($self, $event) = @_;
-
-    $self->_add_to_top_tag( $event->{'elem'});
-
-    return;
-}
-
 sub _handle_event
 {
     my ($self, $event) = @_;
@@ -422,7 +413,7 @@ sub _handle_event
     {
         $self->_handle_paragraph_event($event);
     }
-    elsif ($event->{'type'} eq "elem")
+    elsif ($self->_is_event_elem($event))
     {
         $self->_handle_elem_event($event);
     }
