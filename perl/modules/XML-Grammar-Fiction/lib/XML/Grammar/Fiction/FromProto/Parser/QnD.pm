@@ -483,26 +483,6 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
-sub _look_ahead_for_comment
-{
-    my $self = shift;
-
-    if ($self->curr_line_continues_with(qr{<!--}))
-    {
-        my $text = $self->consume_up_to(qr{-->});
-
-        $self->_add_to_top_tag(
-            $self->_new_comment($text),
-        );
-
-        return 1;
-    }
-    else
-    {
-        return;
-    }
-}
-
 sub _parse_all
 {
     my $self = shift;

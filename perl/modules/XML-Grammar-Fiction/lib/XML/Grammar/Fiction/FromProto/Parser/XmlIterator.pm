@@ -155,6 +155,26 @@ sub _look_for_and_handle_tag
     return;
 }
 
+sub _look_ahead_for_comment
+{
+    my $self = shift;
+
+    if ($self->curr_line_continues_with(qr{<!--}))
+    {
+        my $text = $self->consume_up_to(qr{-->});
+
+        $self->_add_to_top_tag(
+            $self->_new_comment($text),
+        );
+
+        return 1;
+    }
+    else
+    {
+        return;
+    }
+}
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base
