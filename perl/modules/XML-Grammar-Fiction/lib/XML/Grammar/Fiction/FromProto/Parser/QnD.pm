@@ -448,22 +448,6 @@ sub _handle_event
     return;
 }
 
-sub _handle_non_tag_text
-{
-    my $self = shift;
-
-    $self->_check_for_open_tag();
-
-    my $contents = $self->_parse_text();
-
-    foreach my $event (@$contents)
-    {
-        $self->_handle_event($event);
-    }
-
-    return;
-}
-
 sub _handle_open_tag
 {
     my $self = shift;
