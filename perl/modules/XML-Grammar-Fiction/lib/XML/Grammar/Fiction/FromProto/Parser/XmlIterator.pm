@@ -82,6 +82,17 @@ sub _is_event_a_para
     return exists($event->{'tag'}) && ($event->{'tag'} eq "para");
 }
 
+sub _handle_paragraph_event
+{
+    my ($self, $event) = @_;
+
+    return 
+          $event->{'type'} eq "open"
+        ? $self->_handle_open_para($event)
+        : $self->_handle_close_para($event)
+        ;
+}
+
 sub _handle_non_tag_text
 {
     my $self = shift;

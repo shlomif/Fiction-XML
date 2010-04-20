@@ -700,20 +700,27 @@ sub _close_top_tags
     return;
 }
 
+sub _handle_close_para
+{
+    my ($self, $event) = @_;
+
+    return $self->_close_para();
+}
+
+sub _handle_open_para
+{
+    my ($self, $event) = @_;
+
+    return $self->_start_para();
+}
+
 sub _handle_event
 {
     my ($self, $event) = @_;
 
     if ($self->_is_event_a_para($event))
     {
-        if ($event->{'type'} eq "open")
-        {
-            $self->_start_para();
-        }
-        else
-        {
-            $self->_close_para();
-        }
+        $self->_handle_paragraph_event($event);
     }
     elsif (  exists($event->{'tag'})
         && $event->{'tag'} eq "saying"
