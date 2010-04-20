@@ -32,7 +32,7 @@ sub _top_is_para
 {
     my $self = shift;
 
-    return $self->_in_para() && ($self->_tags_stack->[-1]->name() eq "p");
+    return $self->_in_para() && ($self->_top_tag->name() eq "p");
 }
 
 
@@ -40,7 +40,7 @@ sub _top_is_saying
 {
     my $self = shift;
 
-    return $self->_in_saying() && ($self->_tags_stack->[-1]->name() eq "saying");
+    return $self->_in_saying() && ($self->_top_tag->name() eq "saying");
 }
 
 around '_pop_tag' => sub {
