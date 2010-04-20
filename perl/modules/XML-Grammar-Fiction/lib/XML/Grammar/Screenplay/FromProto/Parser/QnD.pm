@@ -722,9 +722,7 @@ sub _handle_event
     {
         $self->_handle_paragraph_event($event);
     }
-    elsif (  exists($event->{'tag'})
-        && $event->{'tag'} eq "saying"
-    )
+    elsif ($self->_is_event_a_saying($event))
     {
         if ($event->{'type'} eq "open")
         {
