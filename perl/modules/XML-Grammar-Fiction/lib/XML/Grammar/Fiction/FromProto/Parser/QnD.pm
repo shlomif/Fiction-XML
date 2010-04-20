@@ -514,7 +514,7 @@ sub _parse_all
     my $ret_tag;
 
     TAGS_LOOP:
-    while (1)
+    while (!defined($ret_tag))
     {
         if ($self->_look_ahead_for_comment())
         {
@@ -522,24 +522,7 @@ sub _parse_all
         }
         $self->skip_space();
 
-        my ($is_tag_cond, $is_close) = $self->_look_ahead_for_tag();
-
-        # Check if it's a closing tag.
-        if ($is_close)
-        {
-            if ($ret_tag = $self->_handle_close_tag())
-            {
-                last TAGS_LOOP;
-            }
-        }
-        elsif ($is_tag_cond)
-        {
-            $self->_handle_open_tag();
-        }
-        else
-        {
-            $self->_handle_non_tag_text();
-        }
+        $ret_tag = $self->_look_for_and_handle_tag();
     }
 
     return $ret_tag;
