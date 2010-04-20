@@ -594,15 +594,6 @@ sub _parse_all
     return $ret_tag;
 }
 
-sub process_text
-{   
-    my ($self, $text) = @_;
-
-    $self->setup_text($text);
-
-    return $self->_parse_all();
-}
-
 =head1 METHODS
 
 =head2 $self->process_text($string)
