@@ -108,6 +108,19 @@ sub _create_elem
         );
 }
 
+sub _new_list
+{
+    my $self = shift;
+    my $contents = shift;
+
+    return $self->_new_node(
+        {
+            t => "List",
+            contents => $contents,
+        }
+    );
+}
+
 sub _check_for_open_tag
 {
     my $self = shift;
