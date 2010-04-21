@@ -157,6 +157,19 @@ sub _new_text
     );
 }
 
+sub _new_comment
+{
+    my $self = shift;
+    my $text = shift;
+
+    return $self->_new_node(
+        {
+            t => "Comment",
+            text => $text,
+        }
+    );
+}
+
 sub _check_for_open_tag
 {
     my $self = shift;

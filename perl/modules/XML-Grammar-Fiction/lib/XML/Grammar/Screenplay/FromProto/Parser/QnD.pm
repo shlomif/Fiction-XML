@@ -85,20 +85,6 @@ after '_push_tag' => sub {
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-
-sub _new_comment
-{
-    my $self = shift;
-    my $text = shift;
-
-    return $self->_new_node(
-        {
-            t => "Comment",
-            text => $text,
-        }
-    );
-}
-
 sub _new_saying
 {
     my $self = shift;
