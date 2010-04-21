@@ -27,28 +27,6 @@ Version 0.0.4
 
 our $VERSION = '0.0.4';
 
-sub _parse_closing_tag
-{
-    my $self = shift;
-
-    my $l = $self->curr_line_ref();
-
-    my $id_regex = $self->_get_id_regex();
-
-    if ($$l !~ m{\G</($id_regex)>}g)
-    {
-        $self->throw_text_error(
-            'XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax',
-            "Cannot match closing tag",
-        );
-    }
-
-    return XML::Grammar::Fiction::Struct::Tag->new(
-        name => $1,
-        line => $self->line_num(),
-    );
-}
-
 sub _parse_text
 {
     my $self = shift;
