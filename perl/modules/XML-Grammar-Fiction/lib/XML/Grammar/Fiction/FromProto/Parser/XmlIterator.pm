@@ -248,6 +248,17 @@ sub _main_loop
     return;
 }
 
+sub _parse_all
+{
+    my $self = shift;
+
+    $self->_in_para(0);
+
+    $self->_main_loop();
+
+    return $self->_flush_ret_tag();
+}
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base

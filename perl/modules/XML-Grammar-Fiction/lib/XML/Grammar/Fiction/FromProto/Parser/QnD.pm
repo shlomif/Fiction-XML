@@ -468,18 +468,13 @@ sub _main_loop_iter
     return;
 }
 
-sub _parse_all
-{
+before '_parse_all' => sub {
     my $self = shift;
 
     $self->skip_space();
 
-    $self->_in_para(0);
-
-    $self->_main_loop();
-
-    return $self->_flush_ret_tag();
-}
+    return;
+};
 
 =head1 METHODS
 
