@@ -121,19 +121,6 @@ sub _get_desc_name
     return ($self->_in_para() ? "innerdesc" : "desc");
 }
 
-sub _new_text
-{
-    my $self = shift;
-    my $contents = shift;
-
-    return $self->_new_node(
-        {
-            t => "Text",
-            children => $self->_new_list($contents),
-        }
-    );
-}
-
 sub _parse_opening_tag
 {
     my $self = shift;

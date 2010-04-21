@@ -7,7 +7,6 @@ use Moose;
 
 extends("XML::Grammar::Fiction::FromProto::Parser::XmlIterator");
 
-
 use XML::Grammar::Fiction::FromProto::Nodes;
 
 use XML::Grammar::Fiction::Struct::Tag;
@@ -29,19 +28,6 @@ Version 0.0.4
 our $VERSION = '0.0.4';
 
 my $id_regex = '[a-zA-Z_\-]+';
-
-sub _new_text
-{
-    my $self = shift;
-    my $contents = shift;
-
-    return $self->_new_node(
-        {
-            t => "Text",
-            children => $self->_new_list($contents),
-        }
-    );
-}
 
 sub _new_comment
 {

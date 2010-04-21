@@ -144,6 +144,19 @@ sub _new_para
     );
 }
 
+sub _new_text
+{
+    my $self = shift;
+    my $contents = shift;
+
+    return $self->_new_node(
+        {
+            t => "Text",
+            children => $self->_new_list($contents),
+        }
+    );
+}
+
 sub _check_for_open_tag
 {
     my $self = shift;
