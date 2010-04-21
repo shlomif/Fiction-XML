@@ -38,6 +38,14 @@ has "_events_queue" =>
     },
 );
 
+has '_ret_tag' =>
+(
+    is => "rw",
+    # TODO : add isa.
+    predicate => "_has_ret_tag",
+    clearer => "_clear_ret_tag",
+);
+
 sub _top_tag
 {
     my $self = shift;
@@ -215,6 +223,29 @@ sub _look_ahead_for_comment
     {
         return;
     }
+}
+
+sub _flush_ret_tag
+{
+    my $self = shift;
+
+    my $ret = $self->_ret_tag();
+
+    $self->_clear_ret_tag();
+
+    return $ret;
+}
+
+sub _main_loop
+{
+    my $self = shift;
+
+    while (! defined($self->_ret_tag()))
+    {
+        $self->_main_loop_iter();
+    }
+
+    return;
 }
 
 =head1 NAME

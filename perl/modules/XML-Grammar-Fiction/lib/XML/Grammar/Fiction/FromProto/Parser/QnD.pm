@@ -452,6 +452,22 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
+sub _main_loop_iter
+{
+    my $self = shift;
+
+    if ($self->_look_ahead_for_comment())
+    {
+        return;
+    }
+
+    $self->skip_space();
+
+    $self->_ret_tag(scalar($self->_look_for_and_handle_tag()));
+
+    return;
+}
+
 sub _parse_all
 {
     my $self = shift;
@@ -460,21 +476,9 @@ sub _parse_all
 
     $self->_in_para(0);
 
-    my $ret_tag;
+    $self->_main_loop();
 
-    TAGS_LOOP:
-    while (!defined($ret_tag))
-    {
-        if ($self->_look_ahead_for_comment())
-        {
-            redo TAGS_LOOP;
-        }
-        $self->skip_space();
-
-        $ret_tag = $self->_look_for_and_handle_tag();
-    }
-
-    return $ret_tag;
+    return $self->_flush_ret_tag();
 }
 
 =head1 METHODS

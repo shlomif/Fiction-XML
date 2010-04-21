@@ -792,6 +792,51 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
+sub _main_loop_iter
+{
+    my $self = shift;
+
+    # This is an assert.
+    if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
+    {
+        Carp::confess (qq{Reached EOF.});
+    }
+    
+    if ($self->_look_ahead_for_comment())
+    {
+        return;
+    }
+
+    my ($l, $p) = $self->curr_line_and_pos();
+
+    if ($$l eq "\n")
+    {
+        if ($self->_top_is_para())
+        {
+            $self->_close_para();
+        }
+        $self->next_line_ref();
+        return;
+    }
+    
+    if ($$l =~ m{\G([ \t]+)\n?\z})
+    {
+        if (length($1))
+        {
+            $self->_add_to_top_tag( $self->_new_text([" "]) );
+        }
+
+        $self->next_line_ref();
+
+        return;
+    }
+    
+    $self->_ret_tag(scalar($self->_look_for_and_handle_tag()));
+
+    return;
+}
+
+
 sub _parse_all
 {
     my $self = shift;
@@ -800,50 +845,9 @@ sub _parse_all
 
     $self->_in_para(0);
 
-    my $ret_tag;
+    $self->_main_loop();
 
-    TAGS_LOOP:
-    while (!defined($ret_tag))
-    {
-        # This is an assert.
-        if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
-        {
-            Carp::confess (qq{Reached EOF.});
-        }
-        
-        if ($self->_look_ahead_for_comment())
-        {
-            redo TAGS_LOOP;
-        }
-
-        my ($l, $p) = $self->curr_line_and_pos();
-
-        if ($$l eq "\n")
-        {
-            if ($self->_top_is_para())
-            {
-                $self->_close_para();
-            }
-            $self->next_line_ref();
-            next TAGS_LOOP;
-        }
-        
-        if ($$l =~ m{\G([ \t]+)\n?\z})
-        {
-            if (length($1))
-            {
-                $self->_add_to_top_tag( $self->_new_text([" "]) );
-            }
-
-            $self->next_line_ref();
-
-            next TAGS_LOOP;            
-        }
-        
-        $ret_tag = $self->_look_for_and_handle_tag();
-    }
-
-    return $ret_tag;
+    return $self->_flush_ret_tag();
 }
 
 =head1 NAME
