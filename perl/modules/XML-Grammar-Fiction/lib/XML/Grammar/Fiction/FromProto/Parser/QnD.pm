@@ -30,19 +30,6 @@ our $VERSION = '0.0.4';
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-sub _new_para
-{
-    my $self = shift;
-    my $contents = shift;
-
-    return $self->_new_node(
-        {
-            t => "Paragraph",
-            children => $self->_new_list($contents),
-        }
-    );
-}
-
 sub _new_text
 {
     my $self = shift;

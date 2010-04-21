@@ -85,28 +85,6 @@ after '_push_tag' => sub {
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-sub _new_para
-{
-    my $self = shift;
-    my $contents = shift;
-
-    # This is an assert
-    if (List::MoreUtils::any 
-        { ref($_) ne "" && $_->isa("XML::Grammar::Fiction::FromProto::Node::Saying") }
-        @{$contents || []}
-        )
-    {
-        Carp::confess (qq{Para contains a saying.});
-    }
-
-
-    return $self->_new_node(
-        {
-            t => "Paragraph",
-            children => $self->_new_list($contents),
-        }
-    );
-}
 
 sub _new_comment
 {
