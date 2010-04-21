@@ -16,7 +16,6 @@ use XML::Grammar::Screenplay::Struct::Tag;
 use List::Util ();
 use List::MoreUtils ();
 
-has "_in_para" => (isa => "Bool", is => "rw");
 has "_in_saying" => (isa => "Bool", is => "rw");
 has "_prev_line_is_empty" => (isa => "Bool", is => "rw", default => 1);
 

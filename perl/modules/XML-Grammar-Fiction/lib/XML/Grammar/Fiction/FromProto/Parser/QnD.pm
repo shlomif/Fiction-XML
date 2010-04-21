@@ -7,7 +7,6 @@ use Moose;
 
 extends("XML::Grammar::Fiction::FromProto::Parser::XmlIterator");
 
-has "_in_para" => (isa => "Bool", is => "rw");
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
