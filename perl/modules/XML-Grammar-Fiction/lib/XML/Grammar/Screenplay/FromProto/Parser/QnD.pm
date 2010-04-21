@@ -102,13 +102,10 @@ sub _get_desc_name
     return ($self->_in_para() ? "innerdesc" : "desc");
 }
 
-sub _parse_closing_tag
-{
-    my $self = shift;
+around '_parse_closing_tag' => sub {
+    my ($orig, $self) = @_;
 
     my $l = $self->curr_line_ref();
-
-    my $id_regex = $self->_get_id_regex();
 
     if ($$l =~ m{\G\]}cg)
     {
@@ -117,18 +114,11 @@ sub _parse_closing_tag
             line => $self->line_num(),
         );
     }
-    elsif ($$l =~ m{\G</($id_regex)>}g)
-    {
-        return XML::Grammar::Fiction::Struct::Tag->new(
-            name => $1,
-            line => $self->line_num(),
-        );
-    }
     else
     {
-        Carp::confess("Cannot match closing tag at line ". $self->line_num());
+        return $self->$orig();
     }
-}
+};
 
 sub _parse_text
 {
