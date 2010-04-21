@@ -46,6 +46,9 @@ has '_ret_tag' =>
     clearer => "_clear_ret_tag",
 );
 
+# Whether we are inside a paragraph or not.
+has "_in_para" => (isa => "Bool", is => "rw", default => 0,);
+
 sub _top_tag
 {
     my $self = shift;
@@ -251,8 +254,6 @@ sub _main_loop
 sub _parse_all
 {
     my $self = shift;
-
-    $self->_in_para(0);
 
     $self->_main_loop();
 
