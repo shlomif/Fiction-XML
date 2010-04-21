@@ -10,7 +10,7 @@ extends(
     'XML::Grammar::Fiction::FromProto::Parser::XmlIterator',
 );
 
-use XML::Grammar::Screenplay::FromProto::Nodes;
+use XML::Grammar::Fiction::FromProto::Nodes;
 use XML::Grammar::Screenplay::Struct::Tag;
 
 use List::Util ();
@@ -85,20 +85,6 @@ after '_push_tag' => sub {
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-sub _new_node
-{
-    my $self = shift;
-    my $args = shift;
-
-    # t == type
-    my $class = 
-        "XML::Grammar::Screenplay::FromProto::Node::"
-        . delete($args->{'t'})
-        ;
-
-    return $class->new(%$args);
-}
-
 sub _create_elem
 {
     my $self = shift;
@@ -141,7 +127,7 @@ sub _new_para
 
     # This is an assert
     if (List::MoreUtils::any 
-        { ref($_) ne "" && $_->isa("XML::Grammar::Screenplay::FromProto::Node::Saying") }
+        { ref($_) ne "" && $_->isa("XML::Grammar::Fiction::FromProto::Node::Saying") }
         @{$contents || []}
         )
     {
@@ -517,13 +503,13 @@ sub _generate_text_unit_events
 
         my $elem = $status->{'elem'};
         my $is_para_end = $status->{'para_end'};
-        my $is_saying = $elem->isa("XML::Grammar::Screenplay::FromProto::Node::Saying");
+        my $is_saying = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying");
         #my $is_para =
         #    (($self->curr_pos() == 0) && 
         #     (${$self->curr_line_ref()} =~ m{\G\n?\z})
         #    );
         # Trying out this one:
-        my $is_para = $elem->isa("XML::Grammar::Screenplay::FromProto::Node::Paragraph");
+        my $is_para = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph");
 
         my $in_para = $self->_in_para();
         my $was_already_enqueued = 0;
@@ -555,7 +541,7 @@ sub _generate_text_unit_events
             $in_para = 1;
         }
 
-        if ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Text") &&
+        if ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text") &&
             !$was_already_enqueued)
         {
             if (!$in_para)

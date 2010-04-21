@@ -5,8 +5,6 @@ use warnings;
 
 use Moose;
 
-use XML::Grammar::Screenplay::FromProto::Nodes;
-
 =head1 NAME
 
 XML::Grammar::Screenplay::Struct::Tag - information about an XML/SGML opening or 
