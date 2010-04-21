@@ -803,7 +803,7 @@ sub _parse_all
     my $ret_tag;
 
     TAGS_LOOP:
-    while (!defined($ret_tag) || @{$self->_tags_stack()})
+    while (!defined($ret_tag))
     {
         # This is an assert.
         if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
