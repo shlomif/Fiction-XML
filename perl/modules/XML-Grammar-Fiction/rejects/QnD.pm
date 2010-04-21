@@ -277,4 +277,18 @@ sub _curr_line_matches
     return ($$l =~ $re);
 }
 
+=begin Removed
+    This was a removed part of _parse_text.
+
+    # If it's whitespace - return an empty list.
+    if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
+    {
+        return $self->_new_empty_list();
+    }
+
+    return $self->_new_list(\@ret);
+
+=end Removed
+
+=cut
 

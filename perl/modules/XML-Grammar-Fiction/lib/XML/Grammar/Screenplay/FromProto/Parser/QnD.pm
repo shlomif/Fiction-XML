@@ -120,26 +120,6 @@ around '_parse_closing_tag' => sub {
     }
 };
 
-sub _parse_text
-{
-    my $self = shift;
-
-    my @ret;
-    while (defined(my $unit = $self->_parse_text_unit()))
-    {
-        push @ret, $unit;
-        my $type = $unit->{'type'};
-        if (($type eq "close") || ($type eq "open"))
-        {
-            push @ret, @{$self->_events_queue()};
-            $self->_events_queue([]);
-            return \@ret;
-        }
-    }
-
-    return \@ret;
-}
-
 around '_parse_opening_tag' => sub {
     my ($orig, $self) = @_;
 
