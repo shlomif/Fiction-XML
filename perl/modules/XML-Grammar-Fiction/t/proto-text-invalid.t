@@ -15,8 +15,9 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
 
 {
     my $grammar = XML::Grammar::Fiction::FromProto->new({});
+    my $got_xml;
     eval {
-    my $got_xml = $grammar->convert(
+        $got_xml = $grammar->convert(
         {
             source =>
             {
