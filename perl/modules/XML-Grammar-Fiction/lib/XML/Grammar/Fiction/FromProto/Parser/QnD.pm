@@ -30,23 +30,6 @@ our $VERSION = '0.0.4';
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-sub _create_elem
-{
-    my $self = shift;
-    my $open = shift;
-    my $children = shift || $self->_new_empty_list();
-
-    return
-        $self->_new_node(
-            {
-                t => "Element",
-                name => $open->name(),
-                children => $children,
-                attrs => $open->attrs(),
-            }
-        );
-}
-
 sub _new_list
 {
     my $self = shift;
