@@ -83,15 +83,7 @@ after '_push_tag' => sub {
     return;
 };
 
-sub _init
-{
-    my $self = shift;
-
-    return 0;
-}
-
 my $id_regex = '[a-zA-Z_\-]+';
-
 
 sub _new_node
 {
