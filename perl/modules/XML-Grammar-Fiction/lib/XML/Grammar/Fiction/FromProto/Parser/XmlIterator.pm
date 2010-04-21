@@ -85,6 +85,29 @@ sub _new_node
     return $class->new(%$args);
 }
 
+
+sub _create_elem
+{
+    my $self = shift;
+    my $open = shift;
+
+    my $children = @_ ? shift(@_) : $self->_new_empty_list();
+
+    return
+        $self->_new_node(
+            {
+                t => (
+                    $open->name() eq "desc" ? "Description" 
+                    : $open->name() eq "innerdesc" ? "InnerDesc"
+                    : "Element"
+                ),
+                name => $open->name(),
+                children => $children,
+                attrs => $open->attrs(),
+            }
+        );
+}
+
 sub _check_for_open_tag
 {
     my $self = shift;
