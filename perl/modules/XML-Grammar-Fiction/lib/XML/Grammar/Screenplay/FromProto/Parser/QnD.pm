@@ -8,7 +8,7 @@ use Moose;
 extends( 'XML::Grammar::Fiction::FromProto::Parser::XmlIterator' );
 
 use XML::Grammar::Fiction::FromProto::Nodes;
-use XML::Grammar::Screenplay::Struct::Tag;
+use XML::Grammar::Fiction::Struct::Tag;
 
 use List::Util ();
 use List::MoreUtils ();
@@ -80,8 +80,6 @@ after '_push_tag' => sub {
     return;
 };
 
-my $id_regex = '[a-zA-Z_\-]+';
-
 sub _new_saying
 {
     my $self = shift;
@@ -104,94 +102,24 @@ sub _get_desc_name
     return ($self->_in_para() ? "innerdesc" : "desc");
 }
 
-sub _parse_opening_tag
-{
-    my $self = shift;
-
-    my $l = $self->curr_line_ref();
-
-    # This is an assert
-    if (!defined($$l))
-    {
-        Carp::confess (qq{Reached EOF in _parse_opening_tag.});
-    }
-
-    # This is an assert
-    if (!defined($self->curr_pos()))
-    {
-        Carp::confess (qq{curr_pos is not defined in _parse_opening_tag.});
-    }
-
-    my $is_start = ($self->curr_pos() == 0);
-
-    if ($$l =~ m{\G\[}cg)
-    {
-        my $not_inline = 0;
-        if ($is_start && $self->_prev_line_is_empty())
-        {
-            $self->_close_top_tags();
-            $not_inline = 1;
-        }
-
-        return XML::Grammar::Screenplay::Struct::Tag->new(
-            name => $not_inline ? "desc" : $self->_get_desc_name(),
-            line => $self->line_num(),
-            attrs => [],
-        );
-    }
-
-    if ($$l !~ m{\G<($id_regex)}g)
-    {
-        Carp::confess("Cannot match opening tag at line " . $self->line_num());
-    }
-
-    my $id = $1;
-
-    my @attrs;
-
-    while ($$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg)
-    {
-        push @attrs, { 'key' => $1, 'value' => $2, };
-    }
-
-    my $is_standalone = 0;
-
-    if ($$l =~ m{\G\s*/\s*>}cg)
-    {
-        $is_standalone = 1;
-    }
-    elsif ($$l !~ m{\G>}g)
-    {
-        Carp::confess (
-            "Cannot match the \">\" of the opening tag at line " 
-            . $self->line_num()
-        );
-    }
-     
-    return XML::Grammar::Screenplay::Struct::Tag->new(
-        name => $id,
-        is_standalone => $is_standalone,
-        line => $self->line_num(),
-        attrs => \@attrs,
-    );
-}
-
 sub _parse_closing_tag
 {
     my $self = shift;
 
     my $l = $self->curr_line_ref();
 
+    my $id_regex = $self->_get_id_regex();
+
     if ($$l =~ m{\G\]}cg)
     {
-        return XML::Grammar::Screenplay::Struct::Tag->new(
+        return XML::Grammar::Fiction::Struct::Tag->new(
             name => $self->_get_desc_name(),
             line => $self->line_num(),
         );
     }
     elsif ($$l =~ m{\G</($id_regex)>}g)
     {
-        return XML::Grammar::Screenplay::Struct::Tag->new(
+        return XML::Grammar::Fiction::Struct::Tag->new(
             name => $1,
             line => $self->line_num(),
         );
@@ -200,7 +128,6 @@ sub _parse_closing_tag
     {
         Carp::confess("Cannot match closing tag at line ". $self->line_num());
     }
-
 }
 
 sub _parse_text
@@ -221,8 +148,35 @@ sub _parse_text
     }
 
     return \@ret;
-
 }
+
+around '_parse_opening_tag' => sub {
+    my ($orig, $self) = @_;
+
+    my $l = $self->curr_line_ref();
+
+    my $is_start = ($self->curr_pos() == 0);
+
+    if ($$l =~ m{\G\[}cg)
+    {
+        my $not_inline = 0;
+        if ($is_start && $self->_prev_line_is_empty())
+        {
+            $self->_close_top_tags();
+            $not_inline = 1;
+        }
+
+        return XML::Grammar::Fiction::Struct::Tag->new(
+            name => $not_inline ? "desc" : $self->_get_desc_name(),
+            line => $self->line_num(),
+            attrs => [],
+        );
+    }
+    else
+    {
+        return $self->$orig();
+    }
+};
 
 sub _parse_inner_tag
 {
@@ -529,7 +483,7 @@ sub _start_para
     my $self = shift;
 
     my $new_elem = 
-    XML::Grammar::Screenplay::Struct::Tag::Para->new(
+    XML::Grammar::Fiction::Struct::Tag::Para->new(
         name => "p",
         is_standalone => 0,
         line => $self->line_num(),
@@ -582,7 +536,7 @@ sub _open_saying
     my $event = shift;
 
     my $new_tag =
-        XML::Grammar::Screenplay::Struct::Tag->new(
+        XML::Grammar::Fiction::Struct::Tag->new(
             {
                 name => "saying",
                 is_standalone => 0,

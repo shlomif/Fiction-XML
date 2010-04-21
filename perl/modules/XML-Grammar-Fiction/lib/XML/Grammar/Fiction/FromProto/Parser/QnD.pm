@@ -27,68 +27,13 @@ Version 0.0.4
 
 our $VERSION = '0.0.4';
 
-my $id_regex = '[a-zA-Z_\-]+';
-
-sub _parse_opening_tag_attrs
-{
-    my $self = shift;
-
-    my $l = $self->curr_line_ref();
-
-    my @attrs;
-
-    while (my ($name, $val) = $$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg)
-    {
-        push @attrs, { 'key' => $name, 'value' => $val, };
-    }
-
-    return \@attrs;
-}
-
-sub _parse_opening_tag
-{
-    my $self = shift;
-
-    my $l = $self->curr_line_ref();
-
-    if ($$l !~ m{\G<($id_regex)}cg)
-    {
-        $self->throw_text_error(
-            'XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag',
-            "Cannot match opening tag.",
-        );
-    }
-
-    my $id = $1;
-
-    my $attrs = $self->_parse_opening_tag_attrs();
-
-    my $is_standalone = 0;
-    if ($$l =~ m{\G\s*/\s*>}cg)
-    {
-        $is_standalone = 1;
-    }
-    elsif ($$l !~ m{\G>}g)
-    {
-        $self->throw_text_error(
-            'XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket',
-            "Cannot match the \">\" of the opening tag",
-        );
-    }
-    
-    return XML::Grammar::Fiction::Struct::Tag->new(
-        name => $id,
-        is_standalone => $is_standalone,
-        line => $self->line_num(),
-        attrs => $attrs,
-    );
-}
-
 sub _parse_closing_tag
 {
     my $self = shift;
 
     my $l = $self->curr_line_ref();
+
+    my $id_regex = $self->_get_id_regex();
 
     if ($$l !~ m{\G</($id_regex)>}g)
     {

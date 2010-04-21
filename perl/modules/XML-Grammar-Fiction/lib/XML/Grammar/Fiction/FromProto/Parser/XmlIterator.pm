@@ -6,6 +6,7 @@ use warnings;
 use Moose;
 
 use XML::Grammar::Fiction::Err;
+use XML::Grammar::Fiction::Struct::Tag;
 
 extends("XML::Grammar::Fiction::FromProto::Parser::LineIterator");
 
@@ -48,6 +49,11 @@ has '_ret_tag' =>
 
 # Whether we are inside a paragraph or not.
 has "_in_para" => (isa => "Bool", is => "rw", default => 0,);
+
+sub _get_id_regex
+{
+    return qr{[a-zA-Z_\-]+};
+}
 
 sub _top_tag
 {
@@ -167,6 +173,77 @@ sub _new_comment
             t => "Comment",
             text => $text,
         }
+    );
+}
+
+sub _parse_opening_tag_attrs
+{
+    my $self = shift;
+
+    my $l = $self->curr_line_ref();
+
+    my @attrs;
+
+    my $id_regex = $self->_get_id_regex();
+
+    while ($$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg)
+    {
+        push @attrs, { 'key' => $1, 'value' => $2, };
+    }
+
+    return \@attrs;
+}
+
+sub _parse_opening_tag
+{
+    my $self = shift;
+
+    my $l = $self->curr_line_ref();
+
+    my $id_regex = $self->_get_id_regex();
+
+    # This is an assert
+    if (!defined($$l))
+    {
+        Carp::confess (qq{Reached EOF in _parse_opening_tag.});
+    }
+
+    # This is an assert
+    if (!defined($self->curr_pos()))
+    {
+        Carp::confess (qq{curr_pos is not defined in _parse_opening_tag.});
+    }
+    
+    if ($$l !~ m{\G<($id_regex)}cg)
+    {
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag',
+            "Cannot match opening tag.",
+        );
+    }
+
+    my $id = $1;
+
+    my $attrs = $self->_parse_opening_tag_attrs();
+
+    my $is_standalone = 0;
+    if ($$l =~ m{\G\s*/\s*>}cg)
+    {
+        $is_standalone = 1;
+    }
+    elsif ($$l !~ m{\G>}g)
+    {
+        $self->throw_text_error(
+            'XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket',
+            "Cannot match the \">\" of the opening tag",
+        );
+    }
+    
+    return XML::Grammar::Fiction::Struct::Tag->new(
+        name => $id,
+        is_standalone => $is_standalone,
+        line => $self->line_num(),
+        attrs => $attrs,
     );
 }
 
