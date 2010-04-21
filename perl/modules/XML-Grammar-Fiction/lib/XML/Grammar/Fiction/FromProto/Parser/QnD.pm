@@ -29,19 +29,6 @@ our $VERSION = '0.0.4';
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-sub _new_comment
-{
-    my $self = shift;
-    my $text = shift;
-
-    return $self->_new_node(
-        {
-            t => "Comment",
-            text => $text,
-        }
-    );
-}
-
 sub _parse_opening_tag_attrs
 {
     my $self = shift;
