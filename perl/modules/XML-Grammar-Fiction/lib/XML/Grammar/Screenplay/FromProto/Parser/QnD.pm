@@ -837,19 +837,6 @@ sub _main_loop_iter
 }
 
 
-sub _parse_all
-{
-    my $self = shift;
-
-    # $self->skip_multiline_space();
-
-    $self->_in_para(0);
-
-    $self->_main_loop();
-
-    return $self->_flush_ret_tag();
-}
-
 =head1 NAME
 
 XML::Grammar::Screenplay::FromProto::Parser::QnD - Quick and Dirty parser
