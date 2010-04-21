@@ -85,19 +85,6 @@ after '_push_tag' => sub {
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-sub _new_list
-{
-    my $self = shift;
-    my $contents = shift;
-
-    return $self->_new_node(
-        {
-            t => "List",
-            contents => $contents,
-        }
-    );
-}
-
 sub _new_para
 {
     my $self = shift;
