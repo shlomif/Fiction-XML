@@ -14,7 +14,7 @@ use XML::Grammar::Fiction::FromProto::Nodes;
 
 use Moose;
 
-has "_parser" => ('isa' => "XML::Grammar::Screenplay::FromProto::Parser", 'is' => "rw");
+has "_parser" => ('is' => "rw");
 has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
 has '_buffer' => ('isa' => "ScalarRef[Str]", is => "rw");
