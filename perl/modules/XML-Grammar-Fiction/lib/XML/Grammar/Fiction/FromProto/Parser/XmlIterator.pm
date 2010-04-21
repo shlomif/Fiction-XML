@@ -426,6 +426,26 @@ sub _look_ahead_for_comment
     }
 }
 
+sub _parse_text
+{
+    my $self = shift;
+
+    my @ret;
+    while (my $unit = $self->_parse_text_unit())
+    {
+        push @ret, $unit;
+        my $type = $unit->{'type'};
+        if (($type eq "close") || ($type eq "open"))
+        {
+            push @ret, @{$self->_events_queue()};
+            $self->_events_queue([]);
+            return \@ret;
+        }
+    }
+
+    return \@ret;
+}
+
 sub _flush_ret_tag
 {
     my $self = shift;

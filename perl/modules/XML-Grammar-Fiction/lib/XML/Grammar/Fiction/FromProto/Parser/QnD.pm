@@ -27,39 +27,6 @@ Version 0.0.4
 
 our $VERSION = '0.0.4';
 
-sub _parse_text
-{
-    my $self = shift;
-
-    my @ret;
-    while (my $unit = $self->_parse_text_unit())
-    {
-        push @ret, $unit;
-        my $type = $unit->{'type'};
-        if (($type eq "close") || ($type eq "open"))
-        {
-            push @ret, @{$self->_events_queue()};
-            $self->_events_queue([]);
-            return \@ret;
-        }
-    }
-
-=begin Removed
-
-    # If it's whitespace - return an empty list.
-    if ((scalar(@ret) == 1) && (ref($ret[0]) eq "") && ($ret[0] !~ m{\S}))
-    {
-        return $self->_new_empty_list();
-    }
-
-    return $self->_new_list(\@ret);
-
-=end Removed
-
-=cut
-
-}
-
 sub _find_next_inner_text
 {
     my $self = shift;
