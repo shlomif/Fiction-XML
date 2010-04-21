@@ -10,7 +10,7 @@ use base 'XML::Grammar::Screenplay::Base';
 use XML::Writer;
 use HTML::Entities ();
 
-use XML::Grammar::Screenplay::FromProto::Nodes;
+use XML::Grammar::Fiction::FromProto::Nodes;
 
 use Moose;
 
@@ -101,7 +101,7 @@ sub _handle_text_start
 {
     my ($self, $elem) = @_;
 
-    if ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Saying"))
+    if ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying"))
     {
         $self->_output_tag_with_childs(
             {
@@ -110,7 +110,7 @@ sub _handle_text_start
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Description"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Description"))
     {
         $self->_output_tag_with_childs(
             {
@@ -119,7 +119,7 @@ sub _handle_text_start
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Text"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
     {
         foreach my $child (@{$elem->_get_childs()})
         {
@@ -142,7 +142,7 @@ sub _write_elem
     {
         $self->_writer->characters($elem);
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Paragraph"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph"))
     {
         $self->_output_tag_with_childs(
             {
@@ -151,7 +151,7 @@ sub _write_elem
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Element"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Element"))
     {
         if (($elem->name() eq "s") || ($elem->name() eq "section"))
         {
@@ -179,7 +179,7 @@ sub _write_elem
         {
             $self->_writer->emptyTag("br");
         }
-        elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::InnerDesc"))
+        elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::InnerDesc"))
         {
             $self->_output_tag_with_childs(
                 {
@@ -189,11 +189,11 @@ sub _write_elem
             );
         }
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Text"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
     {
         $self->_handle_text_start($elem);
     }
-    elsif ($elem->isa("XML::Grammar::Screenplay::FromProto::Node::Comment"))
+    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Comment"))
     {
         $self->_writer->comment($elem->text());
     }

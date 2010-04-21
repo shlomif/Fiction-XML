@@ -30,20 +30,6 @@ our $VERSION = '0.0.4';
 
 my $id_regex = '[a-zA-Z_\-]+';
 
-sub _new_node
-{
-    my $self = shift;
-    my $args = shift;
-
-    # t == type
-    my $class = 
-        "XML::Grammar::Fiction::FromProto::Node::"
-        . delete($args->{'t'})
-        ;
-
-    return $class->new(%$args);
-}
-
 sub _create_elem
 {
     my $self = shift;

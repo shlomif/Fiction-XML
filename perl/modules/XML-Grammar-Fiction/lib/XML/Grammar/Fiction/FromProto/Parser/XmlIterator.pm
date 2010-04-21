@@ -71,6 +71,20 @@ sub _new_empty_list
     return $self->_new_list([]);
 }
 
+sub _new_node
+{
+    my $self = shift;
+    my $args = shift;
+
+    # t == type
+    my $class = 
+        "XML::Grammar::Fiction::FromProto::Node::"
+        . delete($args->{'t'})
+        ;
+
+    return $class->new(%$args);
+}
+
 sub _check_for_open_tag
 {
     my $self = shift;
