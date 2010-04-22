@@ -27,39 +27,8 @@ Version 0.0.4
 
 our $VERSION = '0.0.4';
 
-sub _parse_non_tag_text_unit
-{
-    my $self = shift;
-
-    my $l = $self->curr_line_ref();
-
-    my $text = $self->consume_up_to(qr{(?:\<|^\n?$)}ms);
-
-    $l = $self->curr_line_ref();
-
-    my $ret_elem = $self->_new_text([$text]);
-    my $is_para_end = 0;
-
-    # Demote the cursor to before the < of the tag.
-    #
-    if (pos($$l) > 0)
-    {
-        pos($$l)--;
-        if (substr($$l, pos($$l), 1) eq "\n")
-        {
-            $is_para_end = 1;
-        }
-    }
-    else
-    {
-        $is_para_end = 1;
-    }
-
-    return
-    {
-        elem => $ret_elem,
-        para_end => $is_para_end,
-    };
+sub _non_tag_text_unit_consume_regex {
+    return qr{(?:\<|^\n?$)}ms;
 }
 
 sub _parse_text_unit
