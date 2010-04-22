@@ -31,37 +31,39 @@ sub _non_tag_text_unit_consume_regex {
     return qr{(?:\<|^\n?$)}ms;
 }
 
-sub _generate_text_unit_events
+sub _generate_non_tag_text_event
 {
     my $self = shift;
 
-    $self->skip_multiline_space();
+    my $is_para = ($self->curr_pos() == 0);
 
-    if (! $self->_generate_tag_event())
+    my $status = $self->_parse_non_tag_text_unit();
+    my $elem = $status->{'elem'};
+    my $is_para_end = $status->{'para_end'};
+
+    my $in_para = $self->_in_para();
+    if ($is_para && !$in_para)
     {
-        my $is_para = ($self->curr_pos() == 0);
-
-        my $status = $self->_parse_non_tag_text_unit();
-        my $elem = $status->{'elem'};
-        my $is_para_end = $status->{'para_end'};
-
-        my $in_para = $self->_in_para();
-        if ($is_para && !$in_para)
-        {
-            $self->_enqueue_event({type => "open", tag => "para"});
-            $in_para = 1;
-        }
-
-        $self->_enqueue_event({type => "elem", elem => $elem});
-
-        if ($is_para_end && $in_para)
-        {
-            $self->_enqueue_event({ type => "close", tag => "para" });
-            $in_para = 0;
-        }
+        $self->_enqueue_event({type => "open", tag => "para"});
+        $in_para = 1;
     }
+
+    $self->_enqueue_event({type => "elem", elem => $elem});
+
+    if ($is_para_end && $in_para)
+    {
+        $self->_enqueue_event({ type => "close", tag => "para" });
+        $in_para = 0;
+    }
+
     return;
 }
+
+before '_generate_text_unit_events' => sub {
+    my $self = shift;
+
+    $self->skip_multiline_space() 
+};
 
 sub _handle_open_para
 {

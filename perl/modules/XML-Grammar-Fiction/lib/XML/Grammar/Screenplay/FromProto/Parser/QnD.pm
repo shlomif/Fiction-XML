@@ -219,76 +219,69 @@ sub _is_closing_tag {
     return (${$self->curr_line_ref()} =~ m{\G(</|\])});
 }
 
-
-sub _generate_text_unit_events
+sub _generate_non_tag_text_event
 {
     my $self = shift;
-    
-    # $self->skip_multiline_space();
+    my $status = $self->_parse_non_tag_text_unit();
 
-    if (! $self->_generate_tag_event())
+    if (!defined($status))
     {
-        my $status = $self->_parse_non_tag_text_unit();
-
-        if (!defined($status))
-        {
-            return;
-        }
-
-        my $elem = $status->{'elem'};
-        my $is_para_end = $status->{'para_end'};
-        my $is_saying = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying");
-        #my $is_para =
-        #    (($self->curr_pos() == 0) && 
-        #     (${$self->curr_line_ref()} =~ m{\G\n?\z})
-        #    );
-        # Trying out this one:
-        my $is_para = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph");
-
-        my $in_para = $self->_in_para();
-        my $was_already_enqueued = 0;
-
-        if ( ($is_saying || $is_para) && $in_para)
-        {
-            $self->_enqueue_event({type => "close", tag => "para"});
-            $in_para = 0;
-        }
-        
-        if ( $is_saying && $self->_in_saying())
-        {
-            $self->_enqueue_event({type => "close", tag => "saying"});
-        }
-
-        if ($is_saying)
-        {
-            $self->_enqueue_event(
-                {type => "open", tag => "saying", _elem => $elem, },
-            );
-            $was_already_enqueued = 1;
-
-            $self->_enqueue_event({type => "open", tag => "para"});
-            $in_para = 1;
-        }
-        elsif ($is_para && !$in_para)
-        {
-            $self->_enqueue_event({type => "open", tag => "para"});
-            $in_para = 1;
-        }
-
-        if ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text") &&
-            !$was_already_enqueued)
-        {
-            if (!$in_para)
-            {
-                $self->_enqueue_event({type => "open", tag => "para"});
-                $in_para = 1;
-            }
-            $self->_enqueue_event({type => "elem", elem => $elem, });
-            $was_already_enqueued = 1;
-        }
-
         return;
     }
+
+    my $elem = $status->{'elem'};
+    my $is_para_end = $status->{'para_end'};
+    my $is_saying = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying");
+    #my $is_para =
+    #    (($self->curr_pos() == 0) && 
+    #     (${$self->curr_line_ref()} =~ m{\G\n?\z})
+    #    );
+    # Trying out this one:
+    my $is_para = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph");
+
+    my $in_para = $self->_in_para();
+    my $was_already_enqueued = 0;
+
+    if ( ($is_saying || $is_para) && $in_para)
+    {
+        $self->_enqueue_event({type => "close", tag => "para"});
+        $in_para = 0;
+    }
+    
+    if ( $is_saying && $self->_in_saying())
+    {
+        $self->_enqueue_event({type => "close", tag => "saying"});
+    }
+
+    if ($is_saying)
+    {
+        $self->_enqueue_event(
+            {type => "open", tag => "saying", _elem => $elem, },
+        );
+        $was_already_enqueued = 1;
+
+        $self->_enqueue_event({type => "open", tag => "para"});
+        $in_para = 1;
+    }
+    elsif ($is_para && !$in_para)
+    {
+        $self->_enqueue_event({type => "open", tag => "para"});
+        $in_para = 1;
+    }
+
+    if ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text") &&
+        !$was_already_enqueued)
+    {
+        if (!$in_para)
+        {
+            $self->_enqueue_event({type => "open", tag => "para"});
+            $in_para = 1;
+        }
+        $self->_enqueue_event({type => "elem", elem => $elem, });
+        $was_already_enqueued = 1;
+    }
+
+    return;
 }
 
 sub _close_saying

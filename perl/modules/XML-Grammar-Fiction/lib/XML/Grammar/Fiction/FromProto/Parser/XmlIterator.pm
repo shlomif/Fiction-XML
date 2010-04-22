@@ -575,6 +575,20 @@ sub _generate_tag_event
     }
 }
 
+sub _generate_text_unit_events
+{
+    my $self = shift;
+    
+    # $self->skip_multiline_space();
+
+    if (! $self->_generate_tag_event())
+    {
+        $self->_generate_non_tag_text_event();
+    }
+
+    return;
+}
+
 sub _flush_ret_tag
 {
     my $self = shift;
