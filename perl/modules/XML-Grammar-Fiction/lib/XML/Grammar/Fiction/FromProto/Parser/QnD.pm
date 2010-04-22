@@ -31,36 +31,6 @@ sub _non_tag_text_unit_consume_regex {
     return qr{(?:\<|^\n?$)}ms;
 }
 
-sub _generate_tag_event
-{
-    my $self = shift;
-
-    my $l = $self->curr_line_ref();
-    my $orig_pos = pos($$l);
-
-    if (my ($tag_opener) = $$l =~ m{\G(<(?:/)?)}cg)
-    {
-        # If it's a tag.
-
-        # TODO : implement the comment handling.
-        # We have a tag.
-
-        my $is_closing_tag = $tag_opener =~ m{/};
-
-        pos($$l) = $orig_pos;
-
-        $self->_enqueue_event(
-            {'type' => ($is_closing_tag ? "close" : "open")}
-        );
-
-        return 1;
-    }
-    else
-    {
-        return;
-    }
-}
-
 sub _generate_text_unit_events
 {
     my $self = shift;

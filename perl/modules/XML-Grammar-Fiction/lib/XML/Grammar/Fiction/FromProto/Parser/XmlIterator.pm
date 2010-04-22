@@ -501,6 +501,80 @@ sub _parse_text
     return \@ret;
 }
 
+sub _look_for_tag_opener
+{
+    my $self = shift;
+
+    my $l = $self->curr_line_ref();
+
+    if ($$l =~ m{\G(\&|<(?:/)?)}cg)
+    {
+        return $1;
+    }
+    else
+    {
+        return;
+    }
+}
+
+sub _is_closing_tag { 
+    my $self = shift;
+    my $tag_start = shift;
+
+    return $tag_start =~ m{/};
+}
+
+sub _generate_tag_event
+{
+    my $self = shift;
+
+    my $l = $self->curr_line_ref();
+    my $orig_pos = pos($$l);
+
+    if (defined(my $tag_start = $self->_look_for_tag_opener()))
+    {
+        # If it's a tag.
+
+        # TODO : implement the comment handling.
+        # We have a tag.
+
+        pos($$l) = $orig_pos;
+
+        if ($$l =~ m{\G\&})
+        {
+            if ($$l !~ m{\G(\&\w+;)}g)
+            {
+                Carp::confess("Cannot match entity (e.g: \"&quot;\") at line " .
+                    $self->line_num()
+                );
+            }
+
+            my $entity = $1;
+
+            $self->_enqueue_event(
+                {
+                    type => "elem",
+                    elem => $self->_new_text(
+                        [HTML::Entities::decode_entities($entity)]
+                    ),
+                },
+            );
+
+            return;
+        }
+
+        $self->_enqueue_event(
+            {'type' => ($self->_is_closing_tag($tag_start) ? "close" : "open")}
+        );
+
+        return 1;
+    }
+    else
+    {
+        return;
+    }
+}
+
 sub _flush_ret_tag
 {
     my $self = shift;
