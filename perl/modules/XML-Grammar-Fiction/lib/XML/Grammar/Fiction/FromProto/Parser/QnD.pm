@@ -27,38 +27,6 @@ Version 0.0.4
 
 our $VERSION = '0.0.4';
 
-sub _find_next_inner_text
-{
-    my $self = shift;
-
-    my $which_tag;
-    my $text = "";
-
-    my $l = $self->curr_line_ref();
-
-    # Apparently, perl does not always returns true in this
-    # case, so we need the defined($1) ? $1 : "" workaround.
-    $$l =~ m{\G([^\<\[\]\&]*)}cgms;
-
-    $text .= (defined($1) ? $1 : "");
-
-    if ($$l =~ m{\G\&})
-    {
-        $which_tag = "entity";
-    }                
-    elsif ($$l =~ m{\G(?:</|\])})
-    {
-        $which_tag = "close";
-    }
-    elsif ($$l =~ m{\G<})
-    {
-        $which_tag = "open_tag";
-    }
-
-    return ($which_tag, $text);
-}
-
-
 sub _parse_non_tag_text_unit
 {
     my $self = shift;
