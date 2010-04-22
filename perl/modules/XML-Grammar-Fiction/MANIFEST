@@ -131,8 +131,6 @@ t/screenplay/data/xml/with-multi-line-comments.xml
 t/screenplay/data/xml/with-multi-para-desc.xml
 t/screenplay/data/xml/with-tags-inside-paragraphs.xml
 t/screenplay/lib/run-test-1/XML/Grammar/Screenplay/ConfigData.pm
-t/screenplay/pod-coverage.t
-t/screenplay/pod.t
 t/screenplay/proto-text-invalid.t
 t/screenplay/proto-text-to-xml-using-custom-parser.t
 t/screenplay/qnd-parser-unit.t
