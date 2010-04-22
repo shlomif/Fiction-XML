@@ -31,21 +31,6 @@ sub _non_tag_text_unit_consume_regex {
     return qr{(?:\<|^\n?$)}ms;
 }
 
-sub _parse_text_unit
-{
-    my $self = shift;
-
-    if (defined(my $event  = $self->_extract_event()))
-    {
-        return $event;
-    }
-    else
-    {
-        $self->_generate_text_unit_events();
-        return $self->_extract_event();
-    }
-}
-
 sub _generate_tag_event
 {
     my $self = shift;
