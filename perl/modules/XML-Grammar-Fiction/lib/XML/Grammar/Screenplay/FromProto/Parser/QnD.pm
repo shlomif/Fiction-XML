@@ -195,21 +195,6 @@ around '_parse_non_tag_text_unit' => sub {
     }
 };
 
-sub _parse_text_unit
-{
-    my $self = shift;
-
-    if (defined(my $event = $self->_extract_event()))
-    {
-        return $event;
-    }
-    else
-    {
-        $self->_generate_text_unit_events();
-        return $self->_extract_event();
-    }
-}
-
 sub _generate_text_unit_events
 {
     my $self = shift;
