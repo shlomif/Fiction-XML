@@ -195,58 +195,39 @@ around '_parse_non_tag_text_unit' => sub {
     }
 };
 
+sub _look_for_tag_opener
+{
+    my $self = shift;
+
+    my $l = $self->curr_line_ref();
+
+    if ($$l =~ m{\G([<\[\]\&])})
+    {
+        return $1;
+    }
+    else
+    {
+        return;
+    }
+}
+
+
+sub _is_closing_tag { 
+    my $self = shift;
+    my $tag_start = shift;
+
+    return (${$self->curr_line_ref()} =~ m{\G(</|\])});
+}
+
+
 sub _generate_text_unit_events
 {
     my $self = shift;
     
     # $self->skip_multiline_space();
 
-    my $l = $self->curr_line_ref();
-    if ($$l =~ m{\G[<\[\]\&]})
+    if (! $self->_generate_tag_event())
     {
-        # If it's a tag.
-
-        # TODO : implement the comment handling.
-        # We have a tag.
-
-        # If it's an entity, then parse it.
-        if ($$l =~ m{\G\&})
-        {
-            if ($$l !~ m{\G(\&\w+;)}g)
-            {
-                Carp::confess("Cannot match entity (e.g: \"&quot;\") at line " .
-                    $self->line_num()
-                );
-            }
-
-            my $entity = $1;
-
-            $self->_enqueue_event(
-                {
-                    type => "elem",
-                    elem => $self->_new_text(
-                        [HTML::Entities::decode_entities($entity)]
-                    ),
-                },
-            );
-
-            return;
-        }
-        # If it's a closing tag - then backtrack.
-        if ($$l =~ m{\G(</|\])})
-        {
-            $self->_enqueue_event({'type' => "close"});
-            return;
-        }
-        else
-        {
-            $self->_enqueue_event({'type' => "open"});
-            return;
-        }
-    }
-    else
-    {
-
         my $status = $self->_parse_non_tag_text_unit();
 
         if (!defined($status))
