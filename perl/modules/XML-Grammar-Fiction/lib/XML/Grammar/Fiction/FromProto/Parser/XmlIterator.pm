@@ -426,6 +426,46 @@ sub _look_ahead_for_comment
     }
 }
 
+sub _parse_non_tag_text_unit
+{
+    my $self = shift;
+
+    my $text = $self->consume_up_to($self->_non_tag_text_unit_consume_regex);
+
+    my $l = $self->curr_line_ref();
+
+    my $ret_elem = $self->_new_text([$text]);
+    my $is_para_end = 0;
+
+    # Demote the cursor to before the < of the tag.
+    #
+    if (pos($$l) > 0)
+    {
+        pos($$l)--;
+        if (substr($$l, pos($$l), 1) eq "\n")
+        {
+            $is_para_end = 1;
+        }
+    }
+    else
+    {
+        $is_para_end = 1;
+    }
+    
+    if ($text !~ /\S/)
+    {
+        return;
+    }
+    else
+    {
+        return
+        {
+            elem => $ret_elem,
+            para_end => $is_para_end,
+        };
+    }
+}
+
 sub _parse_text
 {
     my $self = shift;

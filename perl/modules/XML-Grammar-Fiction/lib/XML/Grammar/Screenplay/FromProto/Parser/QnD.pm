@@ -175,9 +175,13 @@ sub _parse_speech_unit
     }
 }
 
-sub _parse_non_tag_text_unit
+sub _non_tag_text_unit_consume_regex
 {
-    my $self = shift;
+    return qr{(?:[\<\[\]\&]|^\n?$)}ms;
+}
+
+around '_parse_non_tag_text_unit' => sub {
+    my ($orig, $self) = @_;
 
     my $l = $self->curr_line_ref();
 
@@ -185,42 +189,11 @@ sub _parse_non_tag_text_unit
     {
         return $self->_parse_speech_unit();
     }
-
-    my $text = $self->consume_up_to(qr{(?:[\<\[\]\&]|^\n?$)}ms);
-
-    $l = $self->curr_line_ref();
-
-    my $ret_elem = $self->_new_text([$text]);
-    my $is_para_end = 0;
-
-    # Demote the cursor to before the < of the tag.
-    #
-    if (pos($$l) > 0)
-    {
-        pos($$l)--;
-        if (substr($$l, pos($$l), 1) eq "\n")
-        {
-            $is_para_end = 1;
-        }
-    }
     else
     {
-        $is_para_end = 1;
+        return $self->$orig();
     }
-
-    if ($text !~ /\S/)
-    {
-        return;
-    }
-    else
-    {
-        return
-        {
-            elem => $ret_elem,
-            para_end => $is_para_end,
-        };
-    }
-}
+};
 
 sub _parse_text_unit
 {
