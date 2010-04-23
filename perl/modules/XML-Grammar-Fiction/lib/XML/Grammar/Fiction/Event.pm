@@ -13,11 +13,22 @@ use Moose;
 use XML::Grammar::Fiction::FromProto::Nodes;
 
 has 'type' => (isa => "Str", is => "ro");
-has 'tag' => (isa => "Maybe[Str]", is => "ro");
+has 'tag' => (isa => "Maybe[Str]", is => "ro", predicate => '_has_tag',);
 has 'elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
 has 'tag_elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
 
+sub is_tag_of_name
+{
+    my ($self, $name) = @_;
+
+    return ($self->_has_tag() && ($self->tag() eq $name));
+}
+
 1;
+
+=head2 $event->is_tag_of_name($name)
+
+Determines if the $event is a tag and of name $name.
 
 =head2 $self->meta()
 

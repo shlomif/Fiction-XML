@@ -289,21 +289,21 @@ sub _is_event_a_saying
 {
     my ($self, $event) = @_;
 
-    return exists($event->{'tag'}) && ($event->{'tag'} eq "saying");
+    return $event->is_tag_of_name("saying");
 }
 
 sub _is_event_a_para
 {
     my ($self, $event) = @_;
 
-    return exists($event->{'tag'}) && ($event->{'tag'} eq "para");
+    return $event->is_tag_of_name("para");
 }
 
 sub _is_event_elem
 {
     my ($self, $event) = @_;
 
-    return $event->{'type'} eq "elem";
+    return $event->type() eq "elem";
 }
 
 sub _handle_paragraph_event
@@ -311,7 +311,7 @@ sub _handle_paragraph_event
     my ($self, $event) = @_;
 
     return
-          $event->{'type'} eq "open"
+          $event->type() eq "open"
         ? $self->_handle_open_para($event)
         : $self->_handle_close_para($event)
         ;
@@ -321,7 +321,7 @@ sub _handle_elem_event
 {
     my ($self, $event) = @_;
 
-    $self->_add_to_top_tag( $event->{'elem'});
+    $self->_add_to_top_tag( $event->elem());
 
     return;
 }
