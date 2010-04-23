@@ -24,11 +24,22 @@ sub is_tag_of_name
     return ($self->_has_tag() && ($self->tag() eq $name));
 }
 
+sub is_open
+{
+    my $self = shift;
+
+    return ($self->type() eq "open");
+}
+
 1;
 
 =head2 $event->is_tag_of_name($name)
 
 Determines if the $event is a tag and of name $name.
+
+=head2 $event->is_open()
+
+Returns true if the $event 's type is "open".
 
 =head2 $self->meta()
 

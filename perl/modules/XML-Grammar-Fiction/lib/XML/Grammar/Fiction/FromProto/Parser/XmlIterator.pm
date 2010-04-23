@@ -311,7 +311,7 @@ sub _handle_paragraph_event
     my ($self, $event) = @_;
 
     return
-          $event->type() eq "open"
+          $event->is_open()
         ? $self->_handle_open_para($event)
         : $self->_handle_close_para($event)
         ;
