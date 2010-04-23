@@ -7,6 +7,7 @@ use Moose;
 
 use XML::Grammar::Fiction::Err;
 use XML::Grammar::Fiction::Struct::Tag;
+use XML::Grammar::Fiction::Event;
 
 extends("XML::Grammar::Fiction::FromProto::Parser::LineIterator");
 
@@ -28,7 +29,7 @@ has "_tags_stack" =>
 
 has "_events_queue" =>
 (
-    isa => "ArrayRef",
+    isa => "ArrayRef[XML::Grammar::Fiction::Event]",
     is => "rw", 
     default => sub { []; },
     traits => ['Array'],
@@ -552,19 +553,23 @@ sub _generate_tag_event
             my $entity = $1;
 
             $self->_enqueue_event(
-                {
-                    type => "elem",
-                    elem => $self->_new_text(
-                        [HTML::Entities::decode_entities($entity)]
-                    ),
-                },
+                XML::Grammar::Fiction::Event->new(
+                    {
+                        type => "elem",
+                        elem => $self->_new_text(
+                            [HTML::Entities::decode_entities($entity)]
+                        ),
+                    },
+                )
             );
 
             return;
         }
 
         $self->_enqueue_event(
-            {'type' => ($self->_is_closing_tag($tag_start) ? "close" : "open")}
+            XML::Grammar::Fiction::Event->new(
+                {'type' => ($self->_is_closing_tag($tag_start) ? "close" : "open")}
+            ),
         );
 
         return 1;
