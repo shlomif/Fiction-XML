@@ -310,7 +310,7 @@ sub _generate_non_tag_text_event
     return;
 }
 
-sub _close_saying
+sub _handle_close_saying
 {
     my $self = shift;
     my $open = $self->_pop_tag();
@@ -396,7 +396,7 @@ sub _close_top_tags
 
     if ($self->_top_is_saying())
     {
-        $self->_close_saying();
+        $self->_handle_close_saying();
     }
 
     return;
@@ -416,7 +416,7 @@ sub _handle_open_para
     return $self->_start_para();
 }
 
-sub _open_saying
+sub _handle_open_saying
 {
     my $self = shift;
     my $event = shift;
@@ -448,8 +448,8 @@ sub _handle_saying_event
 
     return
         $event->is_open()
-        ? $self->_open_saying($event)
-        : $self->_close_saying();
+        ? $self->_handle_open_saying($event)
+        : $self->_handle_close_saying();
 }
 
 sub _handle_event
