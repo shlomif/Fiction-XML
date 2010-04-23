@@ -120,19 +120,6 @@ sub _handle_event
     return;
 }
 
-sub _handle_open_tag
-{
-    my $self = shift;
-
-    my $open = $self->_parse_opening_tag();
-
-    $open->children([]);
-
-    $self->_push_tag($open);
-
-    return;
-}
-
 before '_handle_close_tag' => sub { 
     my $self = shift;
 

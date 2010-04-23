@@ -446,36 +446,16 @@ sub _handle_event
     return;
 }
 
-sub _handle_open_tag
-{
+after '_handle_open_tag' => sub {
     my $self = shift;
 
-    my $open = $self->_parse_opening_tag();
-
-    $open->children([]);
-
-    # TODO : add the check for is_standalone in XML-Grammar-Fiction
-    # too.
-    if ($open->is_standalone())
-    {
-        if (defined($self->_merge_tag($open)))
-        {
-            Carp::confess ("Top element/tag cannot be standalone.");
-        }
-        else
-        {
-            return;
-        }
-    }
-    $self->_push_tag($open);
-
-    if ($open->name() eq "desc")
+    if ($self->_top_tag()->name() eq "desc")
     {
         $self->_start_para();
     }
 
     return;
-}
+};
 
 before '_handle_close_tag' => sub { 
     my $self = shift;

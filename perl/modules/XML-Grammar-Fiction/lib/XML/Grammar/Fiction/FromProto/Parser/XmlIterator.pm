@@ -575,6 +575,33 @@ sub _generate_tag_event
     }
 }
 
+sub _handle_open_tag
+{
+    my $self = shift;
+
+    my $open = $self->_parse_opening_tag();
+
+    $open->children([]);
+
+    # TODO : add the check for is_standalone in XML-Grammar-Fiction
+    # too.
+    if ($open->is_standalone())
+    {
+        if (defined($self->_merge_tag($open)))
+        {
+            Carp::confess ("Top element/tag cannot be standalone.");
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    $self->_push_tag($open);
+
+    return;
+}
+
 sub _generate_text_unit_events
 {
     my $self = shift;
