@@ -447,7 +447,7 @@ sub _handle_saying_event
     my ($self, $event) = @_;
 
     return
-        $event->{'type'} eq "open"
+        $event->type() eq "open"
         ? $self->_open_saying($event)
         : $self->_close_saying();
 }
