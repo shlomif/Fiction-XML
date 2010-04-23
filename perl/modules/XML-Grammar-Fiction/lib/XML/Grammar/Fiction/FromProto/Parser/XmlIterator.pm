@@ -306,7 +306,7 @@ sub _is_event_elem
     return $event->type() eq "elem";
 }
 
-sub _handle_paragraph_event
+sub _handle_para_event
 {
     my ($self, $event) = @_;
 

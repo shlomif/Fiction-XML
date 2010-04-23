@@ -122,7 +122,7 @@ sub _handle_event
 
     if ($self->_is_event_a_para($event))
     {
-        $self->_handle_paragraph_event($event);
+        $self->_handle_para_event($event);
     }
     elsif ($self->_is_event_elem($event))
     {
