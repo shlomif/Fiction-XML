@@ -244,28 +244,46 @@ sub _generate_non_tag_text_event
 
     if ( ($is_saying || $is_para) && $in_para)
     {
-        $self->_enqueue_event({type => "close", tag => "para"});
+        $self->_enqueue_event(
+            XML::Grammar::Fiction::Event->new(
+                {type => "close", tag => "para"}
+            )
+        );
         $in_para = 0;
     }
     
     if ( $is_saying && $self->_in_saying())
     {
-        $self->_enqueue_event({type => "close", tag => "saying"});
+        $self->_enqueue_event(
+            XML::Grammar::Fiction::Event->new(
+                {type => "close", tag => "saying"}
+            )
+        );
     }
 
     if ($is_saying)
     {
         $self->_enqueue_event(
-            {type => "open", tag => "saying", _elem => $elem, },
+            XML::Grammar::Fiction::Event->new(
+                {type => "open", tag => "saying", tag_elem => $elem, },
+            ),
         );
         $was_already_enqueued = 1;
 
-        $self->_enqueue_event({type => "open", tag => "para"});
+        $self->_enqueue_event(
+            XML::Grammar::Fiction::Event->new(
+                {type => "open", tag => "para"}
+            )
+        );
         $in_para = 1;
     }
     elsif ($is_para && !$in_para)
     {
-        $self->_enqueue_event({type => "open", tag => "para"});
+        $self->_enqueue_event(
+            XML::Grammar::Fiction::Event->new(
+                {type => "open", tag => "para"}
+            ),
+        );
         $in_para = 1;
     }
 
@@ -274,10 +292,18 @@ sub _generate_non_tag_text_event
     {
         if (!$in_para)
         {
-            $self->_enqueue_event({type => "open", tag => "para"});
+            $self->_enqueue_event(
+                XML::Grammar::Fiction::Event->new(
+                    {type => "open", tag => "para"},
+                )
+            );
             $in_para = 1;
         }
-        $self->_enqueue_event({type => "elem", elem => $elem, });
+        $self->_enqueue_event(
+            XML::Grammar::Fiction::Event->new(
+                {type => "elem", elem => $elem, }
+            )
+        );
         $was_already_enqueued = 1;
     }
 
@@ -403,7 +429,7 @@ sub _open_saying
                 # TODO : propagate the correct line_num
                 # from the called-to layers.
                 line => $self->line_num(),
-                attrs => [{key => "character", value => $event->{_elem}->character()}],
+                attrs => [{key => "character", value => $event->tag_elem->character()}],
             }
         );
 

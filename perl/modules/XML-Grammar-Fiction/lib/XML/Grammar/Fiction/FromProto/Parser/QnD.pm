@@ -44,15 +44,27 @@ sub _generate_non_tag_text_event
     my $in_para = $self->_in_para();
     if ($is_para && !$in_para)
     {
-        $self->_enqueue_event({type => "open", tag => "para"});
+        $self->_enqueue_event(
+            XML::Grammar::Fiction::Event->new(
+               { type => "open", tag => "para", }
+            ),
+        );
         $in_para = 1;
     }
 
-    $self->_enqueue_event({type => "elem", elem => $elem});
+    $self->_enqueue_event(
+        XML::Grammar::Fiction::Event->new(
+            {type => "elem", elem => $elem}
+        )
+    );
 
     if ($is_para_end && $in_para)
     {
-        $self->_enqueue_event({ type => "close", tag => "para" });
+        $self->_enqueue_event(
+            XML::Grammar::Fiction::Event->new(
+                { type => "close", tag => "para" }
+            )
+        );
         $in_para = 0;
     }
 
