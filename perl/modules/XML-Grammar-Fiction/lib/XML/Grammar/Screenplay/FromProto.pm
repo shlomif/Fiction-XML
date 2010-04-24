@@ -117,6 +117,11 @@ sub _handle_text_start
     }
 }
 
+sub _paragraph_tag
+{
+    return "para";
+}
+
 sub _write_elem
 {
     my ($self, $args) = @_;
@@ -131,7 +136,7 @@ sub _write_elem
     {
         $self->_output_tag_with_childs(
             {
-               start => ["para"],
+               start => [$self->_paragraph_tag()],
                 elem => $elem,
             },
         );
