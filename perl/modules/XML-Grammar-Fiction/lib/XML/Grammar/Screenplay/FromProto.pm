@@ -1,23 +1,8 @@
 package XML::Grammar::Screenplay::FromProto;
 
-use strict;
-use warnings;
-
-use Carp;
-
-use base 'XML::Grammar::Screenplay::Base';
-
-use XML::Writer;
-use HTML::Entities ();
-
-use XML::Grammar::Fiction::FromProto::Nodes;
-
 use Moose;
 
-has "_parser" => ('is' => "rw");
-has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
-
-has '_buffer' => ('isa' => "ScalarRef[Str]", is => "rw");
+extends("XML::Grammar::FictionBase::TagsTree2XML");
 
 my $screenplay_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/};
 

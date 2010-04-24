@@ -4,35 +4,13 @@ use strict;
 use warnings;
 
 use Carp;
-
-use XML::Writer;
 use HTML::Entities ();
-
-use XML::Grammar::Fiction::FromProto::Nodes;
 
 use Moose;
 
+extends("XML::Grammar::FictionBase::TagsTree2XML");
+
 use List::Util (qw(first));
-
-has '_parser_class' =>
-(
-    is => "ro",
-    isa => "Str",
-    init_arg => "parser_class",
-    default => "XML::Grammar::Fiction::FromProto::Parser::QnD",
-);
-
-has "_parser" => (
-    'isa' => "XML::Grammar::Fiction::FromProto::Parser", 
-    'is' => "rw",
-    lazy => 1,
-    default => sub { 
-        my $self = shift; 
-        return $self->_parser_class->new();
-    },
-);
-
-has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
 my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
 my $xml_ns = "http://www.w3.org/XML/1998/namespace";
