@@ -30,6 +30,7 @@ has "_tags_stack" =>
 has "_events_queue" =>
 (
     isa => "ArrayRef[XML::Grammar::Fiction::Event]",
+    # isa => "ArrayRef",
     is => "rw", 
     default => sub { []; },
     traits => ['Array'],
