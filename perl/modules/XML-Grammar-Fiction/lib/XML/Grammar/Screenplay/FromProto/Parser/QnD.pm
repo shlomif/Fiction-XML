@@ -487,20 +487,9 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
-sub _main_loop_iter
+sub _main_loop_iter_body
 {
     my $self = shift;
-
-    # This is an assert.
-    if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
-    {
-        Carp::confess (qq{Reached EOF.});
-    }
-    
-    if ($self->_look_ahead_for_comment())
-    {
-        return;
-    }
 
     my ($l, $p) = $self->curr_line_and_pos();
 
