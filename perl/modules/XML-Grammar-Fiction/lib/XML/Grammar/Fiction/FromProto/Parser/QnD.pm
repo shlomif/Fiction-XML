@@ -139,15 +139,13 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
-sub _main_loop_iter_body
+sub _main_loop_iter_body_prelude
 {
     my $self = shift;
 
     $self->skip_space();
 
-    $self->_ret_tag(scalar($self->_look_for_and_handle_tag()));
-
-    return;
+    return 1;
 }
 
 before '_parse_all' => sub {

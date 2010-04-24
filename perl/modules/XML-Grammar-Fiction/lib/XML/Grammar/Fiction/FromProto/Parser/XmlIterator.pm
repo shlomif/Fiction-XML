@@ -706,6 +706,27 @@ sub _main_loop_iter
     return $self->_main_loop_iter_body();
 }
 
+sub _attempt_to_calc_new_ret_tag
+{
+    my $self = shift;
+    
+    $self->_ret_tag(scalar($self->_look_for_and_handle_tag()));
+
+    return;
+}
+
+sub _main_loop_iter_body
+{
+    my $self = shift;
+
+    if ($self->_main_loop_iter_body_prelude())
+    {
+        $self->_attempt_to_calc_new_ret_tag();
+    }
+
+    return;
+}
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base

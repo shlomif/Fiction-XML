@@ -487,7 +487,7 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
-sub _main_loop_iter_body
+sub _main_loop_iter_body_prelude
 {
     my $self = shift;
 
@@ -515,9 +515,7 @@ sub _main_loop_iter_body
         return;
     }
     
-    $self->_ret_tag(scalar($self->_look_for_and_handle_tag()));
-
-    return;
+    return 1;
 }
 
 
