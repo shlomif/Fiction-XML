@@ -688,6 +688,24 @@ sub _parse_all
     return $self->_flush_ret_tag();
 }
 
+sub _main_loop_iter
+{
+    my $self = shift;
+
+    # This is an assert.
+    if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
+    {
+        Carp::confess (qq{Reached EOF.});
+    }
+    
+    if ($self->_look_ahead_for_comment())
+    {
+        return;
+    }
+
+    return $self->_main_loop_iter_body();
+}
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base

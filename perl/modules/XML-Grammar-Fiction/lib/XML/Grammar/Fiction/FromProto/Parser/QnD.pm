@@ -139,14 +139,9 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
-sub _main_loop_iter
+sub _main_loop_iter_body
 {
     my $self = shift;
-
-    if ($self->_look_ahead_for_comment())
-    {
-        return;
-    }
 
     $self->skip_space();
 
