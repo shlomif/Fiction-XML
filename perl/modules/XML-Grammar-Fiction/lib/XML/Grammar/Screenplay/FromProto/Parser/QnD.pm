@@ -452,24 +452,9 @@ sub _handle_saying_event
         : $self->_handle_close_saying();
 }
 
-sub _handle_event
+sub _list_valid_tag_events
 {
-    my ($self, $event) = @_;
-
-    if ($self->_is_event_a_para($event))
-    {
-        $self->_handle_para_event($event);
-    }
-    elsif ($self->_is_event_a_saying($event))
-    {
-        $self->_handle_saying_event($event);
-    }
-    elsif ($self->_is_event_elem($event))
-    {
-        $self->_handle_elem_event($event);
-    }
-
-    return;
+    return [qw(para saying)];
 }
 
 after '_handle_open_tag' => sub {
