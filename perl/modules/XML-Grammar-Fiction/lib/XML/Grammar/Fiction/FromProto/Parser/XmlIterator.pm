@@ -306,6 +306,41 @@ sub _is_event_elem
     return $event->type() eq "elem";
 }
 
+sub _handle_event
+{
+    my ($self, $event) = @_;
+
+    if ((! $self->_check_and_handle_tag_event($event))
+        && $self->_is_event_elem($event)
+    )
+    {
+        $self->_handle_elem_event($event);
+    }
+
+    return;
+}
+
+sub _check_and_handle_tag_event
+{
+    my ($self, $event) = @_;
+
+    foreach my $tag_name (@{$self->_list_valid_tag_events()})
+    {
+        if ($event->is_tag_of_name($tag_name))
+        {
+            my $type = $event->is_open() ? "open" : "close";
+            
+            my $method = "_handle_${type}_${tag_name}";
+
+            $self->$method($event);
+
+            return 1;
+        }
+    }
+
+    return;
+}
+
 sub _handle_para_event
 {
     my ($self, $event) = @_;
