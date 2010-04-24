@@ -101,7 +101,7 @@ sub _handle_text_start
 {
     my ($self, $elem) = @_;
 
-    if ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying"))
+    if ($elem->_short_isa("Saying"))
     {
         $self->_output_tag_with_childs(
             {
@@ -110,7 +110,7 @@ sub _handle_text_start
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Description"))
+    elsif ($elem->_short_isa("Description"))
     {
         $self->_output_tag_with_childs(
             {
@@ -119,7 +119,7 @@ sub _handle_text_start
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
+    elsif ($elem->_short_isa("Text"))
     {
         foreach my $child (@{$elem->_get_childs()})
         {
@@ -142,7 +142,7 @@ sub _write_elem
     {
         $self->_writer->characters($elem);
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph"))
+    elsif ($elem->_short_isa("Paragraph"))
     {
         $self->_output_tag_with_childs(
             {
@@ -151,7 +151,7 @@ sub _write_elem
             },
         );
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Element"))
+    elsif ($elem->_short_isa("Element"))
     {
         if (($elem->name() eq "s") || ($elem->name() eq "section"))
         {
@@ -179,7 +179,7 @@ sub _write_elem
         {
             $self->_writer->emptyTag("br");
         }
-        elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::InnerDesc"))
+        elsif ($elem->_short_isa("InnerDesc"))
         {
             $self->_output_tag_with_childs(
                 {
@@ -189,11 +189,11 @@ sub _write_elem
             );
         }
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Text"))
+    elsif ($elem->_short_isa("Text"))
     {
         $self->_handle_text_start($elem);
     }
-    elsif ($elem->isa("XML::Grammar::Fiction::FromProto::Node::Comment"))
+    elsif ($elem->_short_isa("Comment"))
     {
         $self->_writer->comment($elem->text());
     }
