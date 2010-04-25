@@ -169,6 +169,20 @@ sub _write_Element_elem
     return;
 }
 
+sub _handle_text_start
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => $self->_get_text_start($elem),
+            elem => $elem,
+        },
+    );
+
+    return;
+}
+
 sub _write_elem
 {
     my ($self, $args) = @_;
@@ -208,12 +222,7 @@ sub _write_elem
     }
     elsif ($elem->_short_isa("Text"))
     {
-        $self->_output_tag_with_childs(
-            {
-                start => $self->_get_text_start($elem),
-                elem => $elem,
-            },
-        );
+        $self->_handle_text_start($elem);
     }
     elsif ($elem->_short_isa("Comment"))
     {
