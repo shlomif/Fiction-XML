@@ -122,6 +122,49 @@ sub _paragraph_tag
     return "para";
 }
 
+sub _write_Element_elem
+{
+    my ($self, $elem) = @_;
+
+    if (($elem->name() eq "s") || ($elem->name() eq "section"))
+    {
+        $self->_write_scene({scene => $elem});
+    }
+    elsif ($elem->name() eq "a")
+    {
+        $self->_output_tag_with_childs(
+            {
+                start => ["ulink", "url" => $elem->lookup_attr("href")],
+                elem => $elem,
+            }
+        );
+    }
+    elsif ($elem->name() eq "b")
+    {
+        $self->_output_tag_with_childs(
+            {
+                start => ["bold"],
+                elem => $elem,
+            }
+        );
+    }
+    elsif ($elem->name() eq "br")
+    {
+        $self->_writer->emptyTag("br");
+    }
+    elsif ($elem->_short_isa("InnerDesc"))
+    {
+        $self->_output_tag_with_childs(
+            {
+                start => ["inlinedesc"],
+                elem => $elem,
+            }
+        );
+    }
+
+    return;
+}
+
 sub _write_elem
 {
     my ($self, $args) = @_;
@@ -143,41 +186,7 @@ sub _write_elem
     }
     elsif ($elem->_short_isa("Element"))
     {
-        if (($elem->name() eq "s") || ($elem->name() eq "section"))
-        {
-            $self->_write_scene({scene => $elem});
-        }
-        elsif ($elem->name() eq "a")
-        {
-            $self->_output_tag_with_childs(
-                {
-                    start => ["ulink", "url" => $elem->lookup_attr("href")],
-                    elem => $elem,
-                }
-            );
-        }
-        elsif ($elem->name() eq "b")
-        {
-            $self->_output_tag_with_childs(
-                {
-                    start => ["bold"],
-                    elem => $elem,
-                }
-            );
-        }
-        elsif ($elem->name() eq "br")
-        {
-            $self->_writer->emptyTag("br");
-        }
-        elsif ($elem->_short_isa("InnerDesc"))
-        {
-            $self->_output_tag_with_childs(
-                {
-                    start => ["inlinedesc"],
-                    elem => $elem,
-                }
-            );
-        }
+        $self->_write_Element_elem($elem);
     }
     elsif ($elem->_short_isa("Text"))
     {
