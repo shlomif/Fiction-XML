@@ -122,45 +122,24 @@ sub _paragraph_tag
     return "para";
 }
 
-sub _write_Element_elem
+sub _handle_elem_of_name_section
 {
     my ($self, $elem) = @_;
 
-    if ($elem->_short_isa("InnerDesc"))
-    {
-        $self->_output_tag_with_childs(
-            {
-                start => ["inlinedesc"],
-                elem => $elem,
-            }
-        );
-    }
-    elsif (($elem->name() eq "s") || ($elem->name() eq "section"))
-    {
-        $self->_write_scene({scene => $elem});
-    }
-    elsif ($elem->name() eq "a")
-    {
-        $self->_output_tag_with_childs(
-            {
-                start => ["ulink", "url" => $elem->lookup_attr("href")],
-                elem => $elem,
-            }
-        );
-    }
-    elsif ($elem->name() eq "b")
-    {
-        $self->_output_tag_with_childs(
-            {
-                start => ["bold"],
-                elem => $elem,
-            }
-        );
-    }
-    elsif ($elem->name() eq "br")
-    {
-        $self->_writer->emptyTag("br");
-    }
+    return $self->_handle_elem_of_name_s($elem);
+}
+
+# TODO : extract a common method with different class constants.
+sub _handle_elem_of_name_b
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => ["bold"],
+            elem => $elem,
+        }
+    );
 
     return;
 }
