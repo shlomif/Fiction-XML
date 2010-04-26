@@ -11,19 +11,32 @@ my $builder = XML::Grammar::Fiction::Builder->new(
     license             => 'mit',
     dist_author         => 'Shlomi Fish <shlomif@cpan.org>',
     dist_version_from   => 'lib/XML/Grammar/Fiction.pm',
+    configure_requires => {
+        'strict' => 0,
+        'warnings' => 0,
+        'File::Spec' => 0,
+        'Module::Build' => 0,
+    },
     build_requires => {
         'Config' => 0,
         'File::Find' => 0,
         'File::Spec' => 0,
         'strict' => 0,
+        'warnings' => 0,
+        'XML::LibXML' => 0,
+    },
+    test_requires => {
         'Test::More' => 0,
+        'strict' => 0,
         'Test::XML' => 0,
         'warnings' => 0,
         'XML::LibXML' => 0,
+        'File::Spec' => 0,
     },
     requires => 
     {
         'Carp' => 0,
+        'Exporter' => 0,
         'Data::Dumper' => 0,
         'Exception::Class' => 0,
         'Getopt::Long' => 0,
