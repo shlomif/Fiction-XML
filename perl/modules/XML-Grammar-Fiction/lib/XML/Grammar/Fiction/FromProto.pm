@@ -122,16 +122,9 @@ sub _handle_elem_of_name_title
     return;
 }
 
-sub _handle_elem_of_name_b
+sub _bold_tag_name
 {
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => ["b"],
-            elem => $elem,
-        }
-    );
+    return "b";
 }
 
 sub _handle_elem_of_name_i

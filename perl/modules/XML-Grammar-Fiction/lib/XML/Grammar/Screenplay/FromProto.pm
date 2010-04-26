@@ -129,19 +129,9 @@ sub _handle_elem_of_name_section
     return $self->_handle_elem_of_name_s($elem);
 }
 
-# TODO : extract a common method with different class constants.
-sub _handle_elem_of_name_b
+sub _bold_tag_name
 {
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => ["bold"],
-            elem => $elem,
-        }
-    );
-
-    return;
+    return "bold";
 }
 
 sub _write_elem
