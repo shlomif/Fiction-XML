@@ -111,60 +111,92 @@ sub _write_Element_elem
                 elem => $elem,
             }
         );
+        return;
     }
-    elsif ($elem->name() eq "title")
+    else
     {
-        # TODO :
-        # Eliminate the Law-of-Demeter-syndrome here.
-        my $list = $elem->_get_childs()->[0];
-        $self->_output_tag(
-            {
-                start => ["title"],
-                in => sub {
-                    $self->_write_elem(
-                        {
-                            elem => $list,
-                        }                            
-                    ),
-                },
+        my $method = "_handle_elem_of_name_" . $elem->name();
+
+        $self->$method($elem);
+
+        return;
+    }
+}
+
+sub _handle_elem_of_name_title
+{
+    my ($self, $elem) = @_;
+
+    # TODO :
+    # Eliminate the Law-of-Demeter-syndrome here.
+    my $list = $elem->_get_childs()->[0];
+    $self->_output_tag(
+        {
+            start => ["title"],
+            in => sub {
+                $self->_write_elem(
+                    {
+                        elem => $list,
+                    }                            
+                ),
             },
-        );
-    }
-    elsif ($elem->name() eq "s")
-    {
-        $self->_write_scene({scene => $elem});
-    }
-    elsif ($elem->name() eq "a")
-    {
-        $self->_output_tag_with_childs(
-            {
-                start => ["ulink", "url" => $elem->lookup_attr("href")],
-                elem => $elem,
-            }
-        );
-    }
-    elsif ($elem->name() eq "b")
-    {
-        $self->_output_tag_with_childs(
-            {
-                start => ["b"],
-                elem => $elem,
-            }
-        );
-    }
-    elsif ($elem->name() eq "i")
-    {
-        $self->_output_tag_with_childs(
-            {
-                start => ["i"],
-                elem => $elem,
-            }
-        );
-    }        
-    elsif ($elem->name() eq "br")
-    {
-        $self->_writer->emptyTag("br");
-    }
+        },
+    );
+
+    return;
+}
+
+sub _handle_elem_of_name_s
+{
+    my ($self, $elem) = @_;
+
+    $self->_write_scene({scene => $elem});
+}
+
+sub _handle_elem_of_name_a
+{
+    my ($self, $elem) = @_;
+    $self->_output_tag_with_childs(
+        {
+            start => ["ulink", "url" => $elem->lookup_attr("href")],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
+
+sub _handle_elem_of_name_b
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => ["b"],
+            elem => $elem,
+        }
+    );
+}
+
+sub _handle_elem_of_name_i
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => ["i"],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
+
+sub _handle_elem_of_name_br
+{
+    my ($self, $elem) = @_;
+
+    $self->_writer->emptyTag("br");
 
     return;
 }
