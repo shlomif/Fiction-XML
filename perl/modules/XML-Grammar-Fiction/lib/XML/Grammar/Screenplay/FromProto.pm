@@ -126,7 +126,16 @@ sub _write_Element_elem
 {
     my ($self, $elem) = @_;
 
-    if (($elem->name() eq "s") || ($elem->name() eq "section"))
+    if ($elem->_short_isa("InnerDesc"))
+    {
+        $self->_output_tag_with_childs(
+            {
+                start => ["inlinedesc"],
+                elem => $elem,
+            }
+        );
+    }
+    elsif (($elem->name() eq "s") || ($elem->name() eq "section"))
     {
         $self->_write_scene({scene => $elem});
     }
@@ -151,15 +160,6 @@ sub _write_Element_elem
     elsif ($elem->name() eq "br")
     {
         $self->_writer->emptyTag("br");
-    }
-    elsif ($elem->_short_isa("InnerDesc"))
-    {
-        $self->_output_tag_with_childs(
-            {
-                start => ["inlinedesc"],
-                elem => $elem,
-            }
-        );
     }
 
     return;
