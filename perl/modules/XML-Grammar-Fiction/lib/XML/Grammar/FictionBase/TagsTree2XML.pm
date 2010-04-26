@@ -85,6 +85,18 @@ sub _handle_elem_of_name_a
     return;
 }
 
+sub _handle_elem_of_name_b
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => [$self->_bold_tag_name()],
+            elem => $elem,
+        }
+    );
+}
+
 sub _handle_elem_of_name_br
 {
     my ($self, $elem) = @_;
