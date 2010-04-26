@@ -68,6 +68,8 @@ my $builder = XML::Grammar::Fiction::Builder->new(
             "xslt",
         ],
     },
+    # In order to run the screenplay tests.
+    test_files => "t/*.t t/*/*.t",
 );
 
 $builder->create_build_script();
