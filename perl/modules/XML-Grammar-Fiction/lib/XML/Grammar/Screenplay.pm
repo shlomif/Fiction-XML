@@ -10,11 +10,11 @@ screenplays.
 
 =head1 VERSION
 
-Version 0.0600
+Version 0.1.0
 
 =cut
 
-our $VERSION = '0.0600';
+our $VERSION = '0.1.0';
 
 =head1 SYNOPSIS
 

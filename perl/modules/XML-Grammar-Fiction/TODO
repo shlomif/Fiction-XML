@@ -1,0 +1,9 @@
+* Write unit tests for LineIterator.pm.
+
+* Add more necessary tags and features.
+
+* Convert the XML grammar to use the xlink namespace for links.
+
+* Regularise the XML grammars of XML-Grammar-Fiction and XML-Grammar-Screenplay.
+
+* Merge more tests.
