@@ -1,5 +1,17 @@
 Revision history for XML-Grammar-Fiction.
 
+0.1.0 
+        - Merged in the XML-Grammar-Screenplay into this module.
+        - Converted XML-Grammar-Screenplay to a non-procedurally-recursive
+        parser.
+        - Created some base classes:
+            - lib/XML/Grammar/Fiction/FromProto/Parser/LineIterator.pm
+            - lib/XML/Grammar/Fiction/FromProto/Parser/XmlIterator.pm
+            - lib/XML/Grammar/FictionBase/TagsTree2XML.pm
+        - Made XML-Grammar-Screenplay use some of the XML-Grammar-Fiction
+        classes instead of having duplicate copies.
+        - Add the TODO file.
+
 0.0.4       Sat Mar 13 00:28:52 IST 2010
         - Implemented better error handling and presentation in 
         ::App::FromProto.

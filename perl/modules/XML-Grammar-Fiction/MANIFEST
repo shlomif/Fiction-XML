@@ -96,6 +96,7 @@ t/data/xml/with-multi-line-comments.xml
 t/data/xml/with-multi-para-desc.xml
 t/data/xml/with-tags-inside-paragraphs.xml
 t/lib/run-test-1/XML/Grammar/Fiction/ConfigData.pm
+TODO
 t/pod-coverage.t
 t/pod.t
 t/proto-text-invalid.t
