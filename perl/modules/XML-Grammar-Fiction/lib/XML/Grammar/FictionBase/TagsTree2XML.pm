@@ -41,6 +41,58 @@ has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
 has '_buffer' => ('isa' => "ScalarRef[Str]", is => "rw");
 
+sub _write_Element_elem
+{
+    my ($self, $elem) = @_;
+
+    if ($elem->_short_isa("InnerDesc"))
+    {
+        $self->_output_tag_with_childs(
+            {
+                start => ["inlinedesc"],
+                elem => $elem,
+            }
+        );
+        return;
+    }
+    else
+    {
+        my $method = "_handle_elem_of_name_" . $elem->name();
+
+        $self->$method($elem);
+
+        return;
+    }
+}
+    
+sub _handle_elem_of_name_s
+{
+    my ($self, $elem) = @_;
+
+    $self->_write_scene({scene => $elem});
+}
+
+sub _handle_elem_of_name_a
+{
+    my ($self, $elem) = @_;
+    $self->_output_tag_with_childs(
+        {
+            start => ["ulink", "url" => $elem->lookup_attr("href")],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
+
+sub _handle_elem_of_name_br
+{
+    my ($self, $elem) = @_;
+
+    $self->_writer->emptyTag("br");
+
+    return;
+}
 
 =head2 meta()
 
