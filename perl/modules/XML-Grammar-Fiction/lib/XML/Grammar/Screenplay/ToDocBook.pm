@@ -8,7 +8,7 @@ use File::Spec;
 
 use XML::LibXSLT;
 
-use XML::Grammar::Screenplay::ConfigData;
+use XML::Grammar::Fiction::ConfigData;
 
 use XML::LibXML;
 use XML::LibXSLT;
@@ -52,7 +52,7 @@ sub _init
     my ($self, $args) = @_;
 
     my $data_dir = $args->{'data_dir'} ||
-        XML::Grammar::Screenplay::ConfigData->config('extradata_install_path')->[0];
+        XML::Grammar::Fiction::ConfigData->config('extradata_install_path')->[0];
 
     $self->_data_dir($data_dir);
 
