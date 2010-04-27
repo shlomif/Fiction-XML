@@ -15,7 +15,7 @@ use Config;
         File::Spec->rel2abs(
             File::Spec->catdir(
                 File::Spec->curdir(),
-                "t", "screenplay", "lib", "run-test-1",
+                "t", "lib", "run-test-1",
             )
         ), @p5lib);
 
