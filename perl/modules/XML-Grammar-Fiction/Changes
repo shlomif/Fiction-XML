@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.1.1       Tue Apr 27 10:11:00 IDT 2010
         - Made sure XML-Grammar-Screenplay used
         XML::Grammar::Fiction::ConfigData instead of 
         XML::Grammar::Screenplay::ConfigData . This broke the installation
