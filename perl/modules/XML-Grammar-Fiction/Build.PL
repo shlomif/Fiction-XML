@@ -22,16 +22,10 @@ my $builder = XML::Grammar::Fiction::Builder->new(
         'File::Find' => 0,
         'File::Spec' => 0,
         'strict' => 0,
-        'warnings' => 0,
-        'XML::LibXML' => 0,
-    },
-    test_requires => {
         'Test::More' => 0,
-        'strict' => 0,
         'Test::XML' => 0,
         'warnings' => 0,
         'XML::LibXML' => 0,
-        'File::Spec' => 0,
     },
     requires => 
     {
