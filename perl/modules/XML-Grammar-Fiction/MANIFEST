@@ -37,7 +37,6 @@ lib/XML/Grammar/Screenplay/App/ToDocBook.pm
 lib/XML/Grammar/Screenplay/App/ToHTML.pm
 lib/XML/Grammar/Screenplay/Base.pm
 lib/XML/Grammar/Screenplay/FromProto/Parser.pm
-lib/XML/Grammar/Screenplay/FromProto/Parser/PRD.pm
 lib/XML/Grammar/Screenplay/FromProto/Parser/QnD.pm
 lib/XML/Grammar/Screenplay/FromProto.pm
 lib/XML/Grammar/Screenplay.pm
@@ -49,6 +48,7 @@ META.yml # Will be created by "make dist"
 README
 rejects/lib/XML/Grammar/Fiction/FromProto/Parser/PRD.pm
 rejects/lib/XML/Grammar/Fiction/RendererBase.pm
+rejects/lib/XML/Grammar/Screenplay/FromProto/Parser/PRD.pm
 rejects/lib/XML/Grammar/Screenplay/Struct/Tag.pm
 rejects/proto-text-to-xml.t
 rejects/QnD.pm
