@@ -33,6 +33,7 @@ my $builder = XML::Grammar::Fiction::Builder->new(
         'Exporter' => 0,
         'Data::Dumper' => 0,
         'Exception::Class' => 0,
+        'File::ShareDir' => 0,
         'Getopt::Long' => 0,
         'HTML::Entities' => 0,
         'List::Util' => 0,
