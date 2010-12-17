@@ -13,11 +13,11 @@ text representing a screenplay to an XML format.
 
 =head1 VERSION
 
-Version 0.1.2
+Version 0.1.3
 
 =cut
 
-our $VERSION = '0.1.2';
+our $VERSION = '0.1.3';
 
 =head2 new()
 
