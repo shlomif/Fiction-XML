@@ -8,7 +8,7 @@ use File::Spec;
 
 use XML::LibXSLT;
 
-use XML::Grammar::Fiction::ConfigData;
+use File::ShareDir ':ALL';
 
 use XML::LibXML;
 use XML::LibXSLT;
@@ -51,8 +51,7 @@ sub _init
 {
     my ($self, $args) = @_;
 
-    my $data_dir = $args->{'data_dir'} ||
-        XML::Grammar::Fiction::ConfigData->config('extradata_install_path')->[0];
+    my $data_dir = $args->{'data_dir'} || dist_dir ( 'XML-Grammar-Fiction');
 
     $self->_data_dir($data_dir);
 

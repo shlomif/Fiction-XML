@@ -7,7 +7,7 @@ use base 'Test::Run::Builder';
 
 use File::Find;
 
-our $VERSION = '0.0101';
+our $VERSION = '0.0200';
 
 sub new
 {
@@ -15,42 +15,10 @@ sub new
     my %args = @_;
     my @extradata_files;
     
-    my $module_name = $args{'module_name'};
-    $module_name =~ s{::}{-}g;
-
-    my $filter_files_cb = sub {
-        my $filename = $File::Find::name;
-        if ((-f $filename) &&
-            ($filename =~ /\.(?:mod|xslt|dtd|ent|cat|jpg|rng|xcf\.bz2)$/)
-        )
-        {
-            push @extradata_files, $filename;
-        }
-    };
- 
-    find({ wanted => $filter_files_cb, no_chdir => 1}, "extradata");
-
     my $builder = $package->SUPER::new(
-        extradata_files =>
-        {
-            (map { $_ => $_ } @extradata_files)
-        },
+        share_dir => 'extradata',
+        auto_configure_requires => 1,
         @_
-    );
-
-    $builder->add_build_element('extradata');
-
-    $builder->install_path()->{'extradata'} = 
-        File::Spec->catdir(
-                $builder->install_destination("lib"),
-                qw(data modules),
-                $module_name,
-                qw(data)
-        );
-
-    $builder->config_data(
-        'extradata_install_path' =>
-        [$builder->install_path()->{'extradata'}]
     );
 
     return $builder;

@@ -8,7 +8,7 @@ use File::Spec;
 
 use XML::LibXSLT;
 
-use XML::Grammar::Fiction::ConfigData;
+use File::ShareDir ':ALL';
 
 use XML::LibXML;
 use XML::LibXSLT;
@@ -27,6 +27,7 @@ has '_data_dir' =>
         return $self->_get_default_data_dir();
     },
 );
+
 has '_rng' =>
 (
     isa => 'XML::LibXML::RelaxNG', 
@@ -89,7 +90,7 @@ sub _get_default_data_dir
 {
     my $self = shift;
 
-    return XML::Grammar::Fiction::ConfigData->config('extradata_install_path')->[0];
+    return dist_dir( 'XML-Grammar-Fiction' );
 }
 
 sub _get_rng_schema
