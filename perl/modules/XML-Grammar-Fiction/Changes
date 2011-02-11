@@ -1,5 +1,23 @@
 Revision history for XML-Grammar-Fiction.
 
+    * ::Screenplay - Fix the innerdesc on the start of the line in the middle 
+    of the paragraph. Like:
+
+-----------------
+Hi I went to the store and
+[walks around the room, nervous] bought a chocolate bar.
+-----------------
+
+        - this was caused by two bugs here
+
+-----------------
+-$self->_prev_line_is_empty($self->curr_line_ref() =~ m{\A\s*\z});
++$self->_prev_line_is_empty(scalar(${$self->curr_line_ref()} =~ m{\A\s*\z}));
+-----------------
+
+        - they cancelled each other most of the time except for in this 
+        case.
+
 0.1.3       Fri Dec 17 19:38:45 IST 2010
         - Moved some unused source files to the rejects directory.
         - Convert to the new XML-Grammar-Fiction-Builder which uses

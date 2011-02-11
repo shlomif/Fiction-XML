@@ -5,13 +5,13 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 26;
+use Test::XML tests => 28;
 
 use XML::LibXML;
 
-use XML::Grammar::Screenplay::FromProto;
+require XML::Grammar::Screenplay::FromProto;
 
-use XML::Grammar::Screenplay::FromProto::Parser::QnD;
+require XML::Grammar::Screenplay::FromProto::Parser::QnD;
 
 sub load_xml
 {
@@ -41,9 +41,10 @@ my @tests = (qw(
         scenes-with-titles
         with-entities
         with-brs
+        with-internal-description-at-start-of-line
     ));
 
-# TEST:$num_texts=13
+# TEST:$num_texts=14
 
 my $grammar = XML::Grammar::Screenplay::FromProto->new({
         parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",

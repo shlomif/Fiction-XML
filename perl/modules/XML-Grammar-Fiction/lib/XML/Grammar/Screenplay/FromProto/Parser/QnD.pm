@@ -19,7 +19,7 @@ has "_prev_line_is_empty" => (isa => "Bool", is => "rw", default => 1);
 before 'next_line_ref' => sub {
     my $self = shift;
 
-    $self->_prev_line_is_empty($self->curr_line_ref() =~ m{\A\s*\z});
+    $self->_prev_line_is_empty(scalar(${$self->curr_line_ref()} =~ m{\A\s*\z}));
 
     return;
 };
