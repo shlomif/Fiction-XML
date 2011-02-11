@@ -7,3 +7,33 @@
 * Regularise the XML grammars of XML-Grammar-Fiction and XML-Grammar-Screenplay.
 
 * Merge more tests.
+
+* Make the ::Screenplay exceptions contain the opening line closing line
+and generally more context (currently they are guess-work).
+
+* ::Screenplay - Fix the innerdesc on the start of the line in the middle of 
+the paragraph. Like:
+
+-----------------
+Hi I went to the store and
+[walks around the room, nervous] bought a chocolate bar.
+-----------------
+
+* Can we include some stray sayings at the beginning of the scene without an
+inner wrapping scene:
+
+-----------------
+David: prepare for judgement day.
+
+Goliath: First, let's go the next scene:
+
+<s id="....>
+
+Goliath: OK, now we can continue, you were saying...
+
+David: Judgement day.
+
+Goliath: yes, what about it?
+
+</s>
+-----------------
