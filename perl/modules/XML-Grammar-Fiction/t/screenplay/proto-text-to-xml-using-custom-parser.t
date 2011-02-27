@@ -51,8 +51,8 @@ my $grammar = XML::Grammar::Screenplay::FromProto->new({
     });
 
 my $rngschema = XML::LibXML::RelaxNG->new(
-        location => "./extradata/screenplay-xml.rng" 
-    );    
+        location => "./extradata/screenplay-xml.rng"
+    );
 
 my $xml_parser = XML::LibXML->new();
 $xml_parser->validation(0);
@@ -76,7 +76,7 @@ foreach my $fn (@tests)
     my $dom = $xml_parser->parse_string($got_xml);
 
     my $code;
-    eval 
+    eval
     {
     $code = $rngschema->validate($dom);
     };
