@@ -54,6 +54,7 @@ rejects/proto-text-to-xml.t
 rejects/QnD.pm
 rejects/Screenplay_Parser_QnD.pm
 t/00-load.t
+tag-release.pl
 t/app-to-html.t
 t/boilerplate.t
 t/data/docbook/with-internal-description.docbook.xml
