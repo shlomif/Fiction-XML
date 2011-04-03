@@ -70,8 +70,8 @@ Regular text
 
 =item 2. XML-like tags.
 
-Supported tags are C<< <b> >> for bold tags, C<< <a href="..."> >> for
-hyperlinks, and an empty C<< <br /> >> tag for line-breaks.
+Supported tags are C<< <b> >> for bold text, C<< <i> >> for italics,
+C<< <a href="..."> >> for hyperlinks, and an empty C<< <br /> >> tag for line-breaks.
 
 =item 3. Entities
 

@@ -91,6 +91,12 @@
     </strong>
 </xsl:template>
 
+<xsl:template match="sp:italics">
+    <em class="italics">
+        <xsl:apply-templates />
+    </em>
+</xsl:template>
+
 <xsl:template match="sp:inlinedesc">
     <span class="inlinedesc">[<xsl:apply-templates />]</span>
 </xsl:template>
