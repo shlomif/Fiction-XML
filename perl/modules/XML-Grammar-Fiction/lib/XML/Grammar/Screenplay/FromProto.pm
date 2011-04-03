@@ -134,6 +134,11 @@ sub _bold_tag_name
     return "bold";
 }
 
+sub _italics_tag_name
+{
+    return "italics";
+}
+
 sub _write_elem
 {
     my ($self, $args) = @_;
