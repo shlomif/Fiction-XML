@@ -1,5 +1,7 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Add the tag-release.pl script to tag a release using svn.berlios.de.
+
 0.1.4       Mon Apr  4 00:50:07 IDT 2011
     * ::Screenplay - Fix the innerdesc on the start of the line in the middle 
     of the paragraph. Like:
