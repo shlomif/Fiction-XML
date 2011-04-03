@@ -29,6 +29,7 @@
             <text/>
             <ref name="ulink"/>
             <ref name="bold"/>
+            <ref name="italics"/>
         </choice>
     </define>
     <define name="scene">
@@ -82,6 +83,11 @@
             <text />
         </element>
     </define>
+    <define name="italics">
+        <element name="sp:italics">
+            <text />
+        </element>
+    </define>
     <define name="ulink">
         <element name="sp:ulink">
                 <attribute name="url">
@@ -91,6 +97,7 @@
                     <choice>
                         <text />
                         <ref name="bold"/>
+                        <ref name="italics"/>
                     </choice>
             </zeroOrMore>
         </element>

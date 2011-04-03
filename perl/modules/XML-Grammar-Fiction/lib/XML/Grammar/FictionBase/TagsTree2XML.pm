@@ -106,6 +106,19 @@ sub _handle_elem_of_name_br
     return;
 }
 
+sub _handle_elem_of_name_i
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => [$self->_italics_tag_name],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
 =head2 meta()
 
 Internal - (to settle pod-coverage.).

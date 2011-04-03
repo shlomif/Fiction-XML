@@ -116,6 +116,7 @@ t/screenplay/data/proto-text/with-comments.txt
 t/screenplay/data/proto-text/with-description.txt
 t/screenplay/data/proto-text/with-dialogue.txt
 t/screenplay/data/proto-text/with-entities.txt
+t/screenplay/data/proto-text/with-i-element-inside-paragraphs.txt
 t/screenplay/data/proto-text/with-internal-description-at-start-of-line.txt
 t/screenplay/data/proto-text/with-internal-description.txt
 t/screenplay/data/proto-text/with-multi-line-comments.txt
@@ -130,6 +131,7 @@ t/screenplay/data/xml/with-comments.xml
 t/screenplay/data/xml/with-description.xml
 t/screenplay/data/xml/with-dialogue.xml
 t/screenplay/data/xml/with-entities.xml
+t/screenplay/data/xml/with-i-element-inside-paragraphs.xml
 t/screenplay/data/xml/with-internal-description-at-start-of-line.xml
 t/screenplay/data/xml/with-internal-description.xml
 t/screenplay/data/xml/with-multi-line-comments.xml
