@@ -12,11 +12,11 @@ classes.
 
 =head1 VERSION
 
-Version 0.1.3
+Version 0.1.4
 
 =cut
 
-our $VERSION = '0.1.3';
+our $VERSION = '0.1.4';
 
 =head1 METHODS
 
