@@ -28,7 +28,7 @@ sub _top_is_para
 {
     my $self = shift;
 
-    return $self->_in_para() && ($self->_top_tag->name() eq "p");
+    return $self->_in_para() && ($self->_top_is('p'));
 }
 
 
@@ -36,14 +36,21 @@ sub _top_is_saying
 {
     my $self = shift;
 
-    return $self->_in_saying() && ($self->_top_tag->name() eq "saying");
+    return $self->_in_saying() && ($self->_top_is('saying'));
+}
+
+sub _top_is
+{
+    my ($self, $want_name) = @_;
+
+    return ($self->_top_tag->name eq $want_name);
 }
 
 sub _top_is_desc
 {
     my $self = shift;
 
-    return ($self->_top_tag->name() eq "desc");
+    return $self->_top_is('desc');
 }
 
 around '_pop_tag' => sub {
