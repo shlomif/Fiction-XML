@@ -69,4 +69,19 @@
     </emphasis>
 </xsl:template>
 
+<xsl:template match="fic:span">
+    <xsl:choose>
+        <xsl:when test="@xlink:href">
+            <link>
+                <xsl:attribute name="xlink:href">
+                    <xsl:value-of select="@xlink:href" />
+                </xsl:attribute>
+                <xsl:apply-templates/>
+            </link>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:apply-templates/>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
 </xsl:stylesheet>

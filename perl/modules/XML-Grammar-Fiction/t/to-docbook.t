@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 4;
+use Test::XML tests => 9;
 
 use File::Spec;
 
@@ -16,23 +16,25 @@ use XML::Grammar::Fiction::ToDocBook;
 my @tests = (qw(
         sections-and-paras
         sections-p-b-i-comments
+        sections-a-href
     ));
 
 sub load_xml
 {
     my $path = shift;
 
-    open my $in, "<", $path;
+    open my $in, "<", $path
+        or die "Cannot open '$path' for reading";
     my $contents;
     {
         local $/;
-        $contents = <$in>
+        $contents = <$in>;
     }
     close($in);
     return $contents;
 }
 
-# TEST:$num_texts=2
+# TEST:$num_texts=3
 
 my $converter = XML::Grammar::Fiction::ToDocBook->new({
         data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
@@ -68,6 +70,11 @@ foreach my $fn (@tests)
             1
         ),
         "Found role=description sections",
+    );
+
+    # TEST*$num_texts
+    is_xml ($docbook_text, load_xml("t/data/docbook/$fn.docbook.xml"),
+        "Output of the DocBook \"$fn\"",
     );
 }
 
