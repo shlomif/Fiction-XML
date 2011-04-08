@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More tests => 8;
 
 use Test::XML;
 
@@ -31,9 +31,10 @@ my @tests = (qw(
     sections-and-paras
     sections-p-b-i
     sections-p-b-i-comments
+    sections-a-href
     ));
 
-# TEST:$num_texts=3
+# TEST:$num_texts=4
 
 my $grammar = XML::Grammar::Fiction::FromProto->new({
         parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
