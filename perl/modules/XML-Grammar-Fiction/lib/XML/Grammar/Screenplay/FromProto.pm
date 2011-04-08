@@ -125,6 +125,7 @@ sub _paragraph_tag
 sub _handle_elem_of_name_a
 {
     my ($self, $elem) = @_;
+
     $self->_output_tag_with_childs(
         {
             start => ["ulink", "url" => $elem->lookup_attr("href")],

@@ -1,7 +1,10 @@
 Revision history for XML-Grammar-Fiction.
 
-    * Now handling the a element only in XML::Grammar::Screenplay - it
+    * Now handling the <a /> element only in XML::Grammar::Screenplay - it
     does not exist in ::Fiction.
+    * Add support for the <a href="$URL">$CONTENT</a> tag in Fiction-Text 
+    which is translated into <span xlink:href="$URL" >$CONTENT</span> in
+    the Fiction-XML grammar.
 
 0.1.5       Mon Apr  4 23:08:18 IDT 2011
 

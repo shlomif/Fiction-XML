@@ -2,6 +2,7 @@
 <!-- $Id: testSuite.rng,v 1.12 2003/01/29 12:24:07 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
     xmlns:fic="http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
     >
     <start>
@@ -33,6 +34,11 @@
                 <data type="NCName" />
             </attribute>
         </optional>
+        <optional>
+            <attribute name="xlink:href">
+                <data type="anyURI"/>
+            </attribute>
+        </optional>
     </define>
     <define name="section">
         <element name="fic:section">
@@ -53,11 +59,25 @@
         <element name="fic:p">
             <zeroOrMore>
                 <choice>
-                    <ref name="b" />
-                    <ref name="i" />
-                    <text />
+                    <ref name="text_with_style" />
+                    <ref name="span" />
                 </choice>
             </zeroOrMore>
+        </element>
+    </define>
+    <define name="text_with_style">
+        <choice>
+            <text />
+            <ref name="b" />
+            <ref name="i" />
+        </choice>
+    </define>
+    <define name="span">
+        <element name="fic:span">
+            <ref name="common_attrs" />
+            <oneOrMore>
+                <ref name="text_with_style" />
+            </oneOrMore>
         </element>
     </define>
     <define name="b">

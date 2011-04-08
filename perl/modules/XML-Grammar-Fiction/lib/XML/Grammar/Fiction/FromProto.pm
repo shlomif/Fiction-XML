@@ -14,6 +14,7 @@ use List::Util (qw(first));
 
 my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
 my $xml_ns = "http://www.w3.org/XML/1998/namespace";
+my $xlink_ns = "http://www.w3.org/1999/xlink";
 
 =head1 NAME
 
@@ -97,6 +98,24 @@ sub _get_text_start
 sub _paragraph_tag
 {
     return "p";
+}
+
+sub _handle_elem_of_name_a
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start =>
+            [
+                "span",
+                [$xlink_ns, "href"] => $elem->lookup_attr("href"),
+            ],
+            elem => $elem,
+        }
+    );
+
+    return;
 }
 
 sub _handle_elem_of_name_title
@@ -321,8 +340,9 @@ sub convert
         NAMESPACES => 1,
         PREFIX_MAP =>
         {
-             $fiction_ns => "",
-             $xml_ns => "xml",
+             $fiction_ns => q{},
+             $xml_ns => 'xml',
+             $xlink_ns => 'xlink',
         }
     );
 
