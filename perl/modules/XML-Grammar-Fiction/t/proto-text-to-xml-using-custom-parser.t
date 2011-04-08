@@ -28,22 +28,6 @@ sub load_xml
 }
 
 my @tests = (qw(
-        nested-s
-        two-nested-s
-        with-dialogue
-        dialogue-with-several-paragraphs
-        with-description
-        with-tags-inside-paragraphs
-        sections-and-paras
-        with-comments
-        with-multi-para-desc
-        with-multi-line-comments
-        scenes-with-titles
-        with-entities
-        with-brs
-    ));
-
-@tests = (qw(
     sections-and-paras
     sections-p-b-i
     sections-p-b-i-comments
