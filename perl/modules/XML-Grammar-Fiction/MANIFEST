@@ -57,6 +57,7 @@ t/00-load.t
 tag-release.pl
 t/app-to-html.t
 t/boilerplate.t
+t/data/docbook/sections-p-b-i-comments.docbook.xml
 t/data/docbook/with-internal-description.docbook.xml
 t/data/proto-text/dialogue-with-several-paragraphs.txt
 t/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
