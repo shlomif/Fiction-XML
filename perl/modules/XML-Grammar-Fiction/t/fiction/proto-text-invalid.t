@@ -21,7 +21,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         {
             source =>
             {
-                file => "t/data/proto-text-invalid/inner-desc-inside-char-addressing.txt",
+                file => "t/fiction/data/proto-text-invalid/inner-desc-inside-char-addressing.txt",
             },
         }
     );
@@ -80,7 +80,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         {
             source =>
             {
-                file => "t/data/proto-text-invalid/not-start-with-tag.txt",
+                file => "t/fiction/data/proto-text-invalid/not-start-with-tag.txt",
             },
         }
     );
@@ -112,7 +112,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         {
             source =>
             {
-                file => "t/data/proto-text-invalid/no-right-angle.txt",
+                file => "t/fiction/data/proto-text-invalid/no-right-angle.txt",
             },
         }
     );
@@ -152,7 +152,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
             {
                 source =>
                 {
-                    file => "t/data/proto-text-invalid/wrong-close-tag.txt",
+                    file => "t/fiction/data/proto-text-invalid/wrong-close-tag.txt",
                 },
             }
         );
@@ -189,7 +189,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         {
             source =>
             {
-                file => "t/data/proto-text-invalid/wrong-closing-inner-tag.txt",
+                file => "t/fiction/data/proto-text-invalid/wrong-closing-inner-tag.txt",
             },
         }
     );
@@ -250,7 +250,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         {
             source =>
             {
-                file => "t/data/proto-text-invalid/leading-space.txt",
+                file => "t/fiction/data/proto-text-invalid/leading-space.txt",
             },
         }
     );
@@ -290,7 +290,7 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
         {
             source =>
             {
-                file => "t/data/proto-text-invalid/leading-space-at-para-start.txt",
+                file => "t/fiction/data/proto-text-invalid/leading-space-at-para-start.txt",
             },
         }
     );
