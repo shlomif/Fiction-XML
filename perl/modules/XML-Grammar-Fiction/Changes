@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.1.6       Sat Apr  9 16:15:17 IDT 2011
     * Now handling the <a /> element only in XML::Grammar::Screenplay - it
     does not exist in ::Fiction.
     * Add support for the <a href="$URL">$CONTENT</a> tag in Fiction-Text 
