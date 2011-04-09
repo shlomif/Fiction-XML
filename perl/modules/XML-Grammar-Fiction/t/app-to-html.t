@@ -26,7 +26,7 @@ use Config;
             "--",
             "-o", "temp.xhtml",
             File::Spec->catdir(File::Spec->curdir(), 
-                "t", "data", "xml", "sections-and-paras.xml",
+                "t", "fiction", "data", "xml", "sections-and-paras.xml",
             )
         ),
         "Testing App::ToHTML",

@@ -43,7 +43,7 @@ my $converter = XML::Grammar::Fiction::ToDocBook->new({
 foreach my $fn (@tests)
 {
     my $docbook_text = $converter->translate_to_docbook({
-            source => { file => "t/data/xml/$fn.xml", },
+            source => { file => "t/fiction/data/xml/$fn.xml", },
             output => "string",
         }
         );
@@ -73,7 +73,7 @@ foreach my $fn (@tests)
     );
 
     # TEST*$num_texts
-    is_xml ($docbook_text, load_xml("t/data/docbook/$fn.docbook.xml"),
+    is_xml ($docbook_text, load_xml("t/fiction/data/docbook/$fn.docbook.xml"),
         "Output of the DocBook \"$fn\"",
     );
 }

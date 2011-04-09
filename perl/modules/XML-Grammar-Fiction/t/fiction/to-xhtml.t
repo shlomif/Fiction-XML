@@ -72,7 +72,7 @@ foreach my $fn (@tests)
         my $format_hash = $converters{$format_id};
         my $m = $format_hash->{method};
 
-        my $xml_fn = "t/data/xml/$fn.xml";
+        my $xml_fn = "t/fiction/data/xml/$fn.xml";
 
         my $text = $format_hash->{'obj'}->$m(
             {

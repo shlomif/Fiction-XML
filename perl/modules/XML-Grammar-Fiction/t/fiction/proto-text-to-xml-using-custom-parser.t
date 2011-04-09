@@ -53,13 +53,13 @@ foreach my $fn (@tests)
         {
             source =>
             {
-                file => "t/data/proto-text/$fn.txt",
+                file => "t/fiction/data/proto-text/$fn.txt",
             },
         }
     );
 
     # TEST*$num_texts
-    is_xml ($got_xml, load_xml("t/data/xml/$fn.xml"),
+    is_xml ($got_xml, load_xml("t/fiction/data/xml/$fn.xml"),
         "Output of the Proto Text \"$fn\""
     );
 
