@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.1.7       Tue Apr 19 00:55:07 IDT 2011
     * Add support for &#91; and other numeric entities.
 
 0.1.6       Sat Apr  9 16:15:17 IDT 2011
