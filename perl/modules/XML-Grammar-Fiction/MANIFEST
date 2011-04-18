@@ -130,6 +130,7 @@ t/screenplay/data/proto-text/with-internal-description-at-start-of-line.txt
 t/screenplay/data/proto-text/with-internal-description.txt
 t/screenplay/data/proto-text/with-multi-line-comments.txt
 t/screenplay/data/proto-text/with-multi-para-desc.txt
+t/screenplay/data/proto-text/with-numeric-entities.txt
 t/screenplay/data/proto-text/with-tags-inside-paragraphs.txt
 t/screenplay/data/xml/dialogue-with-several-paragraphs.xml
 t/screenplay/data/xml/nested-s.xml
@@ -146,6 +147,7 @@ t/screenplay/data/xml/with-internal-description-at-start-of-line.xml
 t/screenplay/data/xml/with-internal-description.xml
 t/screenplay/data/xml/with-multi-line-comments.xml
 t/screenplay/data/xml/with-multi-para-desc.xml
+t/screenplay/data/xml/with-numeric-entities.xml
 t/screenplay/data/xml/with-tags-inside-paragraphs.xml
 t/screenplay/lib/run-test-1/XML/Grammar/Screenplay/ConfigData.pm
 t/screenplay/proto-text-invalid.t
