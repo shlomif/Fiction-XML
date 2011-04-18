@@ -579,7 +579,7 @@ sub _generate_tag_event
 
         if ($$l =~ m{\G\&})
         {
-            if ($$l !~ m{\G(\&\w+;)}g)
+            if ($$l !~ m/\G(\&#?\w+;)/g)
             {
                 Carp::confess("Cannot match entity (e.g: \"&quot;\") at line " .
                     $self->line_num()

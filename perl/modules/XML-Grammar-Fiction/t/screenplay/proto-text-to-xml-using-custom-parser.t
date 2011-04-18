@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 32;
+use Test::XML tests => 34;
 
 use XML::LibXML;
 
@@ -44,9 +44,10 @@ my @tests = (qw(
         with-brs
         with-internal-description-at-start-of-line
         with-colon-inside-description
+        with-numeric-entities
     ));
 
-# TEST:$num_texts=16
+# TEST:$num_texts=17
 
 my $grammar = XML::Grammar::Screenplay::FromProto->new({
         parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
