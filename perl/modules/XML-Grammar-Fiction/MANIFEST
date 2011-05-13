@@ -85,6 +85,7 @@ t/fiction/data/proto-text/with-internal-description.txt
 t/fiction/data/proto-text/with-multi-line-comments.txt
 t/fiction/data/proto-text/with-multi-para-desc.txt
 t/fiction/data/proto-text/with-tags-inside-paragraphs.txt
+t/fiction/data/proto-text/with-ul-ol-li.txt
 t/fiction/data/xml/dialogue-with-several-paragraphs.xml
 t/fiction/data/xml/nested-s.xml
 t/fiction/data/xml/scenes-with-titles.xml
@@ -101,6 +102,7 @@ t/fiction/data/xml/with-entities.xml
 t/fiction/data/xml/with-multi-line-comments.xml
 t/fiction/data/xml/with-multi-para-desc.xml
 t/fiction/data/xml/with-tags-inside-paragraphs.xml
+t/fiction/data/xml/with-ul-ol-li.xml
 t/fiction/proto-text-invalid.t
 t/fiction/proto-text-to-xml-using-custom-parser.t
 t/fiction/qnd-parser-unit.t

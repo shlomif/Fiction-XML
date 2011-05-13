@@ -52,8 +52,34 @@
     </define>
     <define name="several_paras">
         <zeroOrMore>
-            <ref name="para"/>
+            <choice>
+                <ref name="para"/>
+                <ref name="ol"/>
+                <ref name="ul"/>
+            </choice>
         </zeroOrMore>
+    </define>
+    <define name="inside_list">
+        <oneOrMore>
+            <ref name="li" />
+        </oneOrMore>
+    </define>
+    <define name="ol">
+        <element name="fic:ol">
+            <ref name="inside_list" />
+        </element>
+    </define>
+    <define name="ul">
+        <element name="fic:ul">
+            <ref name="inside_list" />
+        </element>
+    </define>
+    <define name="li">
+        <element name="fic:li">
+            <oneOrMore>
+                <ref name="para" />
+            </oneOrMore>
+        </element>
     </define>
     <define name="para">
         <element name="fic:p">

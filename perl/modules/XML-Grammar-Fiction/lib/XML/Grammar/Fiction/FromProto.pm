@@ -118,6 +118,49 @@ sub _handle_elem_of_name_a
     return;
 }
 
+
+sub _handle_elem_of_name_li
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => ['li'],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
+
+sub _handle_elem_of_name_ol
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => ['ol'],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
+
+sub _handle_elem_of_name_ul
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => ['ul'],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
+
 sub _handle_elem_of_name_title
 {
     my ($self, $elem) = @_;
