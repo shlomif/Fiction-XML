@@ -61,6 +61,7 @@ t/fiction/data/docbook/sections-a-href.docbook.xml
 t/fiction/data/docbook/sections-and-paras.docbook.xml
 t/fiction/data/docbook/sections-p-b-i-comments.docbook.xml
 t/fiction/data/docbook/with-internal-description.docbook.xml
+t/fiction/data/docbook/with-ul-ol-li.docbook.xml
 t/fiction/data/proto-text/dialogue-with-several-paragraphs.txt
 t/fiction/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
 t/fiction/data/proto-text-invalid/leading-space-at-para-start.txt

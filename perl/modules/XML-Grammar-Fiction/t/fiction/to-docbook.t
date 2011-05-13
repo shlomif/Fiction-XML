@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 9;
+use Test::XML tests => 12;
 
 use File::Spec;
 
@@ -17,6 +17,7 @@ my @tests = (qw(
         sections-and-paras
         sections-p-b-i-comments
         sections-a-href
+        with-ul-ol-li
     ));
 
 sub load_xml
@@ -34,7 +35,7 @@ sub load_xml
     return $contents;
 }
 
-# TEST:$num_texts=3
+# TEST:$num_texts=4
 
 my $converter = XML::Grammar::Fiction::ToDocBook->new({
         data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
