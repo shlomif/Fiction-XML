@@ -46,7 +46,7 @@
             </xsl:choose> 
         </title>
     </info>
-        <xsl:apply-templates select="fic:section|fic:p" />
+        <xsl:apply-templates select="fic:section|fic:p|fic:ol|fic:ul" />
     </section>
 </xsl:template>
 
@@ -67,6 +67,24 @@
     <emphasis>
         <xsl:apply-templates/>
     </emphasis>
+</xsl:template>
+
+<xsl:template match="fic:ol">
+    <orderedlist>
+        <xsl:apply-templates/>
+    </orderedlist>
+</xsl:template>
+
+<xsl:template match="fic:ul">
+    <itemizedlist>
+        <xsl:apply-templates/>
+    </itemizedlist>
+</xsl:template>
+
+<xsl:template match="fic:li">
+    <listitem>
+        <xsl:apply-templates/>
+    </listitem>
 </xsl:template>
 
 <xsl:template match="fic:span">
