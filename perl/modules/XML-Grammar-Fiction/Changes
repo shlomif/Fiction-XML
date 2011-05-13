@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.2.0       Fri May 13 16:56:00 IDT 2011
     * Add support for <ol>, <li> and <ul> to Fiction-Text and Fiction-XML.
 
 0.1.7       Tue Apr 19 00:55:07 IDT 2011
