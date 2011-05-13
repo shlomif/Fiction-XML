@@ -1,5 +1,7 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Add support for <ol>, <li> and <ul> to Fiction-Text and Fiction-XML.
+
 0.1.7       Tue Apr 19 00:55:07 IDT 2011
     * Add support for &#91; and other numeric entities.
 

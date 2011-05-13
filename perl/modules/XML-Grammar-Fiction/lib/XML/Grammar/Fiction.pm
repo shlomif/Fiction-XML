@@ -51,7 +51,7 @@ The rest of this page will document the syntax of the custom textual format.
 
 =head1 FORMAT
 
-=head2 Scenes
+=head2 Sections
 
 Sections are placed in XML-like tags of C<< <section> ... </section> >> or
 abbreviated as C<< <s> ... </s> >>. Opening tags in the format may have 
@@ -108,6 +108,21 @@ need to use them at the beginning of the paragraph you can escape them with
 a backslash (C<\>) or their SGML/XML entity (e.g: C<&qout;>).
 
 =back
+
+=head2 Types of top-level items.
+
+=head3 Paragraphs
+
+These are not delimited by anything - just a paragraph of text not containing
+an empty line.
+
+=head3 <ol>
+
+This is an ordered list with <li>s, similar to its purpose in XHTML.
+
+=head3 <ul>
+
+An unordered list.
 
 =head2 EXAMPLES
 
