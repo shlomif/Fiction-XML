@@ -69,32 +69,32 @@
 </xsl:template>
 
 <xsl:template match="sp:ulink">
-    <a>
-        <xsl:attribute name="href">
+    <ref>
+        <xsl:attribute name="terget">
             <xsl:value-of select="@url" />
         </xsl:attribute>
         <xsl:apply-templates />
-    </a>
+    </ref>
 </xsl:template>
 
 <xsl:template match="sp:bold">
-    <strong class="bold">
+    <tei:hi rend="bold">
         <xsl:apply-templates />
-    </strong>
+    </tei:hi>
 </xsl:template>
 
 <xsl:template match="sp:italics">
-    <em class="italics">
+    <tei:hi rend="italic">
         <xsl:apply-templates />
-    </em>
+    </tei:hi>
 </xsl:template>
 
 <xsl:template match="sp:inlinedesc">
-    <span class="inlinedesc">[<xsl:apply-templates />]</span>
+    <tei:stage>[<xsl:apply-templates />]</tei:stage>
 </xsl:template>
 
 <xsl:template match="sp:br">
-    <br />
+    <lb />
 </xsl:template>
 
 </xsl:stylesheet>
