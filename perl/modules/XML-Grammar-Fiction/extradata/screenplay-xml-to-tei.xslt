@@ -5,8 +5,6 @@
      >
 
 <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"
- doctype-public="-//W3C//DTD XHTML 1.1//EN"
- doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
  />
 
 <xsl:template match="/">
@@ -28,12 +26,12 @@
 </xsl:template>
 
 <xsl:template match="sp:scene">
-    <tei:div type="scene" xml:id="scene-{@id}">
+    <tei:div type="scene">
+        <xsl:attribute name="xml:id">
+            <xsl:value-of select="@id" />
+        </xsl:attribute>
         <!-- Make the title the title attribute or "ID" if does not exist. -->
         <tei:head>
-            <xsl:attribute name="id">
-                <xsl:value-of select="@id" />
-            </xsl:attribute>
             <xsl:choose>
                 <xsl:when test="@title">
                     <xsl:value-of select="@title" />
