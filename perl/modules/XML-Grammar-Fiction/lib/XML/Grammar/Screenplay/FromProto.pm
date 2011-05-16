@@ -1,5 +1,7 @@
 package XML::Grammar::Screenplay::FromProto;
 
+use XML::Writer;
+
 use Moose;
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
@@ -280,7 +282,6 @@ sub convert
     );
 
     $writer->xmlDecl("utf-8");
-    $writer->doctype("document", undef, "screenplay-xml.dtd");
     $writer->startTag([$screenplay_ns, "document"]);
     $writer->startTag([$screenplay_ns, "head"]);
     $writer->endTag();
