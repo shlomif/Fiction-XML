@@ -67,12 +67,12 @@
 </xsl:template>
 
 <xsl:template match="sp:ulink">
-    <ref>
-        <xsl:attribute name="terget">
+    <tei:ref>
+        <xsl:attribute name="target">
             <xsl:value-of select="@url" />
         </xsl:attribute>
         <xsl:apply-templates />
-    </ref>
+    </tei:ref>
 </xsl:template>
 
 <xsl:template match="sp:bold">
@@ -92,7 +92,7 @@
 </xsl:template>
 
 <xsl:template match="sp:br">
-    <lb />
+    <tei:lb />
 </xsl:template>
 
 </xsl:stylesheet>
