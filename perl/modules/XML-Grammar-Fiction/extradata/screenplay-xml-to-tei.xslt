@@ -1,6 +1,7 @@
 <xsl:stylesheet version = '1.0'
      xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
      xmlns:sp="http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/"
+     xmlns:tei="http://www.tei-c.org/ns/1.0"
      >
 
 <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"
@@ -13,23 +14,23 @@
 </xsl:template>
 
 <xsl:template match="sp:body">
-    <text>
-        <body>
-            <div type="act">
+    <tei:text>
+        <tei:body>
+            <tei:div type="act">
                 <xsl:attribute name="xml:id">
                     <xsl:value-of select="@id" />
                 </xsl:attribute>
-                <head>ACT I</head>
+                <tei:head>ACT I</tei:head>
                 <xsl:apply-templates select="sp:scene" />
-            </div>
-        </body>
-    </text>
+            </tei:div>
+        </tei:body>
+    </tei:text>
 </xsl:template>
 
 <xsl:template match="sp:scene">
-    <div type="scene" xml:id="scene-{@id}">
+    <tei:div type="scene" xml:id="scene-{@id}">
         <!-- Make the title the title attribute or "ID" if does not exist. -->
-        <head>
+        <tei:head>
             <xsl:attribute name="id">
                 <xsl:value-of select="@id" />
             </xsl:attribute>
@@ -41,30 +42,30 @@
                     <xsl:value-of select="@id" />
                 </xsl:otherwise>
             </xsl:choose>
-        </head>
+        </tei:head>
         <xsl:apply-templates select="sp:scene|sp:description|sp:saying" />
-    </div>
+    </tei:div>
 </xsl:template>
 
 <xsl:template match="sp:description">
-    <stage>
+    <tei:stage>
         <xsl:apply-templates />
-    </stage>
+    </tei:stage>
 </xsl:template>
 
 <xsl:template match="sp:saying">
-    <sp>
-        <speaker>
+    <tei:sp>
+        <tei:speaker>
             <xsl:value-of select="@character" />
-        </speaker>
+        </tei:speaker>
         <xsl:apply-templates />
-    </sp>
+    </tei:sp>
 </xsl:template>
 
 <xsl:template match="sp:para">
-    <p>
+    <tei:p>
         <xsl:apply-templates />
-    </p>
+    </tei:p>
 </xsl:template>
 
 <xsl:template match="sp:ulink">
