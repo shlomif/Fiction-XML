@@ -9,6 +9,7 @@ extradata/screenplay-xml.dtd
 extradata/screenplay-xml.rng
 extradata/screenplay-xml-to-docbook.xslt
 extradata/screenplay-xml-to-html.xslt
+extradata/screenplay-xml-to-tei.xslt
 extradata/screenplay-xml-to-xsl-fo.xslt
 inc/Test/Run/Builder.pm
 inc/XML/Grammar/Builder.pm
