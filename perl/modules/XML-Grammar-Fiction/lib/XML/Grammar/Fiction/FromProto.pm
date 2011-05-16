@@ -5,6 +5,7 @@ use warnings;
 
 use Carp;
 use HTML::Entities ();
+use XML::Writer;
 
 use Moose;
 
