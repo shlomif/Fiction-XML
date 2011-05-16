@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 34;
+use Test::XML tests => 51;
 
 use XML::LibXML;
 
@@ -70,6 +70,9 @@ foreach my $fn (@tests)
             },
         }
     );
+
+    # TEST*$num_texts
+    unlike ($got_xml, qr{^<!DOCTYPE}ms, "No doctype in \"$fn\"");
 
     # TEST*$num_texts
     is_xml ($got_xml, load_xml("t/screenplay/data/xml/$fn.xml"),
