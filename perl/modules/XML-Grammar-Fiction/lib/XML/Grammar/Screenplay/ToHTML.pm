@@ -5,7 +5,7 @@ use Moose;
 extends('XML::Grammar::FictionBase::XSLT::Converter');
 
 has '+rng_schema_basename' => (default => "screenplay-xml.rng");
-has '+xslt_basename' => (default => "screenplay-xml-to-html.xslt");
+has '+xslt_transform_basename' => (default => "screenplay-xml-to-html.xslt");
 
 =head1 NAME
 

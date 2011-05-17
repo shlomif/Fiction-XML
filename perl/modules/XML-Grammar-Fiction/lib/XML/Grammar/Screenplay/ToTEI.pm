@@ -8,7 +8,7 @@ use Moose;
 extends('XML::Grammar::FictionBase::XSLT::Converter');
 
 has '+rng_schema_basename' => (default => "screenplay-xml.rng");
-has '+xslt_basename' => (default => "screenplay-xml-to-tei.xslt");
+has '+xslt_transform_basename' => (default => "screenplay-xml-to-tei.xslt");
 
 =head1 NAME
 
