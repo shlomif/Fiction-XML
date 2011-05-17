@@ -29,7 +29,6 @@ lib/XML/Grammar/Fiction/FromProto/Parser/QnD.pm
 lib/XML/Grammar/Fiction/FromProto/Parser/XmlIterator.pm
 lib/XML/Grammar/Fiction/FromProto.pm
 lib/XML/Grammar/Fiction.pm
-lib/XML/Grammar/Fiction/RendererBase.pm
 lib/XML/Grammar/Fiction/RNG_Renderer.pm
 lib/XML/Grammar/Fiction/Struct/Tag.pm
 lib/XML/Grammar/Fiction/ToDocBook.pm
@@ -52,6 +51,7 @@ META.yml # Will be created by "make dist"
 README
 rejects/lib/XML/Grammar/Fiction/FromProto/Parser/PRD.pm
 rejects/lib/XML/Grammar/Fiction/RendererBase.pm
+rejects/lib/XML/Grammar/Fiction/RendererBase.pm.2
 rejects/lib/XML/Grammar/Screenplay/FromProto/Parser/PRD.pm
 rejects/lib/XML/Grammar/Screenplay/Struct/Tag.pm
 rejects/proto-text-to-xml.t
