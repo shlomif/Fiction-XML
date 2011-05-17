@@ -85,24 +85,62 @@ sub BUILD
     return 0;
 }
 
-=head2 $converter->perform_translation({source => {file => $filename}, output => "string" })
+=head2 $converter->perform_translation
 
-Does the actual conversion. $filename is the filename to translate (currently
-the only available source). 
+=over 4
+
+=item * my $final_source = $converter->perform_translation({source => {file => $filename}, output => "string" })
+
+=item * my $final_source = $converter->perform_translation({source => {string_ref => \$buffer}, output => "string" })
+
+=item * my $final_dom = $converter->perform_translation({source => {file => $filename}, output => "dom" })
+
+=item * my $final_dom = $converter->perform_translation({source => {dom => $libxml_dom}, output => "dom" })
+
+=back
+
+Does the actual conversion. The C<'source'> argument points to a hash-ref with
+keys and values for the source. If C<'file'> is specified there it points to the
+filename to translate (currently the only available source). If 
+C<'string_ref'> is specified it points to a reference to a string, with the
+contents of the source XML. If C<'dom'> is specified then it points to an XML
+DOM as parsed or constructed by XML::LibXML.
 
 The C<'output'> key specifies the return value. A value of C<'string'> returns 
-the XML as a string, and a value of C<'xml'> returns the XML as an 
+the XML as a string, and a value of C<'dom'> returns the XML as an 
 L<XML::LibXML> DOM object.
 
 =cut
 
-sub perform_translation
+sub _undefize
 {
-    my ($self, $args) = @_;
+    my $v = shift;
 
-    my $source_dom =
-        $self->_xml_parser()->parse_file($args->{source}->{file})
+    return defined($v) ? $v : "(undef)";
+}
+
+sub _calc_and_ret_dom_without_validate
+{
+    my $self = shift;
+    my $args = shift;
+
+    my $source = $args->{source};
+
+    return
+          exists($source->{'dom'})
+        ? $source->{'dom'}
+        : exists($source->{'string_ref'})
+        ? $self->_xml_parser()->parse_string(${$source->{'string_ref'}}) 
+        : $self->_xml_parser()->parse_file($source->{'file'})
         ;
+}
+
+sub _get_dom_from_source
+{
+    my $self = shift;
+    my $args = shift;
+  
+    my $source_dom = $self->_calc_and_ret_dom_without_validate($args);
 
     my $ret_code;
 
@@ -117,8 +155,19 @@ sub perform_translation
     }
     else
     {
-        confess "RelaxNG validation failed [\$ret_code == $ret_code ; $@]";
+        confess "RelaxNG validation failed [\$ret_code == "
+            . _undefize($ret_code) . " ; $@]"
+            ;
     }
+
+    return $source_dom;
+}
+
+sub perform_translation
+{
+    my ($self, $args) = @_;
+
+    my $source_dom = $self->_get_dom_from_source($args);
 
     my $stylesheet = $self->_stylesheet();
 
@@ -130,7 +179,7 @@ sub perform_translation
     {
         return $stylesheet->output_string($results);
     }
-    elsif ($medium eq "xml")
+    elsif ($medium eq "dom")
     {
         return $results;
     }

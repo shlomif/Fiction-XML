@@ -7,7 +7,7 @@ use Carp;
 
 use Moose;
 
-extends( "XML::Grammar::Fiction::RNG_Renderer" );
+extends( 'XML::Grammar::Fiction::RNG_Renderer' );
 
 =head1 NAME
 
@@ -31,13 +31,7 @@ at that point.
 Internal - (to settle pod-coverage.).
 
 =cut
-
-sub _get_xslt_base_path
-{
-    my $self = shift;
-
-    return "fiction-xml-to-html.xslt";
-}
+has '+xslt_transform_basename' => (default => "fiction-xml-to-html.xslt", );
 
 =head2 translate_to_html
 
@@ -70,7 +64,7 @@ sub translate_to_html
 {
     my ($self, $args) = @_;
 
-    return $self->generic_translate($args);
+    return $self->perform_translation($args);
 }
 
 =head1 AUTHOR
