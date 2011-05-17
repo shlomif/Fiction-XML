@@ -6,8 +6,6 @@ use warnings;
 use Carp;
 use File::Spec;
 
-use XML::LibXSLT;
-
 use File::ShareDir ':ALL';
 
 use XML::LibXML;

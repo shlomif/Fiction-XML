@@ -15,14 +15,9 @@ For internal use.
 
 use Moose;
 
-extends ("XML::Grammar::Fiction::RendererBase");
+extends ("XML::Grammar::FictionBase::XSLT::Converter");
 
-sub _get_relaxng_base_path
-{
-    my $self = shift;
-
-    return "fiction-xml.rng";
-}
+has '+rng_schema_basename' => (default => "fiction-xml.rng");
 
 =head1 AUTHOR
 
