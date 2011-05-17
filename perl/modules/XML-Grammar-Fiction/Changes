@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.3.0       Tue May 17 22:59:17 IDT 2011
     * Add extradata/screenplay-xml-to-tei.xslt and 
     lib/XML/Grammar/Screenplay/ToTEI.pm - add tests for them.
         - They convert Screenplay-XML into TEI - Text Encoding Initiative,
