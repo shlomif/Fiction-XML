@@ -3,16 +3,6 @@ package XML::Grammar::Screenplay::ToTEI;
 use strict;
 use warnings;
 
-use Carp;
-use File::Spec;
-
-use XML::LibXSLT;
-
-use File::ShareDir ':ALL';
-
-use XML::LibXML;
-use XML::LibXSLT;
-
 use Moose;
 
 extends('XML::Grammar::FictionBase::XSLT::Converter');
@@ -41,44 +31,6 @@ at that point.
 =head2 meta()
 
 Internal - (to settle pod-coverage.).
-
-=cut
-
-sub _init
-{
-    my ($self, $args) = @_;
-
-    my $data_dir = $args->{'data_dir'} ||
-        dist_dir( 'XML-Grammar-Fiction');
-
-    $self->_data_dir($data_dir);
-
-    my $rngschema =
-        XML::LibXML::RelaxNG->new(
-            location =>
-            File::Spec->catfile(
-                $self->_data_dir(), 
-                "screenplay-xml.rng"
-            ),
-        );
-
-    $self->_rng($rngschema);
-
-    $self->_xml_parser(XML::LibXML->new());
-
-    my $xslt = XML::LibXSLT->new();
-
-    my $style_doc = $self->_xml_parser()->parse_file(
-            File::Spec->catfile(
-                $self->_data_dir(), 
-                "screenplay-xml-to-tei.xslt"
-            ),
-        );
-
-    $self->_stylesheet($xslt->parse_stylesheet($style_doc));
-
-    return 0;
-}
 
 =head2 $converter->translate_to_tei({source => {file => $filename}, output => "string" })
 

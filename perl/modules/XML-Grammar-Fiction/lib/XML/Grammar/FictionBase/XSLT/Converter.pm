@@ -11,16 +11,15 @@ use File::ShareDir ':ALL';
 use XML::LibXML;
 use XML::LibXSLT;
 
-use base 'XML::Grammar::Screenplay::Base';
-
 use Moose;
 
 has '_data_dir' => (isa => 'Str', is => 'rw');
+has '_data_dir_from_input' => (isa => 'Str', is => 'rw', init_arg => 'data_dir',);
 has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
 has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
 has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
-has 'rng_basename' => (is => 'ro', isa => 'Str',);
-has 'xslt_basename' => (is => 'ro', isa => 'Str',);
+has 'rng_basename' => (is => 'ro', isa => 'Str', required => 1,);
+has 'xslt_basename' => (is => 'ro', isa => 'Str', required => 1,);
 
 =head1 NAME
 
@@ -44,13 +43,17 @@ at that point.
 
 Internal - (to settle pod-coverage.).
 
+=head2 BUILD()
+
+Internal - (to settle pod-coverage.).
+
 =cut
 
-sub _init
+sub BUILD
 {
-    my ($self, $args) = @_;
+    my ($self) = @_;
 
-    my $data_dir = $args->{'data_dir'} ||
+    my $data_dir = $self->_data_dir_from_input() ||
         dist_dir( 'XML-Grammar-Fiction');
 
     $self->_data_dir($data_dir);
