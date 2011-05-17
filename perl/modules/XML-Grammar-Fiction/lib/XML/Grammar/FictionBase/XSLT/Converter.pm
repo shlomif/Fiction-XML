@@ -19,7 +19,7 @@ has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
 has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
 has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
 has 'rng_schema_basename' => (is => 'ro', isa => 'Str', required => 1,);
-has 'xslt_basename' => (is => 'ro', isa => 'Str', required => 1,);
+has 'xslt_transform_basename' => (is => 'ro', isa => 'Str', required => 1,);
 
 =head1 NAME
 
@@ -76,7 +76,7 @@ sub BUILD
     my $style_doc = $self->_xml_parser()->parse_file(
             File::Spec->catfile(
                 $self->_data_dir(), 
-                $self->xslt_basename(),
+                $self->xslt_transform_basename(),
             ),
         );
 
