@@ -17,7 +17,7 @@ XSLT conversions.
 
 =head1 VERSION
 
-Version 0.2.0
+Version 0.3.0
 
 =head1 AUTHOR
 
