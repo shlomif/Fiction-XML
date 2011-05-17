@@ -45,6 +45,7 @@ lib/XML/Grammar/Screenplay.pm
 lib/XML/Grammar/Screenplay/ToDocBook.pm
 lib/XML/Grammar/Screenplay/ToHTML.pm
 lib/XML/Grammar/Screenplay/ToTEI.pm
+lib/XML/Grammar/Screenplay/XSLT/Base.pm
 Makefile.PL
 MANIFEST
 META.yml # Will be created by "make dist"

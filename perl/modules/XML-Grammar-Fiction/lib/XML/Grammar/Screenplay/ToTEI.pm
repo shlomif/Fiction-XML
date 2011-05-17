@@ -5,9 +5,8 @@ use warnings;
 
 use Moose;
 
-extends('XML::Grammar::FictionBase::XSLT::Converter');
+extends('XML::Grammar::Screenplay::XSLT::Base');
 
-has '+rng_schema_basename' => (default => "screenplay-xml.rng");
 has '+xslt_transform_basename' => (default => "screenplay-xml-to-tei.xslt");
 
 =head1 NAME
