@@ -1,27 +1,10 @@
 package XML::Grammar::Screenplay::ToDocBook;
 
-use strict;
-use warnings;
-
-use Carp;
-use File::Spec;
-
-use XML::LibXSLT;
-
-use File::ShareDir ':ALL';
-
-use XML::LibXML;
-use XML::LibXSLT;
-
-use base 'XML::Grammar::Screenplay::Base';
-
 use Moose;
 
+extends('XML::Grammar::Screenplay::XSLT::Base');
 
-has '_data_dir' => (isa => 'Str', is => 'rw');
-has '_dtd' => (isa => 'XML::LibXML::Dtd', is => 'rw');
-has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
-has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
+has '+xslt_transform_basename' => (default => "screenplay-xml-to-docbook.xslt");
 
 =head1 NAME
 
@@ -47,41 +30,6 @@ Internal - (to settle pod-coverage.).
 
 =cut
 
-sub _init
-{
-    my ($self, $args) = @_;
-
-    my $data_dir = $args->{'data_dir'} || dist_dir ( 'XML-Grammar-Fiction');
-
-    $self->_data_dir($data_dir);
-
-    my $dtd =
-        XML::LibXML::Dtd->new(
-            "Screenplay XML 0.1.0",
-            File::Spec->catfile(
-                $self->_data_dir(), 
-                "screenplay-xml.dtd"
-            ),
-        );
-
-    $self->_dtd($dtd);
-
-    $self->_xml_parser(XML::LibXML->new());
-
-    my $xslt = XML::LibXSLT->new();
-
-    my $style_doc = $self->_xml_parser()->parse_file(
-            File::Spec->catfile(
-                $self->_data_dir(), 
-                "screenplay-xml-to-docbook.xslt"
-            ),
-        );
-
-    $self->_stylesheet($xslt->parse_stylesheet($style_doc));
-
-    return 0;
-}
-
 =head2 $converter->translate_to_docbook({source => {file => $filename}, output => "string" })
 
 Does the actual conversion. $filename is the filename to translate (currently
@@ -97,28 +45,7 @@ sub translate_to_docbook
 {
     my ($self, $args) = @_;
 
-    my $source_dom =
-        $self->_xml_parser()->parse_file($args->{source}->{file})
-        ;
-
-    my $stylesheet = $self->_stylesheet();
-
-    my $results = $stylesheet->transform($source_dom);
-
-    my $medium = $args->{output};
-
-    if ($medium eq "string")
-    {
-        return $stylesheet->output_string($results);
-    }
-    elsif ($medium eq "xml")
-    {
-        return $results;
-    }
-    else
-    {
-        confess "Unknown medium";
-    }
+    return $self->perform_translation($args);
 }
 
 =head1 AUTHOR
