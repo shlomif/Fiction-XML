@@ -1,5 +1,17 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Add extradata/screenplay-xml-to-tei.xslt and 
+    lib/XML/Grammar/Screenplay/ToTEI.pm - add tests for them.
+        - They convert Screenplay-XML into TEI - Text Encoding Initiative,
+        a markup language for digital representation of texts (especially 
+        artsy texts such as screenplays, prose or poems) 
+            - http://www.tei-c.org/ .
+        - This will allow for easier conversion into XSL-FO, as well as many
+        other formats.
+    * Got rid of the <!DOCTYPE .... > declaration in the Screenplay-XML
+    output (it confused the heck out of xsltproc and was not really needed
+    as we use a RELAX-NG schema instead of a DTD.)
+
 0.2.0       Fri May 13 16:56:00 IDT 2011
     * Add support for <ol>, <li> and <ul> to Fiction-Text and Fiction-XML.
 
