@@ -18,7 +18,7 @@ has '_data_dir_from_input' => (isa => 'Str', is => 'rw', init_arg => 'data_dir',
 has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
 has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
 has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
-has 'rng_basename' => (is => 'ro', isa => 'Str', required => 1,);
+has 'rng_schema_basename' => (is => 'ro', isa => 'Str', required => 1,);
 has 'xslt_basename' => (is => 'ro', isa => 'Str', required => 1,);
 
 =head1 NAME
@@ -63,7 +63,7 @@ sub BUILD
             location =>
             File::Spec->catfile(
                 $self->_data_dir(), 
-                $self->rng_basename(),
+                $self->rng_schema_basename(),
             ),
         );
 
