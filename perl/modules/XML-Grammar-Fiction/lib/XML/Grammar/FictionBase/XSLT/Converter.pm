@@ -1,4 +1,4 @@
-package XML::Grammar::Screenplay::ToTEI;
+package XML::Grammar::FictionBase::XSLT::Converter;
 
 use strict;
 use warnings;
@@ -6,24 +6,26 @@ use warnings;
 use Carp;
 use File::Spec;
 
-use XML::LibXSLT;
-
 use File::ShareDir ':ALL';
 
 use XML::LibXML;
 use XML::LibXSLT;
 
+use base 'XML::Grammar::Screenplay::Base';
+
 use Moose;
 
-extends('XML::Grammar::FictionBase::XSLT::Converter');
-
-has '+rng_basename' => (default => "screenplay-xml.rng");
-has '+xslt_basename' => (default => "screenplay-xml-to-tei.xslt");
+has '_data_dir' => (isa => 'Str', is => 'rw');
+has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
+has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
+has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
+has 'rng_basename' => (is => 'ro', isa => 'Str',);
+has 'xslt_basename' => (is => 'ro', isa => 'Str',);
 
 =head1 NAME
 
-XML::Grammar::Screenplay::ToTEI - module that converts the Screenplay
-XML to TEI (Text Encoding Initiative).
+XML::Grammar::FictionBase::XSLT::Converter - base module that converts an XML 
+file to a different XML file using an XSLT transform.
 
 =head1 VERSION
 
@@ -58,7 +60,7 @@ sub _init
             location =>
             File::Spec->catfile(
                 $self->_data_dir(), 
-                "screenplay-xml.rng"
+                $self->rng_basename(),
             ),
         );
 
@@ -71,7 +73,7 @@ sub _init
     my $style_doc = $self->_xml_parser()->parse_file(
             File::Spec->catfile(
                 $self->_data_dir(), 
-                "screenplay-xml-to-tei.xslt"
+                $self->xslt_basename(),
             ),
         );
 
@@ -80,7 +82,7 @@ sub _init
     return 0;
 }
 
-=head2 $converter->translate_to_tei({source => {file => $filename}, output => "string" })
+=head2 $converter->perform_translation({source => {file => $filename}, output => "string" })
 
 Does the actual conversion. $filename is the filename to translate (currently
 the only available source). 
@@ -91,11 +93,48 @@ L<XML::LibXML> DOM object.
 
 =cut
 
-sub translate_to_tei
+sub perform_translation
 {
     my ($self, $args) = @_;
 
-    return $self->perform_translation($args);
+    my $source_dom =
+        $self->_xml_parser()->parse_file($args->{source}->{file})
+        ;
+
+    my $ret_code;
+
+    eval
+    {
+        $ret_code = $self->_rng()->validate($source_dom);
+    };
+
+    if (defined($ret_code) && ($ret_code == 0))
+    {
+        # It's OK.
+    }
+    else
+    {
+        confess "RelaxNG validation failed [\$ret_code == $ret_code ; $@]";
+    }
+
+    my $stylesheet = $self->_stylesheet();
+
+    my $results = $stylesheet->transform($source_dom);
+
+    my $medium = $args->{output};
+
+    if ($medium eq "string")
+    {
+        return $stylesheet->output_string($results);
+    }
+    elsif ($medium eq "xml")
+    {
+        return $results;
+    }
+    else
+    {
+        confess "Unknown medium";
+    }
 }
 
 =head1 AUTHOR
@@ -120,6 +159,8 @@ Copyright 2007 Shlomi Fish, all rights reserved.
 This program is released under the following license: MIT X11.
 
 =cut
+
+1;
 
 1;
 
