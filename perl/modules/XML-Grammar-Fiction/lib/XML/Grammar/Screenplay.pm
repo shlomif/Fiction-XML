@@ -150,8 +150,8 @@ Shlomi Fish, L<http://www.shlomifish.org/>.
 =head1 BUGS
 
 Please report any bugs or feature requests to
-C<bug-xml-grammar-screenplay at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Screenplay>.
+C<bug-xml-grammar-fiction at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Fiction>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
 
@@ -175,19 +175,19 @@ You can also look for information at:
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/XML-Grammar-Screenplay>
+L<http://annocpan.org/dist/XML-Grammar-Fiction>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/XML-Grammar-Screenplay>
+L<http://cpanratings.perl.org/d/XML-Grammar-Fiction>
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-Grammar-Screenplay>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-Grammar-Fiction>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/XML-Grammar-Screenplay>
+L<http://search.cpan.org/dist/XML-Grammar-Fiction/>
 
 =back
 

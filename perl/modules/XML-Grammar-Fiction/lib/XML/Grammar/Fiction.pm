@@ -161,7 +161,7 @@ your bug as I make changes.
 This will allow a friendlier diagnostic. Carp::confess was implemented due to
 laziness on the programmers' part.
 
-=item * Merge the duplicate code from XML-Grammar-Screenplay
+=item * Merge the duplicate code from XML-Grammar-Fiction
 
 XML::Grammar::Fiction was forked from L<XML::Grammar::Screenplay>
 and they still share a lot of common code. This needs to be merged in time.
