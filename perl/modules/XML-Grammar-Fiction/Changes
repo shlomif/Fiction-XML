@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Updated some of the bug report URLs to read "XML-Grammar-Fiction"
+    instead of "XML-Grammar-Screenplay".
+
 0.3.0       Tue May 17 22:59:17 IDT 2011
     * Add extradata/screenplay-xml-to-tei.xslt and 
     lib/XML/Grammar/Screenplay/ToTEI.pm - add tests for them.
