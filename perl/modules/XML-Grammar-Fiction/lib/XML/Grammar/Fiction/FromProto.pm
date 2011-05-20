@@ -119,6 +119,20 @@ sub _handle_elem_of_name_a
     return;
 }
 
+sub _handle_elem_of_name_blockquote
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => ['blockquote'],
+            elem => $elem,
+        }
+    );
+
+    return;
+}
+
 
 sub _handle_elem_of_name_li
 {

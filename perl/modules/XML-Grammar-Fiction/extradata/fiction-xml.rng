@@ -53,6 +53,7 @@
     <define name="several_paras">
         <zeroOrMore>
             <choice>
+                <ref name="blockquote"/>
                 <ref name="para"/>
                 <ref name="ol"/>
                 <ref name="ul"/>
@@ -72,6 +73,11 @@
     <define name="ul">
         <element name="fic:ul">
             <ref name="inside_list" />
+        </element>
+    </define>
+    <define name="blockquote">
+        <element name="fic:blockquote">
+            <ref name="several_paras"/>
         </element>
     </define>
     <define name="li">

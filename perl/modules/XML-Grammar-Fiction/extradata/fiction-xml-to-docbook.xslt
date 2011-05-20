@@ -46,7 +46,7 @@
             </xsl:choose> 
         </title>
     </info>
-        <xsl:apply-templates select="fic:section|fic:p|fic:ol|fic:ul" />
+        <xsl:apply-templates select="fic:section|fic:blockquote|fic:p|fic:ol|fic:ul" />
     </section>
 </xsl:template>
 
@@ -56,11 +56,16 @@
     </para>
 </xsl:template>
 
-
 <xsl:template match="fic:b">
     <emphasis role="bold">
         <xsl:apply-templates/>
     </emphasis>
+</xsl:template>
+
+<xsl:template match="fic:blockquote">
+    <blockquote>
+        <xsl:apply-templates/>
+    </blockquote>
 </xsl:template>
 
 <xsl:template match="fic:i">
