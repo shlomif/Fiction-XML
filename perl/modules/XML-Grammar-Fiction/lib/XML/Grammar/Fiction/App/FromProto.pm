@@ -22,11 +22,11 @@ to convert from a well-formed plaintext format to Fiction-XML.
 
 =head1 VERSION
 
-Version 0.3.0
+Version 0.4.0
 
 =cut
 
-our $VERSION = '0.3.0';
+our $VERSION = '0.4.0';
 
 =head1 SYNOPSIS
 
