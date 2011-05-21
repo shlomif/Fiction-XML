@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.5.0       Sat May 21 23:20:43 IDT 2011
     * Add support for the <programinglisting> tag.
     * Fix the handling of the entities ("&amp;" "&#32;" etc.) in Fiction-Text.
 
