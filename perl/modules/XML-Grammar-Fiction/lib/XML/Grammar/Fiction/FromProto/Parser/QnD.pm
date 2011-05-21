@@ -74,7 +74,7 @@ sub _generate_non_tag_text_event
 before '_generate_text_unit_events' => sub {
     my $self = shift;
 
-    $self->skip_multiline_space() 
+    $self->skip_multiline_space();
 };
 
 sub _handle_open_para
@@ -143,7 +143,7 @@ sub _main_loop_iter_body_prelude
 {
     my $self = shift;
 
-    $self->skip_space();
+    # $self->skip_space();
 
     return 1;
 }

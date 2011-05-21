@@ -195,6 +195,11 @@ sub skip_multiline_space
 {
     my $self = shift;
 
+    if (${$self->curr_line_ref()} =~ m{\G.*?\S})
+    {
+        return;
+    }
+
     $self->consume(qr{\s});
 
     return;
