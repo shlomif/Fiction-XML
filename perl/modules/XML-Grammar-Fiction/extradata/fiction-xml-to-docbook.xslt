@@ -46,7 +46,7 @@
             </xsl:choose> 
         </title>
     </info>
-        <xsl:apply-templates select="fic:section|fic:blockquote|fic:p|fic:ol|fic:ul" />
+        <xsl:apply-templates select="fic:section|fic:blockquote|fic:p|fic:ol|fic:ul|fic:programlisting" />
     </section>
 </xsl:template>
 
@@ -84,6 +84,12 @@
     <itemizedlist>
         <xsl:apply-templates/>
     </itemizedlist>
+</xsl:template>
+
+<xsl:template match="fic:programlisting">
+    <programlisting>
+        <xsl:apply-templates/>
+    </programlisting>
 </xsl:template>
 
 <xsl:template match="fic:li">

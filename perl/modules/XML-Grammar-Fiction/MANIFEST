@@ -66,6 +66,7 @@ t/fiction/data/docbook/sections-and-paras.docbook.xml
 t/fiction/data/docbook/sections-p-b-i-comments.docbook.xml
 t/fiction/data/docbook/with-blockquote.docbook.xml
 t/fiction/data/docbook/with-internal-description.docbook.xml
+t/fiction/data/docbook/with-programlisting.docbook.xml
 t/fiction/data/docbook/with-ul-ol-li.docbook.xml
 t/fiction/data/proto-text/dialogue-with-several-paragraphs.txt
 t/fiction/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
@@ -91,6 +92,7 @@ t/fiction/data/proto-text/with-entities.txt
 t/fiction/data/proto-text/with-internal-description.txt
 t/fiction/data/proto-text/with-multi-line-comments.txt
 t/fiction/data/proto-text/with-multi-para-desc.txt
+t/fiction/data/proto-text/with-programlisting.txt
 t/fiction/data/proto-text/with-tags-inside-paragraphs.txt
 t/fiction/data/proto-text/with-ul-ol-li.txt
 t/fiction/data/xml/dialogue-with-several-paragraphs.xml
@@ -109,6 +111,7 @@ t/fiction/data/xml/with-dialogue.xml
 t/fiction/data/xml/with-entities.xml
 t/fiction/data/xml/with-multi-line-comments.xml
 t/fiction/data/xml/with-multi-para-desc.xml
+t/fiction/data/xml/with-programlisting.xml
 t/fiction/data/xml/with-tags-inside-paragraphs.xml
 t/fiction/data/xml/with-ul-ol-li.xml
 t/fiction/proto-text-invalid.t

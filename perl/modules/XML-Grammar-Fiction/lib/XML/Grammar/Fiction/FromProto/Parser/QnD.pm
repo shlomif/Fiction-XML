@@ -28,7 +28,7 @@ Version 0.4.1
 our $VERSION = '0.4.1';
 
 sub _non_tag_text_unit_consume_regex {
-    return qr{(?:\<|^\n?$)}ms;
+    return qr{(?:[\<\&]|^\n?$)}ms;
 }
 
 sub _generate_non_tag_text_event
@@ -38,6 +38,12 @@ sub _generate_non_tag_text_event
     my $is_para = ($self->curr_pos() == 0);
 
     my $status = $self->_parse_non_tag_text_unit();
+
+    if (!defined($status))
+    {
+        return;
+    }
+
     my $elem = $status->{'elem'};
     my $is_para_end = $status->{'para_end'};
 
@@ -50,6 +56,12 @@ sub _generate_non_tag_text_event
             ),
         );
         $in_para = 1;
+    }
+
+    # This is an assert / sanity check.
+    if (!defined($elem))
+    {
+        Carp::confess ('$elem is undefined');
     }
 
     $self->_enqueue_event(

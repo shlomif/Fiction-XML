@@ -35,6 +35,12 @@ sub append_children
 {
     my ($self, $children) = @_;
 
+    # This is an assert / sanity check.
+    if (List::MoreUtils::any { !defined ($_) } @$children)
+    {
+        Carp::confess("append_children with undef.");
+    }
+
     push @{$self->children()}, @$children;
 
     return;
