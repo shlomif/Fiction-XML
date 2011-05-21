@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 13;
 
 use Test::XML;
 
@@ -59,6 +59,16 @@ foreach my $fn (@tests)
             },
         }
     );
+
+    if ($fn eq "sections-p-b-i")
+    {
+        # TEST
+        like (
+            $got_xml,
+            qr{</b> },
+            "Space after the </b>",
+        );
+    }
 
     # TEST*$num_texts
     is_xml ($got_xml, load_xml("t/fiction/data/xml/$fn.xml"),
