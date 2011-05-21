@@ -148,6 +148,56 @@ sub _handle_elem_of_name_li
     return;
 }
 
+sub _handle_elem_of_name_programlisting
+{
+    my ($self, $elem) = @_;
+
+    my $throw_found_tag_exception = sub {
+        XML::Grammar::Fiction::Err::Parse::ProgramListingContainsTags->throw(
+            error => "<programlisting> tag cannot contain other tags.",
+            line => $elem->open_line(),
+        );
+    };
+
+    return $self->_output_tag(
+        {
+            start => ['programlisting'],
+            elem => $elem,
+            'in' => sub {
+                foreach my $child (@{ $elem->_get_childs() })
+                {
+                    if ($child->_short_isa("Paragraph"))
+                    {
+                        foreach my $text_node (
+                            @{ $child->children()->contents() }
+                        )
+                        {
+                            if ($text_node->_short_isa("Text"))
+                            {
+                                $self->_write_elem({elem => $text_node});
+                            }
+                            else
+                            {
+                                $throw_found_tag_exception->();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $throw_found_tag_exception->();
+                    }
+                    # End of paragraph.
+                    $self->_writer->characters("\n\n");
+                }
+
+                return;
+            },
+        }
+    );
+
+    return;
+}
+
 sub _handle_elem_of_name_ol
 {
     my ($self, $elem) = @_;

@@ -61,6 +61,7 @@ extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
 has 'name' => (isa => 'Str', is => 'rw');
 has 'attrs' => (isa => 'ArrayRef', is => 'rw');
+has 'open_line' => (isa => 'Maybe[Int]', is => 'rw');
 
 sub lookup_attr
 {

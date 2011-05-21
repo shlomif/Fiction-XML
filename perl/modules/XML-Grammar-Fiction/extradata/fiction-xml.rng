@@ -57,6 +57,7 @@
                 <ref name="para"/>
                 <ref name="ol"/>
                 <ref name="ul"/>
+                <ref name="programlisting"/>
             </choice>
         </zeroOrMore>
     </define>
@@ -124,6 +125,11 @@
     </define>
     <define name="title">
         <element name="fic:title">
+            <text />
+        </element>
+    </define>
+    <define name="programlisting">
+        <element name="fic:programlisting">
             <text />
         </element>
     </define>

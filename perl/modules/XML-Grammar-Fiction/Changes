@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Add support for the <programinglisting> tag.
+    * Fix the handling of the entities ("&amp;" "&#32;" etc.) in Fiction-Text.
+
 0.4.1       Sat May 21 19:45:56 IDT 2011
     * Properly handling whitespace after a closing tag in the Fiction-Text
     proto-text. Like:
