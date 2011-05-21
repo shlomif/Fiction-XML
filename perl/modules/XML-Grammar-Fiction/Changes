@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.4.1       Sat May 21 19:45:56 IDT 2011
     * Properly handling whitespace after a closing tag in the Fiction-Text
     proto-text. Like:
         - "</b> foo" should be translated "</b> foo" instead of "</b>foo".
