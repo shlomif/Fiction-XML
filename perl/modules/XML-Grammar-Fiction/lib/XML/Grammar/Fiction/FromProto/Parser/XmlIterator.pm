@@ -7,7 +7,7 @@ use Moose;
 
 use XML::Grammar::Fiction::Err;
 use XML::Grammar::Fiction::Struct::Tag;
-use XML::Grammar::Fiction::Event;
+use XML::Grammar::FictionBase::Event;
 
 extends("XML::Grammar::FictionBase::FromProto::Parser::LineIterator");
 
@@ -29,7 +29,7 @@ has "_tags_stack" =>
 
 has "_events_queue" =>
 (
-    isa => "ArrayRef[XML::Grammar::Fiction::Event]",
+    isa => "ArrayRef[XML::Grammar::FictionBase::Event]",
     # isa => "ArrayRef",
     is => "rw", 
     default => sub { []; },
@@ -629,7 +629,7 @@ sub _generate_tag_event
         pos($$l) = $orig_pos;
 
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 {'type' => ($self->_is_closing_tag($tag_start) ? "close" : "open")}
             ),
         );

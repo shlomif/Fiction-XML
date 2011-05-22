@@ -17,12 +17,12 @@ inc/XML/Grammar/Fiction/Builder.pm
 lib/XML/Grammar/Fiction/App/FromProto.pm
 lib/XML/Grammar/Fiction/App/ToDocBook.pm
 lib/XML/Grammar/Fiction/App/ToHTML.pm
+lib/XML/Grammar/FictionBase/Event.pm
 lib/XML/Grammar/FictionBase/FromProto/Parser/LineIterator.pm
 lib/XML/Grammar/Fiction/Base.pm
 lib/XML/Grammar/FictionBase/TagsTree2XML.pm
 lib/XML/Grammar/FictionBase/XSLT/Converter.pm
 lib/XML/Grammar/Fiction/Err.pm
-lib/XML/Grammar/Fiction/Event.pm
 lib/XML/Grammar/Fiction/FromProto/Nodes.pm
 lib/XML/Grammar/Fiction/FromProto/Parser.pm
 lib/XML/Grammar/Fiction/FromProto/Parser/QnD.pm
