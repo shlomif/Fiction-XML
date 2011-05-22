@@ -19,7 +19,6 @@ lib/XML/Grammar/Fiction/App/ToDocBook.pm
 lib/XML/Grammar/Fiction/App/ToHTML.pm
 lib/XML/Grammar/FictionBase/Event.pm
 lib/XML/Grammar/FictionBase/FromProto/Parser/LineIterator.pm
-lib/XML/Grammar/Fiction/Base.pm
 lib/XML/Grammar/FictionBase/TagsTree2XML.pm
 lib/XML/Grammar/FictionBase/XSLT/Converter.pm
 lib/XML/Grammar/Fiction/Err.pm
