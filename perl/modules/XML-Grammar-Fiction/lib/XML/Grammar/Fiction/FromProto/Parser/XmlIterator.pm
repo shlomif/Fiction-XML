@@ -9,7 +9,7 @@ use XML::Grammar::Fiction::Err;
 use XML::Grammar::Fiction::Struct::Tag;
 use XML::Grammar::Fiction::Event;
 
-extends("XML::Grammar::Fiction::FromProto::Parser::LineIterator");
+extends("XML::Grammar::FictionBase::FromProto::Parser::LineIterator");
 
 has "_tags_stack" =>
 (
