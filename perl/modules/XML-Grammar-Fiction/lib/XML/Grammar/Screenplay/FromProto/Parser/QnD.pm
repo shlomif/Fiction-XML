@@ -9,6 +9,7 @@ extends( 'XML::Grammar::Fiction::FromProto::Parser::XmlIterator' );
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 use XML::Grammar::Fiction::Struct::Tag;
+use XML::Grammar::FictionBase::Event;
 
 use List::Util ();
 use List::MoreUtils ();
@@ -259,7 +260,7 @@ sub _generate_non_tag_text_event
     if ( ($is_saying || $is_para) && $in_para)
     {
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 {type => "close", tag => "para"}
             )
         );
@@ -269,7 +270,7 @@ sub _generate_non_tag_text_event
     if ( $is_saying && $self->_in_saying())
     {
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 {type => "close", tag => "saying"}
             )
         );
@@ -278,14 +279,14 @@ sub _generate_non_tag_text_event
     if ($is_saying)
     {
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 {type => "open", tag => "saying", tag_elem => $elem, },
             ),
         );
         $was_already_enqueued = 1;
 
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 {type => "open", tag => "para"}
             )
         );
@@ -294,7 +295,7 @@ sub _generate_non_tag_text_event
     elsif ($is_para && !$in_para)
     {
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 {type => "open", tag => "para"}
             ),
         );
@@ -307,14 +308,14 @@ sub _generate_non_tag_text_event
         if (!$in_para)
         {
             $self->_enqueue_event(
-                XML::Grammar::Fiction::Event->new(
+                XML::Grammar::FictionBase::Event->new(
                     {type => "open", tag => "para"},
                 )
             );
             $in_para = 1;
         }
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 {type => "elem", elem => $elem, }
             )
         );

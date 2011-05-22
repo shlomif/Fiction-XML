@@ -11,6 +11,7 @@ use XML::Grammar::Fiction::FromProto::Nodes;
 
 use XML::Grammar::Fiction::Struct::Tag;
 use XML::Grammar::Fiction::Err;
+use XML::Grammar::FictionBase::Event;
 
 =head1 NAME
 
@@ -51,7 +52,7 @@ sub _generate_non_tag_text_event
     if ($is_para && !$in_para)
     {
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                { type => "open", tag => "para", }
             ),
         );
@@ -65,7 +66,7 @@ sub _generate_non_tag_text_event
     }
 
     $self->_enqueue_event(
-        XML::Grammar::Fiction::Event->new(
+        XML::Grammar::FictionBase::Event->new(
             {type => "elem", elem => $elem}
         )
     );
@@ -73,7 +74,7 @@ sub _generate_non_tag_text_event
     if ($is_para_end && $in_para)
     {
         $self->_enqueue_event(
-            XML::Grammar::Fiction::Event->new(
+            XML::Grammar::FictionBase::Event->new(
                 { type => "close", tag => "para" }
             )
         );

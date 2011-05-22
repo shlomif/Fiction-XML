@@ -1,8 +1,8 @@
-package XML::Grammar::Fiction::Event;
+package XML::Grammar::FictionBase::Event;
 
 =head1 NAME
 
-XML::Grammar::Fiction::Event - a parser event.
+XML::Grammar::FictionBase::Event - a parser event.
 
 B<For internal use only>.
 
