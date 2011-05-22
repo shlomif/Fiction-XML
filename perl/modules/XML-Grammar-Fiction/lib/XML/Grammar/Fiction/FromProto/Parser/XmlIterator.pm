@@ -473,14 +473,11 @@ sub _look_ahead_for_comment
     }
 }
 
-sub _parse_non_tag_text_unit
+sub _decode_entities_in_text
 {
-    my $self = shift;
+    my ($self, $orig_text) = @_;
 
-    my $orig_text = $self->consume_up_to($self->_non_tag_text_unit_consume_regex);
-
-    
-    my $text = '';
+    my $ret = '';
 
     # Incrementally parse $text for entities.
     pos($orig_text) = 0;
@@ -489,13 +486,13 @@ sub _parse_non_tag_text_unit
     {
         my ($before, $indicator) = ($1, $2);
 
-        $text .= $before;
+        $ret .= $before;
 
         if ($indicator eq '&')
         {
             if ($orig_text =~ m{\G(\#?\w+;)}cg)
             {
-                $text .= HTML::Entities::decode_entities("&$1");
+                $ret .= HTML::Entities::decode_entities("&$1");
             }
             else
             {
@@ -510,11 +507,18 @@ sub _parse_non_tag_text_unit
         }
     }
 
-    $text =~ s{(\&#?\w+;)}{HTML::Entities::decode_entities($1)}eg;
+    return $ret;
+}
 
-    if ($text =~ m{\&})
-    {
-    }
+sub _parse_non_tag_text_unit
+{
+    my $self = shift;
+
+    my $orig_text = $self->consume_up_to(
+        $self->_non_tag_text_unit_consume_regex
+    );
+
+    my $text = $self->_decode_entities_in_text($orig_text);
 
     my $l = $self->curr_line_ref();
 
