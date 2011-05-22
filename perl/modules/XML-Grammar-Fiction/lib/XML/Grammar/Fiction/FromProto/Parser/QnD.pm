@@ -28,7 +28,7 @@ Version 0.5.0
 our $VERSION = '0.5.0';
 
 sub _non_tag_text_unit_consume_regex {
-    return qr{(?:[\<\&]|^\n?$)}ms;
+    return qr{(?:[\<]|^\n?$)}ms;
 }
 
 sub _generate_non_tag_text_event
