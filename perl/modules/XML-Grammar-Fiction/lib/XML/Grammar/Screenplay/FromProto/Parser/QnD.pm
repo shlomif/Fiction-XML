@@ -191,7 +191,7 @@ sub _parse_speech_unit
 
 sub _non_tag_text_unit_consume_regex
 {
-    return qr{(?:[\<\[\]\&]|^\n?$)}ms;
+    return qr{(?:[\<\[\]]|^\n?$)}ms;
 }
 
 around '_parse_non_tag_text_unit' => sub {
@@ -215,7 +215,7 @@ sub _look_for_tag_opener
 
     my $l = $self->curr_line_ref();
 
-    if ($$l =~ m{\G([<\[\]\&])})
+    if ($$l =~ m{\G([<\[\]])})
     {
         return $1;
     }

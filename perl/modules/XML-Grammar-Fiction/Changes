@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Fix the handling of entities at the start of the opening line of
+    paragraphs in the Fiction-Text . See 
+    t/fiction/data/proto-text/paras-with-entities-at-start-of-line.txt .
+
 0.5.0       Sat May 21 23:20:43 IDT 2011
     * Add support for the <programinglisting> tag.
     * Fix the handling of the entities ("&amp;" "&#32;" etc.) in Fiction-Text.

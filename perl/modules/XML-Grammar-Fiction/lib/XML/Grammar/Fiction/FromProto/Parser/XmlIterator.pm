@@ -477,7 +477,44 @@ sub _parse_non_tag_text_unit
 {
     my $self = shift;
 
-    my $text = $self->consume_up_to($self->_non_tag_text_unit_consume_regex);
+    my $orig_text = $self->consume_up_to($self->_non_tag_text_unit_consume_regex);
+
+    
+    my $text = '';
+
+    # Incrementally parse $text for entities.
+    pos($orig_text) = 0;
+
+    while ($orig_text =~ m{\G(.*?)(\&|\z)}msg)
+    {
+        my ($before, $indicator) = ($1, $2);
+
+        $text .= $before;
+
+        if ($indicator eq '&')
+        {
+            if ($orig_text =~ m{\G(\#?\w+;)}cg)
+            {
+                $text .= HTML::Entities::decode_entities("&$1");
+            }
+            else
+            {
+                Carp::confess(
+                    sprintf(
+                        "Cannot match entity '%s' at line %d",
+                        substr($orig_text, pos($orig_text)-1, 10),
+                        $self->line_num(),
+                    )
+                );
+            }
+        }
+    }
+
+    $text =~ s{(\&#?\w+;)}{HTML::Entities::decode_entities($1)}eg;
+
+    if ($text =~ m{\&})
+    {
+    }
 
     my $l = $self->curr_line_ref();
 
@@ -554,7 +591,7 @@ sub _look_for_tag_opener
 
     my $l = $self->curr_line_ref();
 
-    if ($$l =~ m{\G(\&|<(?:/)?)}cg)
+    if ($$l =~ m{\G(<(?:/)?)}cg)
     {
         return $1;
     }
@@ -586,31 +623,6 @@ sub _generate_tag_event
         # We have a tag.
 
         pos($$l) = $orig_pos;
-
-        if ($$l =~ m{\G\&})
-        {
-            if ($$l !~ m/\G(\&#?\w+;)/g)
-            {
-                Carp::confess("Cannot match entity (e.g: \"&quot;\") at line " .
-                    $self->line_num()
-                );
-            }
-
-            my $entity = $1;
-
-            $self->_enqueue_event(
-                XML::Grammar::Fiction::Event->new(
-                    {
-                        type => "elem",
-                        elem => $self->_new_text(
-                            [HTML::Entities::decode_entities($entity)]
-                        ),
-                    },
-                )
-            );
-
-            return;
-        }
 
         $self->_enqueue_event(
             XML::Grammar::Fiction::Event->new(

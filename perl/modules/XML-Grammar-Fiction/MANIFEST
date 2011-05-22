@@ -77,6 +77,7 @@ t/fiction/data/proto-text-invalid/not-start-with-tag.txt
 t/fiction/data/proto-text-invalid/wrong-close-tag.txt
 t/fiction/data/proto-text-invalid/wrong-closing-inner-tag.txt
 t/fiction/data/proto-text/nested-s.txt
+t/fiction/data/proto-text/paras-with-entities-at-start-of-line.txt
 t/fiction/data/proto-text/scenes-with-titles.txt
 t/fiction/data/proto-text/sections-a-href.txt
 t/fiction/data/proto-text/sections-and-paras.txt
@@ -97,6 +98,7 @@ t/fiction/data/proto-text/with-tags-inside-paragraphs.txt
 t/fiction/data/proto-text/with-ul-ol-li.txt
 t/fiction/data/xml/dialogue-with-several-paragraphs.xml
 t/fiction/data/xml/nested-s.xml
+t/fiction/data/xml/paras-with-entities-at-start-of-line.xml
 t/fiction/data/xml/scenes-with-titles.xml
 t/fiction/data/xml/sections-a-href.xml
 t/fiction/data/xml/sections-and-paras.xml
