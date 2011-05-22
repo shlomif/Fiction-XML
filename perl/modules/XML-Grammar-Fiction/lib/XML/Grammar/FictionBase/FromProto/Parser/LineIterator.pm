@@ -1,4 +1,4 @@
-package XML::Grammar::Fiction::FromProto::Parser::LineIterator;
+package XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
 
 use strict;
 use warnings;
@@ -14,7 +14,7 @@ has "_lines" => (isa => "ArrayRef", is => "rw");
 
 =head1 NAME
 
-XML::Grammar::Fiction::FromProto::Parser::LineIterator - line iterator base
+XML::Grammar::FictionBase::FromProto::Parser::LineIterator - line iterator base
 class for the parser.
 
 B<For internal use only>.
