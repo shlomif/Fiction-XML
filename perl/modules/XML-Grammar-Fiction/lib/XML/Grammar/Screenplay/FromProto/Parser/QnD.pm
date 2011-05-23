@@ -536,7 +536,7 @@ sub _main_loop_iter_body_prelude
 {
     my $self = shift;
 
-    my ($l, $p) = $self->curr_line_and_pos();
+    my $l = $self->curr_line_ref();
 
     if ($$l eq "\n")
     {
