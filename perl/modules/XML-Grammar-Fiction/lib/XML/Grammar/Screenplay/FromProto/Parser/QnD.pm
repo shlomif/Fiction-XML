@@ -556,12 +556,9 @@ sub _main_loop_iter_body_prelude
     {
         return $self->_main_loop_iter_on_empty_line;
     }
-    elsif ($$l =~ m{\G([ \t]+)\n?\z})
+    elsif ($$l =~ m{\G[ \t]+\n?\z})
     {
-        if (length($1))
-        {
-            $self->_add_to_top_tag( $self->_new_text([" "]) );
-        }
+        $self->_add_to_top_tag( $self->_new_text([" "]) );
 
         $self->next_line_ref();
 
