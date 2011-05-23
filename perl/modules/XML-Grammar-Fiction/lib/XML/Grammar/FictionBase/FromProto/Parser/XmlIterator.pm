@@ -787,7 +787,7 @@ sub _main_loop_iter_body
 
 =head1 NAME
 
-XML::Grammar::Fiction::FromProto::Parser::XmlIterator - line iterator base
+XML::Grammar::FictionBase::FromProto::Parser::XmlIterator - line iterator base
 class with some nested XMLisms.
 
 B<For internal use only>.
