@@ -475,10 +475,9 @@ sub _handle_open_saying
                 # from the called-to layers.
                 line => $self->line_num(),
                 attrs => [{key => "character", value => $event->tag_elem->character()}],
+                children => [],
             }
         );
-
-    $new_tag->children([]);
 
     $self->_push_tag($new_tag);
 
