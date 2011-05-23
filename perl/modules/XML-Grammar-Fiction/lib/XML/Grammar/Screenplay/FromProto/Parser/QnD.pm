@@ -426,11 +426,11 @@ sub _close_para
     return;
 }
 
-sub _start_para
+sub _create_start_para
 {
     my $self = shift;
 
-    my $new_elem = 
+    return
         XML::Grammar::Fiction::Struct::Tag::Para->new(
             name => "p",
             is_standalone => 0,
@@ -438,8 +438,13 @@ sub _start_para
             attrs => [],
             children => [],
         );
+}
 
-    $self->_push_tag($new_elem);
+sub _start_para
+{
+    my $self = shift;
+
+    $self->_push_tag($self->_create_start_para());
 
     $self->_in_para(1);
 
