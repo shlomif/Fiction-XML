@@ -357,6 +357,20 @@ sub _handle_event
     return;
 }
 
+sub _handle_specific_tag_event
+{
+    my ($self, $event) = @_;
+
+    my $tag_name = $event->tag();
+    my $type = $event->is_open() ? "open" : "close";
+
+    my $method = "_handle_${type}_${tag_name}";
+
+    $self->$method($event);
+
+    return 1;
+}
+
 sub _check_and_handle_tag_event
 {
     my ($self, $event) = @_;
@@ -365,13 +379,7 @@ sub _check_and_handle_tag_event
     {
         if ($event->is_tag_of_name($tag_name))
         {
-            my $type = $event->is_open() ? "open" : "close";
-            
-            my $method = "_handle_${type}_${tag_name}";
-
-            $self->$method($event);
-
-            return 1;
+            return $self->_handle_specific_tag_event($event);
         }
     }
 
