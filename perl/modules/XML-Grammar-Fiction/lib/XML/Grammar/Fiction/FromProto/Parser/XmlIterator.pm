@@ -599,9 +599,7 @@ sub _parse_text
     {
         push @ret, $unit;
 
-        my $type = $unit->{'type'};
-
-        if (($type eq "close") || ($type eq "open"))
+        if ($unit->is_open_or_close)
         {
             return [@ret, @{$self->_flush_events()}];
         }
