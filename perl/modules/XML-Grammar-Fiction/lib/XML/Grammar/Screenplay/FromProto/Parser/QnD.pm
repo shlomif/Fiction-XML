@@ -140,7 +140,7 @@ around '_parse_opening_tag' => sub {
 
     my $l = $self->curr_line_ref();
 
-    my $is_start = ($self->curr_pos() == 0);
+    my $is_start = $self->at_line_start;
 
     if ($$l =~ m{\G\[}cg)
     {
@@ -203,7 +203,7 @@ sub _is_there_a_speech_unit
 
     return
     (
-           (pos($$l) == 0) 
+        $self->at_line_start()
         && (! $self->_top_is_desc())
         && ($$l =~ m{\A[^\[<][^:]*:})
     );
@@ -257,11 +257,6 @@ sub _generate_non_tag_text_event
     my $elem = $status->{'elem'};
     my $is_para_end = $status->{'para_end'};
     my $is_saying = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Saying");
-    #my $is_para =
-    #    (($self->curr_pos() == 0) && 
-    #     (${$self->curr_line_ref()} =~ m{\G\n?\z})
-    #    );
-    # Trying out this one:
     my $is_para = $elem->isa("XML::Grammar::Fiction::FromProto::Node::Paragraph");
 
     my $in_para = $self->_in_para();

@@ -94,6 +94,19 @@ sub curr_pos
     return pos(${$self->curr_line_ref()});
 }
 
+=head2 $self->at_line_start()
+
+Returns if at start of line (curr_pos == 0).
+
+=cut
+
+sub at_line_start
+{
+    my $self = shift;
+
+    return ($self->curr_pos == 0);
+}
+
 =head2 my ($line_ref, $pos) = $self->curr_line_and_pos();
 
 Convenience method to return the line reference and the position.
