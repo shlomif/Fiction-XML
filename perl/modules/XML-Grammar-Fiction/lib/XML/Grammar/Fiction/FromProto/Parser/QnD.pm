@@ -36,7 +36,7 @@ sub _generate_non_tag_text_event
 {
     my $self = shift;
 
-    my $is_para = ($self->curr_pos() == 0);
+    my $is_para = $self->at_line_start;
 
     my $status = $self->_parse_non_tag_text_unit();
 

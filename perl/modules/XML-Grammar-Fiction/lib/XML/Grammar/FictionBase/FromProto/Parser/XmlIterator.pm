@@ -536,7 +536,11 @@ sub _parse_non_tag_text_unit
 
     # Demote the cursor to before the < of the tag.
     #
-    if (pos($$l) > 0)
+    if ($self->at_line_start)
+    {
+        $is_para_end = 1;
+    }
+    else
     {
         pos($$l)--;
         if (substr($$l, pos($$l), 1) eq "\n")
@@ -544,11 +548,7 @@ sub _parse_non_tag_text_unit
             $is_para_end = 1;
         }
     }
-    else
-    {
-        $is_para_end = 1;
-    }
-    
+
     if ($text !~ /\S/)
     {
         return;
