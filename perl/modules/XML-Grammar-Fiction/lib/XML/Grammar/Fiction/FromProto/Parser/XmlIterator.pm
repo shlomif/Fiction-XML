@@ -210,7 +210,7 @@ sub _opening_tag_asserts
 {
     my $self = shift;
 
-    if (!defined(${$self->curr_line_ref}))
+    if ($self->eof)
     {
         Carp::confess (qq{Reached EOF in _parse_opening_tag.});
     }
@@ -726,7 +726,7 @@ sub _assert_not_eof
 {
     my $self = shift;
 
-    if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
+    if ($self->eof() && (! @{$self->_events_queue()}))
     {
         Carp::confess (qq{Reached EOF.});
     }
