@@ -149,30 +149,33 @@ sub _detect_open_desc_tag
     return (${ $self->curr_line_ref } =~ m{\G\[}cg);
 }
 
+sub _create_open_desc_tag
+{
+    my ($self, $is_start) = @_;
+
+    my $not_inline = 0;
+    if ($is_start && $self->_prev_line_is_empty())
+    {
+        $self->_close_top_tags();
+        $not_inline = 1;
+    }
+
+    return XML::Grammar::Fiction::Struct::Tag->new(
+        name => $not_inline ? "desc" : $self->_get_desc_name(),
+        line => $self->line_num(),
+        attrs => [],
+    );
+}
+
 around '_parse_opening_tag' => sub {
     my ($orig, $self) = @_;
 
     my $is_start = $self->at_line_start;
 
-    if ($self->_detect_open_desc_tag)
-    {
-        my $not_inline = 0;
-        if ($is_start && $self->_prev_line_is_empty())
-        {
-            $self->_close_top_tags();
-            $not_inline = 1;
-        }
-
-        return XML::Grammar::Fiction::Struct::Tag->new(
-            name => $not_inline ? "desc" : $self->_get_desc_name(),
-            line => $self->line_num(),
-            attrs => [],
-        );
-    }
-    else
-    {
-        return $self->$orig();
-    }
+    return 
+        $self->_detect_open_desc_tag
+        ? $self->_create_open_desc_tag($is_start)
+        : $self->$orig();
 };
 
 sub _parse_speech_unit
