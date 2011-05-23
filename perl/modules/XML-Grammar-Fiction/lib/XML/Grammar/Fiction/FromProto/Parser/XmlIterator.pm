@@ -206,26 +206,33 @@ sub _parse_opening_tag_attrs
     return \@attrs;
 }
 
+sub _opening_tag_asserts
+{
+    my $self = shift;
+
+    if (!defined(${$self->curr_line_ref}))
+    {
+        Carp::confess (qq{Reached EOF in _parse_opening_tag.});
+    }
+
+    if (!defined($self->curr_pos()))
+    {
+        Carp::confess (qq{curr_pos is not defined in _parse_opening_tag.});
+    }
+
+    return;
+}
+
 sub _parse_opening_tag
 {
     my $self = shift;
+
+    $self->_opening_tag_asserts;
 
     my $l = $self->curr_line_ref();
 
     my $id_regex = $self->_get_id_regex();
 
-    # This is an assert
-    if (!defined($$l))
-    {
-        Carp::confess (qq{Reached EOF in _parse_opening_tag.});
-    }
-
-    # This is an assert
-    if (!defined($self->curr_pos()))
-    {
-        Carp::confess (qq{curr_pos is not defined in _parse_opening_tag.});
-    }
-    
     if ($$l !~ m{\G<($id_regex)}cg)
     {
         $self->throw_text_error(
