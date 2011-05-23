@@ -83,22 +83,25 @@ before '_generate_text_unit_events' => sub {
 
     $self->skip_multiline_space();
 };
-
-sub _handle_open_para
+sub _calc_open_para
 {
-    my ($self, $event) = @_;
+    my $self = shift;
 
-    my $new_elem = 
+    return
         XML::Grammar::Fiction::Struct::Tag::Para->new(
             name => "p",
             is_standalone => 0,
             line => $self->line_num(),
             attrs => [],
+            children => [],
         );
+}
 
-    $new_elem->children([]);
+sub _handle_open_para
+{
+    my ($self, $event) = @_;
 
-    $self->_push_tag($new_elem);
+    $self->_push_tag($self->_calc_open_para());
 
     $self->_in_para(1);
 
