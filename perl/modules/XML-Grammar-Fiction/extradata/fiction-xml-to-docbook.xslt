@@ -19,6 +19,7 @@
         <xsl:attribute name="xml:lang">
             <xsl:value-of select="@xml:lang" />
         </xsl:attribute>
+        <xsl:attribute name="version">5.0</xsl:attribute>
         <info>
             <title>
                 <xsl:value-of select="fic:title" />
