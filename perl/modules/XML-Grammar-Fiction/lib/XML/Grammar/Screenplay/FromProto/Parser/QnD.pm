@@ -461,12 +461,12 @@ sub _handle_open_para
     return $self->_start_para();
 }
 
-sub _handle_open_saying
+sub _create_open_saying_tag
 {
     my $self = shift;
     my $event = shift;
 
-    my $new_tag =
+    return
         XML::Grammar::Fiction::Struct::Tag->new(
             {
                 name => "saying",
@@ -478,8 +478,13 @@ sub _handle_open_saying
                 children => [],
             }
         );
+}
 
-    $self->_push_tag($new_tag);
+sub _handle_open_saying
+{
+    my ($self, $event) = @_;
+
+    $self->_push_tag($self->_create_open_saying_tag($event));
 
     $self->_in_saying(1);
 
