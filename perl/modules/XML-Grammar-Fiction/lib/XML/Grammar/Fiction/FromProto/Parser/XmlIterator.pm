@@ -758,8 +758,10 @@ sub _main_loop_iter
     {
         return;
     }
-
-    return $self->_main_loop_iter_body;
+    else
+    {
+        return $self->_main_loop_iter_body;
+    }
 }
 
 sub _attempt_to_calc_new_ret_tag
