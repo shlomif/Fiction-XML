@@ -431,14 +431,13 @@ sub _start_para
     my $self = shift;
 
     my $new_elem = 
-    XML::Grammar::Fiction::Struct::Tag::Para->new(
-        name => "p",
-        is_standalone => 0,
-        line => $self->line_num(),
-        attrs => [],
-    );
-
-    $new_elem->children([]);
+        XML::Grammar::Fiction::Struct::Tag::Para->new(
+            name => "p",
+            is_standalone => 0,
+            line => $self->line_num(),
+            attrs => [],
+            children => [],
+        );
 
     $self->_push_tag($new_elem);
 
