@@ -142,14 +142,19 @@ around '_parse_closing_tag' => sub {
         : $self->$orig();
 };
 
+sub _detect_open_desc_tag
+{
+    my $self = shift;
+
+    return (${ $self->curr_line_ref } =~ m{\G\[}cg);
+}
+
 around '_parse_opening_tag' => sub {
     my ($orig, $self) = @_;
 
-    my $l = $self->curr_line_ref();
-
     my $is_start = $self->at_line_start;
 
-    if ($$l =~ m{\G\[}cg)
+    if ($self->_detect_open_desc_tag)
     {
         my $not_inline = 0;
         if ($is_start && $self->_prev_line_is_empty())
