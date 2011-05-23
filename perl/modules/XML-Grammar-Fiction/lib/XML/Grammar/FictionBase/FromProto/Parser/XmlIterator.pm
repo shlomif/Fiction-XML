@@ -132,12 +132,11 @@ sub _new_list
     );
 }
 
-sub _new_para
-{
-    my $self = shift;
-    my $contents = shift;
 
-    # This is an assert
+sub _assert_not_contains_saying
+{
+    my ($self, $contents) = @_;
+
     if (List::MoreUtils::any 
         { ref($_) ne "" && $_->isa("XML::Grammar::Fiction::FromProto::Node::Saying") }
         @{$contents || []}
@@ -145,6 +144,13 @@ sub _new_para
     {
         Carp::confess (qq{Para contains a saying.});
     }
+
+    return;
+}
+
+sub _assert_not_contains_undef
+{
+    my ($self, $contents) = @_;
 
     # This is an assert
     if (List::MoreUtils::any 
@@ -155,6 +161,16 @@ sub _new_para
         Carp::confess (qq{Para contains an undef member.});
     }
 
+    return;
+}
+
+
+sub _new_para
+{
+    my ($self, $contents) = @_;
+
+    $self->_assert_not_contains_saying($contents);
+    $self->_assert_not_contains_undef($contents);
 
     return $self->_new_node(
         {
