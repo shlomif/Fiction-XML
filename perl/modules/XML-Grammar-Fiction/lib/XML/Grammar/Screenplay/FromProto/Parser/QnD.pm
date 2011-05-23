@@ -532,6 +532,20 @@ sub _look_ahead_for_tag
     return ($is_tag_cond, $is_close);
 }
 
+sub _main_loop_iter_on_empty_line
+{
+    my $self = shift;
+
+    if ($self->_top_is_para())
+    {
+        $self->_close_para();
+    }
+
+    $self->next_line_ref();
+
+    return;
+}
+
 sub _main_loop_iter_body_prelude
 {
     my $self = shift;
@@ -540,12 +554,7 @@ sub _main_loop_iter_body_prelude
 
     if ($$l eq "\n")
     {
-        if ($self->_top_is_para())
-        {
-            $self->_close_para();
-        }
-        $self->next_line_ref();
-        return;
+        return $self->_main_loop_iter_on_empty_line;
     }
     elsif ($$l =~ m{\G([ \t]+)\n?\z})
     {
