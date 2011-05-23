@@ -132,38 +132,39 @@ sub _new_list
     );
 }
 
+sub _generic_para_contents_assert
+{
+    my ($self, $predicate, $message, $contents) = @_;
+
+    if (List::MoreUtils::any { $predicate->($_) } @{$contents || []})
+    {
+        Carp::confess ($message);
+    }
+
+    return;
+}
 
 sub _assert_not_contains_saying
 {
     my ($self, $contents) = @_;
 
-    if (List::MoreUtils::any 
-        { ref($_) ne "" && $_->isa("XML::Grammar::Fiction::FromProto::Node::Saying") }
-        @{$contents || []}
-        )
-    {
-        Carp::confess (qq{Para contains a saying.});
-    }
-
-    return;
+    return $self->_generic_para_contents_assert(
+        sub { ref($_) ne "" && $_->isa("XML::Grammar::Fiction::FromProto::Node::Saying") },
+        qq{Para contains a saying.},
+        $contents
+    );
 }
 
 sub _assert_not_contains_undef
 {
     my ($self, $contents) = @_;
 
-    # This is an assert
-    if (List::MoreUtils::any 
-        { !defined($_) }
-        @{$contents || []}
-        )
-    {
-        Carp::confess (qq{Para contains an undef member.});
-    }
-
-    return;
+    return $self->_generic_para_contents_assert(
+        sub { !defined($_) },
+        qq{Para contains an undef member.},
+        $contents
+    );
 }
-
 
 sub _new_para
 {
