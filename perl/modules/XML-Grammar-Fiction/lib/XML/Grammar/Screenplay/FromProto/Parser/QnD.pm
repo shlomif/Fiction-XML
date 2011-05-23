@@ -405,12 +405,11 @@ sub _close_para
     # Filter away empty paragraphs.
     if (defined($children) && @$children)
     {
-        my $new_elem =
+        $self->_add_to_top_tag(
             $self->_new_para(
                 $children
-            );
-
-        $self->_add_to_top_tag($new_elem);
+            )
+        );
     }
 
     $self->_in_para(0);
