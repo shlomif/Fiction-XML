@@ -352,6 +352,18 @@ sub _check_if_line_starts_with_whitespace
     }
 }
 
+=head2 eof()
+
+Returns if the parser reached the end of the file.
+
+=cut
+
+sub eof
+{
+    my $self = shift;
+
+    return (!defined( ${ $self->curr_line_ref() } ));
+}
 
 =head2 $self->meta()
 
