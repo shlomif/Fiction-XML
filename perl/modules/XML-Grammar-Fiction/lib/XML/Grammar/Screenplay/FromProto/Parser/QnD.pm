@@ -380,16 +380,25 @@ sub _handle_close_saying
     return;
 }
 
+sub _assert_top_is_para
+{
+    my ($self, $open) = @_;
+
+    if ($open->name() ne "p")
+    {
+        Carp::confess (qq{Not a para tag.});
+    }
+
+    return;
+}
+
 sub _close_para
 {
     my $self = shift;
+
     my $open = $self->_pop_tag();
 
-    # This is an assert.
-    if ($open->name() ne "p")
-    {
-        Carp::confess (qq{Not a para tag.});    
-    }
+    $self->_assert_top_is_para($open);
 
     my $children = $open->detach_children();
 
