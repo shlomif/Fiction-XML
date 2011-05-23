@@ -38,6 +38,8 @@ has "_events_queue" =>
     {
         _enqueue_event => 'push',
         _extract_event => 'shift',
+        _no_events => 'is_empty',
+        _clear_events => 'clear',
     },
 );
 
@@ -588,7 +590,7 @@ sub _parse_text
         if (($type eq "close") || ($type eq "open"))
         {
             push @ret, @{$self->_events_queue()};
-            $self->_events_queue([]);
+            $self->_clear_events;
             return \@ret;
         }
     }
@@ -726,7 +728,7 @@ sub _assert_not_eof
 {
     my $self = shift;
 
-    if ($self->eof() && (! @{$self->_events_queue()}))
+    if ($self->eof() && $self->_no_events())
     {
         Carp::confess (qq{Reached EOF.});
     }
