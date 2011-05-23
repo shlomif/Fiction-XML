@@ -195,19 +195,29 @@ sub _non_tag_text_unit_consume_regex
     return qr{(?:[\<\[\]]|^\n?$)}ms;
 }
 
-around '_parse_non_tag_text_unit' => sub {
-    my ($orig, $self) = @_;
+sub _is_there_a_speech_unit
+{
+    my $self = shift;
 
     my $l = $self->curr_line_ref();
 
-    if ((pos($$l) == 0) && (! $self->_top_is_desc()) && ($$l =~ m{\A[^\[<][^:]*:}))
-    {
-        return $self->_parse_speech_unit();
-    }
-    else
-    {
-        return $self->$orig();
-    }
+    return
+    (
+           (pos($$l) == 0) 
+        && (! $self->_top_is_desc())
+        && ($$l =~ m{\A[^\[<][^:]*:})
+    );
+}
+
+around '_parse_non_tag_text_unit' => sub {
+    my ($orig, $self) = @_;
+
+    return
+    (
+        $self->_is_there_a_speech_unit()
+        ? $self->_parse_speech_unit()
+        : $self->$orig()
+    );
 };
 
 sub _look_for_tag_opener
