@@ -59,12 +59,6 @@ sub _generate_non_tag_text_event
         $in_para = 1;
     }
 
-    # This is an assert / sanity check.
-    if (!defined($elem))
-    {
-        Carp::confess ('$elem is undefined');
-    }
-
     $self->_enqueue_event(
         XML::Grammar::FictionBase::Event->new(
             {type => "elem", elem => $elem}
