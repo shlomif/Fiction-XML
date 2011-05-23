@@ -54,6 +54,21 @@ has '_ret_tag' =>
 # Whether we are inside a paragraph or not.
 has "_in_para" => (isa => "Bool", is => "rw", default => 0,);
 
+has '_tag_names_to_be_handled' =>
+(
+    is => 'ro',
+    isa => 'HashRef[Bool]',
+    lazy => 1,
+    builder => '_build_tag_names_to_be_handled',
+);
+
+sub _build_tag_names_to_be_handled
+{
+    my $self = shift;
+
+    return { map { $_ => 1 } @{$self->_list_valid_tag_events} };
+}
+
 sub _get_id_regex
 {
     return qr{[a-zA-Z_\-]+};
@@ -375,15 +390,14 @@ sub _check_and_handle_tag_event
 {
     my ($self, $event) = @_;
 
-    foreach my $tag_name (@{$self->_list_valid_tag_events()})
+    if ($event->tag && exists($self->_tag_names_to_be_handled->{$event->tag}))
     {
-        if ($event->is_tag_of_name($tag_name))
-        {
-            return $self->_handle_specific_tag_event($event);
-        }
+        return $self->_handle_specific_tag_event($event);
     }
-
-    return;
+    else
+    {
+        return;
+    }
 }
 
 sub _handle_para_event
