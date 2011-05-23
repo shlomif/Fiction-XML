@@ -117,22 +117,29 @@ sub _get_desc_name
     return ($self->_in_para() ? "innerdesc" : "desc");
 }
 
+sub _create_closing_desc_tag {
+    my $self = shift;
+
+    return XML::Grammar::Fiction::Struct::Tag->new(
+        name => $self->_get_desc_name(),
+        line => $self->line_num(),
+    );
+}
+
+sub _detect_closing_desc_tag
+{
+    my $self = shift;
+
+    return (${ $self->curr_line_ref() } =~ m{\G\]}cg);
+}
+
 around '_parse_closing_tag' => sub {
     my ($orig, $self) = @_;
 
-    my $l = $self->curr_line_ref();
-
-    if ($$l =~ m{\G\]}cg)
-    {
-        return XML::Grammar::Fiction::Struct::Tag->new(
-            name => $self->_get_desc_name(),
-            line => $self->line_num(),
-        );
-    }
-    else
-    {
-        return $self->$orig();
-    }
+    return 
+        $self->_detect_closing_desc_tag
+        ? $self->_create_closing_desc_tag
+        : $self->$orig();
 };
 
 around '_parse_opening_tag' => sub {
