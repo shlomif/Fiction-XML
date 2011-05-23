@@ -1,4 +1,4 @@
-package XML::Grammar::Fiction::FromProto::Parser::XmlIterator;
+package XML::Grammar::FictionBase::FromProto::Parser::XmlIterator;
 
 use strict;
 use warnings;

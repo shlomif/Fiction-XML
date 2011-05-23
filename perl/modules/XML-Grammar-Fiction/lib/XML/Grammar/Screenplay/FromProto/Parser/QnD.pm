@@ -5,7 +5,7 @@ use warnings;
 
 use Moose;
 
-extends( 'XML::Grammar::Fiction::FromProto::Parser::XmlIterator' );
+extends( 'XML::Grammar::FictionBase::FromProto::Parser::XmlIterator' );
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 use XML::Grammar::Fiction::Struct::Tag;
