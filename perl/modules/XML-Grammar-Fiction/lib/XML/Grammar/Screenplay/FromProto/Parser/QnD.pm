@@ -16,6 +16,7 @@ use List::MoreUtils ();
 
 has "_in_saying" => (isa => "Bool", is => "rw");
 has "_prev_line_is_empty" => (isa => "Bool", is => "rw", default => 1);
+has '_is_start' => (isa => 'Bool', is => 'rw');
 
 before 'next_line_ref' => sub {
     my $self = shift;
@@ -151,10 +152,10 @@ sub _detect_open_desc_tag
 
 sub _create_open_desc_tag
 {
-    my ($self, $is_start) = @_;
+    my ($self) = @_;
 
     my $not_inline = 0;
-    if ($is_start && $self->_prev_line_is_empty())
+    if ($self->_is_start && $self->_prev_line_is_empty())
     {
         $self->_close_top_tags();
         $not_inline = 1;
@@ -167,14 +168,23 @@ sub _create_open_desc_tag
     );
 }
 
+sub _set_is_start
+{
+    my $self = shift;
+
+    $self->_is_start($self->at_line_start);
+
+    return;
+}
+
 around '_parse_opening_tag' => sub {
     my ($orig, $self) = @_;
 
-    my $is_start = $self->at_line_start;
+    $self->_set_is_start;
 
     return 
         $self->_detect_open_desc_tag
-        ? $self->_create_open_desc_tag($is_start)
+        ? $self->_create_open_desc_tag
         : $self->$orig();
 };
 
