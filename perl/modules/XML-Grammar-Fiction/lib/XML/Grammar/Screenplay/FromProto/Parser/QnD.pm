@@ -546,6 +546,17 @@ sub _main_loop_iter_on_empty_line
     return;
 }
 
+sub _main_loop_iter_on_whitepsace
+{
+    my $self = shift;
+
+    $self->_add_to_top_tag( $self->_new_text([" "]) );
+
+    $self->next_line_ref();
+
+    return;
+}
+
 sub _main_loop_iter_body_prelude
 {
     my $self = shift;
@@ -558,11 +569,7 @@ sub _main_loop_iter_body_prelude
     }
     elsif ($$l =~ m{\G[ \t]+\n?\z})
     {
-        $self->_add_to_top_tag( $self->_new_text([" "]) );
-
-        $self->next_line_ref();
-
-        return;
+        return $self->_main_loop_iter_on_whitepsace;
     }
     else
     {
