@@ -83,6 +83,7 @@ before '_generate_text_unit_events' => sub {
 
     $self->skip_multiline_space();
 };
+
 sub _calc_open_para
 {
     my $self = shift;
