@@ -547,8 +547,7 @@ sub _main_loop_iter_body_prelude
         $self->next_line_ref();
         return;
     }
-    
-    if ($$l =~ m{\G([ \t]+)\n?\z})
+    elsif ($$l =~ m{\G([ \t]+)\n?\z})
     {
         if (length($1))
         {
@@ -559,8 +558,10 @@ sub _main_loop_iter_body_prelude
 
         return;
     }
-    
-    return 1;
+    else
+    {
+        return 1;
+    }
 }
 
 
