@@ -563,18 +563,14 @@ sub _main_loop_iter_body_prelude
 
     my $l = $self->curr_line_ref();
 
-    if ($$l eq "\n")
-    {
-        return $self->_main_loop_iter_on_empty_line;
-    }
-    elsif ($$l =~ m{\G[ \t]+\n?\z})
-    {
-        return $self->_main_loop_iter_on_whitepsace;
-    }
-    else
-    {
-        return 1;
-    }
+    return
+    (
+        ($$l eq "\n")
+        ? $self->_main_loop_iter_on_empty_line
+        : ($$l =~ m{\G[ \t]+\n?\z})
+        ? $self->_main_loop_iter_on_whitepsace
+        : 1
+    );
 }
 
 
