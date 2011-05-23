@@ -682,10 +682,12 @@ sub _handle_open_tag
             return;
         }
     }
+    else
+    {
+        $self->_push_tag($open);
 
-    $self->_push_tag($open);
-
-    return;
+        return;
+    }
 }
 
 sub _generate_text_unit_events
