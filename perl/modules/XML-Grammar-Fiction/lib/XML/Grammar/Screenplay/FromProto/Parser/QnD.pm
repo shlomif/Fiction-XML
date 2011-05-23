@@ -392,13 +392,9 @@ sub _assert_top_is_para
     return;
 }
 
-sub _close_para
+sub _process_closed_para
 {
-    my $self = shift;
-
-    my $open = $self->_pop_tag();
-
-    $self->_assert_top_is_para($open);
+    my ($self, $open) = @_;
 
     my $children = $open->detach_children();
 
@@ -411,6 +407,19 @@ sub _close_para
             )
         );
     }
+
+    return;
+}
+
+sub _close_para
+{
+    my $self = shift;
+
+    my $open = $self->_pop_tag();
+
+    $self->_assert_top_is_para($open);
+
+    $self->_process_closed_para($open);
 
     $self->_in_para(0);
 
