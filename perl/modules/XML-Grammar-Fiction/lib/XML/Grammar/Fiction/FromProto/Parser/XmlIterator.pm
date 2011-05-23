@@ -578,20 +578,32 @@ sub _parse_text_unit
     }
 }
 
+sub _flush_events 
+{
+    my $self = shift;
+
+    my @ret = @{$self->_events_queue()};
+
+    $self->_clear_events;
+
+    return \@ret;
+}
+
 sub _parse_text
 {
     my $self = shift;
 
     my @ret;
+
     while (my $unit = $self->_parse_text_unit())
     {
         push @ret, $unit;
+
         my $type = $unit->{'type'};
+
         if (($type eq "close") || ($type eq "open"))
         {
-            push @ret, @{$self->_events_queue()};
-            $self->_clear_events;
-            return \@ret;
+            return [@ret, @{$self->_flush_events()}];
         }
     }
 
