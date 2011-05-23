@@ -715,22 +715,30 @@ sub _parse_all
     return $self->_flush_ret_tag();
 }
 
-sub _main_loop_iter
+sub _assert_not_eof
 {
     my $self = shift;
 
-    # This is an assert.
     if (!defined(${$self->curr_line_ref()}) && (! @{$self->_events_queue()}))
     {
         Carp::confess (qq{Reached EOF.});
     }
     
-    if ($self->_look_ahead_for_comment())
+    return;
+}
+
+sub _main_loop_iter
+{
+    my $self = shift;
+
+    $self->_assert_not_eof;
+
+    if ($self->_look_ahead_for_comment)
     {
         return;
     }
 
-    return $self->_main_loop_iter_body();
+    return $self->_main_loop_iter_body;
 }
 
 sub _attempt_to_calc_new_ret_tag
