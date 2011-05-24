@@ -34,6 +34,11 @@
         <xsl:attribute name="xml:id">
             <xsl:value-of select="@xml:id" />
         </xsl:attribute>
+        <xsl:if test="@xml:lang">
+            <xsl:attribute name="xml:lang">
+                <xsl:value-of select="@xml:lang" />
+            </xsl:attribute>
+        </xsl:if>
         <!-- Make the title the title attribute or "ID" if does not exist. -->
         <info>
         <title>

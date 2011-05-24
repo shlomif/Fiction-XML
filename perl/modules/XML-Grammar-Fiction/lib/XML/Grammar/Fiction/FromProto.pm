@@ -330,16 +330,25 @@ sub _write_scene
     
     if (($tag eq "s") || ($tag eq "scene"))
     {
+        # TODO : abstract with _write_body.
         my $id = $scene->lookup_attr("id");
+        my $lang = $scene->lookup_attr("lang");
 
         if (!defined($id))
         {
             Carp::confess("Unspecified id for scene!");
         }
 
+        my @lang_attr;
+
+        if (defined($lang))
+        {
+            push @lang_attr, ([$xml_ns, 'lang'] => $lang);
+        }
+
         $self->_output_tag_with_childs(
             {
-                'start' => ["section", [$xml_ns, "id"] => $id],
+                'start' => ["section", [$xml_ns, "id"] => $id, @lang_attr,],
                 elem => $scene,
             }
         );
@@ -392,6 +401,7 @@ sub _write_body
         confess "Improper body tag - should be '<body>'!";
     }
 
+    # TODO : abstract with _write_scene.
     my $id = $body->lookup_attr("id");
     my $lang = $body->lookup_attr("lang");
 =begin foo
@@ -419,6 +429,7 @@ sub _write_body
     {
         push @lang_attr, ([$xml_ns, 'lang'] => $lang);
     }
+
     $self->_output_tag_with_childs(
         {
             'start' => ["body", [$xml_ns, "id"] => $id, @lang_attr,],
