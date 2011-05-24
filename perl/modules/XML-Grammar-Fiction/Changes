@@ -6,6 +6,8 @@ Revision history for XML-Grammar-Fiction.
     * Add support for the lang="..." attribute in <section>/<s>.
     * Add the <span> tag for Fiction-Text (already exists in Fiction-XML).
         - supports two attributes - lang -> xml:lang and id -> xml:id.
+    * Bumped the testing dependencies for Test::XML version '0.08' and
+    XML::SemanticDiff '1.0000' - the test failed otherwise.
 
 0.6.0      Mon May 23 22:59:05 IDT 2011
     * Add the version="5.0" attribute to the top-level tag of the
