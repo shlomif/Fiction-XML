@@ -66,6 +66,7 @@ t/fiction/data/docbook/sections-p-b-i-comments.docbook.xml
 t/fiction/data/docbook/with-blockquote.docbook.xml
 t/fiction/data/docbook/with-internal-description.docbook.xml
 t/fiction/data/docbook/with-programlisting.docbook.xml
+t/fiction/data/docbook/with-span.docbook.xml
 t/fiction/data/docbook/with-ul-ol-li.docbook.xml
 t/fiction/data/docbook/with-xml-lang-attribute.docbook.xml
 t/fiction/data/docbook/with-xml-lang-attr-in-section.docbook.xml
@@ -84,6 +85,7 @@ t/fiction/data/proto-text/sections-p-b-i.txt
 t/fiction/data/proto-text/with-blockquote.txt
 t/fiction/data/proto-text/with-internal-description.txt
 t/fiction/data/proto-text/with-programlisting.txt
+t/fiction/data/proto-text/with-span.txt
 t/fiction/data/proto-text/with-ul-ol-li.txt
 t/fiction/data/proto-text/with-xml-lang-attribute.txt
 t/fiction/data/proto-text/with-xml-lang-attr-in-section.txt
@@ -94,6 +96,7 @@ t/fiction/data/xml/sections-p-b-i-comments.xml
 t/fiction/data/xml/sections-p-b-i.xml
 t/fiction/data/xml/with-blockquote.xml
 t/fiction/data/xml/with-programlisting.xml
+t/fiction/data/xml/with-span.xml
 t/fiction/data/xml/with-ul-ol-li.xml
 t/fiction/data/xml/with-xml-lang-attribute.xml
 t/fiction/data/xml/with-xml-lang-attr-in-section.xml

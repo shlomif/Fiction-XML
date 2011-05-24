@@ -84,22 +84,35 @@ sub _output_tag_with_childs_and_common_attributes
 
     my $id = $elem->lookup_attr("id");
     my $lang = $elem->lookup_attr("lang");
+    my $href = $elem->lookup_attr("href");
+
+    my @attr;
 
     if (!defined($id))
     {
-        Carp::confess($args->{missing_id_msg} || "Unspecified id!");
+        if (! $args->{optional_id} )
+        {
+            Carp::confess($args->{missing_id_msg} || "Unspecified id!");
+        }
     }
-
-    my @lang_attr;
+    else
+    {
+        push @attr, ([$xml_ns, "id"] => $id);
+    }
 
     if (defined($lang))
     {
-        push @lang_attr, ([$xml_ns, 'lang'] => $lang);
+        push @attr, ([$xml_ns, 'lang'] => $lang);
+    }
+
+    if (defined($href))
+    {
+        push @attr, ([$xml_ns, 'href'] => $href);
     }
 
     return $self->_output_tag_with_childs(
         {
-            'start' => [$tag_name, [$xml_ns, "id"] => $id, @lang_attr,],
+            'start' => [$tag_name, @attr,],
             elem => $elem,
         }
     );
@@ -234,6 +247,22 @@ sub _handle_elem_of_name_ol
             start => ['ol'],
             elem => $elem,
         }
+    );
+
+    return;
+}
+
+sub _handle_elem_of_name_span
+{
+    my ($self, $elem) = @_;
+
+    $self->_output_tag_with_childs_and_common_attributes(
+        $elem,
+        'span',
+        {
+            optional_id => 1,
+            missing_id_msg => "Unspecified id for span!",
+        },
     );
 
     return;

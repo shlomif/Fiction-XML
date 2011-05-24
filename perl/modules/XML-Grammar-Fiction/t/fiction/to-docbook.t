@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 24;
+use Test::XML tests => 27;
 
 use File::Spec;
 
@@ -22,6 +22,7 @@ my @tests = (qw(
         with-programlisting
         with-xml-lang-attribute
         with-xml-lang-attr-in-section
+        with-span
     ));
 
 sub load_xml
@@ -39,7 +40,7 @@ sub load_xml
     return $contents;
 }
 
-# TEST:$num_texts=8
+# TEST:$num_texts=9
 
 my $converter = XML::Grammar::Fiction::ToDocBook->new({
         data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
