@@ -23,9 +23,10 @@ my $builder = XML::Grammar::Fiction::Builder->new(
         'File::Spec' => 0,
         'strict' => 0,
         'Test::More' => 0,
-        'Test::XML' => 0,
+        'Test::XML' => '0.08',
         'warnings' => 0,
         'XML::LibXML' => 0,
+        'XML::SemanticDiff' => '1.0000',
     },
     requires => 
     {
