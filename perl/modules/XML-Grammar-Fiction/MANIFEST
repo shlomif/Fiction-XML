@@ -67,6 +67,7 @@ t/fiction/data/docbook/with-blockquote.docbook.xml
 t/fiction/data/docbook/with-internal-description.docbook.xml
 t/fiction/data/docbook/with-programlisting.docbook.xml
 t/fiction/data/docbook/with-ul-ol-li.docbook.xml
+t/fiction/data/docbook/with-xml-lang-attribute.docbook.xml
 t/fiction/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
 t/fiction/data/proto-text-invalid/leading-space-at-para-start.txt
 t/fiction/data/proto-text-invalid/leading-space.txt
