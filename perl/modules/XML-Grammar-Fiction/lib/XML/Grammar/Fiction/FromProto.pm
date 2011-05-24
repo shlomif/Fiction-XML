@@ -78,6 +78,33 @@ sub _output_tag_with_childs
         });
 }
 
+sub _output_tag_with_childs_and_common_attributes
+{
+    my ($self, $elem, $tag_name, $args) = @_;
+
+    my $id = $elem->lookup_attr("id");
+    my $lang = $elem->lookup_attr("lang");
+
+    if (!defined($id))
+    {
+        Carp::confess($args->{missing_id_msg} || "Unspecified id!");
+    }
+
+    my @lang_attr;
+
+    if (defined($lang))
+    {
+        push @lang_attr, ([$xml_ns, 'lang'] => $lang);
+    }
+
+    return $self->_output_tag_with_childs(
+        {
+            'start' => [$tag_name, [$xml_ns, "id"] => $id, @lang_attr,],
+            elem => $elem,
+        }
+    );
+}
+
 sub _get_text_start
 {
     my ($self, $elem) = @_;
@@ -330,27 +357,10 @@ sub _write_scene
     
     if (($tag eq "s") || ($tag eq "scene"))
     {
-        # TODO : abstract with _write_body.
-        my $id = $scene->lookup_attr("id");
-        my $lang = $scene->lookup_attr("lang");
-
-        if (!defined($id))
-        {
-            Carp::confess("Unspecified id for scene!");
-        }
-
-        my @lang_attr;
-
-        if (defined($lang))
-        {
-            push @lang_attr, ([$xml_ns, 'lang'] => $lang);
-        }
-
-        $self->_output_tag_with_childs(
-            {
-                'start' => ["section", [$xml_ns, "id"] => $id, @lang_attr,],
-                elem => $scene,
-            }
+        $self->_output_tag_with_childs_and_common_attributes(
+            $scene,
+            "section",
+            { missing_id_msg => "Unspecified id for scene!", },
         );
     }
     else
@@ -401,9 +411,6 @@ sub _write_body
         confess "Improper body tag - should be '<body>'!";
     }
 
-    # TODO : abstract with _write_scene.
-    my $id = $body->lookup_attr("id");
-    my $lang = $body->lookup_attr("lang");
 =begin foo
 
     my $title =
@@ -423,18 +430,10 @@ sub _write_body
 
 =cut
 
-    my @lang_attr;
-
-    if (defined($lang))
-    {
-        push @lang_attr, ([$xml_ns, 'lang'] => $lang);
-    }
-
-    $self->_output_tag_with_childs(
-        {
-            'start' => ["body", [$xml_ns, "id"] => $id, @lang_attr,],
-            elem => $body,
-        }
+    $self->_output_tag_with_childs_and_common_attributes(
+        $body,
+        'body',
+        { missing_id_msg => "Unspecified id for body tag!", },
     );
 
     return;
