@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 21;
+use Test::More tests => 23;
 
 use Test::XML;
 
@@ -38,9 +38,10 @@ my @tests = (qw(
     paras-with-entities-at-start-of-line
     with-xml-lang-attribute
     with-xml-lang-attr-in-section
+    with-span
     ));
 
-# TEST:$num_texts=10
+# TEST:$num_texts=11
 
 my $grammar = XML::Grammar::Fiction::FromProto->new({
         parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",

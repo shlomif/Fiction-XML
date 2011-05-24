@@ -115,7 +115,19 @@
             </link>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:apply-templates/>
+            <phrase>
+                <xsl:if test="@xml:lang">
+                    <xsl:attribute name="xml:lang">
+                        <xsl:value-of select="@xml:lang" />
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@xml:id">
+                    <xsl:attribute name="xml:id">
+                        <xsl:value-of select="@xml:id" />
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:apply-templates/>
+            </phrase>
         </xsl:otherwise>
     </xsl:choose>
 </xsl:template>
