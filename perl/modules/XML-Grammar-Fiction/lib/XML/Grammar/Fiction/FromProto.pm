@@ -393,7 +393,7 @@ sub _write_body
     }
 
     my $id = $body->lookup_attr("id");
-
+    my $lang = $body->lookup_attr("lang");
 =begin foo
 
     my $title =
@@ -413,9 +413,15 @@ sub _write_body
 
 =cut
 
+    my @lang_attr;
+
+    if (defined($lang))
+    {
+        push @lang_attr, ([$xml_ns, 'lang'] => $lang);
+    }
     $self->_output_tag_with_childs(
         {
-            'start' => ["body", [$xml_ns, "id"] => $id],
+            'start' => ["body", [$xml_ns, "id"] => $id, @lang_attr,],
             elem => $body,
         }
     );
