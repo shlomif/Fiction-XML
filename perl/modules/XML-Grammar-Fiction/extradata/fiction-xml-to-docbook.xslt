@@ -118,19 +118,13 @@
     </xsl:variable>
     <xsl:element name="{$tag_name}">
         <xsl:if test="@xlink:href">
-            <xsl:attribute name="xlink:href">
-                <xsl:value-of select="@xlink:href" />
-            </xsl:attribute>
+            <xsl:copy-of select="@xlink:href" />
         </xsl:if>
         <xsl:if test="@xml:lang">
-            <xsl:attribute name="xml:lang">
-                <xsl:value-of select="@xml:lang" />
-            </xsl:attribute>
+            <xsl:copy-of select="@xml:lang" />
         </xsl:if>
         <xsl:if test="@xml:id">
-            <xsl:attribute name="xml:id">
-                <xsl:value-of select="@xml:id" />
-            </xsl:attribute>
+            <xsl:copy-of select="@xml:id" />
         </xsl:if>
         <xsl:apply-templates/>
     </xsl:element>
