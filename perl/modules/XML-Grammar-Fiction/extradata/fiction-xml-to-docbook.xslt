@@ -112,6 +112,17 @@
                 <xsl:attribute name="xlink:href">
                     <xsl:value-of select="@xlink:href" />
                 </xsl:attribute>
+                <!-- TODO : Extract a common place from the other clause here. -->
+                <xsl:if test="@xml:lang">
+                    <xsl:attribute name="xml:lang">
+                        <xsl:value-of select="@xml:lang" />
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@xml:id">
+                    <xsl:attribute name="xml:id">
+                        <xsl:value-of select="@xml:id" />
+                    </xsl:attribute>
+                </xsl:if>
                 <xsl:apply-templates/>
             </link>
         </xsl:when>
