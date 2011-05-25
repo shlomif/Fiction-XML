@@ -60,6 +60,7 @@ t/00-load.t
 tag-release.pl
 t/app-to-html.t
 t/boilerplate.t
+t/fiction/data/docbook/a-href-with-id-and-lang.docbook.xml
 t/fiction/data/docbook/sections-a-href.docbook.xml
 t/fiction/data/docbook/sections-and-paras.docbook.xml
 t/fiction/data/docbook/sections-p-b-i-comments.docbook.xml
@@ -70,6 +71,7 @@ t/fiction/data/docbook/with-span.docbook.xml
 t/fiction/data/docbook/with-ul-ol-li.docbook.xml
 t/fiction/data/docbook/with-xml-lang-attribute.docbook.xml
 t/fiction/data/docbook/with-xml-lang-attr-in-section.docbook.xml
+t/fiction/data/proto-text/a-href-with-id-and-lang.txt
 t/fiction/data/proto-text-invalid/inner-desc-inside-char-addressing.txt
 t/fiction/data/proto-text-invalid/leading-space-at-para-start.txt
 t/fiction/data/proto-text-invalid/leading-space.txt
@@ -89,6 +91,7 @@ t/fiction/data/proto-text/with-span.txt
 t/fiction/data/proto-text/with-ul-ol-li.txt
 t/fiction/data/proto-text/with-xml-lang-attribute.txt
 t/fiction/data/proto-text/with-xml-lang-attr-in-section.txt
+t/fiction/data/xml/a-href-with-id-and-lang.xml
 t/fiction/data/xml/paras-with-entities-at-start-of-line.xml
 t/fiction/data/xml/sections-a-href.xml
 t/fiction/data/xml/sections-and-paras.xml

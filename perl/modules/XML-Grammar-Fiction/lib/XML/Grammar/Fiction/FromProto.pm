@@ -105,9 +105,18 @@ sub _output_tag_with_childs_and_common_attributes
         push @attr, ([$xml_ns, 'lang'] => $lang);
     }
 
-    if (defined($href))
+    if (! defined($href))
     {
-        push @attr, ([$xml_ns, 'href'] => $href);
+        if ($args->{required_href})
+        {
+            Carp::confess(
+                $args->{missing_href_msg} || 'Unspecified href in tag!'
+            );
+        }
+    }
+    else
+    {
+        push @attr, ([$xlink_ns, 'href'] => $href);
     }
 
     return $self->_output_tag_with_childs(
@@ -145,15 +154,14 @@ sub _handle_elem_of_name_a
 {
     my ($self, $elem) = @_;
 
-    $self->_output_tag_with_childs(
+    $self->_output_tag_with_childs_and_common_attributes(
+        $elem,
+        'span',
         {
-            start =>
-            [
-                "span",
-                [$xlink_ns, "href"] => $elem->lookup_attr("href"),
-            ],
-            elem => $elem,
-        }
+            optional_id => 1,
+            required_href => 1,
+            missing_href_msg => 'Unspecified href in a tag.',
+        },
     );
 
     return;
