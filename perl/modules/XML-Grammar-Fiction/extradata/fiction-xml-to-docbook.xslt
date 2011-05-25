@@ -106,41 +106,34 @@
 </xsl:template>
 
 <xsl:template match="fic:span">
-    <xsl:choose>
-        <xsl:when test="@xlink:href">
-            <link>
-                <xsl:attribute name="xlink:href">
-                    <xsl:value-of select="@xlink:href" />
-                </xsl:attribute>
-                <!-- TODO : Extract a common place from the other clause here. -->
-                <xsl:if test="@xml:lang">
-                    <xsl:attribute name="xml:lang">
-                        <xsl:value-of select="@xml:lang" />
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:if test="@xml:id">
-                    <xsl:attribute name="xml:id">
-                        <xsl:value-of select="@xml:id" />
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:apply-templates/>
-            </link>
-        </xsl:when>
-        <xsl:otherwise>
-            <phrase>
-                <xsl:if test="@xml:lang">
-                    <xsl:attribute name="xml:lang">
-                        <xsl:value-of select="@xml:lang" />
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:if test="@xml:id">
-                    <xsl:attribute name="xml:id">
-                        <xsl:value-of select="@xml:id" />
-                    </xsl:attribute>
-                </xsl:if>
-                <xsl:apply-templates/>
-            </phrase>
-        </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="tag_name">
+        <xsl:choose>
+            <xsl:when test="@xlink:href">
+                <xsl:value-of select="'link'" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="'phrase'" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$tag_name}">
+        <xsl:if test="@xlink:href">
+            <xsl:attribute name="xlink:href">
+                <xsl:value-of select="@xlink:href" />
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@xml:lang">
+            <xsl:attribute name="xml:lang">
+                <xsl:value-of select="@xml:lang" />
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@xml:id">
+            <xsl:attribute name="xml:id">
+                <xsl:value-of select="@xml:id" />
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:apply-templates/>
+    </xsl:element>
 </xsl:template>
+
 </xsl:stylesheet>
