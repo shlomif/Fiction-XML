@@ -13,11 +13,11 @@ XML to HTML.
 
 =head1 VERSION
 
-Version 0.6.0
+Version 0.7.0
 
 =cut
 
-our $VERSION = '0.6.0';
+our $VERSION = '0.7.0';
 
 =head2 new()
 
