@@ -78,6 +78,7 @@
     </define>
     <define name="blockquote">
         <element name="fic:blockquote">
+            <ref name="common_attrs" />
             <ref name="several_paras"/>
         </element>
     </define>

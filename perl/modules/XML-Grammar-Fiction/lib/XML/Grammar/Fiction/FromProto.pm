@@ -171,11 +171,12 @@ sub _handle_elem_of_name_blockquote
 {
     my ($self, $elem) = @_;
 
-    $self->_output_tag_with_childs(
+    $self->_output_tag_with_childs_and_common_attributes(
+        $elem,
+        'blockquote',
         {
-            start => ['blockquote'],
-            elem => $elem,
-        }
+            optional_id => 1,
+        },
     );
 
     return;

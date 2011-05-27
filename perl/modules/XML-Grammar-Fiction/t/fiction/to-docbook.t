@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 30;
+use Test::XML tests => 33;
 
 use File::Spec;
 
@@ -24,6 +24,7 @@ my @tests = (qw(
         with-xml-lang-attr-in-section
         with-span
         a-href-with-id-and-lang
+        with-blockquote-with-lang-and-id
     ));
 
 sub load_xml
@@ -41,7 +42,7 @@ sub load_xml
     return $contents;
 }
 
-# TEST:$num_texts=10
+# TEST:$num_texts=11
 
 my $converter = XML::Grammar::Fiction::ToDocBook->new({
         data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
