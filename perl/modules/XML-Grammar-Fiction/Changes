@@ -1,5 +1,7 @@
 Revision history for XML-Grammar-Fiction.
 
+    * <blockquote> now supports xml:id and xml:lang.
+
 0.7.0       Wed May 25 12:47:13 IDT 2011
     * Add support for the lang="..." attribute of <body> in Fiction-Text which
     would be translated to <body xml:lang=".."> attribute in Fiction-XML (and

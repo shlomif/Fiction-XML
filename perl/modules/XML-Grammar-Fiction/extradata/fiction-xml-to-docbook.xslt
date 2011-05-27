@@ -67,6 +67,15 @@
 
 <xsl:template match="fic:blockquote">
     <blockquote>
+        <xsl:if test="@xlink:href">
+            <xsl:copy-of select="@xlink:href" />
+        </xsl:if>
+        <xsl:if test="@xml:lang">
+            <xsl:copy-of select="@xml:lang" />
+        </xsl:if>
+        <xsl:if test="@xml:id">
+            <xsl:copy-of select="@xml:id" />
+        </xsl:if>
         <xsl:apply-templates/>
     </blockquote>
 </xsl:template>
