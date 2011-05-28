@@ -3,6 +3,7 @@
     xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
     xmlns:fic="http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/"
     xmlns="http://docbook.org/ns/docbook"
+    xmlns:db="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <xsl:output method="xml" encoding="UTF-8" indent="yes"
