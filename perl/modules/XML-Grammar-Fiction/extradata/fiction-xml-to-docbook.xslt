@@ -119,10 +119,10 @@
     <xsl:variable name="tag_name">
         <xsl:choose>
             <xsl:when test="@xlink:href">
-                <xsl:value-of select="'link'" />
+                <xsl:value-of select="'db:link'" />
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="'phrase'" />
+                <xsl:value-of select="'db:phrase'" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
