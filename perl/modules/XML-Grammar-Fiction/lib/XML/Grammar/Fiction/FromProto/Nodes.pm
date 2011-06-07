@@ -93,6 +93,13 @@ use Moose;
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
+sub get_text
+{
+    my ($self, $re) = @_;
+
+    return $self->children->contents->[0];
+}
+
 package XML::Grammar::Fiction::FromProto::Node::Saying;
 
 use Moose;

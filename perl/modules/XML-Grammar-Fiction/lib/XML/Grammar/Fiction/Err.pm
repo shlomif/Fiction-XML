@@ -49,7 +49,11 @@ use Exception::Class
         "XML::Grammar::Fiction::Err::Parse::ProgramListingContainsTags" =>
         {
             isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        }
+        },
+        "XML::Grammar::Fiction::Err::Parse::ParaOpenPlusNotFollowedByTag" =>
+        {
+            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+        },
     )
     ;
 1;
