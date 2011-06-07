@@ -152,7 +152,7 @@ your bug as I make changes.
 
 =over 4
 
-=item * Implement the correct handlind of leading special characters in lines.
+=item * Implement the correct handling of leading special characters in lines.
 
 =item * Check that SGML entities work properly.
 
