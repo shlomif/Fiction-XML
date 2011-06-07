@@ -1,3 +1,12 @@
+* ::Fiction : add a feature for a formatting tag at the beginning of a 
+paragraph, that will not be mistaken for a top-level tag:
+
+[QUOTE]
+
++<b>Hello</b>: There.
+
+[/QUOTE]
+
 * Write unit tests for LineIterator.pm.
 
 * Add more necessary tags and features.
