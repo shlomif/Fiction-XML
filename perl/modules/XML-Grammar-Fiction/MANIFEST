@@ -91,6 +91,7 @@ t/fiction/data/proto-text/with-blockquote-with-lang-and-id.txt
 t/fiction/data/proto-text/with-internal-description.txt
 t/fiction/data/proto-text/with-programlisting.txt
 t/fiction/data/proto-text/with-span.txt
+t/fiction/data/proto-text/with-style-tag-at-start-of-paragraph.txt
 t/fiction/data/proto-text/with-ul-ol-li.txt
 t/fiction/data/proto-text/with-xml-lang-attribute.txt
 t/fiction/data/proto-text/with-xml-lang-attr-in-section.txt
@@ -104,6 +105,7 @@ t/fiction/data/xml/with-blockquote-with-lang-and-id.xml
 t/fiction/data/xml/with-blockquote.xml
 t/fiction/data/xml/with-programlisting.xml
 t/fiction/data/xml/with-span.xml
+t/fiction/data/xml/with-style-tag-at-start-of-paragraph.xml
 t/fiction/data/xml/with-ul-ol-li.xml
 t/fiction/data/xml/with-xml-lang-attribute.xml
 t/fiction/data/xml/with-xml-lang-attr-in-section.xml

@@ -114,7 +114,8 @@ a backslash (C<\>) or their SGML/XML entity (e.g: C<&qout;>).
 =head3 Paragraphs
 
 These are not delimited by anything - just a paragraph of text not containing
-an empty line.
+an empty line. If a paragraph starts with a Plus sign ( C<+> ) then it is 
+immediately expected to be followed by a styling tag (as opposed to a 
 
 =head3 <ol>
 
