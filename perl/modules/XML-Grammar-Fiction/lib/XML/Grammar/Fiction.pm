@@ -187,30 +187,6 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Fiction>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
 
-=head1 TODO
-
-=over 4
-
-=item * Implement the correct handling of leading special characters in lines.
-
-=item * Check that SGML entities work properly.
-
-=item * Convert the parsing errors from Carp::confess to Exception::Class
-
-This will allow a friendlier diagnostic. Carp::confess was implemented due to
-laziness on the programmers' part.
-
-=item * Merge the duplicate code from XML-Grammar-Fiction
-
-XML::Grammar::Fiction was forked from L<XML::Grammar::Screenplay>
-and they still share a lot of common code. This needs to be merged in time.
-
-=item * Refactor the Prototext parser and other parts.
-
-Currently the code is relatively hairy and easy-to-break. Try to refactor it.
-
-=back
-
 =head1 MOTIVATION
 
 I (= Shlomi Fish) originated this CPAN distribution (after forking 
