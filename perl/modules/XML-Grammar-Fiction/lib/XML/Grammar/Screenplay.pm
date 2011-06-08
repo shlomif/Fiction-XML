@@ -155,14 +155,6 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Fiction>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
 
-=head1 TODO
-
-=over 4
-
-=item * Empty
-
-=back
-
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
