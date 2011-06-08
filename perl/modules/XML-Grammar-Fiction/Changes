@@ -5,6 +5,9 @@ Revision history for XML-Grammar-Fiction.
     now indicates that the following tag is a style tag.
     * lib/XML/Grammar/Fiction.pm - add a comprehensive example to the POD
     itself.
+    * Consolidated the lib/XML/Grammar/Fiction.pm 's todo into the C<TODO>
+    file.
+    * lib/XML/Grammar/Screenplay.pm - add an example in the code.
 
 0.7.0       Wed May 25 12:47:13 IDT 2011
     * Add support for the lang="..." attribute of <body> in Fiction-Text which
