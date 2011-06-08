@@ -3,6 +3,8 @@ package XML::Grammar::Fiction;
 use warnings;
 use strict;
 
+=encoding utf8
+
 =head1 NAME
 
 XML::Grammar::Fiction - CPAN distribution implementing an XML grammar 
@@ -126,6 +128,42 @@ This is an ordered list with <li>s, similar to its purpose in XHTML.
 An unordered list.
 
 =head2 EXAMPLES
+
+=head3 Examples Document.
+
+    <body id="index" lang="en-UK">
+
+    <title>David vs. Goliath - Part I</title>
+
+    <s id="top">
+
+    <title>The Top Section</title>
+
+    <!-- David has Green hair here -->
+
+    King <a href="http://en.wikipedia.org/wiki/David">David</a> and Goliath
+    were standing by each other.
+
+    David said unto Goliath: “I will shoot you. I <b>swear</b> I will”
+
+    <s id="goliath">
+
+    <title>Goliath's Response</title>
+
+    <!-- Goliath has to reply to that. -->
+
+    Goliath was not amused.
+
+    He said to David: “Oh, really. <i>David</i>, the red-headed!”.
+
+    </s>
+
+    </s>
+
+    </body>
+
+
+=head3 Other Examples
 
 Examples can be found in the C<t/data> directory, and here:
 
