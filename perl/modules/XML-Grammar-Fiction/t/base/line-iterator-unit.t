@@ -3,7 +3,7 @@ use warnings;
 
 use utf8;
 
-use Test::More tests => 2;
+use Test::More tests => 3;
 
 use XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
 
@@ -96,4 +96,7 @@ EOF
     is (pos(${$parser->curr_line_ref()}), 0,
         "The pos() of the line is set at the right value."
     );
+
+    # TEST
+    is ($parser->curr_pos(), 0, "->pos() returns the right value.");
 }
