@@ -3,7 +3,7 @@ use warnings;
 
 use utf8;
 
-use Test::More tests => 4;
+use Test::More tests => 6;
 
 use XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
 
@@ -103,4 +103,17 @@ EOF
     # TEST
     ok (scalar($parser->at_line_start()), 
         "Parser is at line start.");
+
+    {
+        my ($l_ref, $pos) = $parser->curr_line_and_pos();
+
+        # TEST
+        is ($$l_ref, 
+            qq{I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of\n},
+            "Line ref of ->curr_line_and_pos() is OK."
+        );
+
+        # TEST
+        is ($pos, 0, "Pos of ->curr_line_and_pos() is OK.")
+    }
 }
