@@ -3,7 +3,7 @@ use warnings;
 
 use utf8;
 
-use Test::More tests => 6;
+use Test::More tests => 9;
 
 use XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
 
@@ -116,4 +116,17 @@ EOF
         # TEST
         is ($pos, 0, "Pos of ->curr_line_and_pos() is OK.")
     }
+
+    my $verdict = ${$parser->curr_line_ref()} =~ m{\G.*?(my f[^d]*d)}g;
+
+    my $match = $1;
+
+    # TEST
+    ok ($verdict, 'Matched.');
+    # TEST
+    is ($match, 'my friend', 'Match is correct');
+    # TEST
+    is (substr(${$parser->curr_line_ref()}, $parser->curr_pos()),
+        qq{, Mr. Sherlock Holmes, one day in the autumn of\n},
+    );
 }
