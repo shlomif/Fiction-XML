@@ -128,5 +128,6 @@ EOF
     # TEST
     is (substr(${$parser->curr_line_ref()}, $parser->curr_pos()),
         qq{, Mr. Sherlock Holmes, one day in the autumn of\n},
+        'curr_pos() is correct.'
     );
 }
