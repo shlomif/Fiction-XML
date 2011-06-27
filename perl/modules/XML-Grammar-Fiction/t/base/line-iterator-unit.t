@@ -3,7 +3,7 @@ use warnings;
 
 use utf8;
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 
 use XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
 
@@ -130,4 +130,7 @@ EOF
         qq{, Mr. Sherlock Holmes, one day in the autumn of\n},
         'curr_pos() is correct.'
     );
+
+    # TEST
+    ok (!$parser->at_line_start(), "Not at line start.");
 }
