@@ -2,6 +2,7 @@ package XML::Grammar::Fiction::FromProto;
 
 use strict;
 use warnings;
+use autodie;
 
 use Carp;
 use HTML::Entities ();

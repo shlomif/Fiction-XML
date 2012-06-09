@@ -2,6 +2,7 @@ package XML::Grammar::Screenplay::App::ToHTML;
 
 use strict;
 use warnings;
+use autodie;
 
 use base 'Exporter';
 
