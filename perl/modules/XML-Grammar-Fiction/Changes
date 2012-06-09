@@ -2,6 +2,7 @@ Revision history for XML-Grammar-Fiction.
 
     * Add t/base/line-iterator-unit.t to provide unit-tests for
         XML::Grammar::FictionBase::FromProto::Parser::LineIterator .
+    * Add "use autodie" to the modules with open calls.
 
 0.8.0       Wed Jun  8 19:04:57 IDT 2011
     * <blockquote> now supports xml:id and xml:lang.

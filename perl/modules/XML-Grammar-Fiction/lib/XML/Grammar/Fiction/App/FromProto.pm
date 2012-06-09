@@ -2,6 +2,7 @@ package XML::Grammar::Fiction::App::FromProto;
 
 use strict;
 use warnings;
+use autodie;
 
 use base 'Exporter';
 

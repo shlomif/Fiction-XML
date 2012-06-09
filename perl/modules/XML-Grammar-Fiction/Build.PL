@@ -30,6 +30,7 @@ my $builder = XML::Grammar::Fiction::Builder->new(
     },
     requires => 
     {
+        'autodie' => 0,
         'Carp' => 0,
         'Exporter' => 0,
         'Data::Dumper' => 0,
