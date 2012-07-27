@@ -10,7 +10,7 @@
  />
 
 <xsl:template match="/">
-        <xsl:apply-templates select="//sp:body" />  
+        <xsl:apply-templates select="//sp:body" />
 </xsl:template>
 
 <xsl:template match="sp:body">
@@ -36,7 +36,7 @@
                 <xsl:otherwise>
                     <xsl:value-of select="@id" />
                 </xsl:otherwise>
-            </xsl:choose> 
+            </xsl:choose>
         </title>
         <xsl:apply-templates select="sp:scene|sp:description|sp:saying" />
     </section>

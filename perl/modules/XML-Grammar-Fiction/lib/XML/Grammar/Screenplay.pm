@@ -5,7 +5,7 @@ use strict;
 
 =head1 NAME
 
-XML::Grammar::Screenplay - CPAN distribution implementing an XML grammar for 
+XML::Grammar::Screenplay - CPAN distribution implementing an XML grammar for
 screenplays.
 
 =head1 VERSION
@@ -18,7 +18,7 @@ our $VERSION = '0.8.1';
 
 =head1 SYNOPSIS
 
-See L<XML::Grammar::Screenplay::FromProto>, 
+See L<XML::Grammar::Screenplay::FromProto>,
 L<XML::Grammar::Screenplay::ToDocBook> and
 L<XML::Grammar::Screenplay::ToHTML>.
 
@@ -47,7 +47,7 @@ The rest of this page will document the syntax of the custom textual format.
 =head2 Scenes
 
 Scenes are placed in XML-like tags of C<< <section> ... </section> >> or
-abbreviated as C<< <s> ... </s> >>. Opening tags in the format may have 
+abbreviated as C<< <s> ... </s> >>. Opening tags in the format may have
 attributes whose keys are plaintext and whose values are surrounded by
 double quotes. (Single-quotes are not supported).
 
@@ -76,7 +76,7 @@ C<< <a href="..."> >> for hyperlinks, and an empty C<< <br /> >> tag for line-br
 =item 3. Entities
 
 The text format supports SGML-like entities such as C<< &amp; >>,
-C<< &lt; >>, C<< &quot; >> and all other entities that are supported by 
+C<< &lt; >>, C<< &quot; >> and all other entities that are supported by
 L<HTML::Entities>.
 
 =item 4. Text between [ ... ]
@@ -84,7 +84,7 @@ L<HTML::Entities>.
 Text between square brackets (C<[ ... ]>) is reserved for descriptions
 or inline descriptions (see below).
 
-=back 
+=back
 
 =head2 Sayings
 
@@ -110,7 +110,7 @@ paragraphs.
 
 There are also internal descriptions to the saying which are placed
 inside the paragraph of the saying and describe what happens while the
-character talks. 
+character talks.
 
 =head2 EXAMPLES
 
@@ -120,7 +120,7 @@ character talks.
 
     <s id="david_and_goliath">
 
-    [David and <a href="http://en.wikipedia.org/wiki/Goliath">Goliath</a> are 
+    [David and <a href="http://en.wikipedia.org/wiki/Goliath">Goliath</a> are
     standing by each other.]
 
     David: I will kill you.
@@ -129,9 +129,9 @@ character talks.
 
     David: yes way!
 
-    ++++: In the name of <a href="http://real-allah.tld/">Allah, the 
+    ++++: In the name of <a href="http://real-allah.tld/">Allah, the
     <b>merciful</b>, real merciful</a>, I will show you
-    the [sarcastically] power of my sling. 
+    the [sarcastically] power of my sling.
 
     ++: I shall sling you and bing you till infinity.
 
@@ -173,7 +173,7 @@ L<http://www.shlomifish.org/humour/Star-Trek/We-the-Living-Dead/>
 
 =head1 DEBUGGING
 
-When trying to convert the well-formed text to XML, one will often 
+When trying to convert the well-formed text to XML, one will often
 encounter an obscure "Parse Error". This is caused by L<Parse::RecDescent>,
 which is used for parsing. The best way I found to deal with it is to
 gradually eliminate parts of the document until the offending markup is

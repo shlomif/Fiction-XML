@@ -14,7 +14,7 @@ sub new
     my $package = shift;
     my %args = @_;
     my @extradata_files;
-    
+
     my $builder = $package->SUPER::new(
         share_dir => 'extradata',
         auto_configure_requires => 1,

@@ -182,4 +182,5 @@ t/screenplay/qnd-parser-unit.t
 t/screenplay/to-docbook.t
 t/screenplay/to-tei.t
 t/screenplay/to-xhtml.t
+t/style-trailing-space.t
 META.json

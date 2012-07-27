@@ -7,7 +7,7 @@ use strict;
 
 =head1 NAME
 
-XML::Grammar::Fiction - CPAN distribution implementing an XML grammar 
+XML::Grammar::Fiction - CPAN distribution implementing an XML grammar
 and a lightweight markup language for stories, novels and other fiction.
 
 =head1 VERSION
@@ -20,7 +20,7 @@ our $VERSION = '0.8.1';
 
 =head1 SYNOPSIS
 
-See L<XML::Grammar::Fiction::FromProto>, 
+See L<XML::Grammar::Fiction::FromProto>,
 L<XML::Grammar::Fiction::ToDocBook> and
 L<XML::Grammar::Fiction::ToHTML>.
 
@@ -43,9 +43,9 @@ L<XML::Grammar::Fiction::App::ToDocBook> and
 L<XML::Grammar::Fiction::App::ToHTML>, which are modules implementing
 command line applications for their processing.
 
-In order to be able to share the common code and functionality more easily, 
-then L<XML::Grammar::Screenplay>, which provides similar XML grammar and 
-text-based markup language for writing screenplays, is now included in this 
+In order to be able to share the common code and functionality more easily,
+then L<XML::Grammar::Screenplay>, which provides similar XML grammar and
+text-based markup language for writing screenplays, is now included in this
 CPAN distribution, and you can refer to its documentation as well:
 L<XML::Grammar::Screenplay> .
 
@@ -56,15 +56,15 @@ The rest of this page will document the syntax of the custom textual format.
 =head2 Sections
 
 Sections are placed in XML-like tags of C<< <section> ... </section> >> or
-abbreviated as C<< <s> ... </s> >>. Opening tags in the format may have 
+abbreviated as C<< <s> ... </s> >>. Opening tags in the format may have
 attributes whose keys are plaintext and whose values are surrounded by
 double quotes. (Single-quotes are not supported).
 
 The section tag must have an C<id> attribute (for anchors, etc.) and could
-contain an optional (but highly recommended) C<< <title> >> sub-tag. If the 
+contain an optional (but highly recommended) C<< <title> >> sub-tag. If the
 title is not specified, it will default to the ID.
 
-Sections may be B<nested>. 
+Sections may be B<nested>.
 
 =head2 Text
 
@@ -84,7 +84,7 @@ text.
 =item 3. Entities
 
 The text format supports SGML-like entities such as C<< &amp; >>,
-C<< &lt; >>, C<< &quot; >> and all other entities that are supported by 
+C<< &lt; >>, C<< &quot; >> and all other entities that are supported by
 L<HTML::Entities>.
 
 =item 4. Supported initial characters
@@ -101,7 +101,7 @@ The characters C<"> (double quotes), C<'> (single quotes), etc. are supported.
 
 =item * XML/SGML entities.
 
-XML/SGML entities are also supported at the start. 
+XML/SGML entities are also supported at the start.
 
 =back
 
@@ -116,8 +116,8 @@ a backslash (C<\>) or their SGML/XML entity (e.g: C<&qout;>).
 =head3 Paragraphs
 
 These are not delimited by anything - just a paragraph of text not containing
-an empty line. If a paragraph starts with a Plus sign ( C<+> ) then it is 
-immediately expected to be followed by a styling tag (as opposed to a 
+an empty line. If a paragraph starts with a Plus sign ( C<+> ) then it is
+immediately expected to be followed by a styling tag (as opposed to a
 
 =head3 <ol>
 
@@ -189,10 +189,10 @@ your bug as I make changes.
 
 =head1 MOTIVATION
 
-I (= Shlomi Fish) originated this CPAN distribution (after forking 
+I (= Shlomi Fish) originated this CPAN distribution (after forking
 L<XML:Grammar::Screenplay> which was similar enough) so I'll have a convenient
-way to edit a story I'm writing in Hebrew and similar fiction, as 
-OpenOffice.org caused me many problems, and I found editing bi-directional 
+way to edit a story I'm writing in Hebrew and similar fiction, as
+OpenOffice.org caused me many problems, and I found editing bi-directional
 DocBook/XML to be painful with either gvim or KDE 4's kate, so I opted for a
 more plain-texty format.
 

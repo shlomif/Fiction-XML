@@ -51,7 +51,7 @@ my $man = 0;
 my $ret = GetOptions(
     "o|output=s" => \$output_file,
     "help|h" => \$help,
-    "man" => \$man, 
+    "man" => \$man,
 );
 
 if (!defined($output_file))
@@ -103,12 +103,12 @@ sub _out_section
 
     my @subs = $xpc->findnodes(q{./db:section}, $sect_elem);
 
-    return 
-          qq{<s id="} . _esc_for_attr($id) . qq{">\n\n} 
+    return
+          qq{<s id="} . _esc_for_attr($id) . qq{">\n\n}
         . qq{<title>} . _esc($title_text) . qq{</title>\n\n}
         .  join("\n\n", map { _esc($_->textContent()) } @paras)
         . join("\n\n", map { _out_section($_) } @subs)
-        . qq{</s>\n\n} 
+        . qq{</s>\n\n}
         ;
 }
 

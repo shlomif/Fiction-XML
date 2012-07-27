@@ -22,7 +22,7 @@ sub _parse_inner_tag
 
     if ($open->{name} ne $close->{name})
     {
-        Carp::confess("Opening and closing tags do not match: " 
+        Carp::confess("Opening and closing tags do not match: "
             . "$open->{name} and $close->{name} on element starting at "
             . "line $open->{line}"
         );

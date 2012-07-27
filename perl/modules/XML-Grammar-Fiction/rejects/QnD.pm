@@ -24,7 +24,7 @@ sub _parse_saying_first_para
     my $self = shift;
 
     my ($sayer, $what);
-    
+
     ($sayer) = $self->_with_curr_line(
         sub {
             my $l = shift;
@@ -100,7 +100,7 @@ sub _parse_speech_unit
         $self->_new_node({
                 t => "Saying",
                 character => $first->{character},
-                children => 
+                children =>
                     $self->_new_list([ $first->{para}, @others ]),
         });
 }
@@ -144,7 +144,7 @@ sub _parse_desc_unit
     {
         Carp::confess (
             qq{Description ("[ ... ]") that started on line }
-            . ($start_line+1) . 
+            . ($start_line+1) .
             qq{does not terminate anywhere.}
         );
     }
@@ -153,7 +153,7 @@ sub _parse_desc_unit
             t => "Description",
             children => $self->_new_list(
             [
-                map { 
+                map {
                 $self->_new_para($_),
                 } @paragraphs
             ],),
@@ -251,7 +251,7 @@ sub _parse_inner_text
     {
         if (!defined(${$self->_next_line_ref()}))
         {
-            Carp::confess 
+            Carp::confess
             (
                 "End of file in an addressing paragraph starting at "
                 . ($start_line+1)
@@ -310,7 +310,7 @@ sub _find_next_inner_text
     if ($$l =~ m{\G\&})
     {
         $which_tag = "entity";
-    }                
+    }
     elsif ($$l =~ m{\G(?:</|\])})
     {
         $which_tag = "close";

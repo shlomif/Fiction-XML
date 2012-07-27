@@ -40,7 +40,7 @@ use Moose;
 extends("XML::Grammar::Fiction::FromProto::Node");
 
 has 'children' => (
-    isa => 'XML::Grammar::Fiction::FromProto::Node::List', 
+    isa => 'XML::Grammar::Fiction::FromProto::Node::List',
     is => 'rw'
 );
 

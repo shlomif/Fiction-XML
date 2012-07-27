@@ -9,7 +9,7 @@
  />
 
 <xsl:template match="/">
-        <xsl:apply-templates select="//sp:body" />  
+        <xsl:apply-templates select="//sp:body" />
 </xsl:template>
 
 <xsl:template match="sp:body">

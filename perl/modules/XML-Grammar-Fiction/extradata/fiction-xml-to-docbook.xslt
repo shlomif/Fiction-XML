@@ -10,7 +10,7 @@
  />
 
 <xsl:template match="/">
-        <xsl:apply-templates select="//fic:body" />  
+        <xsl:apply-templates select="//fic:body" />
 </xsl:template>
 
 <xsl:template match="fic:body">
@@ -47,7 +47,7 @@
                     <xsl:otherwise>
                         <xsl:value-of select="@xml:id" />
                     </xsl:otherwise>
-                </xsl:choose> 
+                </xsl:choose>
             </db:title>
         </db:info>
         <xsl:apply-templates select="fic:section|fic:blockquote|fic:p|fic:ol|fic:ul|fic:programlisting" />

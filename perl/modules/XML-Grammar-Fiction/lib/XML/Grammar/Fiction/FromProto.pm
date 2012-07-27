@@ -67,7 +67,7 @@ sub _output_tag_with_childs
 {
     my ($self, $args) = @_;
 
-    return 
+    return
         $self->_output_tag({
             %$args,
             'in' => sub {
@@ -306,7 +306,7 @@ sub _handle_elem_of_name_title
                 $self->_write_elem(
                     {
                         elem => $list,
-                    }                            
+                    }
                 ),
             },
         },
@@ -393,7 +393,7 @@ sub _write_scene
     my $scene = $args->{scene};
 
     my $tag = $scene->name;
-    
+
     if (($tag eq "s") || ($tag eq "scene"))
     {
         $self->_output_tag_with_childs_and_common_attributes(
@@ -423,7 +423,7 @@ sub _read_file
         $contents = <$in>;
     }
     close($in);
-    
+
     return $contents;
 }
 
@@ -458,7 +458,7 @@ sub _write_body
         @{$body->_get_childs()}
         ;
 
-    my @t = 
+    my @t =
     (
           defined($title)
         ? (title => $title->_get_childs()->[0])
@@ -485,9 +485,9 @@ sub convert
     # These should be un-commented for debugging.
     # local $::RD_HINT = 1;
     # local $::RD_TRACE = 1;
-    
+
     # We need this so P::RD won't skip leading whitespace at lines
-    # which are siginificant.  
+    # which are siginificant.
 
     my $tree = $self->_calc_tree($args);
 
@@ -498,7 +498,7 @@ sub convert
 
     my $buffer = "";
     my $writer = XML::Writer->new(
-        OUTPUT => \$buffer, 
+        OUTPUT => \$buffer,
         ENCODING => "utf-8",
         NAMESPACES => 1,
         PREFIX_MAP =>
@@ -520,7 +520,7 @@ sub convert
     $self->_write_body({body => $tree});
 
     $writer->endTag();
-    
+
     return $buffer;
 }
 

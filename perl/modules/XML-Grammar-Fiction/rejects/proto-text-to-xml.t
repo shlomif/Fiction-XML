@@ -27,7 +27,7 @@ sub load_xml
 }
 
 my $rngschema = XML::LibXML::RelaxNG->new(
-        location => "./extradata/fiction-xml.rng" 
+        location => "./extradata/fiction-xml.rng"
     );
 
 my @tests = (qw(
@@ -52,7 +52,7 @@ my $grammar = XML::Grammar::Screenplay::FromProto->new({
         parser_class => "XML::Grammar::Screenplay::FromProto::Parser::PRD",
     });
 
-my $dtd = 
+my $dtd =
     XML::LibXML::Dtd->new(
         "Screenplay XML 0.1.0",
         File::Spec->catfile(
@@ -82,7 +82,7 @@ foreach my $fn (@tests)
     my $dom = $xml_parser->parse_string($got_xml);
 
     # TEST*$num_texts
-    ok ($dom->validate($dtd), 
+    ok ($dom->validate($dtd),
         "Checking for validity of '$fn'"
     );
 
@@ -93,7 +93,7 @@ foreach my $fn (@tests)
     ok ((defined($code) && ($code == 0)),
         "The validation of '$fn' succeeded.") ||
         diag("\$@ == $@");
-    
+
 }
 
 1;

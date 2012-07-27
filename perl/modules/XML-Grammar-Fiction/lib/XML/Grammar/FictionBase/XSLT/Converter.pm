@@ -23,7 +23,7 @@ has 'xslt_transform_basename' => (is => 'ro', isa => 'Str', required => 1,);
 
 =head1 NAME
 
-XML::Grammar::FictionBase::XSLT::Converter - base module that converts an XML 
+XML::Grammar::FictionBase::XSLT::Converter - base module that converts an XML
 file to a different XML file using an XSLT transform.
 
 =head1 VERSION
@@ -62,7 +62,7 @@ sub BUILD
         XML::LibXML::RelaxNG->new(
             location =>
             File::Spec->catfile(
-                $self->_data_dir(), 
+                $self->_data_dir(),
                 $self->rng_schema_basename(),
             ),
         );
@@ -75,7 +75,7 @@ sub BUILD
 
     my $style_doc = $self->_xml_parser()->parse_file(
             File::Spec->catfile(
-                $self->_data_dir(), 
+                $self->_data_dir(),
                 $self->xslt_transform_basename(),
             ),
         );
@@ -101,13 +101,13 @@ sub BUILD
 
 Does the actual conversion. The C<'source'> argument points to a hash-ref with
 keys and values for the source. If C<'file'> is specified there it points to the
-filename to translate (currently the only available source). If 
+filename to translate (currently the only available source). If
 C<'string_ref'> is specified it points to a reference to a string, with the
 contents of the source XML. If C<'dom'> is specified then it points to an XML
 DOM as parsed or constructed by XML::LibXML.
 
-The C<'output'> key specifies the return value. A value of C<'string'> returns 
-the XML as a string, and a value of C<'dom'> returns the XML as an 
+The C<'output'> key specifies the return value. A value of C<'string'> returns
+the XML as a string, and a value of C<'dom'> returns the XML as an
 L<XML::LibXML> DOM object.
 
 =cut
@@ -130,7 +130,7 @@ sub _calc_and_ret_dom_without_validate
           exists($source->{'dom'})
         ? $source->{'dom'}
         : exists($source->{'string_ref'})
-        ? $self->_xml_parser()->parse_string(${$source->{'string_ref'}}) 
+        ? $self->_xml_parser()->parse_string(${$source->{'string_ref'}})
         : $self->_xml_parser()->parse_file($source->{'file'})
         ;
 }
@@ -139,7 +139,7 @@ sub _get_dom_from_source
 {
     my $self = shift;
     my $args = shift;
-  
+
     my $source_dom = $self->_calc_and_ret_dom_without_validate($args);
 
     my $ret_code;

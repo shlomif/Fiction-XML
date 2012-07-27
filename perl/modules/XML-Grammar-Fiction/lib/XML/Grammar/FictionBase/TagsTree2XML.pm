@@ -28,11 +28,11 @@ has '_parser_class' =>
 );
 
 has "_parser" => (
-    'isa' => "XML::Grammar::Fiction::FromProto::Parser", 
+    'isa' => "XML::Grammar::Fiction::FromProto::Parser",
     'is' => "rw",
     lazy => 1,
-    default => sub { 
-        my $self = shift; 
+    default => sub {
+        my $self = shift;
         return $self->_parser_class->new();
     },
 );
@@ -64,7 +64,7 @@ sub _write_Element_elem
         return;
     }
 }
-    
+
 sub _handle_elem_of_name_s
 {
     my ($self, $elem) = @_;

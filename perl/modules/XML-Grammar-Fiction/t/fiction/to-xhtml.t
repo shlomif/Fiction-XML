@@ -62,7 +62,7 @@ foreach my $fn (@tests)
     my $xpc = XML::LibXML::XPathContext->new();
     $xpc->registerNs('x', q{http://www.w3.org/1999/xhtml});
     $xpc->registerNs('db', q{http://docbook.org/ns/docbook});
-   
+
     # This is a closure that returns a closure (like shown in "On Lisp" :
     # http://www.paulgraham.com/onlisptext.html ) for a finder in
     # one of the documents
@@ -151,7 +151,7 @@ foreach my $fn (@tests)
     # TEST:$num_xhtml_top_titles=2;
     # TEST:$n=$num_texts*$num_xhtml_top_titles;
     foreach my $xpath (
-        q{//x:html/x:head/x:title}, 
+        q{//x:html/x:head/x:title},
         q{//x:html/x:body/x:div/x:h1},
     )
     {
@@ -169,7 +169,7 @@ foreach my $fn (@tests)
             "XHTML <title> has good content"
         );
     }
-    
+
     # TEST*$num_texts
     ok (
         (scalar(() = $xhtml_find->(q{//x:div}))
@@ -185,7 +185,7 @@ foreach my $fn (@tests)
         is (scalar(@elems), 1, "One element");
 
         # TEST*$num_texts
-        is ($elems[0]->textContent(), "The Top Section", 
+        is ($elems[0]->textContent(), "The Top Section",
             "<h2> element contains the right thing.");
     }
 
@@ -204,10 +204,10 @@ foreach my $fn (@tests)
             );
 
             # TEST*$num_with_styles
-            like ($elems[0]->toString(), qr{swear}, 
+            like ($elems[0]->toString(), qr{swear},
                 "Elem[0] is the right <b> tag."
             );
-            
+
             @elems = $xhtml_find->(q{//x:div/x:p/x:i});
             # TEST*$num_with_styles
             is (
@@ -217,7 +217,7 @@ foreach my $fn (@tests)
             );
 
             # TEST*$num_with_styles
-            like ($elems[0]->toString(), qr{David}, 
+            like ($elems[0]->toString(), qr{David},
                 "<i>[0] contains the right contents."
             );
         }
@@ -234,10 +234,10 @@ foreach my $fn (@tests)
             );
 
             # TEST*$num_with_styles
-            is ($elems[0]->textContent(), "swear", 
+            is ($elems[0]->textContent(), "swear",
                 "Elem[0] is the right <emphasis role=bold> tag."
             );
-            
+
             @elems = $db_find->(
                 q{//db:article//db:section/db:para/db:emphasis[not(@role)]}
             );
@@ -249,7 +249,7 @@ foreach my $fn (@tests)
             );
 
             # TEST*$num_with_styles
-            is ($elems[0]->textContent(), "David", 
+            is ($elems[0]->textContent(), "David",
                 "<i>[0] contains the right contents.",
             );
         }
@@ -269,7 +269,7 @@ foreach my $fn (@tests)
             );
 
             # TEST*$num_with_styles
-            is ($elems[0]->textContent(), "Goliath's Response", 
+            is ($elems[0]->textContent(), "Goliath's Response",
                 "title#goliath contains the right content.",
             );
         }

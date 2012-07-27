@@ -8,7 +8,7 @@
     <title>The Top Section</title>
     <!-- David has Green hair here -->
     <p>
-    King <span xlink:href="http://en.wikipedia.org/wiki/David" xml:id="david_link" xml:lang="es">David</span> and Goliath were standing by each other.    
+    King <span xlink:href="http://en.wikipedia.org/wiki/David" xml:id="david_link" xml:lang="es">David</span> and Goliath were standing by each other.
     </p>
     <p>
     David said unto Goliath: "I will shoot you. I <b>swear</b> I will"

@@ -22,7 +22,7 @@ use Exception::Class
         "XML::Grammar::Fiction::Err::Base",
         "XML::Grammar::Fiction::Err::Parse::TagsMismatch" =>
         {
-            isa => "XML::Grammar::Fiction::Err::Base", 
+            isa => "XML::Grammar::Fiction::Err::Base",
             fields => [qw(opening_tag closing_tag)],
         },
         "XML::Grammar::Fiction::Err::Parse::LineError" =>
@@ -33,7 +33,7 @@ use Exception::Class
         "XML::Grammar::Fiction::Err::Parse::LeadingSpace" =>
         {
             isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        },        
+        },
         "XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag" =>
         {
             isa => "XML::Grammar::Fiction::Err::Parse::LineError",
