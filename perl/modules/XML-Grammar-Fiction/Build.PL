@@ -54,7 +54,7 @@ my $builder = XML::Grammar::Fiction::Builder->new(
     {
         resources =>
         {
-            repository => "https://svn.berlios.de/svnroot/repos/web-cpan/XML-Grammar-Fiction/",
+            repository => "https://bitbucket.org/shlomif/fiction-xml",
             homepage => "http://www.shlomifish.org/open-source/projects/XML-Grammar/Fiction/",
         },
         keywords =>
