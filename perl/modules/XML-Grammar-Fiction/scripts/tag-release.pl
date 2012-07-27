@@ -16,13 +16,10 @@ if (!defined ($version))
     die "Version is undefined!";
 }
 
-my $mini_repos_base = 'https://svn.berlios.de/svnroot/repos/web-cpan/XML-Grammar-Fiction';
-
 my @cmd = (
-    "svn", "copy", "-m",
+    "hg", "tag", "-m",
     "Tagging the XML-Grammar-Fiction release as $version",
-    "$mini_repos_base/trunk",
-    "$mini_repos_base/tags/releases/$version",
+    "releases/XML-Grammar-Fiction/$version",
 );
 
 print join(" ", map { /\s/ ? qq{"$_"} : $_ } @cmd), "\n";
