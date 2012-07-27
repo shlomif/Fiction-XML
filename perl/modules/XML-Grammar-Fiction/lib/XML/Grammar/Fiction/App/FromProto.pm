@@ -77,11 +77,11 @@ sub run
     if ($e = Exception::Class->caught("XML::Grammar::Fiction::Err::Parse::TagsMismatch"))
     {
         warn $e->error(), "\n";
-        warn "Open: ", $e->opening_tag->name(), 
+        warn "Open: ", $e->opening_tag->name(),
             " at line ", $e->opening_tag->line(), "\n"
             ;
-        warn "Close: ", 
-            $e->closing_tag->name(), " at line ", 
+        warn "Close: ",
+            $e->closing_tag->name(), " at line ",
             $e->closing_tag->line(), "\n";
 
         exit(-1);

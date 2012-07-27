@@ -34,10 +34,10 @@ Internal - (to settle pod-coverage.).
 =head2 $converter->translate_to_tei({source => {file => $filename}, output => "string" })
 
 Does the actual conversion. $filename is the filename to translate (currently
-the only available source). 
+the only available source).
 
-The C<'output'> key specifies the return value. A value of C<'string'> returns 
-the XML as a string, and a value of C<'xml'> returns the XML as an 
+The C<'output'> key specifies the return value. A value of C<'string'> returns
+the XML as a string, and a value of C<'xml'> returns the XML as an
 L<XML::LibXML> DOM object.
 
 =cut

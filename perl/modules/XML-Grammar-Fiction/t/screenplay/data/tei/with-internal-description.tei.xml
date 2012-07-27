@@ -9,8 +9,8 @@
           <tei:head>david_and_goliath</tei:head>
           <tei:stage>
             <tei:p>
-                David and 
-                <tei:ref target="http://en.wikipedia.org/wiki/Goliath">Goliath</tei:ref> 
+                David and
+                <tei:ref target="http://en.wikipedia.org/wiki/Goliath">Goliath</tei:ref>
                 are standing by each other.
             </tei:p>
         </tei:stage>
@@ -29,8 +29,8 @@
                 yes way!
             </tei:p>
             <tei:p>
-                In the name of <tei:ref target="http://real-allah.tld/">Allah, the <tei:hi rend="bold">merciful</tei:hi>, real merciful</tei:ref>, I will show you the 
-                <tei:stage>[sarcastically]</tei:stage> power 
+                In the name of <tei:ref target="http://real-allah.tld/">Allah, the <tei:hi rend="bold">merciful</tei:hi>, real merciful</tei:ref>, I will show you the
+                <tei:stage>[sarcastically]</tei:stage> power
                 of my sling.
             </tei:p>
             <tei:p>

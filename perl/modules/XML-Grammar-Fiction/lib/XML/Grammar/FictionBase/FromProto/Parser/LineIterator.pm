@@ -134,7 +134,7 @@ sub curr_line_and_pos
 
 =head2 my $line_copy_ref = $self->curr_line_copy()
 
-Returns a reference to a copy of the current line that is allowed to be 
+Returns a reference to a copy of the current line that is allowed to be
 tempered with (by assigning to pos() or in a different way.). The line is
 returned as a reference so to avoid destroying its pos() value.
 
@@ -161,7 +161,7 @@ sub curr_line_copy
     my $l = ${$self->curr_line_ref()} . "";
 
     pos($l) = $self->curr_pos();
-    
+
     return \$l;
 }
 
@@ -220,8 +220,8 @@ sub skip_multiline_space
 
 =head2 $self->curr_line_continues_with($regex)
 
-Matches the current line with $regex starting from the current position and 
-returns the result. The position remains at the original position if the 
+Matches the current line with $regex starting from the current position and
+returns the result. The position remains at the original position if the
 regular expression does not match (using C< qr//cg >).
 
 =cut
@@ -237,12 +237,12 @@ sub curr_line_continues_with
 
 =head2 my $line_number = $self->line_idx()
 
-Returns the line index as an integer. It starts from 0 for the 
+Returns the line index as an integer. It starts from 0 for the
 first line (like in Perl lines.)
 
 =head2 my $line_number = $self->line_num()
 
-Returns the line number as an integer. It starts from 1 for the 
+Returns the line number as an integer. It starts from 1 for the
 first line (like in file lines.)
 
 =cut
@@ -319,7 +319,7 @@ sub consume_up_to
         # use of the variable.
         my $verdict = ($$l =~ m[\G(.*?)((?:${match_regex})|\z)]cgms);
         $return_value .= $1;
-        
+
         # Find if it matched the regex.
         if (length($2) > 0)
         {

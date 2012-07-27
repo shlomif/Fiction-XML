@@ -51,7 +51,7 @@ my $grammar = XML::Grammar::Fiction::FromProto->new({
     });
 
 my $rngschema = XML::LibXML::RelaxNG->new(
-        location => "./extradata/fiction-xml.rng" 
+        location => "./extradata/fiction-xml.rng"
     );
 
 my $xml_parser = XML::LibXML->new();

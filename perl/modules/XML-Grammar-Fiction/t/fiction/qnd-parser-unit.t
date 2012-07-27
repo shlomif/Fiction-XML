@@ -44,7 +44,7 @@ EOF
     my $ret = $parser->consume(qr{[^<]});
 
     # TEST
-    is ($ret, "Hello\nvoila the row kala:\n", 
+    is ($ret, "Hello\nvoila the row kala:\n",
         "consume works for several lines");
 }
 
@@ -65,7 +65,7 @@ EOF
     my $ret = $parser->_parse_opening_tag();
 
     # TEST
-    is_deeply ($ret, 
+    is_deeply ($ret,
         {
             name => "s",
             is_standalone => 0,

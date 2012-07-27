@@ -92,7 +92,7 @@ after '_push_tag' => sub {
     {
         Carp::confess (qq{Two sayings in the tags stack at the same time.});
     }
-    
+
     return;
 };
 
@@ -137,7 +137,7 @@ sub _detect_closing_desc_tag
 around '_parse_closing_tag' => sub {
     my ($orig, $self) = @_;
 
-    return 
+    return
         $self->_detect_closing_desc_tag
         ? $self->_create_closing_desc_tag
         : $self->$orig();
@@ -182,7 +182,7 @@ around '_parse_opening_tag' => sub {
 
     $self->_set_is_start;
 
-    return 
+    return
         $self->_detect_open_desc_tag
         ? $self->_create_open_desc_tag
         : $self->$orig();
@@ -202,7 +202,7 @@ sub _parse_speech_unit
     if ($sayer =~ m{[\[\]]})
     {
         Carp::confess("Tried to put an inner-desc inside an addressing at line " . $self->line_num());
-    }    
+    }
 
     # All pluses
     if ($sayer =~ m{\A\++\z})
@@ -262,7 +262,7 @@ sub _look_for_tag_opener
 }
 
 
-sub _is_closing_tag { 
+sub _is_closing_tag {
     my $self = shift;
     my $tag_start = shift;
 
@@ -296,7 +296,7 @@ sub _generate_non_tag_text_event
         );
         $in_para = 0;
     }
-    
+
     if ( $is_saying && $self->_in_saying())
     {
         $self->_enqueue_event(
@@ -363,9 +363,9 @@ sub _handle_close_saying
     # This is an assert.
     if ($open->name() ne "saying")
     {
-        Carp::confess (qq{Not a saying tag.});    
+        Carp::confess (qq{Not a saying tag.});
     }
-    
+
     my $new_elem =
         $self->_new_saying(
             (List::Util::first
@@ -538,7 +538,7 @@ after '_handle_open_tag' => sub {
     return;
 };
 
-before '_handle_close_tag' => sub { 
+before '_handle_close_tag' => sub {
     my $self = shift;
 
     $self->_close_top_tags();

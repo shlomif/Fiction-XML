@@ -149,7 +149,7 @@ sub _list_valid_tag_events
     return [qw(para)];
 }
 
-before '_handle_close_tag' => sub { 
+before '_handle_close_tag' => sub {
     my $self = shift;
 
     $self->skip_space();

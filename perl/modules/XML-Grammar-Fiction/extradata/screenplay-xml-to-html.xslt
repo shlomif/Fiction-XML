@@ -10,7 +10,7 @@
  />
 
 <xsl:template match="/">
-        <xsl:apply-templates select="//sp:body" />  
+        <xsl:apply-templates select="//sp:body" />
 </xsl:template>
 
 <xsl:template match="sp:body">
@@ -64,7 +64,7 @@
 <xsl:template match="sp:para">
     <p>
         <xsl:if test="local-name(..) = 'saying'">
-            <strong class="sayer"><xsl:value-of select="../@character" />:</strong> 
+            <strong class="sayer"><xsl:value-of select="../@character" />:</strong>
             <xsl:text> </xsl:text>
         </xsl:if>
         <xsl:if test="local-name(..) = 'description' and ../child::sp:para[position()=1] = .">

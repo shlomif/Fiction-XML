@@ -12,7 +12,7 @@ use XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
     # Project Gutenberg - The Adventures of Sherlock Holmes by
     # Sir Arthur Conan Doyle.
     # http://www.gutenberg.org/files/1661/1661-h/1661-h.htm#2
-    my $text = <<"EOF"; 
+    my $text = <<"EOF";
 I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of
 last year and found him in deep conversation with a very stout,
 florid-faced, elderly gentleman with fiery red hair. With an apology for my
@@ -77,7 +77,7 @@ and pulled a dirty and wrinkled newspaper from the inside pocket of his
 greatcoat. As he glanced down the advertisement column, with his head thrust
 forward and the paper flattened out upon his knee, I took a good look at the
 man and endeavoured, after the fashion of my companion, to read the indications
-which might be presented by his dress or appearance. 
+which might be presented by his dress or appearance.
 
 EOF
 
@@ -101,14 +101,14 @@ EOF
     is ($parser->curr_pos(), 0, "->pos() returns the right value.");
 
     # TEST
-    ok (scalar($parser->at_line_start()), 
+    ok (scalar($parser->at_line_start()),
         "Parser is at line start.");
 
     {
         my ($l_ref, $pos) = $parser->curr_line_and_pos();
 
         # TEST
-        is ($$l_ref, 
+        is ($$l_ref,
             qq{I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of\n},
             "Line ref of ->curr_line_and_pos() is OK."
         );

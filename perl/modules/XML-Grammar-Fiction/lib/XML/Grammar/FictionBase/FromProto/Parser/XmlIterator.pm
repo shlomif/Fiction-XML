@@ -31,7 +31,7 @@ has "_events_queue" =>
 (
     isa => "ArrayRef[XML::Grammar::FictionBase::Event]",
     # isa => "ArrayRef",
-    is => "rw", 
+    is => "rw",
     default => sub { []; },
     traits => ['Array'],
     handles =>
@@ -102,7 +102,7 @@ sub _new_node
     my $args = shift;
 
     # t == type
-    my $class = 
+    my $class =
         "XML::Grammar::Fiction::FromProto::Node::"
         . delete($args->{'t'})
         ;
@@ -122,7 +122,7 @@ sub _create_elem
         $self->_new_node(
             {
                 t => (
-                    $open->name() eq "desc" ? "Description" 
+                    $open->name() eq "desc" ? "Description"
                     : $open->name() eq "innerdesc" ? "InnerDesc"
                     : "Element"
                 ),
@@ -291,7 +291,7 @@ sub _parse_opening_tag
             "Cannot match the \">\" of the opening tag",
         );
     }
-    
+
     return XML::Grammar::Fiction::Struct::Tag->new(
         name => $id,
         is_standalone => $is_standalone,
@@ -464,9 +464,9 @@ sub _merge_tag
     my $self = shift;
     my $open_tag = shift;
 
-    my $new_elem = 
+    my $new_elem =
         $self->_create_elem(
-            $open_tag, 
+            $open_tag,
             $self->_new_list($open_tag->detach_children()),
         );
 
@@ -617,7 +617,7 @@ sub _parse_text_unit
     }
 }
 
-sub _flush_events 
+sub _flush_events
 {
     my $self = shift;
 
@@ -663,7 +663,7 @@ sub _look_for_tag_opener
     }
 }
 
-sub _is_closing_tag { 
+sub _is_closing_tag {
     my $self = shift;
     my $tag_start = shift;
 
@@ -732,7 +732,7 @@ sub _handle_open_tag
 sub _generate_text_unit_events
 {
     my $self = shift;
-    
+
     # $self->skip_multiline_space();
 
     if (! $self->_generate_tag_event())
@@ -783,7 +783,7 @@ sub _assert_not_eof
     {
         Carp::confess (qq{Reached EOF.});
     }
-    
+
     return;
 }
 
@@ -806,7 +806,7 @@ sub _main_loop_iter
 sub _attempt_to_calc_new_ret_tag
 {
     my $self = shift;
-    
+
     $self->_ret_tag(scalar($self->_look_for_and_handle_tag()));
 
     return;
@@ -845,7 +845,7 @@ B<TODO:> write one.
 
 =head1 DESCRIPTION
 
-This is a line iterator with some features for parsing, nested, 
+This is a line iterator with some features for parsing, nested,
 XML-like grammars.
 
 =head1 METHODS
@@ -857,7 +857,7 @@ Processes the text and returns the parse tree.
 =cut
 
 sub process_text
-{   
+{
     my ($self, $text) = @_;
 
     $self->setup_text($text);

@@ -7,7 +7,7 @@ use Moose;
 
 =head1 NAME
 
-XML::Grammar::Screenplay::Struct::Tag - information about an XML/SGML opening or 
+XML::Grammar::Screenplay::Struct::Tag - information about an XML/SGML opening or
 closing tag.
 
 B<For internal use only>.
@@ -25,7 +25,7 @@ has 'line' => (is => "rw", isa => "Int");
 has 'is_standalone' => (is => "rw", isa => "Bool");
 has 'attrs' => (is => "rw", isa => "ArrayRef");
 has 'children' => (
-    is => "rw", 
+    is => "rw",
     isa => "Maybe[ArrayRef]",
 );
 

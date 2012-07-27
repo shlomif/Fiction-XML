@@ -11,7 +11,7 @@ use Config;
 {
     local %ENV = %ENV;
     my @p5lib = split($Config{'path_sep'}, $ENV{'PERL5LIB'});
-    $ENV{'PERL5LIB'} = join($Config{'path_sep'}, 
+    $ENV{'PERL5LIB'} = join($Config{'path_sep'},
         File::Spec->rel2abs(
             File::Spec->catdir(
                 File::Spec->curdir(),
@@ -25,7 +25,7 @@ use Config;
             "-e", "run()",
             "--",
             "-o", "temp.xhtml",
-            File::Spec->catdir(File::Spec->curdir(), 
+            File::Spec->catdir(File::Spec->curdir(),
                 "t", "fiction", "data", "xml", "sections-and-paras.xml",
             )
         ),

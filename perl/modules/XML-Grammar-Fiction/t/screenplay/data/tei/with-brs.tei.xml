@@ -9,8 +9,8 @@
           <tei:head>david_and_goliath</tei:head>
           <tei:stage>
             <tei:p>
-                David and 
-                <tei:ref target="http://en.wikipedia.org/wiki/Goliath">Goliath</tei:ref> 
+                David and
+                <tei:ref target="http://en.wikipedia.org/wiki/Goliath">Goliath</tei:ref>
                 are standing by each other.
             </tei:p>
         </tei:stage>

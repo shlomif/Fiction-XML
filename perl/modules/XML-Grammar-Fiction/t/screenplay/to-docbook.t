@@ -46,7 +46,7 @@ foreach my $fn (@tests)
         );
 
     # TEST*$num_texts*2
-    
+
     my $parser = XML::LibXML->new();
 
     my $doc = $parser->parse_string($docbook_text);

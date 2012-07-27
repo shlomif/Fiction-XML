@@ -146,11 +146,11 @@ desc_unit: /^\[/ms desc_unit_inner /\]\s*$/ms para_sep {
         my $paragraphs = $item[2];
 
         XML::Grammar::Screenplay::FromProto::Node::Description->new(
-            children => 
+            children =>
                 XML::Grammar::Screenplay::FromProto::Node::List->new(
                     contents =>
                 [
-                map { 
+                map {
                 XML::Grammar::Screenplay::FromProto::Node::Paragraph->new(
                     children =>
                         XML::Grammar::Screenplay::FromProto::Node::List->new(
@@ -204,7 +204,7 @@ EOF
 }
 
 sub process_text
-{   
+{
     my ($self, $text) = @_;
 
     my $rv = $self->_p_rd()->start($text);

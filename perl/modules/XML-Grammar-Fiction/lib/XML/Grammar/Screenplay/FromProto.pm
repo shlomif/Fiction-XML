@@ -38,7 +38,7 @@ sub _init
 
     local $Parse::RecDescent::skip = "";
 
-    my $parser_class = 
+    my $parser_class =
         ($args->{parser_class} || "XML::Grammar::Screenplay::FromProto::Parser::QnD");
 
     $self->_parser(
@@ -72,7 +72,7 @@ sub _output_tag_with_childs
 {
     my ($self, $args) = @_;
 
-    return 
+    return
         $self->_output_tag({
             %$args,
             'in' => sub {
@@ -195,7 +195,7 @@ sub _write_scene
     my $scene = $args->{scene};
 
     my $tag = $scene->name;
-    
+
     if (($tag eq "s") || ($tag eq "scene"))
     {
         my $id = $scene->lookup_attr("id");
@@ -236,7 +236,7 @@ sub _read_file
         $contents = <$in>;
     }
     close($in);
-    
+
     return $contents;
 }
 
@@ -257,9 +257,9 @@ sub convert
     # These should be un-commented for debugging.
     # local $::RD_HINT = 1;
     # local $::RD_TRACE = 1;
-    
+
     # We need this so P::RD won't skip leading whitespace at lines
-    # which are siginificant.  
+    # which are siginificant.
 
     my $tree = $self->_calc_tree($args);
 
@@ -270,9 +270,9 @@ sub convert
 
     my $buffer = "";
     $self->_buffer(\$buffer);
-    
+
     my $writer = XML::Writer->new(
-        OUTPUT => $self->_buffer(), 
+        OUTPUT => $self->_buffer(),
         ENCODING => "utf-8",
         NAMESPACES => 1,
         PREFIX_MAP =>
@@ -296,7 +296,7 @@ sub convert
     $writer->endTag();
 
     $writer->endTag();
-    
+
     return ${$self->_buffer()};
 }
 

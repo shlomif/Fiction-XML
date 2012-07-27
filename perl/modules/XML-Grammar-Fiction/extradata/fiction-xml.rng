@@ -27,7 +27,7 @@
         <optional>
             <attribute name="xml:id">
                 <data type="ID"/>
-            </attribute>            
+            </attribute>
         </optional>
         <optional>
             <attribute name="xml:lang">

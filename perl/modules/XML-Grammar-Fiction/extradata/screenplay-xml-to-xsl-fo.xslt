@@ -7,7 +7,7 @@
 <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" />
 
 <xsl:template match="/">
-        <xsl:apply-templates select="//body" />  
+        <xsl:apply-templates select="//body" />
 </xsl:template>
 
 <xsl:template match="body">
@@ -22,7 +22,7 @@
             </fo:layout-master-set>
             <fo:page-sequence master-reference="A4">
                 <fo:flow flow-name="xsl-region-body">
-                    <xsl:apply-templates select="scene" />        
+                    <xsl:apply-templates select="scene" />
                 </fo:flow>
             </fo:page-sequence>
     </fo:root>
@@ -63,7 +63,7 @@
 <xsl:template match="para">
     <p>
         <xsl:if test="local-name(..) = 'saying'">
-            <strong class="sayer"><xsl:value-of select="../@character" />:</strong> 
+            <strong class="sayer"><xsl:value-of select="../@character" />:</strong>
             <xsl:text> </xsl:text>
         </xsl:if>
         <xsl:if test="local-name(..) = 'description' and ../child::para[position()=1] = .">
