@@ -3,7 +3,7 @@ package XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
 use strict;
 use warnings;
 
-use Moose;
+use Mouse;
 
 use XML::Grammar::Fiction::Err;
 
@@ -380,7 +380,7 @@ sub eof
 
 =head2 $self->meta()
 
-Leftover from Moose.
+Leftover from Mouse.
 
 =head1 AUTHOR
 

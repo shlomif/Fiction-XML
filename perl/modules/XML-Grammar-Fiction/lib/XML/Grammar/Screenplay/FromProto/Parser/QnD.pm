@@ -3,7 +3,7 @@ package XML::Grammar::Screenplay::FromProto::Parser::QnD;
 use strict;
 use warnings;
 
-use Moose;
+use Mouse;
 
 extends( 'XML::Grammar::FictionBase::FromProto::Parser::XmlIterator' );
 
@@ -614,7 +614,7 @@ Processes the text and returns the parse tree.
 
 =head2 $self->meta()
 
-Leftover from Moose.
+Leftover from Mouse.
 
 =head1 AUTHOR
 

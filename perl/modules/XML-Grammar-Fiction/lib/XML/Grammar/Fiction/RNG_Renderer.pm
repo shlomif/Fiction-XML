@@ -13,7 +13,7 @@ For internal use.
 
 =cut
 
-use Moose;
+use Mouse;
 
 extends ("XML::Grammar::FictionBase::XSLT::Converter");
 

@@ -1,6 +1,6 @@
 package XML::Grammar::Screenplay::XSLT::Base;
 
-use Moose;
+use Mouse;
 
 extends('XML::Grammar::FictionBase::XSLT::Converter');
 

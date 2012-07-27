@@ -3,7 +3,7 @@ package XML::Grammar::Screenplay::ToTEI;
 use strict;
 use warnings;
 
-use Moose;
+use Mouse;
 
 extends('XML::Grammar::Screenplay::XSLT::Base');
 

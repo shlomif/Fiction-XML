@@ -3,7 +3,9 @@ package XML::Grammar::Fiction::Struct::Tag;
 use strict;
 use warnings;
 
-use Moose;
+use Mouse;
+
+use List::MoreUtils;
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
@@ -66,7 +68,7 @@ sub detach_children
 
 package XML::Grammar::Fiction::Struct::Tag::Para;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::Struct::Tag");
 
