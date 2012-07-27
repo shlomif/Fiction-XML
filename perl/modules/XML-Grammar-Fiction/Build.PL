@@ -28,7 +28,7 @@ my $builder = XML::Grammar::Fiction::Builder->new(
         'XML::LibXML' => 0,
         'XML::SemanticDiff' => '1.0000',
     },
-    requires => 
+    requires =>
     {
         'autodie' => 0,
         'Carp' => 0,
