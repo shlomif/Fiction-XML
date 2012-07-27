@@ -8,7 +8,7 @@ use Carp;
 use HTML::Entities ();
 use XML::Writer;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
 

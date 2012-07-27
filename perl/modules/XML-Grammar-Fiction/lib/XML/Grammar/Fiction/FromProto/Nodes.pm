@@ -20,7 +20,7 @@ our $VERSION = '0.8.1';
 
 package XML::Grammar::Fiction::FromProto::Node;
 
-use Moose;
+use Mouse;
 
 sub _short_isa
 {
@@ -35,7 +35,7 @@ sub _short_isa
 
 package XML::Grammar::Fiction::FromProto::Node::WithContent;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node");
 
@@ -55,7 +55,7 @@ sub _get_childs
 
 package XML::Grammar::Fiction::FromProto::Node::Element;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
@@ -81,7 +81,7 @@ sub lookup_attr
 
 package XML::Grammar::Fiction::FromProto::Node::List;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node");
 
@@ -89,7 +89,7 @@ has 'contents' => (isa => "ArrayRef", is => "rw");
 
 package XML::Grammar::Fiction::FromProto::Node::Text;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
@@ -102,7 +102,7 @@ sub get_text
 
 package XML::Grammar::Fiction::FromProto::Node::Saying;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node::Text");
 
@@ -110,19 +110,19 @@ has 'character' => (isa => "Str", is => "rw");
 
 package XML::Grammar::Fiction::FromProto::Node::Description;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node::Text");
 
 package XML::Grammar::Fiction::FromProto::Node::Paragraph;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node::Element");
 
 package XML::Grammar::Fiction::FromProto::Node::InnerDesc;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node::Element");
 
@@ -133,7 +133,7 @@ sub name
 
 package XML::Grammar::Fiction::FromProto::Node::Comment;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::Fiction::FromProto::Node");
 

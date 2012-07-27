@@ -1,6 +1,6 @@
 package XML::Grammar::Screenplay::ToDocBook;
 
-use Moose;
+use Mouse;
 
 extends('XML::Grammar::Screenplay::XSLT::Base');
 

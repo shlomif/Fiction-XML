@@ -11,7 +11,7 @@ use File::ShareDir ':ALL';
 use XML::LibXML;
 use XML::LibXSLT;
 
-use Moose;
+use Mouse;
 
 has '_data_dir' => (isa => 'Str', is => 'rw');
 has '_data_dir_from_input' => (isa => 'Str', is => 'rw', init_arg => 'data_dir',);

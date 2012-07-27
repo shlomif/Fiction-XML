@@ -5,7 +5,7 @@ use warnings;
 
 use Carp;
 
-use Moose;
+use Mouse;
 
 extends ("XML::Grammar::Fiction::RNG_Renderer");
 

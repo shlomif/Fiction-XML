@@ -3,7 +3,7 @@ package XML::Grammar::FictionBase::FromProto::Parser::XmlIterator;
 use strict;
 use warnings;
 
-use Moose;
+use Mouse;
 
 use XML::Grammar::Fiction::Err;
 use XML::Grammar::Fiction::Struct::Tag;
@@ -867,7 +867,7 @@ sub process_text
 
 =head2 $self->meta()
 
-Leftover from Moose.
+Leftover from Mouse.
 
 =head1 AUTHOR
 

@@ -8,7 +8,7 @@ B<For internal use only>.
 
 =cut
 
-use Moose;
+use Mouse;
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
@@ -54,7 +54,7 @@ Returns true if the $event 's type is either "open" or "close".
 
 =head2 $self->meta()
 
-Leftover from Moose.
+Leftover from Mouse.
 
 =head1 AUTHOR
 

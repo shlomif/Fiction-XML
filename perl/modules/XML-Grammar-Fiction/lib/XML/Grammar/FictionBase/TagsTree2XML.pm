@@ -1,6 +1,6 @@
 package XML::Grammar::FictionBase::TagsTree2XML;
 
-use Moose;
+use Mouse;
 
 use XML::Writer;
 use HTML::Entities ();
@@ -38,8 +38,6 @@ has "_parser" => (
 );
 
 has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
-
-has '_buffer' => ('isa' => "ScalarRef[Str]", is => "rw");
 
 sub _write_Element_elem
 {

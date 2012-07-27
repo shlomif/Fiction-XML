@@ -2,7 +2,7 @@ package XML::Grammar::Screenplay::FromProto;
 
 use XML::Writer;
 
-use Moose;
+use Mouse;
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
 
@@ -53,8 +53,6 @@ sub _init
 Converts the file $path_to_file to XML and returns it.
 
 =cut
-
-use Data::Dumper;
 
 sub _output_tag
 {
@@ -249,6 +247,8 @@ sub _calc_tree
 
     return $self->_parser->process_text($self->_read_file($filename));
 }
+
+has '_buffer' => (is => "rw");
 
 sub convert
 {
