@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+0.9.1       Fri 27 Jul 21:40:10 IDT 2012
+    * Update the link to the repository in META.yml/META.json.
+
 0.9.0       Fri 27 Jul 09:20:42 IDT 2012
     * Add t/style-trailing-space.t to check for trailing space.
         - Got rid of trailing space.
