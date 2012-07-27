@@ -6,7 +6,7 @@ lines. Currently, they are processed as they are, without generating an error.
 This will allow a friendlier diagnostic. Carp::confess was implemented due to
 laziness on the programmers' part.
 
-* ::Fiction : add a feature for a formatting tag at the beginning of a 
+* ::Fiction : add a feature for a formatting tag at the beginning of a
 paragraph, that will not be mistaken for a top-level tag:
 
 [QUOTE]
@@ -28,7 +28,7 @@ paragraph, that will not be mistaken for a top-level tag:
 * Make the ::Screenplay exceptions contain the opening line closing line
 and generally more context (currently they are guess-work).
 
-* ::Screenplay - Fix the innerdesc on the start of the line in the middle of 
+* ::Screenplay - Fix the innerdesc on the start of the line in the middle of
 the paragraph. Like:
 
 -----------------
