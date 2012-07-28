@@ -38,6 +38,7 @@ my $builder = XML::Grammar::Fiction::Builder->new(
         'File::ShareDir' => 0,
         'Getopt::Long' => 0,
         'HTML::Entities' => 0,
+        'List::MoreUtils' => 0,
         'List::Util' => 0,
         'Mouse' => 0,
         'Mouse::Meta::Attribute::Custom::Trait::Array' => 0,
