@@ -1,5 +1,10 @@
 Revision history for XML-Grammar-Fiction.
 
+0.9.2       Sat 28 Jul 11:27:22 IDT 2012
+    * Add List::MoreUtils to the dependencies.
+        - Some build failures at:
+            - http://www.cpantesters.org/cpan/report/add74ed0-d84a-11e1-9066-3d54fb7543f5
+
 0.9.1       Fri 27 Jul 21:40:10 IDT 2012
     * Update the link to the repository in META.yml/META.json.
 
