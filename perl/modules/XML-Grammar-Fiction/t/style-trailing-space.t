@@ -7,7 +7,7 @@ use autodie;
 
 use Test::More;
 
-eval "use File::Find::Object::Rule";
+eval "use File::Find::Object::Rule 0.0301";
 if ($@)
 {
     plan skip_all => "File::Find::Object::Rule required for trailing space test.";
