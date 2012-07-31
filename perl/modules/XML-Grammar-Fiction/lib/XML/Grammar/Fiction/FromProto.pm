@@ -25,11 +25,11 @@ text representing prose to an XML format.
 
 =head1 VERSION
 
-Version 0.9.2
+Version 0.9.3
 
 =cut
 
-our $VERSION = '0.9.2';
+our $VERSION = '0.9.3';
 
 =head2 new()
 

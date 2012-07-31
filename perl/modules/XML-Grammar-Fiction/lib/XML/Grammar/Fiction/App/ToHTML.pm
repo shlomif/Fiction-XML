@@ -19,11 +19,11 @@ Fiction-XML file to HTML
 
 =head1 VERSION
 
-Version 0.9.2
+Version 0.9.3
 
 =cut
 
-our $VERSION = '0.9.2';
+our $VERSION = '0.9.3';
 
 =head1 SYNOPSIS
 
