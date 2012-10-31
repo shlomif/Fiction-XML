@@ -31,9 +31,9 @@ fiction (= stories, novels, novellas, etc.). What it does is:
 
 =over 4
 
-=item 1. Converting a well-formed plain text format to a specialized XML format.
+=item 1. Convert a well-formed plain text format to a specialized XML format.
 
-=item 2. Converting the XML to DocBook/XML or directly to HTML for rendering.
+=item 2. Convert the XML to DocBook/XML or directly to HTML for rendering.
 
 =back
 
@@ -169,9 +169,17 @@ Examples can be found in the C<t/data> directory, and here:
 
 =over 4
 
-=item * The Pope Died on Sunday
+=item * The Pope Died on Sunday (Hebrew version)
 
 L<http://www.shlomifish.org/humour/Pope/>
+
+=item * The Enemy and How I Helped to Fight it (Hebrew version)
+
+L<http://www.shlomifish.org/humour/TheEnemy/>
+
+=item * The Human Hacking Field Guide (Hebrew version)
+
+L<http://www.shlomifish.org/humour/human-hacking/>
 
 =back
 
@@ -213,6 +221,10 @@ You can also look for information at:
 
 =over 4
 
+=item * XML-Grammar-Fiction’s Homepage
+
+L<http://www.shlomifish.org/open-source/projects/XML-Grammar/Fiction/>
+
 =item * AnnoCPAN: Annotated CPAN documentation
 
 L<http://annocpan.org/dist/XML-Grammar-Fiction>
@@ -224,6 +236,10 @@ L<http://cpanratings.perl.org/d/XML-Grammar-Fiction>
 =item * RT: CPAN's request tracker
 
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-Grammar-Fiction>
+
+=item * MetaCPAN
+
+L<https://metacpan.org/release/XML-Grammar-Fiction>
 
 =item * Search CPAN
 
