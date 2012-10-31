@@ -1,5 +1,7 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Add more links to the XML::Grammar::Fiction's perldoc.
+
 0.9.3       Tue 31 Jul 09:22:01 IDT 2012
     * Add an explicit version of 0.0301 to File::Find::Object::Rule .
         - With lower versions tests fail.
