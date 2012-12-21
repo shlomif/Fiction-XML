@@ -72,7 +72,7 @@ sub ACTION_tags
         system(qw(
             ctags -f tags --recurse --totals
     		--exclude=blib/** --exclude=t/lib/**
-    		--exclude=.svn --exclude='*~'
+    		--exclude=.svn --exclude=*~
     		--languages=Perl --langmap=Perl:+.t
     ));
 }
