@@ -8,7 +8,7 @@ B<For internal use only>.
 
 =cut
 
-use Mouse;
+use MooX 'late';
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
@@ -39,6 +39,27 @@ sub is_open_or_close
 }
 
 1;
+
+=head1 SLOTS
+
+=head2 $event->elem()
+
+The DOM (Document Object Model) element that the event refers to. See
+L<XML::Grammar::Fiction::FromProto::Node> .
+
+=head2 $event->tag_elem()
+
+Extra tag_elem.
+
+=head2 $event->type()
+
+A string specifying the type.
+
+=head2 tag
+
+An optional string (or undef) with the tag name.
+
+=head1 METHODS
 
 =head2 $event->is_tag_of_name($name)
 

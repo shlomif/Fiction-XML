@@ -2,7 +2,7 @@ package XML::Grammar::Screenplay::FromProto;
 
 use XML::Writer;
 
-use Mouse;
+use MooX 'late';
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
 

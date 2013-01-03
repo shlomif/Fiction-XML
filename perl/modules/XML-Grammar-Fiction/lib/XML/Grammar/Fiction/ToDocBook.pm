@@ -5,7 +5,7 @@ use warnings;
 
 use Carp;
 
-use Mouse;
+use MooX 'late';
 
 extends ("XML::Grammar::Fiction::RNG_Renderer");
 
@@ -24,6 +24,8 @@ Version 0.9.3
 
 our $VERSION = '0.9.3';
 
+=head1 METHODS
+
 =head2 new()
 
 Accepts no arguments so far. May take some time as the grammar is compiled
@@ -32,6 +34,10 @@ at that point.
 =head2 meta()
 
 Internal - (to settle pod-coverage.).
+
+=head2 xslt_transform_basename()
+
+Inherited - (to settle pod-coverage).
 
 =cut
 

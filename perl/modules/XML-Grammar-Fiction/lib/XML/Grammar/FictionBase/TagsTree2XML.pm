@@ -1,6 +1,6 @@
 package XML::Grammar::FictionBase::TagsTree2XML;
 
-use Mouse;
+use MooX 'late';
 
 use XML::Writer;
 use HTML::Entities ();

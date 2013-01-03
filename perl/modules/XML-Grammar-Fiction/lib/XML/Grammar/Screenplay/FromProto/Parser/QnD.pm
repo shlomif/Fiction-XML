@@ -3,7 +3,7 @@ package XML::Grammar::Screenplay::FromProto::Parser::QnD;
 use strict;
 use warnings;
 
-use Mouse;
+use MooX 'late';
 
 extends( 'XML::Grammar::FictionBase::FromProto::Parser::XmlIterator' );
 
@@ -613,6 +613,10 @@ B<For internal use only>.
 Processes the text and returns the parse tree.
 
 =head2 $self->meta()
+
+Leftover from Moo.
+
+=head2 $self->next_line_ref
 
 Leftover from Mouse.
 
