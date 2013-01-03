@@ -3,7 +3,7 @@ package XML::Grammar::Fiction::FromProto::Parser::QnD;
 use strict;
 use warnings;
 
-use Mouse;
+use MooX 'late';
 
 extends("XML::Grammar::FictionBase::FromProto::Parser::XmlIterator");
 

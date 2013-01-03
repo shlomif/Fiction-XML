@@ -3,7 +3,7 @@ package XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
 use strict;
 use warnings;
 
-use Mouse;
+use MooX 'late';
 
 use XML::Grammar::Fiction::Err;
 

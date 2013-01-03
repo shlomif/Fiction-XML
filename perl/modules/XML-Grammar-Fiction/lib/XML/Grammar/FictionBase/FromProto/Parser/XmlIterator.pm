@@ -3,7 +3,9 @@ package XML::Grammar::FictionBase::FromProto::Parser::XmlIterator;
 use strict;
 use warnings;
 
-use Mouse;
+use Carp ();
+
+use MooX 'late';
 
 use XML::Grammar::Fiction::Err;
 use XML::Grammar::Fiction::Struct::Tag;
@@ -16,6 +18,11 @@ has "_tags_stack" =>
     isa => "ArrayRef",
     is => "rw",
     default => sub { [] },
+);
+
+=begin Removed
+    # Not supported by Moo / MooX yet.
+
     traits => ['Array'],
     handles =>
     {
@@ -25,7 +32,47 @@ has "_tags_stack" =>
         '_pop_tag' => 'pop',
         '_get_tag' => 'get',
     },
-);
+
+=end Removed
+
+=cut
+sub _get_tag
+{
+    my ($self, $idx) = @_;
+
+    return $self->_tags_stack->[$idx];
+}
+
+sub _tag_stack_is_empty
+{
+    my $self = shift;
+
+    return (! @{$self->_tags_stack});
+}
+
+sub _grep_tags_stack
+{
+    my $self = shift;
+    my $cb = shift;
+
+    return grep { $cb->($_) } @{$self->_tags_stack};
+}
+
+sub _push_tag
+{
+    my $self = shift;
+
+    push( @{$self->_tags_stack}, @_);
+
+    return;
+}
+
+sub _pop_tag
+{
+    my $self = shift;
+
+    return pop(@{$self->_tags_stack});
+}
 
 has "_events_queue" =>
 (
@@ -33,6 +80,11 @@ has "_events_queue" =>
     # isa => "ArrayRef",
     is => "rw",
     default => sub { []; },
+);
+
+=begin Removed
+    # Not supported by Moo / MooX yet.
+
     traits => ['Array'],
     handles =>
     {
@@ -41,7 +93,47 @@ has "_events_queue" =>
         _no_events => 'is_empty',
         _clear_events => 'clear',
     },
-);
+
+=end Removed
+
+=cut
+
+sub _clear_events
+{
+    my $self = shift;
+
+    $self->_events_queue([]);
+
+    return;
+}
+
+sub _no_events
+{
+    my $self = shift;
+
+    return (! @{$self->_events_queue});
+}
+
+sub _enqueue_event
+{
+    my $self = shift;
+    my $event = shift;
+
+    if (@_) {
+        Carp::confess("More than one argument.");
+    }
+
+    push( @{$self->_events_queue}, $event);
+
+    return;
+}
+
+sub _extract_event
+{
+    my $self = shift;
+
+    return shift(@{$self->_events_queue});
+}
 
 has '_ret_tag' =>
 (

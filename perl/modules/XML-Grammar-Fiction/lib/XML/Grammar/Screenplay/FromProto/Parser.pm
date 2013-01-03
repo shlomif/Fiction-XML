@@ -3,7 +3,7 @@ package XML::Grammar::Screenplay::FromProto::Parser;
 use strict;
 use warnings;
 
-use Mouse;
+use MooX 'late';
 
 1;
 

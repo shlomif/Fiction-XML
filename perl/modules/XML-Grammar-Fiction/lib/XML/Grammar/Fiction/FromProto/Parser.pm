@@ -3,7 +3,7 @@ package XML::Grammar::Fiction::FromProto::Parser;
 use strict;
 use warnings;
 
-use Mouse;
+use MooX 'late';
 
 =head1 NAME
 

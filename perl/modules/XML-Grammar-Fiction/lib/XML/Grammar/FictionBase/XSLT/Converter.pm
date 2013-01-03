@@ -11,7 +11,7 @@ use File::ShareDir ':ALL';
 use XML::LibXML;
 use XML::LibXSLT;
 
-use Mouse;
+use MooX 'late';
 
 has '_data_dir' => (isa => 'Str', is => 'rw');
 has '_data_dir_from_input' => (isa => 'Str', is => 'rw', init_arg => 'data_dir',);
@@ -34,6 +34,8 @@ Version 0.9.3
 
 our $VERSION = '0.9.3';
 
+=head1 METHODS
+
 =head2 new()
 
 Accepts no arguments so far. May take some time as the grammar is compiled
@@ -46,6 +48,14 @@ Internal - (to settle pod-coverage.).
 =head2 BUILD()
 
 Internal - (to settle pod-coverage.).
+
+=head2 rng_schema_basename()
+
+Inherited - (to settle pod-coverage.).
+
+=head2 xslt_transform_basename()
+
+Inherited - (to settle pod-coverage.).
 
 =cut
 

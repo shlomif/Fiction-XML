@@ -13,11 +13,17 @@ For internal use.
 
 =cut
 
-use Mouse;
+use MooX 'late';
 
 extends ("XML::Grammar::FictionBase::XSLT::Converter");
 
 has '+rng_schema_basename' => (default => "fiction-xml.rng");
+
+=head1 METHODS
+
+=head2 rng_schema_basename()
+
+Inherited - (to settle pod-coverage).
 
 =head1 AUTHOR
 

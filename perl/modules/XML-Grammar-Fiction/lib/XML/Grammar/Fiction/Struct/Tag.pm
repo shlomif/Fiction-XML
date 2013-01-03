@@ -3,7 +3,7 @@ package XML::Grammar::Fiction::Struct::Tag;
 use strict;
 use warnings;
 
-use Mouse;
+use MooX 'late';
 
 use List::MoreUtils;
 
@@ -68,7 +68,7 @@ sub detach_children
 
 package XML::Grammar::Fiction::Struct::Tag::Para;
 
-use Mouse;
+use MooX 'late';
 
 extends("XML::Grammar::Fiction::Struct::Tag");
 
