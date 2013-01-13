@@ -618,7 +618,7 @@ Leftover from Moo.
 
 =head2 $self->next_line_ref
 
-Leftover from Mouse.
+Leftover from Moo.
 
 =head1 AUTHOR
 

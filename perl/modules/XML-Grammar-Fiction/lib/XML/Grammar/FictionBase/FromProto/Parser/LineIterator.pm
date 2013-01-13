@@ -380,7 +380,7 @@ sub eof
 
 =head2 $self->meta()
 
-Leftover from Mouse.
+Leftover from Moo.
 
 =head1 AUTHOR
 
