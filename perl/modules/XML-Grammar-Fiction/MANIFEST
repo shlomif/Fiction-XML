@@ -58,6 +58,7 @@ rejects/QnD.pm
 rejects/Screenplay_Parser_QnD.pm
 scripts/run_agg_tests.t
 scripts/tag-release.pl
+t/00-libxml-basic.t
 t/00-load.t
 t/app-to-html.t
 t/base/line-iterator-unit.t
