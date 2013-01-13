@@ -75,7 +75,7 @@ Returns true if the $event 's type is either "open" or "close".
 
 =head2 $self->meta()
 
-Leftover from Mouse.
+Leftover from Moo.
 
 =head1 AUTHOR
 
