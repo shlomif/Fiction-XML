@@ -12,11 +12,11 @@ use in XML::Grammar::Fiction::FromProto.
 
 =head1 VERSION
 
-Version 0.9.3
+Version 0.10.0
 
 =cut
 
-our $VERSION = '0.9.3';
+our $VERSION = '0.10.0';
 
 package XML::Grammar::Fiction::FromProto::Node;
 
