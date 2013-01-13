@@ -1,5 +1,4 @@
 Build.PL
-bump-version-number.pl
 Changes
 contrib/docbook-to-fiction-xml-txt.pl
 extradata/fiction-xml.rng
@@ -56,6 +55,7 @@ rejects/lib/XML/Grammar/Screenplay/Struct/Tag.pm
 rejects/proto-text-to-xml.t
 rejects/QnD.pm
 rejects/Screenplay_Parser_QnD.pm
+scripts/bump-version-number.pl
 scripts/run_agg_tests.t
 scripts/tag-release.pl
 t/00-libxml-basic.t
