@@ -3,6 +3,9 @@ Pressing:
 
 * Finish implementing the <image /> tag in the ::Screenplay.
 
+* Make sure «dzil test --all» runs all the tests in the sub-directories
+(«t/*/*.t») using runtest.
+
 Long term:
 ----------
 
