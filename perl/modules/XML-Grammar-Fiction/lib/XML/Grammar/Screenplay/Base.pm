@@ -3,6 +3,8 @@ package XML::Grammar::Screenplay::Base;
 use strict;
 use warnings;
 
+=encoding utf8
+
 =head1 NAME
 
 XML::Grammar::Screenplay::Base - base class for XML::Grammar::Screenplay
