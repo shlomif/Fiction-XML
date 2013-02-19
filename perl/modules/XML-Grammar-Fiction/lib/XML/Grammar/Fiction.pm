@@ -183,18 +183,6 @@ L<http://www.shlomifish.org/humour/human-hacking/>
 
 =back
 
-=head1 AUTHOR
-
-Shlomi Fish, L<http://www.shlomifish.org/>.
-
-=head1 BUGS
-
-Please report any bugs or feature requests to
-C<bug-xml-grammar-fiction at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=XML-Grammar-Fiction>.
-I will be notified, and then you'll automatically be notified of progress on
-your bug as I make changes.
-
 =head1 MOTIVATION
 
 I (= Shlomi Fish) originated this CPAN distribution (after forking
@@ -210,73 +198,6 @@ moment, a lot of stuff in the proto-text format is subject to change,
 so you'll need to accept that some modifications to your sources will be
 required in the future. I hope you still find it useful and let me know
 if you need any feature or bug-fix.
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc XML::Grammar::Fiction
-
-You can also look for information at:
-
-=over 4
-
-=item * XML-Grammar-Fiction’s Homepage
-
-L<http://www.shlomifish.org/open-source/projects/XML-Grammar/Fiction/>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/XML-Grammar-Fiction>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/XML-Grammar-Fiction>
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=XML-Grammar-Fiction>
-
-=item * MetaCPAN
-
-L<https://metacpan.org/release/XML-Grammar-Fiction>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/XML-Grammar-Fiction>
-
-=back
-
-=head1 ACKNOWLEDGEMENTS
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright (c) 2007, 2009 Shlomi Fish.
-
-This program is released under the following license: MIT X11:
-L<http://www.opensource.org/licenses/mit-license.php> .
-
-=head2 LICENSE
-
-Copyright (c) 2007, 2009 Shlomi Fish.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
 
 =cut
 
