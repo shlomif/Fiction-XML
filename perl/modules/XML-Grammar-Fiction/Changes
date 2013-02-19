@@ -62,10 +62,10 @@ Revision history for XML-Grammar-Fiction.
     by the tests.
     * A lot of refactoring and cleanup - moved some modules from
     XML-Grammar-Fiction to XML-Grammar-FictionBase .
-    
+
 0.5.1       Sun May 22 09:33:43 IDT 2011
     * Fix the handling of entities at the start of the opening line of
-    paragraphs in the Fiction-Text . See 
+    paragraphs in the Fiction-Text . See
     t/fiction/data/proto-text/paras-with-entities-at-start-of-line.txt .
 
 0.5.0       Sat May 21 23:20:43 IDT 2011
@@ -83,11 +83,11 @@ Revision history for XML-Grammar-Fiction.
     * Add support for the <blockquote> tag to Fiction-XML / Fiction-Text.
 
 0.3.0       Tue May 17 22:59:17 IDT 2011
-    * Add extradata/screenplay-xml-to-tei.xslt and 
+    * Add extradata/screenplay-xml-to-tei.xslt and
     lib/XML/Grammar/Screenplay/ToTEI.pm - add tests for them.
         - They convert Screenplay-XML into TEI - Text Encoding Initiative,
-        a markup language for digital representation of texts (especially 
-        artsy texts such as screenplays, prose or poems) 
+        a markup language for digital representation of texts (especially
+        artsy texts such as screenplays, prose or poems)
             - http://www.tei-c.org/ .
         - This will allow for easier conversion into XSL-FO, as well as many
         other formats.
@@ -109,7 +109,7 @@ Revision history for XML-Grammar-Fiction.
 0.1.6       Sat Apr  9 16:15:17 IDT 2011
     * Now handling the <a /> element only in XML::Grammar::Screenplay - it
     does not exist in ::Fiction.
-    * Add support for the <a href="$URL">$CONTENT</a> tag in Fiction-Text 
+    * Add support for the <a href="$URL">$CONTENT</a> tag in Fiction-Text
     which is translated into <span xlink:href="$URL" >$CONTENT</span> in
     the Fiction-XML grammar.
 
@@ -120,7 +120,7 @@ Revision history for XML-Grammar-Fiction.
     in XML-Grammar-Screenplay.
 
 0.1.4       Mon Apr  4 00:50:07 IDT 2011
-    * ::Screenplay - Fix the innerdesc on the start of the line in the middle 
+    * ::Screenplay - Fix the innerdesc on the start of the line in the middle
     of the paragraph. Like:
 
 -----------------
@@ -135,7 +135,7 @@ Hi I went to the store and
 +$self->_prev_line_is_empty(scalar(${$self->curr_line_ref()} =~ m{\A\s*\z}));
 -----------------
 
-        - they cancelled each other most of the time except for in this 
+        - they cancelled each other most of the time except for in this
         case.
 
     * ::Screenplay - add support for Screenplay-Text's <i> tags which get
@@ -148,18 +148,18 @@ Hi I went to the store and
         problems.
 
 0.1.2       Thu Apr 29 22:47:04 IDT 2010
-        - In the Build.PL - merged 'test_requires' into 'build_requires'. 
+        - In the Build.PL - merged 'test_requires' into 'build_requires'.
         Turns out that 'test_requires' is a Module::Installism.
 
 0.1.1       Tue Apr 27 10:11:00 IDT 2010
         - Made sure XML-Grammar-Screenplay used
-        XML::Grammar::Fiction::ConfigData instead of 
+        XML::Grammar::Fiction::ConfigData instead of
         XML::Grammar::Screenplay::ConfigData . This broke the installation
         and tests on the following test reports:
             - http://www.cpantesters.org/cpan/report/7167671
             - http://www.cpantesters.org/cpan/report/7167759
             - http://www.cpantesters.org/cpan/report/7167134
-        
+
 0.1.0       Mon Apr 26 19:25:55 IDT 2010
         - Merged in the XML-Grammar-Screenplay into this module.
         - Converted XML-Grammar-Screenplay to a non-procedurally-recursive
@@ -173,7 +173,7 @@ Hi I went to the store and
         - Add the TODO file.
 
 0.0.4       Sat Mar 13 00:28:52 IST 2010
-        - Implemented better error handling and presentation in 
+        - Implemented better error handling and presentation in
         ::App::FromProto.
             - making use of Exception-Class-based classes.
         - Removed the DOCTYPE from the DocBook/XML output (it was a DocBook
@@ -189,12 +189,12 @@ Hi I went to the store and
         - Various refactorings / code cleanup:
             - removed old methods.
             - got rid of the _with_curr_line() anti-abstrcation.
-            - converted the parsing exceptions to Exception-Class 
+            - converted the parsing exceptions to Exception-Class
             ( see lib/XML/Grammar/Fiction/Err.pm )
             - Extract the Struct/Tag.pm helper class.
             - extracted the lib/XML/Grammar/Fiction/RendererBase.pm
             and lib/XML/Grammar/Fiction/RNG_Renderer.pm base classes.
-            - Convert the proto-text parser (::Parser::QnD) to a 
+            - Convert the proto-text parser (::Parser::QnD) to a
             non-procedurally recursive one and extracted many methods from it.
 
 0.0.1       Thu Nov  5 18:59:27 IST 2009
@@ -211,7 +211,7 @@ Revision history for XML-Grammar-Screenplay
         - Converted the generated Screenplay-XML to its own namespace:
         http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/
         - Adapted the stylesheets, the RelaxNG schema, etc. to that while
-        adapting the test scripts. 
+        adapting the test scripts.
 
 0.0503  Wed Jul 29 10:12:38 IDT 2009
         - Included a "package XML::Grammar::Screenplay::FromProto::Nodes"
@@ -225,7 +225,7 @@ Revision history for XML-Grammar-Screenplay
 
 0.0501  Tue Mar  3 19:38:22 IST 2009
         - Changed the Build.PL to use XML::Grammar::Builder.
-            - changed the tests accordingly, due to the lack of 
+            - changed the tests accordingly, due to the lack of
             "blib/extradata".
 
 0.0500  Fri Feb 27 17:48:52 IST 2009
@@ -246,7 +246,7 @@ Revision history for XML-Grammar-Screenplay
 
 0.04    Mon Jun 11 21:26:48 IDT 2007
         - Added the Quick-and-Dirty FromProto parser, which is slightly faster,
-        than the Parse::RecDescent one and with much better diagnostics. 
+        than the Parse::RecDescent one and with much better diagnostics.
         - More parsers can be added later.
         - Broke some compatibility - now require "use"-ing the parser class.
 
@@ -261,12 +261,12 @@ Revision history for XML-Grammar-Screenplay
         - Added the title="" attribute to the scene tag.
         - Added support for SGML-like entities
         - Added the direct ScreenplayXML -> HTML processor.
-        
+
 0.0101  Thu May 17 19:14:01 IDT 2007
-        - BUG FIX: Changed to open the filename in 
-        XML::Grammar::Screenplay::FromProto in ":utf8" mode. 
+        - BUG FIX: Changed to open the filename in
+        XML::Grammar::Screenplay::FromProto in ":utf8" mode.
         - BUG FIX: added more dependencies to the Build.PL.
 
-0.01    
+0.01
         First version, released on an unsuspecting world.
 
