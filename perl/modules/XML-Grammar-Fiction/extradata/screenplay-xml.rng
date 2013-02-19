@@ -30,6 +30,7 @@
             <ref name="ulink"/>
             <ref name="bold"/>
             <ref name="italics"/>
+            <ref name="image"/>
         </choice>
     </define>
     <define name="scene">
@@ -81,6 +82,19 @@
     <define name="bold">
         <element name="sp:bold">
             <text />
+        </element>
+    </define>
+    <define name="image">
+        <element name="sp:image">
+            <attribute name="url">
+                <text/>
+            </attribute>
+            <attribute name="alt">
+                <text/>
+            </attribute>
+            <attribute name="title">
+                <text/>
+            </attribute>
         </element>
     </define>
     <define name="italics">

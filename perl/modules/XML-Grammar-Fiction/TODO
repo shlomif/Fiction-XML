@@ -1,3 +1,12 @@
+Pressing:
+---------
+
+* Finish implementing the <image /> tag in the ::Screenplay.
+
+Long term:
+----------
+
+
 * Add a test script to test for trailing space and get rid of trailing space.
 
 * ::Fiction: Implement the correct handling of leading special characters in
