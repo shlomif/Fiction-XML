@@ -93,7 +93,7 @@
 </xsl:template>
 
 <xsl:template match="sp:image">
-    <img>
+    <img class="screenplay_image">
         <xsl:attribute name="src">
             <xsl:value-of select="@url" />
         </xsl:attribute>
