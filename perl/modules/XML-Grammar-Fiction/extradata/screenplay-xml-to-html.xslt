@@ -92,6 +92,20 @@
     </strong>
 </xsl:template>
 
+<xsl:template match="sp:image">
+    <img>
+        <xsl:attribute name="src">
+            <xsl:value-of select="@url" />
+        </xsl:attribute>
+        <xsl:attribute name="title">
+            <xsl:value-of select="@title" />
+        </xsl:attribute>
+        <xsl:attribute name="alt">
+            <xsl:value-of select="@alt" />
+        </xsl:attribute>
+    </img>
+</xsl:template>
+
 <xsl:template match="sp:italics">
     <em class="italics">
         <xsl:apply-templates />
