@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 51;
+use Test::XML tests => 54;
 
 use XML::LibXML;
 
@@ -35,6 +35,7 @@ my @tests = (qw(
         with-description
         with-tags-inside-paragraphs
         with-i-element-inside-paragraphs
+        with-img-element-inside-paragraphs
         with-internal-description
         with-comments
         with-multi-para-desc
@@ -47,7 +48,7 @@ my @tests = (qw(
         with-numeric-entities
     ));
 
-# TEST:$num_texts=17
+# TEST:$num_texts=18
 
 my $grammar = XML::Grammar::Screenplay::FromProto->new({
         parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
