@@ -3,9 +3,15 @@ package XML::Grammar::Fiction::RNG_Renderer;
 use strict;
 use warnings;
 
+our $VERSION = '0.11.0';
+
 =head1 XML::Grammar::Fiction::RNG_Renderer
 
 The base class for the Fiction-XML renderer with the common RNG.
+
+=head1 VERSION
+
+0.11.0
 
 =head1 SYNOPSIS
 
