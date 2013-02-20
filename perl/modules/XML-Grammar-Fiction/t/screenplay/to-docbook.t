@@ -3,9 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More;
-
-use Test::XML tests => 2;
+use Test::More tests => 2;
 
 use File::Spec;
 
