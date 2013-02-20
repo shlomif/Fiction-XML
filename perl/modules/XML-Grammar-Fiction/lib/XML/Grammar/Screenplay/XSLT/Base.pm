@@ -17,7 +17,7 @@ XSLT conversions.
 
 =head1 VERSION
 
-Version 0.10.0
+Version 0.11.0
 
 =head1 METHODS
 
