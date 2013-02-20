@@ -5,7 +5,8 @@ use warnings;
 
 use Test::More tests => 17;
 
-use Test::XML;
+use lib './t/lib';
+use XmlGrammarTestXML qw(my_is_xml);
 
 use File::Spec;
 
@@ -62,7 +63,9 @@ foreach my $fn (@tests)
     );
 
     # TEST*$num_texts
-    is_xml ($tei_text, load_xml("t/screenplay/data/tei/$fn.tei.xml"),
+    my_is_xml (
+        [ string => $tei_text, ],
+        [ string => load_xml("t/screenplay/data/tei/$fn.tei.xml"), ],
         "Output of the TEI \"$fn\"",
     );
 }
