@@ -37,6 +37,7 @@ at that point.
 Internal - (to settle pod-coverage.).
 
 =cut
+
 has '+xslt_transform_basename' => (default => "fiction-xml-to-html.xslt", );
 
 =head2 translate_to_html
