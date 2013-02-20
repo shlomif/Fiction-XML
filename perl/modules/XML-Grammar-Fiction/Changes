@@ -1,6 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
     * Add the <img /> tag to the Screenplay.
+    * Convert the distribution to use Dist-Zilla.
+    * Convert the tests from Test::XML to Test::XML::Ordered.
 
 0.10.0      Sun 13 Jan 08:32:43 IST 2013
     * Add more links to the XML::Grammar::Fiction's perldoc.
