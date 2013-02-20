@@ -5,7 +5,8 @@ use warnings;
 
 use Test::More tests => 29;
 
-use Test::XML;
+use lib './t/lib';
+use XmlGrammarTestXML qw(my_is_xml);
 
 use XML::LibXML;
 
@@ -79,8 +80,10 @@ foreach my $fn (@tests)
     }
 
     # TEST*$num_texts
-    is_xml ($got_xml, load_xml("t/fiction/data/xml/$fn.xml"),
-        "Output of the Proto Text \"$fn\""
+    my_is_xml (
+        [string => $got_xml,],
+        [string => load_xml("t/fiction/data/xml/$fn.xml"),],
+        "Output of the Proto Text \"$fn\"",
     );
 
     my $dom = $xml_parser->parse_string($got_xml);
