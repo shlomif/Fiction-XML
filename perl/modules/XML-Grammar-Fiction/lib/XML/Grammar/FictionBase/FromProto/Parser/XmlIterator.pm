@@ -36,6 +36,7 @@ has "_tags_stack" =>
 =end Removed
 
 =cut
+
 sub _get_tag
 {
     my ($self, $idx) = @_;
