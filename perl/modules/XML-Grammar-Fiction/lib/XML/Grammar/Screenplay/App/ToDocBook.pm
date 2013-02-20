@@ -12,10 +12,16 @@ use Getopt::Long;
 
 use XML::Grammar::Screenplay::ToDocBook;
 
+our $VERSION = '0.11.0';
+
 =head1 NAME
 
 XML::Grammar::Screenplay::App::ToDocBook - module implementing
 a command line application to convert a Screenplay XML file to docbook.
+
+=head1 VERSION
+
+0.11.0
 
 =head1 FUNCTIONS
 
