@@ -3,9 +3,11 @@
 use strict;
 use warnings;
 
-use Test::More;
+use lib './t/lib';
 
-use Test::XML tests => 33;
+use Test::More tests => 33;
+
+use XmlGrammarTestXML qw(my_is_xml);
 
 use File::Spec;
 
@@ -81,7 +83,9 @@ foreach my $fn (@tests)
     );
 
     # TEST*$num_texts
-    is_xml ($docbook_text, load_xml("t/fiction/data/docbook/$fn.docbook.xml"),
+    my_is_xml (
+        [ string => $docbook_text, ],
+        [ string => load_xml("t/fiction/data/docbook/$fn.docbook.xml"), ],
         "Output of the DocBook \"$fn\"",
     );
 }

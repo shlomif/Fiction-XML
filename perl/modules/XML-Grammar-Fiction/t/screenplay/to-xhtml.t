@@ -5,7 +5,9 @@ use warnings;
 
 use Test::More;
 
-use Test::XML tests => 6;
+use lib './t/lib';
+
+use Test::More tests => 6;
 
 use File::Spec;
 
