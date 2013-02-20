@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.11.1      Wed 20 Feb 15:36:55 IST 2013
     * Add $VERSION and =head1 VERSION to the .pm files that missed them.
 
 0.11.0      Wed 20 Feb 13:08:42 IST 2013
