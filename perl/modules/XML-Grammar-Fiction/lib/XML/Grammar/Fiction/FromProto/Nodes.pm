@@ -5,6 +5,8 @@ use warnings;
 
 use List::Util ();
 
+use XML::Grammar::Fiction::FromProto::Node;
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Nodes - contains several nodes for
@@ -17,21 +19,6 @@ Version 0.11.1
 =cut
 
 our $VERSION = '0.11.1';
-
-package XML::Grammar::Fiction::FromProto::Node;
-
-use MooX 'late';
-
-sub _short_isa
-{
-    my $self = shift;
-    my $isa_classish = shift;
-
-    return
-        $self->isa(
-            "XML::Grammar::Fiction::FromProto::Node::$isa_classish"
-        );
-}
 
 package XML::Grammar::Fiction::FromProto::Node::WithContent;
 
