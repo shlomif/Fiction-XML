@@ -20,111 +20,15 @@ Version 0.11.1
 
 our $VERSION = '0.11.1';
 
-package XML::Grammar::Fiction::FromProto::Node::WithContent;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node");
-
-has 'children' => (
-    isa => 'XML::Grammar::Fiction::FromProto::Node::List',
-    is => 'rw'
-);
-
-sub _get_childs
-{
-    my $self = shift;
-
-    my $childs = $self->children->contents();
-
-    return $childs || [];
-}
-
-package XML::Grammar::Fiction::FromProto::Node::Element;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
-
-has 'name' => (isa => 'Str', is => 'rw');
-has 'attrs' => (isa => 'ArrayRef', is => 'rw');
-has 'open_line' => (isa => 'Maybe[Int]', is => 'rw');
-
-sub lookup_attr
-{
-    my ($self, $attr_name) = @_;
-
-    my $pair = List::Util::first { $_->{key} eq $attr_name } (@{$self->attrs()});
-
-    if (!defined($pair))
-    {
-        return undef;
-    }
-    else
-    {
-        return $pair->{value};
-    }
-}
-
-package XML::Grammar::Fiction::FromProto::Node::List;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node");
-
-has 'contents' => (isa => "ArrayRef", is => "rw");
-
-package XML::Grammar::Fiction::FromProto::Node::Text;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
-
-sub get_text
-{
-    my ($self, $re) = @_;
-
-    return $self->children->contents->[0];
-}
-
-package XML::Grammar::Fiction::FromProto::Node::Saying;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node::Text");
-
-has 'character' => (isa => "Str", is => "rw");
-
-package XML::Grammar::Fiction::FromProto::Node::Description;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node::Text");
-
-package XML::Grammar::Fiction::FromProto::Node::Paragraph;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node::Element");
-
-package XML::Grammar::Fiction::FromProto::Node::InnerDesc;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node::Element");
-
-sub name
-{
-    return "inlinedesc";
-}
-
-package XML::Grammar::Fiction::FromProto::Node::Comment;
-
-use MooX 'late';
-
-extends("XML::Grammar::Fiction::FromProto::Node");
-
-has "text" => (isa => "Str", is => "rw");
+use XML::Grammar::Fiction::FromProto::Node::WithContent;
+use XML::Grammar::Fiction::FromProto::Node::Element;
+use XML::Grammar::Fiction::FromProto::Node::List;
+use XML::Grammar::Fiction::FromProto::Node::Text;
+use XML::Grammar::Fiction::FromProto::Node::Saying;
+use XML::Grammar::Fiction::FromProto::Node::Description;
+use XML::Grammar::Fiction::FromProto::Node::Paragraph;
+use XML::Grammar::Fiction::FromProto::Node::InnerDesc;
+use XML::Grammar::Fiction::FromProto::Node::Comment;
 
 1;
 
