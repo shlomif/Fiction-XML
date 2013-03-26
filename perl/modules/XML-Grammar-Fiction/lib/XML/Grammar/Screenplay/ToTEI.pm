@@ -16,11 +16,11 @@ XML to TEI (Text Encoding Initiative).
 
 =head1 VERSION
 
-Version 0.12.0
+Version 0.12.1
 
 =cut
 
-our $VERSION = '0.12.0';
+our $VERSION = '0.12.1';
 
 =head2 new()
 
