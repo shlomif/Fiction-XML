@@ -21,7 +21,7 @@ has 'tag' => (isa => "Maybe[Str]", is => "ro", predicate => '_has_tag',);
 has 'elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
 has 'tag_elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
 
-our $VERSION = '0.12.0';
+our $VERSION = '0.12.1';
 
 sub is_tag_of_name
 {

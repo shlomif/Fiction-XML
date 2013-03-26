@@ -15,7 +15,7 @@ to XML converters.
 
 =head1 VERSION
 
-Version 0.12.0
+Version 0.12.1
 
 =cut
 
