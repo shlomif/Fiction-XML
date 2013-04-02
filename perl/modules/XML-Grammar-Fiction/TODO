@@ -4,6 +4,14 @@ Pressing:
 * Make sure «dzil test --all» runs all the tests in the sub-directories
 («t/*/*.t») using runtest.
 
+    Screenplay-Text:
+    ----------------
+
+    * Make a non-closed description («[foo ») emit an error with the location
+    of the opening square bracket.
+
+    * If </s>s are missing at the end (or too many) - handle more gracefully.
+
 Long term:
 ----------
 
