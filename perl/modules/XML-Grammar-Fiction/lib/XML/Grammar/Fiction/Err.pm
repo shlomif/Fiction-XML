@@ -20,9 +20,14 @@ our $VERSION = '0.12.1';
 use Exception::Class
     (
         "XML::Grammar::Fiction::Err::Base",
-        "XML::Grammar::Fiction::Err::Parse::TagsMismatch" =>
+        "XML::Grammar::Fiction::Err::Base::WithOpenTag" =>
         {
             isa => "XML::Grammar::Fiction::Err::Base",
+            fields => [qw(opening_tag)],
+        },
+        "XML::Grammar::Fiction::Err::Parse::TagsMismatch" =>
+        {
+            isa => "XML::Grammar::Fiction::Err::Base::WithOpenTag",
             fields => [qw(opening_tag closing_tag)],
         },
         "XML::Grammar::Fiction::Err::Parse::LineError" =>
@@ -53,6 +58,10 @@ use Exception::Class
         "XML::Grammar::Fiction::Err::Parse::ParaOpenPlusNotFollowedByTag" =>
         {
             isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+        },
+        "XML::Grammar::Fiction::Err::Parse::TagNotClosedAtEOF" =>
+        {
+            isa => "XML::Grammar::Fiction::Err::Base::WithOpenTag",
         },
     )
     ;

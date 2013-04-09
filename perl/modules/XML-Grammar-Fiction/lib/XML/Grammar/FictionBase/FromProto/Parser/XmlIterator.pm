@@ -874,7 +874,17 @@ sub _assert_not_eof
 
     if ($self->eof() && $self->_no_events())
     {
-        Carp::confess (qq{Reached EOF.});
+        if (! $self->_tag_stack_is_empty() )
+        {
+            XML::Grammar::Fiction::Err::Parse::TagNotClosedAtEOF->throw(
+                error => "Tag not closed at EOF.",
+                opening_tag => $self->_top_tag(),
+            );
+        }
+        else
+        {
+            Carp::confess (qq{Reached EOF.});
+        }
     }
 
     return;
