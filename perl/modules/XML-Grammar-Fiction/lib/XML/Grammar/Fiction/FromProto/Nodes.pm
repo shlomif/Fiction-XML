@@ -14,11 +14,11 @@ use in XML::Grammar::Fiction::FromProto.
 
 =head1 VERSION
 
-Version 0.12.1
+Version 0.12.2
 
 =cut
 
-our $VERSION = '0.12.1';
+our $VERSION = '0.12.2';
 
 use XML::Grammar::Fiction::FromProto::Node::WithContent;
 use XML::Grammar::Fiction::FromProto::Node::Element;

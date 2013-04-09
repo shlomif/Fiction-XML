@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+0.12.2      Tue  9 Apr 16:41:15 IDT 2013
+    * Made error handling more informative.
+
 0.12.1      Tue 26 Mar 06:22:47 IST 2013
     * Add MooX::late to the dependencies to avoid test failures:
         - http://www.cpantesters.org/cpan/report/62d51cec-946e-11e2-b162-c5ed238b44f3
