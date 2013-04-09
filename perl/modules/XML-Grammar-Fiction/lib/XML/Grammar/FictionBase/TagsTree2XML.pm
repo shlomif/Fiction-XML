@@ -141,6 +141,15 @@ sub _convert_while_handling_errors
         warn "At line ", $e->line(), "\n";
         exit(-1);
     }
+    elsif ($e = Exception::Class->caught("XML::Grammar::Fiction::Err::Parse::TagNotClosedAtEOF"))
+    {
+        warn $e->error(), "\n";
+        warn "Open: ", $e->opening_tag->name(),
+            " at line ", $e->opening_tag->line(), "\n"
+            ;
+
+        exit(-1);
+    }
     elsif ($e = Exception::Class->caught())
     {
         if (ref($e))
