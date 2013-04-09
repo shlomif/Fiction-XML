@@ -59,50 +59,15 @@ sub run
         parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
     });
 
-    eval {
-        my $output_xml = $converter->convert({
+    $converter->_convert_while_handling_errors(
+        {
+            convert_args =>
+            {
                 source => { file => shift(@ARGV), },
-            }
-        );
-
-        open my $out, ">", $output_filename;
-        binmode $out, ":utf8";
-        print {$out} $output_xml;
-        close($out);
-    };
-
-    # Error handling.
-
-    my $e;
-    if ($e = Exception::Class->caught("XML::Grammar::Fiction::Err::Parse::TagsMismatch"))
-    {
-        warn $e->error(), "\n";
-        warn "Open: ", $e->opening_tag->name(),
-            " at line ", $e->opening_tag->line(), "\n"
-            ;
-        warn "Close: ",
-            $e->closing_tag->name(), " at line ",
-            $e->closing_tag->line(), "\n";
-
-        exit(-1);
-    }
-    elsif ($e = Exception::Class->caught("XML::Grammar::Fiction::Err::Parse::LineError"))
-    {
-        warn $e->error(), "\n";
-        warn "At line ", $e->line(), "\n";
-        exit(-1);
-    }
-    elsif ($e = Exception::Class->caught())
-    {
-        if (ref($e))
-        {
-            $e->rethrow();
+            },
+            output_filename => $output_filename,
         }
-        else
-        {
-            die $e;
-        }
-    }
+    );
 
     exit(0);
 }
