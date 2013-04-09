@@ -11,11 +11,11 @@ XML::Grammar::Fiction
 
 =head1 VERSION
 
-Version 0.12.1
+Version 0.12.2
 
 =cut
 
-our $VERSION = '0.12.1';
+our $VERSION = '0.12.2';
 
 use Exception::Class
     (
