@@ -39,9 +39,16 @@ has "_parser" => (
 
 has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
+sub _is_passthrough_elem
+{
+    return;
+}
+
 sub _write_Element_elem
 {
     my ($self, $elem) = @_;
+
+    my $name = $elem->name();
 
     if ($elem->_short_isa("InnerDesc"))
     {
@@ -53,9 +60,19 @@ sub _write_Element_elem
         );
         return;
     }
+    elsif ($self->_is_passthrough_elem($name))
+    {
+        return
+        $self->_output_tag_with_childs(
+            {
+                start => [$name],
+                elem => $elem,
+            }
+        );
+    }
     else
     {
-        my $method = "_handle_elem_of_name_" . $elem->name();
+        my $method = "_handle_elem_of_name_$name";
 
         $self->$method($elem);
 
