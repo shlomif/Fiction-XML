@@ -39,9 +39,40 @@ has "_parser" => (
 
 has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
 
-sub _is_passthrough_elem
+my %passthrough_elem =
+(
+    b => sub { return shift->_bold_tag_name(); },
+    i => sub { return shift->_italics_tag_name(); },
+);
+
+sub _calc_passthrough_cb
 {
-    return;
+    my ($self, $name) = @_;
+
+    if (exists($passthrough_elem{$name}))
+    {
+        return $passthrough_elem{$name};
+    }
+    else
+    {
+        return undef();
+    }
+}
+
+sub _calc_passthrough_name
+{
+    my ($self, $name, $elem) = @_;
+
+    my $cb = $self->_calc_passthrough_cb($name);
+
+    if (ref($cb) eq 'CODE')
+    {
+        return $cb->($self, $name, $elem,);
+    }
+    else
+    {
+        return $cb;
+    }
 }
 
 sub _write_Element_elem
@@ -60,12 +91,11 @@ sub _write_Element_elem
         );
         return;
     }
-    elsif ($self->_is_passthrough_elem($name))
+    elsif (defined(my $out_name = $self->_calc_passthrough_name($name, $elem)))
     {
-        return
-        $self->_output_tag_with_childs(
+        return $self->_output_tag_with_childs(
             {
-                start => [$name],
+                start => [$out_name],
                 elem => $elem,
             }
         );
@@ -87,37 +117,11 @@ sub _handle_elem_of_name_s
     $self->_write_scene({scene => $elem});
 }
 
-sub _handle_elem_of_name_b
-{
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => [$self->_bold_tag_name()],
-            elem => $elem,
-        }
-    );
-}
-
 sub _handle_elem_of_name_br
 {
     my ($self, $elem) = @_;
 
     $self->_writer->emptyTag("br");
-
-    return;
-}
-
-sub _handle_elem_of_name_i
-{
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => [$self->_italics_tag_name],
-            elem => $elem,
-        }
-    );
 
     return;
 }
