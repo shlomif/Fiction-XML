@@ -51,14 +51,21 @@ on failure.
 
 use Data::Dumper;
 
-my %lookup = (map { $_ => 1 } qw( li ol ul ));
+my %lookup = (map { $_ => $_ } qw( li ol ul ));
 
-sub _is_passthrough_elem
+around '_calc_passthrough_cb' => sub
 {
-    my ($self, $name) = @_;
+    my $orig = shift;
+    my $self = shift;
+    my ($name) = @_;
 
-    return exists($lookup{$name});
-}
+    if ($lookup{$name})
+    {
+        return $name;
+    }
+
+    return $orig->($self, @_);
+};
 
 sub _output_tag
 {
