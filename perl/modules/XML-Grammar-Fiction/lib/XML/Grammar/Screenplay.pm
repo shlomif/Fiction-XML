@@ -167,7 +167,7 @@ L<http://www.shlomifish.org/humour/TOWTF/>
 
 L<http://www.shlomifish.org/humour/humanity/>
 
-=item * Star Trek - "We The Living Dead"
+=item * Star Trek - “We The Living Dead”
 
 L<http://www.shlomifish.org/humour/Star-Trek/We-the-Living-Dead/>
 
