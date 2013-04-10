@@ -171,6 +171,14 @@ L<http://www.shlomifish.org/humour/humanity/>
 
 L<http://www.shlomifish.org/humour/Star-Trek/We-the-Living-Dead/>
 
+=item * Selina Mandrake - The Slayer
+
+L<http://www.shlomifish.org/humour/Selina-Mandrake/>
+
+=item * Summerschool at the NSA
+
+L<http://www.shlomifish.org/humour/Summerschool-at-the-NSA/>
+
 =back
 
 =head1 DEBUGGING
