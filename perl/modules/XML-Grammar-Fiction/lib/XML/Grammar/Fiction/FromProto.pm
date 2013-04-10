@@ -51,6 +51,15 @@ on failure.
 
 use Data::Dumper;
 
+my %lookup = (map { $_ => 1 } qw( li ol ul ));
+
+sub _is_passthrough_elem
+{
+    my ($self, $name) = @_;
+
+    return exists($lookup{$name});
+}
+
 sub _output_tag
 {
     my ($self, $args) = @_;
@@ -184,20 +193,6 @@ sub _handle_elem_of_name_blockquote
 }
 
 
-sub _handle_elem_of_name_li
-{
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => ['li'],
-            elem => $elem,
-        }
-    );
-
-    return;
-}
-
 sub _handle_elem_of_name_programlisting
 {
     my ($self, $elem) = @_;
@@ -248,20 +243,6 @@ sub _handle_elem_of_name_programlisting
     return;
 }
 
-sub _handle_elem_of_name_ol
-{
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => ['ol'],
-            elem => $elem,
-        }
-    );
-
-    return;
-}
-
 sub _handle_elem_of_name_span
 {
     my ($self, $elem) = @_;
@@ -273,20 +254,6 @@ sub _handle_elem_of_name_span
             optional_id => 1,
             missing_id_msg => "Unspecified id for span!",
         },
-    );
-
-    return;
-}
-
-sub _handle_elem_of_name_ul
-{
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => ['ul'],
-            elem => $elem,
-        }
     );
 
     return;
