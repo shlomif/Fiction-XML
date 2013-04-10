@@ -21,8 +21,6 @@ paragraph, that will not be mistaken for a top-level tag:
 
 [/QUOTE]
 
-* Write unit tests for LineIterator.pm.
-
 * Add more necessary tags and features.
 
 * Convert the XML grammar to use the xlink namespace for links.
