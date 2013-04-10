@@ -16,6 +16,7 @@ CVS/
 \.tar\.gz$
 \.zip$
 _uu$
+^tags$
 ^ttt*
 ^dist/
 ^\.cvs
