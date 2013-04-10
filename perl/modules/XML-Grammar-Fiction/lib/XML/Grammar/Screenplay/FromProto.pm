@@ -54,16 +54,6 @@ Converts the file $path_to_file to XML and returns it.
 
 =cut
 
-
-my %lookup = (map { $_ => 1 } qw( li ol ul ));
-
-sub _is_passthrough_elem
-{
-    my ($self, $name) = @_;
-
-    return exists($lookup{$name});
-}
-
 sub _output_tag
 {
     my ($self, $args) = @_;
