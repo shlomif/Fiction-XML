@@ -2,6 +2,8 @@ package XML::Grammar::FictionBase::TagsTree2XML;
 
 use MooX 'late';
 
+our $VERSION = '0.12.3';
+
 use XML::Writer;
 use HTML::Entities ();
 

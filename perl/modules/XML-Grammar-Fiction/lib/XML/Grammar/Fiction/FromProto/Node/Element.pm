@@ -5,13 +5,11 @@ package XML::Grammar::Fiction::FromProto::Node::Element;
 XML::Grammar::Fiction::FromProto::Nodes - contains several nodes for
 use in XML::Grammar::Fiction::FromProto.
 
-=head1 VERSION
-
-Version 0.12.3
-
 =cut
 
 use MooX 'late';
+
+our $VERSION = '0.12.3';
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
