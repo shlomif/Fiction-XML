@@ -2,7 +2,7 @@ package XML::Grammar::Fiction::FromProto::Node::Saying;
 
 use MooX 'late';
 
-our $VERSION = '0.12.3';
+our $VERSION = '0.12.4';
 
 extends("XML::Grammar::Fiction::FromProto::Node::Text");
 
