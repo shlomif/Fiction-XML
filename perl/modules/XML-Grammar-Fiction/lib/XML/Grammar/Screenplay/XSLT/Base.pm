@@ -2,6 +2,8 @@ package XML::Grammar::Screenplay::XSLT::Base;
 
 use MooX 'late';
 
+our $VERSION = '0.12.3';
+
 extends('XML::Grammar::FictionBase::XSLT::Converter');
 
 has '+rng_schema_basename' => (default => "screenplay-xml.rng");
