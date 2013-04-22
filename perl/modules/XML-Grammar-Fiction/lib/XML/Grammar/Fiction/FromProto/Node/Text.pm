@@ -3,6 +3,8 @@ package XML::Grammar::Fiction::FromProto::Node::Text;
 use strict;
 use warnings;
 
+our $VERSION = '0.12.2';
+
 use MooX 'late';
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
