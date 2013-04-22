@@ -12,7 +12,7 @@ use Getopt::Long;
 
 use XML::Grammar::Screenplay::ToDocBook;
 
-our $VERSION = '0.12.2';
+our $VERSION = '0.12.3';
 
 =head1 NAME
 
