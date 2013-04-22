@@ -14,7 +14,7 @@ use XML::Grammar::FictionBase::Event;
 use List::Util ();
 use List::MoreUtils ();
 
-our $VERSION = '0.12.3';
+our $VERSION = '0.12.4';
 
 has "_in_saying" => (isa => "Bool", is => "rw");
 has "_prev_line_is_empty" => (isa => "Bool", is => "rw", default => 1);
