@@ -1,6 +1,6 @@
 package XML::Grammar::Fiction::FromProto::Node::Description;
 
-our $VERSION = '0.12.2';
+our $VERSION = '0.12.3';
 
 use MooX 'late';
 
