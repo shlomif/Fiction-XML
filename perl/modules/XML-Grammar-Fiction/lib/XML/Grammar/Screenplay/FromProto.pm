@@ -53,7 +53,7 @@ Converts the file $path_to_file to XML and returns it.
 =cut
 
 
-sub _handle_text_start
+sub _write_Element_Text
 {
     my ($self, $elem) = @_;
 
@@ -94,13 +94,6 @@ sub _handle_text_start
 sub _paragraph_tag
 {
     return "para";
-}
-
-sub _write_Element_Text
-{
-    my ($self, $elem) = @_;
-
-    return $self->_handle_text_start($elem);
 }
 
 sub _handle_elem_of_name_img
