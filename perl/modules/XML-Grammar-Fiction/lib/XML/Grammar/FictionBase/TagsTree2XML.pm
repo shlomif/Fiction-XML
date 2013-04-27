@@ -99,6 +99,10 @@ sub _write_elem_obj
 
     my $elem = $args->{elem};
 
+    if ($elem->_short_isa("Text"))
+    {
+        $self->_write_Element_Text($elem);
+    }
     if ($elem->_short_isa("Paragraph"))
     {
         $self->_output_tag_with_childs(

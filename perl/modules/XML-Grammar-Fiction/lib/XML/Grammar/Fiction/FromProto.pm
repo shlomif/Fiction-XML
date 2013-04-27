@@ -313,6 +313,18 @@ sub _handle_text_start
     return;
 }
 
+sub _write_Element_Text
+{
+    my ($self, $elem) = @_;
+
+    foreach my $child (@{$elem->_get_childs()})
+    {
+        $self->_write_elem({ elem => $child,},);
+    }
+
+    return;
+}
+
 around '_write_elem_obj' => sub {
     my $orig = shift;
     my $self = shift;
@@ -325,15 +337,6 @@ around '_write_elem_obj' => sub {
         foreach my $child (@{$elem->contents()})
         {
             $self->_write_elem({elem => $child, });
-        }
-
-        return;
-    }
-    elsif ($elem->_short_isa("Text"))
-    {
-        foreach my $child (@{$elem->_get_childs()})
-        {
-            $self->_write_elem({ elem => $child,},);
         }
 
         return;
