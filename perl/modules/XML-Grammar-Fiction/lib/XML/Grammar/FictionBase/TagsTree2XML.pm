@@ -9,8 +9,15 @@ use HTML::Entities ();
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
-my $xml_ns = "http://www.w3.org/XML/1998/namespace";
-my $xlink_ns = "http://www.w3.org/1999/xlink";
+sub _get_xml_xml_ns
+{
+    return "http://www.w3.org/XML/1998/namespace";
+}
+
+sub _get_xlink_xml_ns
+{
+    return "http://www.w3.org/1999/xlink";
+}
 
 =head1 NAME
 
@@ -52,8 +59,8 @@ sub _get_initial_writer
         PREFIX_MAP =>
         {
             $self->_get_default_xml_ns() => "",
-            $xml_ns => 'xml',
-            $xlink_ns => 'xlink',
+            $self->_get_xml_xml_ns() => 'xml',
+            $self->_get_xlink_xml_ns() => 'xlink',
         },
     );
 
