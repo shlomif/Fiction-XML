@@ -231,23 +231,9 @@ sub _get_default_xml_ns
     return $screenplay_ns;
 }
 
-sub convert
+sub _convert_write_content
 {
-    my ($self, $args) = @_;
-
-    # These should be un-commented for debugging.
-    # local $::RD_HINT = 1;
-    # local $::RD_TRACE = 1;
-
-    # We need this so P::RD won't skip leading whitespace at lines
-    # which are siginificant.
-
-    my $tree = $self->_calc_tree($args);
-
-    if (!defined($tree))
-    {
-        Carp::confess("Parsing failed.");
-    }
+    my ($self, $tree) = @_;
 
     my $writer = $self->_writer;
 
@@ -263,7 +249,7 @@ sub convert
 
     $writer->endTag();
 
-    return ${$self->_flush_buffer()};
+    return;
 }
 
 1;
