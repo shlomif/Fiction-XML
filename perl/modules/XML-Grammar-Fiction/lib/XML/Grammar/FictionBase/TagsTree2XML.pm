@@ -120,6 +120,8 @@ sub _write_elem_obj
     {
         $self->_writer->comment($elem->text());
     }
+
+    return;
 }
 
 sub _write_Element_elem
