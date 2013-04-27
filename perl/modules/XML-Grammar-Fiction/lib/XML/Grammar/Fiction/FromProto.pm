@@ -6,7 +6,6 @@ use autodie;
 
 use Carp;
 use HTML::Entities ();
-use XML::Writer;
 
 use MooX 'late';
 
@@ -397,6 +396,11 @@ sub _write_body
     return;
 }
 
+sub _get_default_xml_ns
+{
+    return $fiction_ns;
+}
+
 sub convert
 {
     my ($self, $args) = @_;
@@ -415,34 +419,17 @@ sub convert
         Carp::confess("Parsing failed.");
     }
 
-    my $buffer = "";
-    $self->_buffer(\$buffer);
+    my $writer = $self->_writer;
 
-    my $writer = XML::Writer->new(
-        OUTPUT => $self->_buffer(),
-        ENCODING => "utf-8",
-        NAMESPACES => 1,
-        PREFIX_MAP =>
-        {
-             $fiction_ns => q{},
-             $xml_ns => 'xml',
-             $xlink_ns => 'xlink',
-        }
-    );
-
-    $writer->xmlDecl("utf-8");
     $writer->startTag([$fiction_ns, "document"], "version" => "0.2");
     $writer->startTag([$fiction_ns, "head"]);
     $writer->endTag();
-
-    # Now we're inside the body.
-    $self->_writer($writer);
 
     $self->_write_body({body => $tree});
 
     $writer->endTag();
 
-    return ${$self->_buffer()};
+    return ${$self->_flush_buffer()};
 }
 
 1;
