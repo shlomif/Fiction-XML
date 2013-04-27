@@ -14,8 +14,6 @@ extends("XML::Grammar::FictionBase::TagsTree2XML");
 use List::Util (qw(first));
 
 my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
-my $xml_ns = "http://www.w3.org/XML/1998/namespace";
-my $xlink_ns = "http://www.w3.org/1999/xlink";
 
 =head1 NAME
 
@@ -83,12 +81,12 @@ sub _output_tag_with_childs_and_common_attributes
     }
     else
     {
-        push @attr, ([$xml_ns, "id"] => $id);
+        push @attr, ([$self->_get_xml_xml_ns, "id"] => $id);
     }
 
     if (defined($lang))
     {
-        push @attr, ([$xml_ns, 'lang'] => $lang);
+        push @attr, ([$self->_get_xml_xml_ns, 'lang'] => $lang);
     }
 
     if (! defined($href))
@@ -102,7 +100,7 @@ sub _output_tag_with_childs_and_common_attributes
     }
     else
     {
-        push @attr, ([$xlink_ns, 'href'] => $href);
+        push @attr, ([$self->_get_xlink_xml_ns(), 'href'] => $href);
     }
 
     return $self->_output_tag_with_childs(
