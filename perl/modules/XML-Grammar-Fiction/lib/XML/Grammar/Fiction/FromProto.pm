@@ -289,26 +289,15 @@ around '_calc_write_elem_obj_classes' => sub
     return ['List', @{$orig->($self)}];
 };
 
-sub _write_scene
+sub _write_scene_main
 {
-    my ($self, $args) = @_;
+    my ($self, $scene) = @_;
 
-    my $scene = $args->{scene};
-
-    my $tag = $scene->name;
-
-    if (($tag eq "s") || ($tag eq "scene"))
-    {
-        $self->_output_tag_with_childs_and_common_attributes(
-            $scene,
-            "section",
-            { missing_id_msg => "Unspecified id for scene!", },
-        );
-    }
-    else
-    {
-        confess "Improper scene tag - should be '<s>' or '<scene>'!";
-    }
+    $self->_output_tag_with_childs_and_common_attributes(
+        $scene,
+        "section",
+        { missing_id_msg => "Unspecified id for scene!", },
+    );
 
     return;
 }

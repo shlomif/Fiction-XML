@@ -130,37 +130,26 @@ sub _italics_tag_name
     return "italics";
 }
 
-sub _write_scene
+sub _write_scene_main
 {
-    my ($self, $args) = @_;
+    my ($self, $scene) = @_;
 
-    my $scene = $args->{scene};
+    my $id = $scene->lookup_attr("id");
 
-    my $tag = $scene->name;
-
-    if (($tag eq "s") || ($tag eq "scene"))
+    if (!defined($id))
     {
-        my $id = $scene->lookup_attr("id");
+        Carp::confess("Unspecified id for scene!");
+    }
 
-        if (!defined($id))
+    my $title = $scene->lookup_attr("title");
+    my @t = (defined($title) ? (title => $title) : ());
+
+    $self->_output_tag_with_childs(
         {
-            Carp::confess("Unspecified id for scene!");
+            'start' => ["scene", id => $id, @t],
+            elem => $scene,
         }
-
-        my $title = $scene->lookup_attr("title");
-        my @t = (defined($title) ? (title => $title) : ());
-
-        $self->_output_tag_with_childs(
-            {
-                'start' => ["scene", id => $id, @t],
-                elem => $scene,
-            }
-        );
-    }
-    else
-    {
-        confess "Improper scene tag - should be '<s>' or '<scene>'!";
-    }
+    );
 
     return;
 }
