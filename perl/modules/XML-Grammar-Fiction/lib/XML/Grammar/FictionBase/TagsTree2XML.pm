@@ -41,6 +41,8 @@ has "_parser" => (
 
 has "_writer" => ('isa' => "Maybe[XML::Writer]", 'is' => "rw");
 
+has '_buffer' => (is => "rw");
+
 my %passthrough_elem =
 (
     b => sub { return shift->_bold_tag_name(); },

@@ -228,8 +228,6 @@ sub _calc_tree
     return $self->_parser->process_text($self->_read_file($filename));
 }
 
-has '_buffer' => (is => "rw");
-
 sub convert
 {
     my ($self, $args) = @_;

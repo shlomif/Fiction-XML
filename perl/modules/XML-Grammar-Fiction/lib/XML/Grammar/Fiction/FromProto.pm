@@ -416,8 +416,10 @@ sub convert
     }
 
     my $buffer = "";
+    $self->_buffer(\$buffer);
+
     my $writer = XML::Writer->new(
-        OUTPUT => \$buffer,
+        OUTPUT => $self->_buffer(),
         ENCODING => "utf-8",
         NAMESPACES => 1,
         PREFIX_MAP =>
@@ -440,7 +442,7 @@ sub convert
 
     $writer->endTag();
 
-    return $buffer;
+    return ${$self->_buffer()};
 }
 
 1;
