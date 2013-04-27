@@ -67,15 +67,11 @@ sub _write_Element_Text
 
         return;
     }
-    elsif ($elem->_short_isa("Text"))
+    else
     {
         $self->_write_elem_childs($elem);
 
         return;
-    }
-    else
-    {
-        Carp::confess ("Unknown element class - " . ref($elem) . "!");
     }
 }
 
