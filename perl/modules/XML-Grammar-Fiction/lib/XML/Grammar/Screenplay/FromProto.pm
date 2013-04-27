@@ -66,22 +66,6 @@ sub _output_tag
     $self->_writer->endTag();
 }
 
-sub _output_tag_with_childs
-{
-    my ($self, $args) = @_;
-
-    return
-        $self->_output_tag({
-            %$args,
-            'in' => sub {
-                foreach my $child (@{$args->{elem}->_get_childs()})
-                {
-                    $self->_write_elem({elem => $child,});
-                }
-            },
-        });
-}
-
 sub _handle_text_start
 {
     my ($self, $elem) = @_;
@@ -94,6 +78,8 @@ sub _handle_text_start
                 elem => $elem,
             },
         );
+
+        return;
     }
     elsif ($elem->_short_isa("Description"))
     {
@@ -103,13 +89,14 @@ sub _handle_text_start
                 elem => $elem,
             },
         );
+
+        return;
     }
     elsif ($elem->_short_isa("Text"))
     {
-        foreach my $child (@{$elem->_get_childs()})
-        {
-            $self->_write_elem({ elem => $child,},);
-        }
+        $self->_write_elem_childs($elem);
+
+        return;
     }
     else
     {
