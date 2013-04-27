@@ -325,21 +325,29 @@ sub _write_Element_Text
     return;
 }
 
+sub _write_Element_List
+{
+    my ($self, $elem) = @_;
+
+    foreach my $child (@{$elem->contents()})
+    {
+        $self->_write_elem({elem => $child, });
+    }
+
+    return;
+}
+
 around '_write_elem_obj' => sub {
     my $orig = shift;
     my $self = shift;
+
     my ($args) = @_;
 
     my $elem = $args->{elem};
 
     if ($elem->_short_isa("List"))
     {
-        foreach my $child (@{$elem->contents()})
-        {
-            $self->_write_elem({elem => $child, });
-        }
-
-        return;
+        return $self->_write_Element_List($elem);
     }
     else
     {
