@@ -132,10 +132,6 @@ at that point.
 
 Internal - (to settle pod-coverage.).
 
-=head2 BUILD()
-
-Internal - (to settle pod-coverage.).
-
 =head2 rng_schema_basename()
 
 Inherited - (to settle pod-coverage.).
