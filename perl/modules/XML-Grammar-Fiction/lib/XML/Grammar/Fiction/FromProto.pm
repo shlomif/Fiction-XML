@@ -361,16 +361,6 @@ sub _read_file
     return $contents;
 }
 
-sub _calc_tree
-{
-    my ($self, $args) = @_;
-
-    my $filename = $args->{source}->{file} or
-        confess "Wrong filename given.";
-
-    return $self->_parser->process_text($self->_read_file($filename));
-}
-
 sub _write_body
 {
     my $self = shift;
