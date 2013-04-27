@@ -93,6 +93,32 @@ sub _write_elem
     }
 }
 
+sub _write_Element_Paragraph
+{
+    my ($self, $elem) = @_;
+
+    return $self->_output_tag_with_childs(
+        {
+            start => [$self->_paragraph_tag()],
+            elem => $elem,
+        },
+    );
+}
+
+sub _write_Element_Element
+{
+    my ($self, $elem) = @_;
+
+    return $self->_write_Element_elem($elem);
+}
+
+sub _write_Element_Comment
+{
+    my ($self, $elem) = @_;
+
+    $self->_writer->comment($elem->text());
+}
+
 sub _write_elem_obj
 {
     my ($self, $args) = @_;
@@ -105,20 +131,15 @@ sub _write_elem_obj
     }
     if ($elem->_short_isa("Paragraph"))
     {
-        $self->_output_tag_with_childs(
-            {
-               start => [$self->_paragraph_tag()],
-                elem => $elem,
-            },
-        );
+        $self->_write_Element_Paragraph($elem);
     }
     elsif ($elem->_short_isa("Element"))
     {
-        $self->_write_Element_elem($elem);
+        $self->_write_Element_Element($elem);
     }
     elsif ($elem->_short_isa("Comment"))
     {
-        $self->_writer->comment($elem->text());
+        $self->_write_Element_Comment($elem);
     }
 
     return;
