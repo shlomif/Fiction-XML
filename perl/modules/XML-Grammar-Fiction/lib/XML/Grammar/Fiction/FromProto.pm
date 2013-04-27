@@ -269,20 +269,6 @@ sub _italics_tag_name
     return "i";
 }
 
-sub _handle_text_start
-{
-    my ($self, $elem) = @_;
-
-    $self->_output_tag_with_childs(
-        {
-            start => $self->_get_text_start($elem),
-            elem => $elem,
-        },
-    );
-
-    return;
-}
-
 sub _write_Element_Text
 {
     return shift->_write_elem_childs(@_);
