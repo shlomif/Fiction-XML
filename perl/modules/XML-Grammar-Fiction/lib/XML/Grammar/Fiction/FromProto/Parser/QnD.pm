@@ -22,11 +22,11 @@ B<For internal use only>.
 
 =head1 VERSION
 
-Version 0.12.4
+Version 0.12.5
 
 =cut
 
-our $VERSION = '0.12.4';
+our $VERSION = '0.12.5';
 
 sub _non_tag_text_unit_consume_regex {
     return qr{(?:[\<]|^\n?$)}ms;

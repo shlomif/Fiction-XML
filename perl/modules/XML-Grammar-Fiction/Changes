@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.12.5      Sat 27 Apr 14:25:15 IDT 2013
     * Do not try to compile scripts/bump-version-number.pl .
         - Requires File::Find::Object which isn't a dependency.
     * New version of MooX::late to avoid test failures.

@@ -3,7 +3,7 @@ package XML::Grammar::Screenplay::Base;
 use strict;
 use warnings;
 
-our $VERSION = '0.12.4';
+our $VERSION = '0.12.5';
 
 =encoding utf8
 
