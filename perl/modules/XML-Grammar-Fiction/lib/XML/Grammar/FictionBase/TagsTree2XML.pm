@@ -338,6 +338,28 @@ sub _convert_while_handling_errors
     return;
 }
 
+=head2 $self->convert({ source => { file => $path_to_file } })
+
+Converts the file $path_to_file to XML and returns it. Throws an exception
+on failure.
+
+=cut
+
+sub convert
+{
+    my ($self, $args) = @_;
+
+    my $tree = $self->_calc_tree($args);
+    if (!defined($tree))
+    {
+        Carp::confess("Parsing failed.");
+    }
+
+    $self->_convert_write_content($tree);
+
+    return ${$self->_flush_buffer()};
+}
+
 =head2 meta()
 
 Internal - (to settle pod-coverage.).
