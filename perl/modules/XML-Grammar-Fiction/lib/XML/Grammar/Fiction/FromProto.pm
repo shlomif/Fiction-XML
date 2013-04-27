@@ -5,13 +5,10 @@ use warnings;
 use autodie;
 
 use Carp;
-use HTML::Entities ();
 
 use MooX 'late';
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
-
-use List::Util (qw(first));
 
 my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
 
