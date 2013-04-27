@@ -9,7 +9,7 @@ use in XML::Grammar::Fiction::FromProto.
 
 use MooX 'late';
 
-our $VERSION = '0.12.4';
+our $VERSION = '0.12.5';
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
