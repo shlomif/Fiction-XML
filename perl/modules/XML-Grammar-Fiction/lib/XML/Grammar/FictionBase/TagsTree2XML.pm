@@ -39,7 +39,7 @@ has "_parser" => (
     },
 );
 
-has "_writer" => ('isa' => "XML::Writer", 'is' => "rw");
+has "_writer" => ('isa' => "Maybe[XML::Writer]", 'is' => "rw");
 
 my %passthrough_elem =
 (
