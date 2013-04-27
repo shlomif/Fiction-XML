@@ -337,22 +337,12 @@ sub _write_Element_List
     return;
 }
 
-around '_write_elem_obj' => sub {
+around '_calc_write_elem_obj_classes' => sub
+{
     my $orig = shift;
     my $self = shift;
 
-    my ($args) = @_;
-
-    my $elem = $args->{elem};
-
-    if ($elem->_short_isa("List"))
-    {
-        return $self->_write_Element_List($elem);
-    }
-    else
-    {
-        return $orig->($self, @_);
-    }
+    return ['List', @{$orig->($self)}];
 };
 
 sub _write_scene

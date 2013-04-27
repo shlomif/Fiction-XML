@@ -119,30 +119,28 @@ sub _write_Element_Comment
     $self->_writer->comment($elem->text());
 }
 
+sub _calc_write_elem_obj_classes
+{
+    return [qw(Text Paragraph Element Comment)];
+}
+
 sub _write_elem_obj
 {
     my ($self, $args) = @_;
 
     my $elem = $args->{elem};
 
-    if ($elem->_short_isa("Text"))
+    foreach my $class (@{$self->_calc_write_elem_obj_classes()})
     {
-        $self->_write_Element_Text($elem);
-    }
-    if ($elem->_short_isa("Paragraph"))
-    {
-        $self->_write_Element_Paragraph($elem);
-    }
-    elsif ($elem->_short_isa("Element"))
-    {
-        $self->_write_Element_Element($elem);
-    }
-    elsif ($elem->_short_isa("Comment"))
-    {
-        $self->_write_Element_Comment($elem);
+        if ($elem->_short_isa($class))
+        {
+            my $meth = "_write_Element_$class";
+            $self->$meth($elem);
+            return;
+        }
     }
 
-    return;
+    Carp::confess("Class of element not detected - " . ref($elem) . "!");
 }
 
 sub _write_Element_elem
