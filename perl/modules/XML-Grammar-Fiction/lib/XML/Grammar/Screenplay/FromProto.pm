@@ -34,8 +34,6 @@ at that point.
 
 Internal - (to settle pod-coverage.).
 
-=cut
-
 =head2 $self->convert({ source => { file => $path_to_file } })
 
 Converts the file $path_to_file to XML and returns it.
