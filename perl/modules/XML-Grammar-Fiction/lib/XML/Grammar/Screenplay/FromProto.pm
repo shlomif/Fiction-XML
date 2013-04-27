@@ -36,22 +36,6 @@ Internal - (to settle pod-coverage.).
 
 =cut
 
-sub _init
-{
-    my ($self, $args) = @_;
-
-    local $Parse::RecDescent::skip = "";
-
-    my $parser_class =
-        ($args->{parser_class} || "XML::Grammar::Screenplay::FromProto::Parser::QnD");
-
-    $self->_parser(
-        $parser_class->new()
-    );
-
-    return 0;
-}
-
 =head2 $self->convert({ source => { file => $path_to_file } })
 
 Converts the file $path_to_file to XML and returns it.
