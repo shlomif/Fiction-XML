@@ -47,8 +47,64 @@ sub _calc_rng
         );
 }
 
-has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
-has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
+has '_xml_parser' =>
+(
+    isa => 'XML::LibXML',
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        return shift->_calc_xml_parser();
+    },
+);
+
+sub _calc_xml_parser
+{
+    my $self = shift;
+
+    return XML::LibXML->new();
+}
+
+has '_xslt_processor' =>
+(
+    isa => "XML::LibXSLT",
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        return shift->_calc_xslt_processor();
+    },
+);
+
+sub _calc_xslt_processor
+{
+    my ($self) = @_;
+
+    return XML::LibXSLT->new();
+}
+
+has '_stylesheet' =>
+(
+    isa => "XML::LibXSLT::StylesheetWrapper",
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        return shift->_calc_stylesheet();
+    },
+);
+
+sub _calc_stylesheet
+{
+    my ($self) = @_;
+
+    my $style_doc = $self->_xml_parser()->parse_file(
+            File::Spec->catfile(
+                $self->_data_dir(),
+                $self->xslt_transform_basename(),
+            ),
+        );
+
+    return $self->_xslt_processor->parse_stylesheet($style_doc);
+}
+
 has 'rng_schema_basename' => (is => 'ro', isa => 'Str', required => 1,);
 has 'xslt_transform_basename' => (is => 'ro', isa => 'Str', required => 1,);
 
@@ -95,26 +151,6 @@ sub _calc_data_dir
     my ($self) = @_;
 
     return $self->_data_dir_from_input() || dist_dir( 'XML-Grammar-Fiction');
-}
-
-sub BUILD
-{
-    my ($self) = @_;
-
-    $self->_xml_parser(XML::LibXML->new());
-
-    my $xslt = XML::LibXSLT->new();
-
-    my $style_doc = $self->_xml_parser()->parse_file(
-            File::Spec->catfile(
-                $self->_data_dir(),
-                $self->xslt_transform_basename(),
-            ),
-        );
-
-    $self->_stylesheet($xslt->parse_stylesheet($style_doc));
-
-    return 0;
 }
 
 =head2 $converter->perform_translation
