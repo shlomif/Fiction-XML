@@ -1,5 +1,11 @@
 package XML::Grammar::Screenplay::FromProto;
 
+use strict;
+use warnings;
+use autodie;
+
+use Carp;
+
 use MooX 'late';
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
