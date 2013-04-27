@@ -13,7 +13,15 @@ use XML::LibXSLT;
 
 use MooX 'late';
 
-has '_data_dir' => (isa => 'Str', is => 'rw');
+has '_data_dir' =>
+(
+    isa => 'Str',
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        return shift->_calc_data_dir();
+    },
+);
 has '_data_dir_from_input' => (isa => 'Str', is => 'rw', init_arg => 'data_dir',);
 has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
 has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
@@ -59,14 +67,16 @@ Inherited - (to settle pod-coverage.).
 
 =cut
 
-sub BUILD
+sub _calc_data_dir
 {
     my ($self) = @_;
 
-    my $data_dir = $self->_data_dir_from_input() ||
-        dist_dir( 'XML-Grammar-Fiction');
+    return $self->_data_dir_from_input() || dist_dir( 'XML-Grammar-Fiction');
+}
 
-    $self->_data_dir($data_dir);
+sub BUILD
+{
+    my ($self) = @_;
 
     my $rngschema =
         XML::LibXML::RelaxNG->new(
