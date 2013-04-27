@@ -338,6 +338,16 @@ sub _convert_while_handling_errors
     return;
 }
 
+sub _calc_tree
+{
+    my ($self, $args) = @_;
+
+    my $filename = $args->{source}->{file} or
+        confess "Wrong filename given.";
+
+    return $self->_parser->process_text($self->_read_file($filename));
+}
+
 =head2 $self->convert({ source => { file => $path_to_file } })
 
 Converts the file $path_to_file to XML and returns it. Throws an exception
