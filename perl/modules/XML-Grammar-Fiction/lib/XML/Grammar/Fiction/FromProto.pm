@@ -48,8 +48,6 @@ on failure.
 
 =cut
 
-use Data::Dumper;
-
 my %lookup = (map { $_ => $_ } qw( li ol ul ));
 
 around '_calc_passthrough_cb' => sub
