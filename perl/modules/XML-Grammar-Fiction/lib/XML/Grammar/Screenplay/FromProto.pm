@@ -122,6 +122,23 @@ sub _paragraph_tag
     return "para";
 }
 
+around '_write_elem_obj' => sub {
+    my $orig = shift;
+    my $self = shift;
+    my ($args) = @_;
+
+    my $elem = $args->{elem};
+
+    if ($elem->_short_isa("Text"))
+    {
+        $self->_handle_text_start($elem);
+    }
+    else
+    {
+        return $orig->($self, @_);
+    }
+};
+
 sub _handle_elem_of_name_img
 {
     my ($self, $elem) = @_;
@@ -170,39 +187,6 @@ sub _bold_tag_name
 sub _italics_tag_name
 {
     return "italics";
-}
-
-sub _write_elem
-{
-    my ($self, $args) = @_;
-
-    my $elem = $args->{elem};
-
-    if (ref($elem) eq "")
-    {
-        $self->_writer->characters($elem);
-    }
-    elsif ($elem->_short_isa("Paragraph"))
-    {
-        $self->_output_tag_with_childs(
-            {
-               start => [$self->_paragraph_tag()],
-                elem => $elem,
-            },
-        );
-    }
-    elsif ($elem->_short_isa("Element"))
-    {
-        $self->_write_Element_elem($elem);
-    }
-    elsif ($elem->_short_isa("Text"))
-    {
-        $self->_handle_text_start($elem);
-    }
-    elsif ($elem->_short_isa("Comment"))
-    {
-        $self->_writer->comment($elem->text());
-    }
 }
 
 sub _write_scene

@@ -313,15 +313,21 @@ sub _handle_text_start
     return;
 }
 
-sub _write_elem
-{
-    my ($self, $args) = @_;
+around '_write_elem_obj' => sub {
+    my $orig = shift;
+    my $self = shift;
+    my ($args) = @_;
 
     my $elem = $args->{elem};
 
-    if (ref($elem) eq "")
+    if ($elem->_short_isa("List"))
     {
-        $self->_writer->characters($elem);
+        foreach my $child (@{$elem->contents()})
+        {
+            $self->_write_elem({elem => $child, });
+        }
+
+        return;
     }
     elsif ($elem->_short_isa("Text"))
     {
@@ -329,36 +335,14 @@ sub _write_elem
         {
             $self->_write_elem({ elem => $child,},);
         }
+
+        return;
     }
-    elsif ($elem->_short_isa("Paragraph"))
+    else
     {
-        $self->_output_tag_with_childs(
-            {
-                start => [$self->_paragraph_tag()],
-                elem => $elem,
-            },
-        );
+        return $orig->($self, @_);
     }
-    elsif ($elem->_short_isa("List"))
-    {
-        foreach my $child (@{$elem->contents()})
-        {
-            $self->_write_elem({elem => $child, });
-        }
-    }
-    elsif ($elem->_short_isa("Element"))
-    {
-        $self->_write_Element_elem($elem);
-    }
-    elsif ($elem->_short_isa("Text"))
-    {
-        $self->_handle_text_start($elem);
-    }
-    elsif ($elem->_short_isa("Comment"))
-    {
-        $self->_writer->comment($elem->text());
-    }
-}
+};
 
 sub _write_scene
 {
