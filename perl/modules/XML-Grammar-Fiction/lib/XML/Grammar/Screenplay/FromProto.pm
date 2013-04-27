@@ -122,22 +122,12 @@ sub _paragraph_tag
     return "para";
 }
 
-around '_write_elem_obj' => sub {
-    my $orig = shift;
-    my $self = shift;
-    my ($args) = @_;
+sub _write_Element_Text
+{
+    my ($self, $elem) = @_;
 
-    my $elem = $args->{elem};
-
-    if ($elem->_short_isa("Text"))
-    {
-        $self->_handle_text_start($elem);
-    }
-    else
-    {
-        return $orig->($self, @_);
-    }
-};
+    return $self->_handle_text_start($elem);
+}
 
 sub _handle_elem_of_name_img
 {
