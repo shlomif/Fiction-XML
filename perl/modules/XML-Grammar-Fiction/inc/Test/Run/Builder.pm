@@ -46,7 +46,7 @@ sub ACTION_distruntest {
 
 sub get_test_run_test_files
 {
-    return [glob("t/*.t")]
+    return [sort { $a cmp $b } (glob("t/*.t"), glob("t/*/*.t"), )]
 }
 
 sub do_test_run_tests
