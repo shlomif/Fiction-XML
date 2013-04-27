@@ -1,7 +1,5 @@
 package XML::Grammar::Screenplay::FromProto;
 
-use XML::Writer;
-
 use MooX 'late';
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
@@ -228,6 +226,11 @@ sub _calc_tree
     return $self->_parser->process_text($self->_read_file($filename));
 }
 
+sub _get_default_xml_ns
+{
+    return $screenplay_ns;
+}
+
 sub convert
 {
     my ($self, $args) = @_;
@@ -246,27 +249,12 @@ sub convert
         Carp::confess("Parsing failed.");
     }
 
-    my $buffer = "";
-    $self->_buffer(\$buffer);
+    my $writer = $self->_writer;
 
-    my $writer = XML::Writer->new(
-        OUTPUT => $self->_buffer(),
-        ENCODING => "utf-8",
-        NAMESPACES => 1,
-        PREFIX_MAP =>
-        {
-             $screenplay_ns => "",
-        }
-    );
-
-    $writer->xmlDecl("utf-8");
     $writer->startTag([$screenplay_ns, "document"]);
     $writer->startTag([$screenplay_ns, "head"]);
     $writer->endTag();
     $writer->startTag([$screenplay_ns, "body"], "id" => "index",);
-
-    # Now we're inside the body.
-    $self->_writer($writer);
 
     $self->_write_scene({scene => $tree});
 
@@ -275,7 +263,10 @@ sub convert
 
     $writer->endTag();
 
-    return ${$self->_buffer()};
+    return ${$self->_flush_buffer()};
+    my $ret = $self->_buffer();
+    $self->_reset_buffer();
+    return ${$ret};
 }
 
 1;

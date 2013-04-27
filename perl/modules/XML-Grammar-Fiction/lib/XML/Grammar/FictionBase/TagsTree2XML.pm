@@ -9,6 +9,8 @@ use HTML::Entities ();
 
 use XML::Grammar::Fiction::FromProto::Nodes;
 
+my $xml_ns = "http://www.w3.org/XML/1998/namespace";
+my $xlink_ns = "http://www.w3.org/1999/xlink";
 
 =head1 NAME
 
@@ -39,9 +41,64 @@ has "_parser" => (
     },
 );
 
-has "_writer" => ('isa' => "Maybe[XML::Writer]", 'is' => "rw");
+sub _get_initial_writer
+{
+    my $self = shift;
 
-has '_buffer' => (is => "rw");
+    my $writer = XML::Writer->new(
+        OUTPUT => $self->_buffer(),
+        ENCODING => "utf-8",
+        NAMESPACES => 1,
+        PREFIX_MAP =>
+        {
+            $self->_get_default_xml_ns() => "",
+            $xml_ns => 'xml',
+            $xlink_ns => 'xlink',
+        },
+    );
+
+    $writer->xmlDecl("utf-8");
+
+    return $writer;
+}
+
+has "_writer" => (
+    'isa' => "Maybe[XML::Writer]",
+    'is' => "rw",
+    lazy => 1,
+    default => sub { return shift->_get_initial_writer(); },
+);
+
+sub _get_initial_buffer {
+    my $buffer = '';
+    return \$buffer;
+}
+
+has '_buffer' => (
+    is => "rw",
+    lazy => 1,
+    default => sub { return shift->_get_initial_buffer; },
+);
+
+sub _reset_buffer
+{
+    my $self = shift;
+
+    $self->_buffer($self->_get_initial_buffer());
+    $self->_writer($self->_get_initial_writer());
+
+    return;
+}
+
+sub _flush_buffer
+{
+    my $self = shift;
+
+    my $ret = $self->_buffer();
+    $self->_reset_buffer();
+
+    return $ret;
+}
 
 my %passthrough_elem =
 (
