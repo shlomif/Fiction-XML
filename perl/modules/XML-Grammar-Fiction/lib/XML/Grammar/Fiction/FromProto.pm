@@ -79,22 +79,6 @@ sub _output_tag
     $self->_writer->endTag();
 }
 
-sub _output_tag_with_childs
-{
-    my ($self, $args) = @_;
-
-    return
-        $self->_output_tag({
-            %$args,
-            'in' => sub {
-                foreach my $child (@{$args->{elem}->_get_childs()})
-                {
-                    $self->_write_elem({elem => $child,});
-                }
-            },
-        });
-}
-
 sub _output_tag_with_childs_and_common_attributes
 {
     my ($self, $elem, $tag_name, $args) = @_;
@@ -273,6 +257,7 @@ sub _handle_elem_of_name_title
     # TODO :
     # Eliminate the Law-of-Demeter-syndrome here.
     my $list = $elem->_get_childs()->[0];
+
     $self->_output_tag(
         {
             start => ["title"],
@@ -315,14 +300,7 @@ sub _handle_text_start
 
 sub _write_Element_Text
 {
-    my ($self, $elem) = @_;
-
-    foreach my $child (@{$elem->_get_childs()})
-    {
-        $self->_write_elem({ elem => $child,},);
-    }
-
-    return;
+    return shift->_write_elem_childs(@_);
 }
 
 sub _write_Element_List
@@ -404,29 +382,11 @@ sub _write_body
     my $body = $args->{'body'};
 
     my $tag = $body->name;
+
     if ($tag ne "body")
     {
         confess "Improper body tag - should be '<body>'!";
     }
-
-=begin foo
-
-    my $title =
-        first
-        { $_->name() eq "title" }
-        @{$body->_get_childs()}
-        ;
-
-    my @t =
-    (
-          defined($title)
-        ? (title => $title->_get_childs()->[0])
-        : ()
-    );
-
-=end foo
-
-=cut
 
     $self->_output_tag_with_childs_and_common_attributes(
         $body,

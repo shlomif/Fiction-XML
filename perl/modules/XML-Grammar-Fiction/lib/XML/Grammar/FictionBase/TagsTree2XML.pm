@@ -124,6 +124,31 @@ sub _calc_write_elem_obj_classes
     return [qw(Text Paragraph Element Comment)];
 }
 
+sub _output_tag_with_childs
+{
+    my ($self, $args) = @_;
+
+    return
+        $self->_output_tag({
+            %$args,
+            'in' => sub {
+                return $self->_write_elem_childs( $args->{elem} );
+            },
+        });
+}
+
+sub _write_elem_childs
+{
+    my ($self, $elem) = @_;
+
+    foreach my $child (@{$elem->_get_childs()})
+    {
+        $self->_write_elem({ elem => $child,},);
+    }
+
+    return;
+}
+
 sub _write_elem_obj
 {
     my ($self, $args) = @_;
