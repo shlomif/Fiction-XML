@@ -23,7 +23,30 @@ has '_data_dir' =>
     },
 );
 has '_data_dir_from_input' => (isa => 'Str', is => 'rw', init_arg => 'data_dir',);
-has '_rng' => (isa => 'XML::LibXML::RelaxNG', is => 'rw');
+has '_rng' =>
+(
+    isa => 'XML::LibXML::RelaxNG',
+    is => 'rw',
+    lazy => 1,
+    default => sub {
+        return shift->_calc_rng();
+    },
+);
+
+sub _calc_rng
+{
+    my $self = shift;
+
+    return
+        XML::LibXML::RelaxNG->new(
+            location =>
+            File::Spec->catfile(
+                $self->_data_dir(),
+                $self->rng_schema_basename(),
+            ),
+        );
+}
+
 has '_xml_parser' => (isa => "XML::LibXML", is => 'rw');
 has '_stylesheet' => (isa => "XML::LibXSLT::StylesheetWrapper", is => 'rw');
 has 'rng_schema_basename' => (is => 'ro', isa => 'Str', required => 1,);
@@ -77,17 +100,6 @@ sub _calc_data_dir
 sub BUILD
 {
     my ($self) = @_;
-
-    my $rngschema =
-        XML::LibXML::RelaxNG->new(
-            location =>
-            File::Spec->catfile(
-                $self->_data_dir(),
-                $self->rng_schema_basename(),
-            ),
-        );
-
-    $self->_rng($rngschema);
 
     $self->_xml_parser(XML::LibXML->new());
 
