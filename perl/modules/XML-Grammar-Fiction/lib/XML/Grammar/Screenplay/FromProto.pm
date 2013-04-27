@@ -52,17 +52,6 @@ Converts the file $path_to_file to XML and returns it.
 
 =cut
 
-sub _output_tag
-{
-    my ($self, $args) = @_;
-
-    my @start = @{$args->{start}};
-    $self->_writer->startTag([$screenplay_ns,$start[0]], @start[1..$#start]);
-
-    $args->{in}->($self, $args);
-
-    $self->_writer->endTag();
-}
 
 sub _handle_text_start
 {

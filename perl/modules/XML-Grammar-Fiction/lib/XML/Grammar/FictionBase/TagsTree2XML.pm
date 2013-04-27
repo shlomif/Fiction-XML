@@ -278,6 +278,18 @@ sub _handle_elem_of_name_br
     return;
 }
 
+sub _output_tag
+{
+    my ($self, $args) = @_;
+
+    my @start = @{$args->{start}};
+    $self->_writer->startTag([$self->_get_default_xml_ns(),$start[0]], @start[1..$#start]);
+
+    $args->{in}->($self, $args);
+
+    $self->_writer->endTag();
+}
+
 sub _convert_while_handling_errors
 {
     my ($self, $args) = @_;

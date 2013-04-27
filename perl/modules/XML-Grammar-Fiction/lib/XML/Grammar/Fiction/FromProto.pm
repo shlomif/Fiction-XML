@@ -64,18 +64,6 @@ around '_calc_passthrough_cb' => sub
     return $orig->($self, @_);
 };
 
-sub _output_tag
-{
-    my ($self, $args) = @_;
-
-    my @start = @{$args->{start}};
-    $self->_writer->startTag([$fiction_ns,$start[0]], @start[1..$#start]);
-
-    $args->{in}->($self, $args);
-
-    $self->_writer->endTag();
-}
-
 sub _output_tag_with_childs_and_common_attributes
 {
     my ($self, $elem, $tag_name, $args) = @_;
