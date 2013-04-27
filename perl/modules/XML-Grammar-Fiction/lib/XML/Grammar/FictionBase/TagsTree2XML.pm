@@ -384,6 +384,26 @@ sub _calc_tree
     return $self->_parser->process_text($self->_read_file($filename));
 }
 
+sub _write_scene
+{
+    my ($self, $args) = @_;
+
+    my $scene = $args->{scene};
+
+    my $tag = $scene->name;
+
+    if (($tag eq "s") || ($tag eq "scene"))
+    {
+        $self->_write_scene_main($scene);
+    }
+    else
+    {
+        confess "Improper scene tag - should be '<s>' or '<scene>'!";
+    }
+
+    return;
+}
+
 =head2 $self->convert({ source => { file => $path_to_file } })
 
 Converts the file $path_to_file to XML and returns it. Throws an exception
