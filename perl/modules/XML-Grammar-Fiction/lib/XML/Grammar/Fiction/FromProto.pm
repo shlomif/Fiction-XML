@@ -313,23 +313,6 @@ sub _write_scene
     return;
 }
 
-sub _read_file
-{
-    my ($self, $filename) = @_;
-
-    open my $in, "<", $filename or
-        confess "Could not open the file \"$filename\" for slurping.";
-    binmode $in, ":utf8";
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>;
-    }
-    close($in);
-
-    return $contents;
-}
-
 sub _write_body
 {
     my $self = shift;

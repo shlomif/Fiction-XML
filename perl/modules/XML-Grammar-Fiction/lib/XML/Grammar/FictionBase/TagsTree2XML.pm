@@ -357,6 +357,23 @@ sub _convert_while_handling_errors
     return;
 }
 
+sub _read_file
+{
+    my ($self, $filename) = @_;
+
+    open my $in, "<", $filename or
+        Carp::confess("Could not open the file \"$filename\" for slurping.");
+    binmode $in, ":utf8";
+    my $contents;
+    {
+        local $/;
+        $contents = <$in>;
+    }
+    close($in);
+
+    return $contents;
+}
+
 sub _calc_tree
 {
     my ($self, $args) = @_;
