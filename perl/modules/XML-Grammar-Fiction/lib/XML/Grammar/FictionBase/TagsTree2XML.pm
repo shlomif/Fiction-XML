@@ -77,6 +77,47 @@ sub _calc_passthrough_name
     }
 }
 
+sub _write_elem
+{
+    my ($self, $args) = @_;
+
+    my $elem = $args->{elem};
+
+    if (ref($elem) eq "")
+    {
+        $self->_writer->characters($elem);
+    }
+    else
+    {
+        return $self->_write_elem_obj($args);
+    }
+}
+
+sub _write_elem_obj
+{
+    my ($self, $args) = @_;
+
+    my $elem = $args->{elem};
+
+    if ($elem->_short_isa("Paragraph"))
+    {
+        $self->_output_tag_with_childs(
+            {
+               start => [$self->_paragraph_tag()],
+                elem => $elem,
+            },
+        );
+    }
+    elsif ($elem->_short_isa("Element"))
+    {
+        $self->_write_Element_elem($elem);
+    }
+    elsif ($elem->_short_isa("Comment"))
+    {
+        $self->_writer->comment($elem->text());
+    }
+}
+
 sub _write_Element_elem
 {
     my ($self, $elem) = @_;
