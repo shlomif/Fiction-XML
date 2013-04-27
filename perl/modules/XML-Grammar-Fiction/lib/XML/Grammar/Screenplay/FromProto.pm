@@ -264,9 +264,6 @@ sub convert
     $writer->endTag();
 
     return ${$self->_flush_buffer()};
-    my $ret = $self->_buffer();
-    $self->_reset_buffer();
-    return ${$ret};
 }
 
 1;
