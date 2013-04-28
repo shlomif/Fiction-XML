@@ -7,8 +7,6 @@ use MooX 'late';
 
 use List::MoreUtils;
 
-use XML::Grammar::Fiction::FromProto::Nodes;
-
 =head1 NAME
 
 XML::Grammar::Fiction::Struct::Tag - information about an XML/SGML opening or

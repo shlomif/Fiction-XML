@@ -14,7 +14,7 @@ B<For internal use only>.
 
 use MooX 'late';
 
-use XML::Grammar::Fiction::FromProto::Nodes;
+use XML::Grammar::Fiction::FromProto::Node;
 
 has 'type' => (isa => "Str", is => "ro");
 has 'tag' => (isa => "Maybe[Str]", is => "ro", predicate => '_has_tag',);
