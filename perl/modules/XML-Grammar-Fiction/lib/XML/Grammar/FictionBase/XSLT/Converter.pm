@@ -22,7 +22,14 @@ has '_data_dir' =>
         return shift->_calc_data_dir();
     },
 );
-has '_data_dir_from_input' => (isa => 'Str', is => 'rw', init_arg => 'data_dir',);
+
+has '_data_dir_from_input' =>
+(
+    isa => 'Str',
+    is => 'rw',
+    init_arg => 'data_dir',
+);
+
 has '_rng' =>
 (
     isa => 'XML::LibXML::RelaxNG',
