@@ -108,24 +108,6 @@ sub _output_tag_with_childs_and_common_attributes
     );
 }
 
-sub _get_text_start
-{
-    my ($self, $elem) = @_;
-
-    if ($elem->_short_isa("Saying"))
-    {
-        return ["saying", 'character' => $elem->character()];
-    }
-    elsif ($elem->_short_isa("Description"))
-    {
-        return ["description"];
-    }
-    else
-    {
-        Carp::confess ("Unknown element class - " . ref($elem) . "!");
-    }
-}
-
 sub _paragraph_tag
 {
     return "p";
