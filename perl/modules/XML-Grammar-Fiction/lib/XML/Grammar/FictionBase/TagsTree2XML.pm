@@ -7,8 +7,6 @@ our $VERSION = '0.14.0';
 use XML::Writer;
 use HTML::Entities ();
 
-use XML::Grammar::Fiction::FromProto::Nodes;
-
 sub _get_xml_xml_ns
 {
     return "http://www.w3.org/XML/1998/namespace";

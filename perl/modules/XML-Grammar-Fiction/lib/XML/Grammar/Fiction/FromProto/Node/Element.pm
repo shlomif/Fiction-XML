@@ -2,8 +2,7 @@ package XML::Grammar::Fiction::FromProto::Node::Element;
 
 =head1 NAME
 
-XML::Grammar::Fiction::FromProto::Nodes - contains several nodes for
-use in XML::Grammar::Fiction::FromProto.
+XML::Grammar::Fiction::FromProto::Node::Element - an XML element node.
 
 =cut
 
