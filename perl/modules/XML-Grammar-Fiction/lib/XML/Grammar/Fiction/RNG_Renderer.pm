@@ -3,7 +3,7 @@ package XML::Grammar::Fiction::RNG_Renderer;
 use strict;
 use warnings;
 
-our $VERSION = '0.12.5';
+our $VERSION = '0.14.0';
 
 =head1 XML::Grammar::Fiction::RNG_Renderer
 

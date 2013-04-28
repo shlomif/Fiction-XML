@@ -2,7 +2,7 @@ package XML::Grammar::FictionBase::TagsTree2XML;
 
 use MooX 'late';
 
-our $VERSION = '0.12.5';
+our $VERSION = '0.14.0';
 
 use XML::Writer;
 use HTML::Entities ();
@@ -26,7 +26,7 @@ to XML converters.
 
 =head1 VERSION
 
-Version 0.12.5
+Version 0.14.0
 
 =cut
 
