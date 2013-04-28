@@ -20,6 +20,7 @@ has '+to_docbook_xslt_transform_basename' =>
 (
     default => 'fiction-xml-to-docbook.xslt',
 );
+
 =head1 NAME
 
 XML::Grammar::Fiction::ToDocBook - module that converts the Fiction-XML to
