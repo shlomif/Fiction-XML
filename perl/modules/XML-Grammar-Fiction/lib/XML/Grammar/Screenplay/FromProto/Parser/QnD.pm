@@ -7,7 +7,6 @@ use MooX 'late';
 
 extends( 'XML::Grammar::FictionBase::FromProto::Parser::XmlIterator' );
 
-use XML::Grammar::Fiction::FromProto::Nodes;
 use XML::Grammar::Fiction::Struct::Tag;
 use XML::Grammar::FictionBase::Event;
 
