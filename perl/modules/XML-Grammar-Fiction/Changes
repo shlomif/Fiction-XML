@@ -8,6 +8,7 @@ Revision history for XML-Grammar-Fiction.
     * Convert to XML::GrammarBase :
         - lib/XML/Grammar/Fiction/ToHTML.pm
         - lib/XML/Grammar/Fiction/ToDocBook.pm
+        - lib/XML/Grammar/Screenplay/ToDocBook.pm
         - lib/XML/Grammar/Screenplay/ToHTML.pm
         - lib/XML/Grammar/Screenplay/ToTEI.pm
 
