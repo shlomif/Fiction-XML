@@ -7,10 +7,19 @@ use Carp;
 
 use MooX 'late';
 
-extends ("XML::Grammar::Fiction::RNG_Renderer");
+use XML::GrammarBase::Role::RelaxNG;
+use XML::GrammarBase::Role::XSLT;
 
-has '+xslt_transform_basename' => (default => "fiction-xml-to-docbook.xslt");
+with ('XML::GrammarBase::Role::RelaxNG');
+with XSLT(output_format => 'docbook');
 
+has '+module_base' => (default => 'XML-Grammar-Fiction');
+has '+rng_schema_basename' => (default => 'fiction-xml.rng');
+
+has '+to_docbook_xslt_transform_basename' =>
+(
+    default => 'fiction-xml-to-docbook.xslt',
+);
 =head1 NAME
 
 XML::Grammar::Fiction::ToDocBook - module that converts the Fiction-XML to
@@ -41,7 +50,9 @@ Inherited - (to settle pod-coverage).
 
 =cut
 
+=head2 perform_xslt_translation
 
+See L<XML::GrammarBase::Role::XSLT> . The output_format is C<'docbook'> .
 
 =head2 translate_to_docbook
 
@@ -74,7 +85,7 @@ sub translate_to_docbook
 {
     my ($self, $args) = @_;
 
-    return $self->perform_translation($args);
+    return $self->perform_xslt_translation({output_format => 'docbook', %{$args}});
 }
 
 1;

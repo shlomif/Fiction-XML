@@ -7,7 +7,19 @@ use Carp;
 
 use MooX 'late';
 
-extends( 'XML::Grammar::Fiction::RNG_Renderer' );
+use XML::GrammarBase::Role::RelaxNG;
+use XML::GrammarBase::Role::XSLT;
+
+with ('XML::GrammarBase::Role::RelaxNG');
+with XSLT(output_format => 'html');
+
+has '+module_base' => (default => 'XML-Grammar-Fiction');
+has '+rng_schema_basename' => (default => 'fiction-xml.rng');
+
+has '+to_html_xslt_transform_basename' =>
+(
+    default => 'fiction-xml-to-html.xslt',
+);
 
 =head1 NAME
 
@@ -38,7 +50,9 @@ Internal - (to settle pod-coverage.).
 
 =cut
 
-has '+xslt_transform_basename' => (default => "fiction-xml-to-html.xslt", );
+=head2 perform_xslt_translation
+
+See L<XML::GrammarBase::Role::XSLT> . The output_format is C<'html'> .
 
 =head2 translate_to_html
 
@@ -71,7 +85,7 @@ sub translate_to_html
 {
     my ($self, $args) = @_;
 
-    return $self->perform_translation($args);
+    return $self->perform_xslt_translation({output_format => 'html', %{$args}});
 }
 
 1;
