@@ -3,6 +3,8 @@ Revision history for XML-Grammar-Fiction.
     * Moved unused to rejects:
         - lib/XML/Grammar/Fiction/RNG_Renderer.pm
         - lib/XML/Grammar/Screenplay/XSLT/Base.pm
+    * Made Test::XML::Ordered a test phase requires in dist.ini.
+        - so it will be mentioned only once.
 
 0.14.0      Sun 28 Apr 06:07:03 IDT 2013
     * Update the glob in inc/Test/Run/Builder.pm .
