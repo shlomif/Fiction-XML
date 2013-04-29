@@ -8,7 +8,7 @@ XML::Grammar::Fiction::FromProto::Node::Element - an XML element node.
 
 use MooX 'late';
 
-our $VERSION = '0.14.0';
+our $VERSION = '0.14.1';
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
