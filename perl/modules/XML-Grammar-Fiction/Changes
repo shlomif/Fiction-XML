@@ -1,5 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
+0.14.2      Tue 30 Apr 21:37:32 IDT 2013
     * Tweak dist.in to have proper runtime dependencies.
         - Thanks to leont on irc.perl.org .
     * Remove the Makefile.PL from the target distribution.
