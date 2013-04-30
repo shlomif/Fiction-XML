@@ -16,11 +16,11 @@ B<For internal use only>.
 
 =head1 VERSION
 
-Version 0.14.2
+Version 0.14.3
 
 =cut
 
-our $VERSION = '0.14.2';
+our $VERSION = '0.14.3';
 
 has 'name' => (is => "rw", isa => "Str");
 has 'line' => (is => "rw", isa => "Int");

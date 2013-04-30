@@ -27,11 +27,11 @@ XML::Grammar::Fiction::ToHTML - module that converts the Fiction-XML to HTML.
 
 =head1 VERSION
 
-Version 0.14.2
+Version 0.14.3
 
 =cut
 
-our $VERSION = '0.14.2';
+our $VERSION = '0.14.3';
 
 =head1 METHODS
 
