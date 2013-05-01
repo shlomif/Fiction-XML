@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 29;
+use Test::More tests => 46;
 
 use lib './t/lib';
 use XmlGrammarTestXML qw(my_is_xml);
@@ -43,9 +43,10 @@ my @tests = (qw(
     a-href-with-id-and-lang
     with-blockquote-with-lang-and-id
     with-style-tag-at-start-of-paragraph
+    with-comment-with-newlines
     ));
 
-# TEST:$num_texts=14
+# TEST:$num_texts=15
 
 my $grammar = XML::Grammar::Fiction::FromProto->new({
         parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
@@ -78,6 +79,9 @@ foreach my $fn (@tests)
             "Space after the </b>",
         );
     }
+
+    # TEST*$num_texts
+    unlike ($got_xml, qr{[ \t+]$}ms, "No trailing space in \"$fn\"");
 
     # TEST*$num_texts
     my_is_xml (
