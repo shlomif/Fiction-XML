@@ -180,7 +180,17 @@ sub _write_Element_Comment
 {
     my ($self, $elem) = @_;
 
-    $self->_writer->comment($elem->text());
+    my $text = $elem->text();
+
+    # To avoid trailing space due to a problem in XML::Writer
+    $text =~ s{\A[\r\n]+}{}ms;
+
+    if ($text =~ m{\n\z})
+    {
+        $text .= ' ';
+    }
+
+    $self->_writer->comment($text);
 }
 
 sub _calc_write_elem_obj_classes
