@@ -13,7 +13,7 @@ use XML::Grammar::FictionBase::Event;
 use List::Util ();
 use List::MoreUtils ();
 
-our $VERSION = '0.14.3';
+our $VERSION = '0.14.4';
 
 has "_in_saying" => (isa => "Bool", is => "rw");
 has "_prev_line_is_empty" => (isa => "Bool", is => "rw", default => 1);
