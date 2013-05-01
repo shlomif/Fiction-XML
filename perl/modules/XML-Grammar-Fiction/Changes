@@ -1,5 +1,13 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Got rid of trailing space in comments with newlines.
+        - Apparently XML::Writer appends surrounding spaces to the comments
+        being output, and if the comment starts or ends with a newline,
+        then it's a problem.
+        - Checking in a test in:
+            - t/screenplay/proto-text-to-xml-using-custom-parser.t
+
+
 v0.14.3     2013-04-30
     * Convert 'Changes' (this file) to CPAN::Changes.
         - Add a test in dist.ini.

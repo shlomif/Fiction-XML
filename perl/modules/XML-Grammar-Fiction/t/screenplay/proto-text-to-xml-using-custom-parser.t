@@ -5,7 +5,7 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 54;
+use Test::More tests => 76;
 
 use XmlGrammarTestXML qw(my_is_xml);
 
@@ -40,6 +40,7 @@ my @tests = (qw(
         with-img-element-inside-paragraphs
         with-internal-description
         with-comments
+        with-comments-with-newlines
         with-multi-para-desc
         with-multi-line-comments
         scenes-with-titles
@@ -50,7 +51,7 @@ my @tests = (qw(
         with-numeric-entities
     ));
 
-# TEST:$num_texts=18
+# TEST:$num_texts=19
 
 my $grammar = XML::Grammar::Screenplay::FromProto->new({
         parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
@@ -76,6 +77,9 @@ foreach my $fn (@tests)
 
     # TEST*$num_texts
     unlike ($got_xml, qr{^<!DOCTYPE}ms, "No doctype in \"$fn\"");
+
+    # TEST*$num_texts
+    unlike ($got_xml, qr{[ \t+]$}ms, "No trailing space in \"$fn\"");
 
     # TEST*$num_texts
     my_is_xml (
