@@ -29,11 +29,11 @@ Inherited - (to settle pod-coverage).
 
 =head1 VERSION
 
-Version 0.14.4
+Version 0.14.5
 
 =cut
 
-our $VERSION = '0.14.4';
+our $VERSION = '0.14.5';
 
 =head2 new()
 

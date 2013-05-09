@@ -13,7 +13,7 @@ use Getopt::Long;
 use XML::Grammar::Screenplay::FromProto;
 use XML::Grammar::Screenplay::FromProto::Parser::QnD;
 
-our $VERSION = '0.14.4';
+our $VERSION = '0.14.5';
 
 =head1 NAME
 
