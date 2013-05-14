@@ -946,11 +946,11 @@ B<For internal use only>.
 
 =cut
 
-our $VERSION = '0.14.5';
+our $VERSION = '0.14.6';
 
 =head1 VERSION
 
-Version 0.14.5
+Version 0.14.6
 
 =head1 SYNOPSIS
 
