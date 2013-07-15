@@ -14,11 +14,11 @@ B<For internal use only>.
 
 =head1 VERSION
 
-Version 0.14.6
+Version 0.14.7
 
 =cut
 
-our $VERSION = '0.14.6';
+our $VERSION = '0.14.7';
 
 1;
 
