@@ -5,7 +5,7 @@ use warnings;
 
 use MooX 'late';
 
-our $VERSION = '0.14.7';
+our $VERSION = '0.14.8';
 
 use XML::Writer;
 use HTML::Entities ();
@@ -27,7 +27,7 @@ to XML converters.
 
 =head1 VERSION
 
-Version 0.14.7
+Version 0.14.8
 
 =cut
 

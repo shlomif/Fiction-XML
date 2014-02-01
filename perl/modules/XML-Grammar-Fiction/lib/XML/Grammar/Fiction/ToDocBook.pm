@@ -28,11 +28,11 @@ DocBook 5.
 
 =head1 VERSION
 
-Version 0.14.7
+Version 0.14.8
 
 =cut
 
-our $VERSION = '0.14.7';
+our $VERSION = '0.14.8';
 
 =head1 METHODS
 
