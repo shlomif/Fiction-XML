@@ -1,5 +1,8 @@
 package XML::Grammar::Fiction::FromProto::Node::Element;
 
+use strict;
+use warnings;
+
 =head1 NAME
 
 XML::Grammar::Fiction::FromProto::Node::Element - an XML element node.

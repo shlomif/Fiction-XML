@@ -1,5 +1,8 @@
 package XML::Grammar::FictionBase::Event;
 
+use strict;
+use warnings;
+
 =head1 NAME
 
 XML::Grammar::FictionBase::Event - a parser event.

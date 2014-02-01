@@ -1,5 +1,8 @@
 package XML::Grammar::Fiction::FromProto::Node::Description;
 
+use strict;
+use warnings;
+
 our $VERSION = '0.14.7';
 
 use MooX 'late';

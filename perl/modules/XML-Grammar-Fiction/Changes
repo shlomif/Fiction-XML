@@ -1,5 +1,7 @@
 Revision history for XML-Grammar-Fiction.
 
+    * Add "use strict;" and "use warnings;" to all modules (CPANTS).
+
 v0.14.7     2013-07-15
     * Skip compiling the scripts with extra dependencies.
 
