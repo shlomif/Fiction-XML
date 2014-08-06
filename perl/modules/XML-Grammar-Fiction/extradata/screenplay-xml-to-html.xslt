@@ -18,6 +18,7 @@
     <html>
         <head>
             <title>My Screenplay</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         </head>
         <body>
             <div class="screenplay">

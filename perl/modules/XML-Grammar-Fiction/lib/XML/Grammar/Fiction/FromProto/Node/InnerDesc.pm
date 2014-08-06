@@ -5,7 +5,7 @@ use warnings;
 
 use MooX 'late';
 
-our $VERSION = '0.14.8';
+our $VERSION = '0.14.9';
 
 extends("XML::Grammar::Fiction::FromProto::Node::Element");
 

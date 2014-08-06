@@ -19,11 +19,11 @@ to convert a Fiction XML file to DocBook 5.
 
 =head1 VERSION
 
-Version 0.14.8
+Version 0.14.9
 
 =cut
 
-our $VERSION = '0.14.8';
+our $VERSION = '0.14.9';
 
 =head1 SYNOPSIS
 

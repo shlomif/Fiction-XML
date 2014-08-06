@@ -122,11 +122,11 @@ file to a different XML file using an XSLT transform.
 
 =head1 VERSION
 
-Version 0.14.8
+Version 0.14.9
 
 =cut
 
-our $VERSION = '0.14.8';
+our $VERSION = '0.14.9';
 
 =head1 METHODS
 
