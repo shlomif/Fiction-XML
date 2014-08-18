@@ -87,7 +87,7 @@ sub _pop_tag
 
 has "_events_queue" =>
 (
-    isa => "ArrayRef[XML::Grammar::FictionBase::Event]",
+    isa => "ArrayRef",
     # isa => "ArrayRef",
     is => "rw",
     default => sub { []; },
@@ -946,11 +946,11 @@ B<For internal use only>.
 
 =cut
 
-our $VERSION = '0.14.9';
+our $VERSION = '0.14.10';
 
 =head1 VERSION
 
-Version 0.14.9
+Version 0.14.10
 
 =head1 SYNOPSIS
 

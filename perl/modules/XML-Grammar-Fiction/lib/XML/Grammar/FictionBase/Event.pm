@@ -21,10 +21,10 @@ use XML::Grammar::Fiction::FromProto::Node;
 
 has 'type' => (isa => "Str", is => "ro");
 has 'tag' => (isa => "Maybe[Str]", is => "ro", predicate => '_has_tag',);
-has 'elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
-has 'tag_elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
+has 'elem' => (is => "ro");
+has 'tag_elem' => (is => "ro");
 
-our $VERSION = '0.14.9';
+our $VERSION = '0.14.10';
 
 sub is_tag_of_name
 {

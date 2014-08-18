@@ -10,18 +10,23 @@ with content.
 
 =head1 VERSION
 
-Version 0.14.9
+Version 0.14.10
+
+=head1 METHODS
+
+=head2 children()
+
+TODO FILL IN.
 
 =cut
 
-our $VERSION = '0.14.9';
+our $VERSION = '0.14.10';
 
 use MooX 'late';
 
 extends("XML::Grammar::Fiction::FromProto::Node");
 
 has 'children' => (
-    isa => 'XML::Grammar::Fiction::FromProto::Node::List',
     is => 'rw'
 );
 
