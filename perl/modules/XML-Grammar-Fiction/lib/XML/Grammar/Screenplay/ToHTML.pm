@@ -26,11 +26,11 @@ XML to HTML.
 
 =head1 VERSION
 
-Version 0.14.10
+Version 0.14.11
 
 =cut
 
-our $VERSION = '0.14.10';
+our $VERSION = '0.14.11';
 
 =head1 METHODS
 

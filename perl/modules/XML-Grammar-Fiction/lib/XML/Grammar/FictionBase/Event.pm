@@ -24,7 +24,7 @@ has 'tag' => (isa => "Maybe[Str]", is => "ro", predicate => '_has_tag',);
 has 'elem' => (is => "ro");
 has 'tag_elem' => (is => "ro");
 
-our $VERSION = '0.14.10';
+our $VERSION = '0.14.11';
 
 sub is_tag_of_name
 {
