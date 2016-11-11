@@ -16,7 +16,7 @@ Version 0.14.11
 
 =cut
 
-our $VERSION = '0.14.11';
+our $VERSION = 'v0.14.11';
 
 =head1 SYNOPSIS
 
