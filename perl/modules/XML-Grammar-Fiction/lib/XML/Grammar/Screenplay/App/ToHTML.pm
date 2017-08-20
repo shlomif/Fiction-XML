@@ -12,7 +12,7 @@ use Getopt::Long;
 
 use XML::Grammar::Screenplay::ToHTML;
 
-our $VERSION = '0.14.11';
+our $VERSION = '0.14.12';
 
 =head1 NAME
 
