@@ -5,8 +5,6 @@ use warnings;
 
 use MooX 'late';
 
-our $VERSION = '0.14.12';
-
 use XML::Writer;
 use HTML::Entities ();
 
@@ -24,10 +22,6 @@ sub _get_xlink_xml_ns
 
 XML::Grammar::FictionBase::TagsTree2XML - base class for the tags-tree
 to XML converters.
-
-=head1 VERSION
-
-Version 0.14.12
 
 =cut
 

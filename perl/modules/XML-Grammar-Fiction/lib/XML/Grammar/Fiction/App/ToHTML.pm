@@ -17,14 +17,6 @@ use XML::Grammar::Fiction::ToHTML;
 XML::Grammar::Fiction::App::ToHTML - command line app-in-a-module to convert
 Fiction-XML file to HTML
 
-=head1 VERSION
-
-Version 0.14.12
-
-=cut
-
-our $VERSION = '0.14.12';
-
 =head1 SYNOPSIS
 
     perl -MXML::Grammar::Fiction::App::ToHTML -e 'run()' -- \

@@ -18,13 +18,7 @@ for the Fiction-XML proto-text.
 
 B<For internal use only>.
 
-=head1 VERSION
-
-Version 0.14.12
-
 =cut
-
-our $VERSION = '0.14.12';
 
 sub _non_tag_text_unit_consume_regex {
     return qr{(?:[\<]|^\n?$)}ms;

@@ -10,13 +10,7 @@ use List::Util ();
 XML::Grammar::Fiction::FromProto::Node - contains several nodes for
 use in XML::Grammar::Fiction::FromProto.
 
-=head1 VERSION
-
-Version 0.14.12
-
 =cut
-
-our $VERSION = '0.14.12';
 
 use MooX 'late';
 

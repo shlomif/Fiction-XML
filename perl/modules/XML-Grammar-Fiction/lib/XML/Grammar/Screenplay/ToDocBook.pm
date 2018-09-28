@@ -30,14 +30,6 @@ XML to DocBook.
 
 Inherited - (to settle pod-coverage).
 
-=head1 VERSION
-
-Version 0.14.12
-
-=cut
-
-our $VERSION = '0.14.12';
-
 =head2 new()
 
 Accepts no arguments so far. May take some time as the grammar is compiled

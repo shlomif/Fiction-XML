@@ -21,14 +21,6 @@ use XML::Grammar::Fiction::FromProto::Parser::QnD;
 XML::Grammar::Fiction::App::FromProto - command line app-in-a-module
 to convert from a well-formed plaintext format to Fiction-XML.
 
-=head1 VERSION
-
-Version 0.14.12
-
-=cut
-
-our $VERSION = '0.14.12';
-
 =head1 SYNOPSIS
 
     perl -MXML::Grammar::Fiction::App::FromProto -e 'run()' -- \

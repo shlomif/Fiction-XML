@@ -25,14 +25,6 @@ has '+to_html_xslt_transform_basename' =>
 
 XML::Grammar::Fiction::ToHTML - module that converts the Fiction-XML to HTML.
 
-=head1 VERSION
-
-Version 0.14.12
-
-=cut
-
-our $VERSION = '0.14.12';
-
 =head1 METHODS
 
 =head2 xslt_transform_basename()

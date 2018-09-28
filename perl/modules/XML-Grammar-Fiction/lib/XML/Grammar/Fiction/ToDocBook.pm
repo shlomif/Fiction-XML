@@ -26,14 +26,6 @@ has '+to_docbook_xslt_transform_basename' =>
 XML::Grammar::Fiction::ToDocBook - module that converts the Fiction-XML to
 DocBook 5.
 
-=head1 VERSION
-
-Version 0.14.12
-
-=cut
-
-our $VERSION = '0.14.12';
-
 =head1 METHODS
 
 =head2 new()

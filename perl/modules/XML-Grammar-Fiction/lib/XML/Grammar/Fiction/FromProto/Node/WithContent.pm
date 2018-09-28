@@ -8,10 +8,6 @@ use warnings;
 XML::Grammar::Fiction::FromProto::Node::WithContent - contains a node
 with content.
 
-=head1 VERSION
-
-Version 0.14.12
-
 =head1 METHODS
 
 =head2 children()
@@ -19,8 +15,6 @@ Version 0.14.12
 TODO FILL IN.
 
 =cut
-
-our $VERSION = '0.14.12';
 
 use MooX 'late';
 

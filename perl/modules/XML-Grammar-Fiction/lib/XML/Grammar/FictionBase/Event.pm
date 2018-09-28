@@ -9,10 +9,6 @@ XML::Grammar::FictionBase::Event - a parser event.
 
 B<For internal use only>.
 
-=head1 VERSION
-
-0.11.0
-
 =cut
 
 use MooX 'late';
@@ -23,8 +19,6 @@ has 'type' => (isa => "Str", is => "ro");
 has 'tag' => (isa => "Maybe[Str]", is => "ro", predicate => '_has_tag',);
 has 'elem' => (is => "ro");
 has 'tag_elem' => (is => "ro");
-
-our $VERSION = '0.14.12';
 
 sub is_tag_of_name
 {
