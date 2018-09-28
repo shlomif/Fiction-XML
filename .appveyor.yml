@@ -1,7 +1,8 @@
 image: ubuntu
 
 install:
-- sudo apt-get -y install --no-recommends cpanm libdist-zilla-perl
+- sudo apt-get update -qq
+- sudo apt-get --no-install-recommends -y install cpanm libdist-zilla-perl
 
 test_script:
 - cd perl/modules/XML-Grammar-Fiction/
