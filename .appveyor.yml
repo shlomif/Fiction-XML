@@ -1,0 +1,11 @@
+image: ubuntu
+
+install:
+- sudo apt-get -y install --no-recommends cpanm libdist-zilla-perl
+
+test_script:
+- cd perl/modules/XML-Grammar-Fiction/
+- dzil authordeps | xargs cpanm -n
+- dzil listdeps | xargs cpanm -n
+- dzil smoke
+build: off
