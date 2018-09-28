@@ -18,37 +18,39 @@
     <html>
         <head>
             <title>My Screenplay</title>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta charset="utf-8" />
         </head>
         <body>
-            <div class="screenplay">
+            <main class="screenplay">
             <xsl:attribute name="id">
                 <xsl:value-of select="@id" />
             </xsl:attribute>
             <xsl:apply-templates select="sp:scene" />
-            </div>
+            </main>
         </body>
     </html>
 </xsl:template>
 
 <xsl:template match="sp:scene">
-    <div class="scene" id="scene-{@id}">
-        <!-- Make the title the title attribute or "ID" if does not exist. -->
-        <xsl:element name="h{count(ancestor-or-self::sp:scene)}">
-            <xsl:attribute name="id">
-                <xsl:value-of select="@id" />
-            </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="@title">
-                    <xsl:value-of select="@title" />
-                </xsl:when>
-                <xsl:otherwise>
+    <section class="scene" id="scene-{@id}">
+        <header>
+            <!-- Make the title the title attribute or "ID" if does not exist. -->
+            <xsl:element name="h{count(ancestor-or-self::sp:scene)}">
+                <xsl:attribute name="id">
                     <xsl:value-of select="@id" />
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:element>
+                </xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="@title">
+                        <xsl:value-of select="@title" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="@id" />
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:element>
+        </header>
         <xsl:apply-templates select="sp:scene|sp:description|sp:saying" />
-    </div>
+    </section>
 </xsl:template>
 
 <xsl:template match="sp:description">
