@@ -6,8 +6,6 @@
      >
 
 <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"
- doctype-public="-//W3C//DTD XHTML 1.1//EN"
- doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
  />
 
 <xsl:template match="/">
