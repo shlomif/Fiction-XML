@@ -2,11 +2,11 @@ image: ubuntu
 
 install:
 - sudo apt-get update -qq
-- sudo apt-get --no-install-recommends -y install cpanm libdist-zilla-perl
+- sudo apt-get --no-install-recommends -y install cpanminus libdist-zilla-perl libxml-libxslt-perl
 
 test_script:
 - cd perl/modules/XML-Grammar-Fiction/
-- dzil authordeps | xargs cpanm -n
-- dzil listdeps | xargs cpanm -n
+- dzil authordeps | xargs sudo cpanm -n
+- dzil listdeps | xargs sudo cpanm -n
 - dzil smoke
 build: off
