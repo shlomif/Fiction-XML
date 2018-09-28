@@ -6,7 +6,7 @@ install:
 
 test_script:
 - cd perl/modules/XML-Grammar-Fiction/
-- dzil authordeps | xargs sudo cpanm -n
-- dzil listdeps | xargs sudo cpanm -n
+- dzil authordeps --missing | xargs sudo cpanm -n
+- dzil listdeps --missing | xargs sudo cpanm -n
 - dzil smoke
 build: off
