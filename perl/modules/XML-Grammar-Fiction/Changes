@@ -1,6 +1,6 @@
 Revision history for XML-Grammar-Fiction.
 
-0.15.0      2018-09-28
+v0.15.0     2018-09-28
     * Convert dist.ini to @SHLOMIF .
     * Convert extradata/screenplay-xml-to-html.xslt to emit XHTML5.
 
