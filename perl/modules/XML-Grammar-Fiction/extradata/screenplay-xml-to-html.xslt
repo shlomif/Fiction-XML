@@ -15,7 +15,7 @@
 <xsl:template match="sp:body">
     <html>
         <xsl:attribute name="xml:lang">
-            <xsl:value-of select="@xml:lang|./sp:scene[@xml:lang]" />
+            <xsl:value-of select="@xml:lang|./sp:scene/@xml:lang" />
         </xsl:attribute>
         <head>
             <title>My Screenplay</title>
