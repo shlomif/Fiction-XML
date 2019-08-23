@@ -12,13 +12,7 @@ Fiction-XML proto-text.
 
 B<For internal use only>.
 
-=head1 VERSION
-
-Version 0.14.4
-
 =cut
-
-our $VERSION = '0.14.4';
 
 1;
 

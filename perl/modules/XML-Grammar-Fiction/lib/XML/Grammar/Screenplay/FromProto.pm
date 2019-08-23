@@ -17,14 +17,6 @@ my $screenplay_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/
 XML::Grammar::Screenplay::FromProto - module that converts well-formed
 text representing a screenplay to an XML format.
 
-=head1 VERSION
-
-Version 0.14.4
-
-=cut
-
-our $VERSION = '0.14.4';
-
 =head2 new()
 
 Accepts no arguments so far. May take some time as the grammar is compiled

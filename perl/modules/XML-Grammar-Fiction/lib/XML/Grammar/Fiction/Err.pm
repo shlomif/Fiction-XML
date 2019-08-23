@@ -9,13 +9,7 @@ use warnings;
 XML::Grammar::Fiction::Err - Exception::Class-based exceptions used by
 XML::Grammar::Fiction
 
-=head1 VERSION
-
-Version 0.14.4
-
 =cut
-
-our $VERSION = '0.14.4';
 
 use Exception::Class
     (

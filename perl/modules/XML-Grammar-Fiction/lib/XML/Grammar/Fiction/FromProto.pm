@@ -17,14 +17,6 @@ my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fictio
 XML::Grammar::Fiction::FromProto - module that converts well-formed
 text representing prose to an XML format.
 
-=head1 VERSION
-
-Version 0.14.4
-
-=cut
-
-our $VERSION = '0.14.4';
-
 =head2 new()
 
 Accepts no arguments so far. May take some time as the grammar is compiled

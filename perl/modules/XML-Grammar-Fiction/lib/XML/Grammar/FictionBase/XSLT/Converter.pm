@@ -120,13 +120,7 @@ has 'xslt_transform_basename' => (is => 'ro', isa => 'Str', required => 1,);
 XML::Grammar::FictionBase::XSLT::Converter - base module that converts an XML
 file to a different XML file using an XSLT transform.
 
-=head1 VERSION
-
-Version 0.14.4
-
 =cut
-
-our $VERSION = '0.14.4';
 
 =head1 METHODS
 

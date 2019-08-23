@@ -10,14 +10,6 @@ use strict;
 XML::Grammar::Screenplay - CPAN distribution implementing an XML grammar for
 screenplays.
 
-=head1 VERSION
-
-Version 0.14.4
-
-=cut
-
-our $VERSION = '0.14.4';
-
 =head1 SYNOPSIS
 
 See L<XML::Grammar::Screenplay::FromProto>,

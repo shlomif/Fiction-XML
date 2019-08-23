@@ -24,14 +24,6 @@ has '+to_tei_xslt_transform_basename' =>
 XML::Grammar::Screenplay::ToTEI - module that converts the Screenplay
 XML to TEI (Text Encoding Initiative).
 
-=head1 VERSION
-
-Version 0.14.4
-
-=cut
-
-our $VERSION = '0.14.4';
-
 =head2 new()
 
 Accepts no arguments so far. May take some time as the grammar is compiled

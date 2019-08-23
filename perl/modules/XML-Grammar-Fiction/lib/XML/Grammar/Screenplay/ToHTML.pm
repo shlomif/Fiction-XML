@@ -21,14 +21,6 @@ has '+to_html_xslt_transform_basename' =>
 XML::Grammar::Screenplay::ToHTML - module that converts the Screenplay
 XML to HTML.
 
-=head1 VERSION
-
-Version 0.14.4
-
-=cut
-
-our $VERSION = '0.14.4';
-
 =head1 METHODS
 
 =head2 xslt_transform_basename()

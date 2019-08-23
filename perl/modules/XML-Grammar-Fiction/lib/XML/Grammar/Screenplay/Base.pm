@@ -3,18 +3,12 @@ package XML::Grammar::Screenplay::Base;
 use strict;
 use warnings;
 
-our $VERSION = '0.14.4';
-
 =encoding utf8
 
 =head1 NAME
 
 XML::Grammar::Screenplay::Base - base class for XML::Grammar::Screenplay
 classes.
-
-=head1 VERSION
-
-0.11.0
 
 =head1 METHODS
 

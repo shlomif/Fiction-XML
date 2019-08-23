@@ -10,14 +10,6 @@ use strict;
 XML::Grammar::Fiction - CPAN distribution implementing an XML grammar
 and a lightweight markup language for stories, novels and other fiction.
 
-=head1 VERSION
-
-Version 0.14.4
-
-=cut
-
-our $VERSION = '0.14.4';
-
 =head1 SYNOPSIS
 
 See L<XML::Grammar::Fiction::FromProto>,

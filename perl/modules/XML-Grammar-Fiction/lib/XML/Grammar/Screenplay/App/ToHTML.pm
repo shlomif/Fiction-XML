@@ -12,16 +12,10 @@ use Getopt::Long;
 
 use XML::Grammar::Screenplay::ToHTML;
 
-our $VERSION = '0.14.4';
-
 =head1 NAME
 
 XML::Grammar::Screenplay::App::ToHTML - module implementing
 a command line application to convert a Screenplay XML file to HTML
-
-=head1 VERSION
-
-0.11.0
 
 =head1 FUNCTIONS
 

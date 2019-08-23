@@ -14,13 +14,7 @@ closing tag.
 
 B<For internal use only>.
 
-=head1 VERSION
-
-Version 0.14.4
-
 =cut
-
-our $VERSION = '0.14.4';
 
 has 'name' => (is => "rw", isa => "Str");
 has 'line' => (is => "rw", isa => "Int");

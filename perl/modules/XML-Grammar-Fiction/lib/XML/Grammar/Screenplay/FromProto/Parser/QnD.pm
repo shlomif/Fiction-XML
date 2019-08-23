@@ -13,8 +13,6 @@ use XML::Grammar::FictionBase::Event;
 use List::Util ();
 use List::MoreUtils ();
 
-our $VERSION = '0.14.4';
-
 has "_in_saying" => (isa => "Bool", is => "rw");
 has "_prev_line_is_empty" => (isa => "Bool", is => "rw", default => 1);
 has '_is_start' => (isa => 'Bool', is => 'rw');
@@ -606,10 +604,6 @@ XML::Grammar::Screenplay::FromProto::Parser::QnD - Quick and Dirty parser
 for the Screenplay-XML proto-text.
 
 B<For internal use only>.
-
-=head1 VERSION
-
-0.11.0
 
 =head1 METHODS
 

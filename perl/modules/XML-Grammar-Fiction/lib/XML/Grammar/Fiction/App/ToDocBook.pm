@@ -17,13 +17,7 @@ use XML::Grammar::Fiction::ToDocBook;
 XML::Grammar::Fiction::App::ToDocBook - command line app-in-a-module
 to convert a Fiction XML file to DocBook 5.
 
-=head1 VERSION
-
-Version 0.14.4
-
 =cut
-
-our $VERSION = '0.14.4';
 
 =head1 SYNOPSIS
 
