@@ -1,7 +1,7 @@
 package XML::Grammar::Fiction;
 
-use warnings;
 use strict;
+use warnings;
 
 =encoding utf8
 

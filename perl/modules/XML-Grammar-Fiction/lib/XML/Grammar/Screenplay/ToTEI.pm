@@ -5,19 +5,17 @@ use warnings;
 
 use MooX 'late';
 
-use XML::GrammarBase::Role::RelaxNG;
+use XML::GrammarBase::Role::RelaxNG ();
 use XML::GrammarBase::Role::XSLT;
 
-with ('XML::GrammarBase::Role::RelaxNG');
-with XSLT(output_format => 'tei');
+with('XML::GrammarBase::Role::RelaxNG');
+with XSLT( output_format => 'tei' );
 
-has '+module_base' => (default => 'XML-Grammar-Fiction');
-has '+rng_schema_basename' => (default => 'screenplay-xml.rng');
+has '+module_base'         => ( default => 'XML-Grammar-Fiction' );
+has '+rng_schema_basename' => ( default => 'screenplay-xml.rng' );
 
 has '+to_tei_xslt_transform_basename' =>
-(
-    default => 'screenplay-xml-to-tei.xslt',
-);
+    ( default => 'screenplay-xml-to-tei.xslt', );
 
 =head1 NAME
 
@@ -50,11 +48,10 @@ L<XML::LibXML> DOM object.
 
 sub translate_to_tei
 {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
     return $self->perform_xslt_translation(
-        {output_format => 'tei', %{$args}}
-    );
+        { output_format => 'tei', %{$args} } );
 }
 
 1;

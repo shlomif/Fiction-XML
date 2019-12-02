@@ -3,23 +3,21 @@ package XML::Grammar::Fiction::ToHTML;
 use strict;
 use warnings;
 
-use Carp;
+use Carp ();
 
 use MooX 'late';
 
-use XML::GrammarBase::Role::RelaxNG;
+use XML::GrammarBase::Role::RelaxNG ();
 use XML::GrammarBase::Role::XSLT;
 
-with ('XML::GrammarBase::Role::RelaxNG');
-with XSLT(output_format => 'html');
+with('XML::GrammarBase::Role::RelaxNG');
+with XSLT( output_format => 'html' );
 
-has '+module_base' => (default => 'XML-Grammar-Fiction');
-has '+rng_schema_basename' => (default => 'fiction-xml.rng');
+has '+module_base'         => ( default => 'XML-Grammar-Fiction' );
+has '+rng_schema_basename' => ( default => 'fiction-xml.rng' );
 
 has '+to_html_xslt_transform_basename' =>
-(
-    default => 'fiction-xml-to-html.xslt',
-);
+    ( default => 'fiction-xml-to-html.xslt', );
 
 =head1 NAME
 
@@ -77,9 +75,10 @@ L<XML::LibXML> DOM object.
 
 sub translate_to_html
 {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
-    return $self->perform_xslt_translation({output_format => 'html', %{$args}});
+    return $self->perform_xslt_translation(
+        { output_format => 'html', %{$args} } );
 }
 
 1;

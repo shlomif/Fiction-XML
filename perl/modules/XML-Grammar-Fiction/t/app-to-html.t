@@ -4,28 +4,30 @@ use strict;
 use warnings;
 
 use Test::More tests => 1;
-use File::Spec;
+use File::Spec ();
 
 use Config;
 
 {
     local %ENV = %ENV;
-    my @p5lib = split($Config{'path_sep'}, $ENV{'PERL5LIB'});
-    $ENV{'PERL5LIB'} = join($Config{'path_sep'},
+    my @p5lib = split( $Config{'path_sep'}, $ENV{'PERL5LIB'} );
+    $ENV{'PERL5LIB'} = join(
+        $Config{'path_sep'},
         File::Spec->rel2abs(
-            File::Spec->catdir(
-                File::Spec->curdir(),
-                "t", "lib", "run-test-1",
-            )
-        ), @p5lib);
+            File::Spec->catdir( File::Spec->curdir(),
+                "t", "lib", "run-test-1", )
+        ),
+        @p5lib
+    );
 
     # TEST
-    ok (
-        !system($^X, "-MXML::Grammar::Fiction::App::ToHTML",
-            "-e", "run()",
-            "--",
-            "-o", "temp.xhtml",
-            File::Spec->catdir(File::Spec->curdir(),
+    ok(
+        !system( $^X,
+            "-MXML::Grammar::Fiction::App::ToHTML",
+            "-e", "run()", "--", "-o",
+            "temp.xhtml",
+            File::Spec->catdir(
+                File::Spec->curdir(),
                 "t", "fiction", "data", "xml", "sections-and-paras.xml",
             )
         ),

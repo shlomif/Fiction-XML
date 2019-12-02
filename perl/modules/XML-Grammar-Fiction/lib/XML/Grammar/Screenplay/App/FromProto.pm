@@ -4,14 +4,14 @@ use strict;
 use warnings;
 use autodie;
 
-use base 'Exporter';
+use parent 'Exporter';
 
 our @EXPORT = (qw(run));
 
-use Getopt::Long;
+use Getopt::Long qw/ GetOptions /;
 
-use XML::Grammar::Screenplay::FromProto;
-use XML::Grammar::Screenplay::FromProto::Parser::QnD;
+use XML::Grammar::Screenplay::FromProto              ();
+use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
 
 =head1 NAME
 
@@ -36,29 +36,27 @@ sub run
 {
     my $output_filename;
 
-    GetOptions(
-        "output|o=s" => \$output_filename,
-    );
+    GetOptions( "output|o=s" => \$output_filename, );
 
-    if (!defined($output_filename))
+    if ( !defined($output_filename) )
     {
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
-    my $converter = XML::Grammar::Screenplay::FromProto->new({
-        parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
-    });
+    my $converter = XML::Grammar::Screenplay::FromProto->new(
+        {
+            parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
+        }
+    );
 
     $converter->_convert_while_handling_errors(
         {
-            convert_args =>
-            {
+            convert_args => {
                 source => { file => shift(@ARGV), },
             },
             output_filename => $output_filename,
         }
     );
-
 
     exit(0);
 }

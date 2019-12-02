@@ -8,9 +8,9 @@ use base 'Exporter';
 
 our @EXPORT = (qw(run));
 
-use Getopt::Long;
+use Getopt::Long qw/ GetOptions /;
 
-use XML::Grammar::Screenplay::ToDocBook;
+use XML::Grammar::Screenplay::ToDocBook ();
 
 =head1 NAME
 
@@ -29,18 +29,17 @@ sub run
 {
     my $output_filename;
 
-    GetOptions(
-        "output|o=s" => \$output_filename,
-    );
+    GetOptions( "output|o=s" => \$output_filename, );
 
-    if (!defined($output_filename))
+    if ( !defined($output_filename) )
     {
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
     my $converter = XML::Grammar::Screenplay::ToDocBook->new();
 
-    my $output_text = $converter->translate_to_docbook({
+    my $output_text = $converter->translate_to_docbook(
+        {
             source => { file => shift(@ARGV), },
             output => "string",
         }

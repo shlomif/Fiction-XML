@@ -7,19 +7,19 @@ use Carp ();
 
 use MooX 'late';
 
-use XML::Grammar::Fiction::Err;
-use XML::Grammar::Fiction::Struct::Tag;
-use XML::Grammar::FictionBase::Event;
+use XML::Grammar::Fiction::Err ();
+use XML::Grammar::Fiction::Struct::Tag ();
+use XML::Grammar::FictionBase::Event ();
 
-use XML::Grammar::Fiction::FromProto::Node::WithContent;
-use XML::Grammar::Fiction::FromProto::Node::Element;
-use XML::Grammar::Fiction::FromProto::Node::List;
-use XML::Grammar::Fiction::FromProto::Node::Text;
-use XML::Grammar::Fiction::FromProto::Node::Saying;
-use XML::Grammar::Fiction::FromProto::Node::Description;
-use XML::Grammar::Fiction::FromProto::Node::Paragraph;
-use XML::Grammar::Fiction::FromProto::Node::InnerDesc;
-use XML::Grammar::Fiction::FromProto::Node::Comment;
+use XML::Grammar::Fiction::FromProto::Node::WithContent ();
+use XML::Grammar::Fiction::FromProto::Node::Element ();
+use XML::Grammar::Fiction::FromProto::Node::List ();
+use XML::Grammar::Fiction::FromProto::Node::Text ();
+use XML::Grammar::Fiction::FromProto::Node::Saying ();
+use XML::Grammar::Fiction::FromProto::Node::Description ();
+use XML::Grammar::Fiction::FromProto::Node::Paragraph ();
+use XML::Grammar::Fiction::FromProto::Node::InnerDesc ();
+use XML::Grammar::Fiction::FromProto::Node::Comment ();
 
 extends("XML::Grammar::FictionBase::FromProto::Parser::LineIterator");
 

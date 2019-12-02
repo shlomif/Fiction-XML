@@ -5,12 +5,12 @@ use warnings;
 
 use Test::More tests => 26;
 
-use XML::LibXML;
+use XML::LibXML ();
 
-use Exception::Class;
+use Exception::Class ();
 
-use XML::Grammar::Fiction::FromProto;
-use XML::Grammar::Fiction::FromProto::Parser::QnD;
+use XML::Grammar::Fiction::FromProto ();
+use XML::Grammar::Fiction::FromProto::Parser::QnD ();
 
 
 {

@@ -5,15 +5,15 @@ use warnings;
 
 use Test::More tests => 2;
 
-use File::Spec;
+use File::Spec                          ();
+use XML::LibXML                         ();
+use XML::Grammar::Screenplay::ToDocBook ();
 
-use XML::LibXML;
-
-use XML::Grammar::Screenplay::ToDocBook;
-
-my @tests = (qw(
+my @tests = (
+    qw(
         with-internal-description
-    ));
+        )
+);
 
 sub load_xml
 {
@@ -31,17 +31,20 @@ sub load_xml
 
 # TEST:$num_texts=1
 
-my $converter = XML::Grammar::Screenplay::ToDocBook->new({
-        data_dir => File::Spec->catdir(File::Spec->curdir(), "extradata"),
-    });
+my $converter = XML::Grammar::Screenplay::ToDocBook->new(
+    {
+        data_dir => File::Spec->catdir( File::Spec->curdir(), "extradata" ),
+    }
+);
 
 foreach my $fn (@tests)
 {
-    my $docbook_text = $converter->translate_to_docbook({
+    my $docbook_text = $converter->translate_to_docbook(
+        {
             source => { file => "t/screenplay/data/xml/$fn.xml", },
             output => "string",
         }
-        );
+    );
 
     # TEST*$num_texts*2
 
@@ -49,16 +52,15 @@ foreach my $fn (@tests)
 
     my $doc = $parser->parse_string($docbook_text);
 
-    is (
-        scalar(() = $doc->findnodes(q{//article[@id='index']})),
-        1,
-        "Found one article with id index",
+    is(
+        scalar( () = $doc->findnodes(q{//article[@id='index']}) ),
+        1, "Found one article with id index",
     );
 
-    ok (
-        (scalar(() = $doc->findnodes(q{//section[@role='description']}))
-            >=
-            1
+    ok(
+        (
+            scalar( () = $doc->findnodes(q{//section[@role='description']}) )
+                >= 1
         ),
         "Found role=description sections",
     );

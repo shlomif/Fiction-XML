@@ -9,7 +9,7 @@ use Test::More tests => 76;
 
 use XmlGrammarTestXML qw(my_is_xml);
 
-use XML::LibXML;
+use XML::LibXML ();
 
 require XML::Grammar::Screenplay::FromProto;
 
@@ -29,7 +29,8 @@ sub load_xml
     return $contents;
 }
 
-my @tests = (qw(
+my @tests = (
+    qw(
         nested-s
         two-nested-s
         with-dialogue
@@ -49,17 +50,19 @@ my @tests = (qw(
         with-internal-description-at-start-of-line
         with-colon-inside-description
         with-numeric-entities
-    ));
+        )
+);
 
 # TEST:$num_texts=19
 
-my $grammar = XML::Grammar::Screenplay::FromProto->new({
+my $grammar = XML::Grammar::Screenplay::FromProto->new(
+    {
         parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
-    });
+    }
+);
 
-my $rngschema = XML::LibXML::RelaxNG->new(
-        location => "./extradata/screenplay-xml.rng"
-    );
+my $rngschema =
+    XML::LibXML::RelaxNG->new( location => "./extradata/screenplay-xml.rng" );
 
 my $xml_parser = XML::LibXML->new();
 $xml_parser->validation(0);
@@ -68,21 +71,20 @@ foreach my $fn (@tests)
 {
     my $got_xml = $grammar->convert(
         {
-            source =>
-            {
+            source => {
                 file => "t/screenplay/data/proto-text/$fn.txt",
             },
         }
     );
 
     # TEST*$num_texts
-    unlike ($got_xml, qr{^<!DOCTYPE}ms, "No doctype in \"$fn\"");
+    unlike( $got_xml, qr{^<!DOCTYPE}ms, "No doctype in \"$fn\"" );
 
     # TEST*$num_texts
-    unlike ($got_xml, qr{[ \t+]$}ms, "No trailing space in \"$fn\"");
+    unlike( $got_xml, qr{[ \t+]$}ms, "No trailing space in \"$fn\"" );
 
     # TEST*$num_texts
-    my_is_xml (
+    my_is_xml(
         [ string => $got_xml, ],
         [ string => load_xml("t/screenplay/data/xml/$fn.xml"), ],
         "Output of the Proto Text \"$fn\""
@@ -91,15 +93,13 @@ foreach my $fn (@tests)
     my $dom = $xml_parser->parse_string($got_xml);
 
     my $code;
-    eval
-    {
-    $code = $rngschema->validate($dom);
-    };
+    eval { $code = $rngschema->validate($dom); };
 
     # TEST*$num_texts
-    ok ((defined($code) && ($code == 0)),
-        "The validation of '$fn' succeeded.") ||
-        diag("\$@ == $@");
+    ok(
+        ( defined($code) && ( $code == 0 ) ),
+        "The validation of '$fn' succeeded."
+    ) || diag("\$@ == $@");
 }
 
 1;

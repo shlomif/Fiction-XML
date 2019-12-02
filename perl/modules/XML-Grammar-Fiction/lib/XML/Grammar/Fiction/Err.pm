@@ -3,7 +3,6 @@ package XML::Grammar::Fiction::Err;
 use strict;
 use warnings;
 
-
 =head1 NAME
 
 XML::Grammar::Fiction::Err - Exception::Class-based exceptions used by
@@ -11,54 +10,42 @@ XML::Grammar::Fiction
 
 =cut
 
-use Exception::Class
-    (
-        "XML::Grammar::Fiction::Err::Base",
-        "XML::Grammar::Fiction::Err::Base::WithOpenTag" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Base",
-            fields => [qw(opening_tag)],
-        },
-        "XML::Grammar::Fiction::Err::Parse::TagsMismatch" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Base::WithOpenTag",
-            fields => [qw(opening_tag closing_tag)],
-        },
-        "XML::Grammar::Fiction::Err::Parse::LineError" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Base",
-            fields => [qw(line)],
-        },
-        "XML::Grammar::Fiction::Err::Parse::LeadingSpace" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        },
-        "XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        },
-        "XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        },
-        "XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        },
-        "XML::Grammar::Fiction::Err::Parse::ProgramListingContainsTags" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        },
-        "XML::Grammar::Fiction::Err::Parse::ParaOpenPlusNotFollowedByTag" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Parse::LineError",
-        },
-        "XML::Grammar::Fiction::Err::Parse::TagNotClosedAtEOF" =>
-        {
-            isa => "XML::Grammar::Fiction::Err::Base::WithOpenTag",
-        },
-    )
-    ;
+use Exception::Class (
+    "XML::Grammar::Fiction::Err::Base",
+    "XML::Grammar::Fiction::Err::Base::WithOpenTag" => {
+        isa    => "XML::Grammar::Fiction::Err::Base",
+        fields => [qw(opening_tag)],
+    },
+    "XML::Grammar::Fiction::Err::Parse::TagsMismatch" => {
+        isa    => "XML::Grammar::Fiction::Err::Base::WithOpenTag",
+        fields => [qw(opening_tag closing_tag)],
+    },
+    "XML::Grammar::Fiction::Err::Parse::LineError" => {
+        isa    => "XML::Grammar::Fiction::Err::Base",
+        fields => [qw(line)],
+    },
+    "XML::Grammar::Fiction::Err::Parse::LeadingSpace" => {
+        isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+    },
+    "XML::Grammar::Fiction::Err::Parse::CannotMatchOpeningTag" => {
+        isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+    },
+    "XML::Grammar::Fiction::Err::Parse::NoRightAngleBracket" => {
+        isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+    },
+    "XML::Grammar::Fiction::Err::Parse::WrongClosingTagSyntax" => {
+        isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+    },
+    "XML::Grammar::Fiction::Err::Parse::ProgramListingContainsTags" => {
+        isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+    },
+    "XML::Grammar::Fiction::Err::Parse::ParaOpenPlusNotFollowedByTag" => {
+        isa => "XML::Grammar::Fiction::Err::Parse::LineError",
+    },
+    "XML::Grammar::Fiction::Err::Parse::TagNotClosedAtEOF" => {
+        isa => "XML::Grammar::Fiction::Err::Base::WithOpenTag",
+    },
+);
 1;
 
 =head1 SYNOPSIS

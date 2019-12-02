@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More tests => 3;
 
-use XML::Grammar::Fiction::FromProto::Parser::QnD;
+use XML::Grammar::Fiction::FromProto::Parser::QnD ();
 
 {
     my $text = <<"EOF";
@@ -22,7 +22,7 @@ EOF
     my $ret = $parser->consume(qr{[^<]});
 
     # TEST
-    is ($ret, "Hello ", "consume works for first line");
+    is( $ret, "Hello ", "consume works for first line" );
 }
 
 {
@@ -44,8 +44,11 @@ EOF
     my $ret = $parser->consume(qr{[^<]});
 
     # TEST
-    is ($ret, "Hello\nvoila the row kala:\n",
-        "consume works for several lines");
+    is(
+        $ret,
+        "Hello\nvoila the row kala:\n",
+        "consume works for several lines"
+    );
 }
 
 {
@@ -65,12 +68,13 @@ EOF
     my $ret = $parser->_parse_opening_tag();
 
     # TEST
-    is_deeply ($ret,
+    is_deeply(
+        $ret,
         {
-            name => "s",
+            name          => "s",
             is_standalone => 0,
-            line => 1,
-            attrs => [ { key => "id", value => "top"}],
+            line          => 1,
+            attrs         => [ { key => "id", value => "top" } ],
         },
         "Checking _parse_opening_tag() - #1",
     );

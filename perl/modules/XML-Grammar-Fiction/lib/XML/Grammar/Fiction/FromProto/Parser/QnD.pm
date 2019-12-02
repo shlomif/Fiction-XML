@@ -7,9 +7,9 @@ use MooX 'late';
 
 extends("XML::Grammar::FictionBase::FromProto::Parser::XmlIterator");
 
-use XML::Grammar::Fiction::Struct::Tag;
-use XML::Grammar::Fiction::Err;
-use XML::Grammar::FictionBase::Event;
+use XML::Grammar::Fiction::Struct::Tag ();
+use XML::Grammar::Fiction::Err         ();
+use XML::Grammar::FictionBase::Event   ();
 
 =head1 NAME
 
@@ -20,7 +20,8 @@ B<For internal use only>.
 
 =cut
 
-sub _non_tag_text_unit_consume_regex {
+sub _non_tag_text_unit_consume_regex
+{
     return qr{(?:[\<]|^\n?$)}ms;
 }
 
@@ -32,34 +33,35 @@ sub _generate_non_tag_text_event
 
     my $status = $self->_parse_non_tag_text_unit();
 
-    if (!defined($status))
+    if ( !defined($status) )
     {
         return;
     }
 
-    my $elem = $status->{'elem'};
+    my $elem        = $status->{'elem'};
     my $is_para_end = $status->{'para_end'};
 
     my $in_para = $self->_in_para();
-    if ($is_para && !$in_para)
+    if ( $is_para && !$in_para )
     {
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-               { type => "open", tag => "para", }
+                { type => "open", tag => "para", }
             ),
         );
         $in_para = 1;
     }
 
-    if (my ($rest) = $elem->get_text() =~ m{\A\+(.*)}ms)
+    if ( my ($rest) = $elem->get_text() =~ m{\A\+(.*)}ms )
     {
         if ( length($rest) )
         {
             $self->throw_text_error(
-                'XML::Grammar::Fiction::Err::Parse::ParaOpenPlusNotFollowedByTag',
+'XML::Grammar::Fiction::Err::Parse::ParaOpenPlusNotFollowedByTag',
                 "Got a paragraph opening plus sign not followed by a tag.",
             );
         }
+
         # Else - do nothing - just ignore the + sign before the
         # style tag.
     }
@@ -67,12 +69,12 @@ sub _generate_non_tag_text_event
     {
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-                {type => "elem", elem => $elem}
+                { type => "elem", elem => $elem }
             )
         );
     }
 
-    if ($is_para_end && $in_para)
+    if ( $is_para_end && $in_para )
     {
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
@@ -97,21 +99,20 @@ sub _calc_open_para
 {
     my $self = shift;
 
-    return
-        XML::Grammar::Fiction::Struct::Tag::Para->new(
-            name => "p",
-            is_standalone => 0,
-            line => $self->line_num(),
-            attrs => [],
-            children => [],
-        );
+    return XML::Grammar::Fiction::Struct::Tag::Para->new(
+        name          => "p",
+        is_standalone => 0,
+        line          => $self->line_num(),
+        attrs         => [],
+        children      => [],
+    );
 }
 
 sub _handle_open_para
 {
-    my ($self, $event) = @_;
+    my ( $self, $event ) = @_;
 
-    $self->_push_tag($self->_calc_open_para());
+    $self->_push_tag( $self->_calc_open_para() );
 
     $self->_in_para(1);
 
@@ -120,14 +121,11 @@ sub _handle_open_para
 
 sub _handle_close_para
 {
-    my ($self, $event) = @_;
+    my ( $self, $event ) = @_;
 
     my $open = $self->_pop_tag;
 
-    my $new_elem =
-        $self->_new_para(
-            $open->detach_children(),
-        );
+    my $new_elem = $self->_new_para( $open->detach_children(), );
 
     $self->_add_to_top_tag($new_elem);
 
@@ -153,10 +151,10 @@ sub _look_ahead_for_tag
 
     my $l = $self->curr_line_copy();
 
-    my $is_tag_cond = ($$l =~ m{\G<}cg);
-    my $is_close = $is_tag_cond && ($$l =~ m{\G/}cg);
+    my $is_tag_cond = ( $$l =~ m{\G<}cg );
+    my $is_close = $is_tag_cond && ( $$l =~ m{\G/}cg );
 
-    return ($is_tag_cond, $is_close);
+    return ( $is_tag_cond, $is_close );
 }
 
 sub _main_loop_iter_body_prelude

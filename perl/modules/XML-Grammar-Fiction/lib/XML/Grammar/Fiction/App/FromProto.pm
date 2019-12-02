@@ -4,24 +4,20 @@ use strict;
 use warnings;
 use autodie;
 
-use base 'Exporter';
+use parent 'Exporter';
 
 our @EXPORT = (qw(run));
 
-use Getopt::Long;
+use Getopt::Long qw/ GetOptions /;
 
-use Exception::Class;
-
-use XML::Grammar::Fiction::FromProto;
-use XML::Grammar::Fiction::FromProto::Parser::QnD;
+use XML::Grammar::Fiction::FromProto ();
+use XML::Grammar::Fiction::FromProto::Parser::QnD ();
 
 
 =head1 NAME
 
 XML::Grammar::Fiction::App::FromProto - command line app-in-a-module
 to convert from a well-formed plaintext format to Fiction-XML.
-
-=cut
 
 =head1 SYNOPSIS
 

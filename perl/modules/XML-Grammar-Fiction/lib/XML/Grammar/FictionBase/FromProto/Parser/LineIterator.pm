@@ -5,12 +5,12 @@ use warnings;
 
 use MooX 'late';
 
-use XML::Grammar::Fiction::Err;
+use XML::Grammar::Fiction::Err ();
 
 extends("XML::Grammar::Fiction::FromProto::Parser");
 
-has "_curr_line_idx" => (isa => "Int", is => "rw", reader => "line_idx",);
-has "_lines" => (isa => "ArrayRef", is => "rw");
+has "_curr_line_idx" => ( isa => "Int", is => "rw", reader => "line_idx", );
+has "_lines" => ( isa => "ArrayRef", is => "rw" );
 
 =head1 NAME
 
@@ -39,14 +39,14 @@ with it and reset the other variables.
 
 sub setup_text
 {
-    my ($self, $text) = @_;
+    my ( $self, $text ) = @_;
 
     # We include the lines trailing newlines for safety.
-    $self->_lines([split(/^/, $text)]);
+    $self->_lines( [ split( /^/, $text ) ] );
 
     $self->_curr_line_idx(0);
 
-    ${$self->curr_line_ref()} =~ m{\A}g;
+    ${ $self->curr_line_ref() } =~ m{\A}g;
 
     return;
 }
@@ -70,7 +70,7 @@ sub curr_line_ref
 {
     my $self = shift;
 
-    return \($self->_lines()->[$self->_curr_line_idx()]);
+    return \( $self->_lines()->[ $self->_curr_line_idx() ] );
 }
 
 =head2 my $pos = $self->curr_pos()
@@ -83,7 +83,7 @@ sub curr_pos
 {
     my $self = shift;
 
-    return pos(${$self->curr_line_ref()});
+    return pos( ${ $self->curr_line_ref() } );
 }
 
 =head2 $self->at_line_start()
@@ -96,7 +96,7 @@ sub at_line_start
 {
     my $self = shift;
 
-    return ($self->curr_pos == 0);
+    return ( $self->curr_pos == 0 );
 }
 
 =head2 my ($line_ref, $pos) = $self->curr_line_and_pos();
@@ -121,7 +121,7 @@ sub curr_line_and_pos
 {
     my $self = shift;
 
-    return ($self->curr_line_ref(), $self->curr_pos());
+    return ( $self->curr_line_ref(), $self->curr_pos() );
 }
 
 =head2 my $line_copy_ref = $self->curr_line_copy()
@@ -150,7 +150,7 @@ sub curr_line_copy
 {
     my $self = shift;
 
-    my $l = ${$self->curr_line_ref()} . "";
+    my $l = ${ $self->curr_line_ref() } . "";
 
     pos($l) = $self->curr_pos();
 
@@ -167,10 +167,11 @@ sub next_line_ref
 {
     my $self = shift;
 
-    $self->_curr_line_idx($self->_curr_line_idx()+1);
+    $self->_curr_line_idx( $self->_curr_line_idx() + 1 );
 
-    if (! $self->eof() ) {
-        pos(${$self->curr_line_ref()}) = 0;
+    if ( !$self->eof() )
+    {
+        pos( ${ $self->curr_line_ref() } ) = 0;
     }
 
     return $self->curr_line_ref();
@@ -202,7 +203,7 @@ sub skip_multiline_space
 {
     my $self = shift;
 
-    if (${$self->curr_line_ref()} =~ m{\G.*?\S})
+    if ( ${ $self->curr_line_ref() } =~ m{\G.*?\S} )
     {
         return;
     }
@@ -222,7 +223,7 @@ regular expression does not match (using C< qr//cg >).
 
 sub curr_line_continues_with
 {
-    my ($self, $re) = @_;
+    my ( $self, $re ) = @_;
 
     my $l = $self->curr_line_ref();
 
@@ -245,7 +246,7 @@ sub line_num
 {
     my $self = shift;
 
-    return $self->_curr_line_idx()+1;
+    return $self->_curr_line_idx() + 1;
 }
 
 =head2 $self->consume($regex)
@@ -260,9 +261,9 @@ sub _next_line_ref_wo_leading_space
 
     my $l = $self->next_line_ref();
 
-    if (defined($$l))
+    if ( defined($$l) )
     {
-        $self->_check_if_line_starts_with_whitespace()
+        $self->_check_if_line_starts_with_whitespace();
     }
 
     return $l;
@@ -270,12 +271,12 @@ sub _next_line_ref_wo_leading_space
 
 sub consume
 {
-    my ($self, $match_regex) = @_;
+    my ( $self, $match_regex ) = @_;
 
     my $return_value = "";
-    my $l = $self->curr_line_ref();
+    my $l            = $self->curr_line_ref();
 
-    while (defined($$l) && ($$l =~ m[\G(${match_regex}*)\z]cgms))
+    while ( defined($$l) && ( $$l =~ m[\G(${match_regex}*)\z]cgms ) )
     {
         $return_value .= $$l;
     }
@@ -284,7 +285,7 @@ sub consume
         $l = $self->_next_line_ref_wo_leading_space();
     }
 
-    if (defined($$l) && ($$l =~ m[\G(${match_regex}*)]cg))
+    if ( defined($$l) && ( $$l =~ m[\G(${match_regex}*)]cg ) )
     {
         $return_value .= $1;
     }
@@ -301,21 +302,21 @@ Consume up to the point where $regex matches.
 # TODO : copied and pasted from _consume - abstract
 sub consume_up_to
 {
-    my ($self, $match_regex) = @_;
+    my ( $self, $match_regex ) = @_;
 
     my $return_value = "";
-    my $l = $self->curr_line_ref();
+    my $l            = $self->curr_line_ref();
 
-    LINE_LOOP:
-    while (defined($$l))
+LINE_LOOP:
+    while ( defined($$l) )
     {
         # We assign to a scalar for scalar context, but we're not making
         # use of the variable.
-        my $verdict = ($$l =~ m[\G(.*?)((?:${match_regex})|\z)]cgms);
+        my $verdict = ( $$l =~ m[\G(.*?)((?:${match_regex})|\z)]cgms );
         $return_value .= $1;
 
         # Find if it matched the regex.
-        if (length($2) > 0)
+        if ( length($2) > 0 )
         {
             last LINE_LOOP;
         }
@@ -337,20 +338,19 @@ line number.
 
 sub throw_text_error
 {
-    my ($self, $error_class, $text) = @_;
+    my ( $self, $error_class, $text ) = @_;
 
     return $error_class->throw(
         error => $text,
-        line => $self->line_num(),
+        line  => $self->line_num(),
     );
 }
-
 
 sub _check_if_line_starts_with_whitespace
 {
     my $self = shift;
 
-    if (${$self->curr_line_ref()} =~ m{\A[ \t]})
+    if ( ${ $self->curr_line_ref() } =~ m{\A[ \t]} )
     {
         $self->throw_text_error(
             'XML::Grammar::Fiction::Err::Parse::LeadingSpace',
@@ -369,7 +369,7 @@ sub eof
 {
     my $self = shift;
 
-    return (!defined( ${ $self->curr_line_ref() } ));
+    return ( !defined( ${ $self->curr_line_ref() } ) );
 }
 
 =head2 $self->meta()

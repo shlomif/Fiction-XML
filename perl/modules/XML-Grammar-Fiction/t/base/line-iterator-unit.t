@@ -5,7 +5,7 @@ use utf8;
 
 use Test::More tests => 10;
 
-use XML::Grammar::FictionBase::FromProto::Parser::LineIterator;
+use XML::Grammar::FictionBase::FromProto::Parser::LineIterator ();
 
 {
     # Taken from:
@@ -87,50 +87,53 @@ EOF
     $parser->setup_text($text);
 
     # TEST
-    is (${$parser->curr_line_ref()},
-        qq{I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of\n},
+    is(
+        ${ $parser->curr_line_ref() },
+qq{I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of\n},
         "curr_line_ref() returns the right value.",
     );
 
     # TEST
-    is (pos(${$parser->curr_line_ref()}), 0,
-        "The pos() of the line is set at the right value."
-    );
+    is( pos( ${ $parser->curr_line_ref() } ),
+        0, "The pos() of the line is set at the right value." );
 
     # TEST
-    is ($parser->curr_pos(), 0, "->pos() returns the right value.");
+    is( $parser->curr_pos(), 0, "->pos() returns the right value." );
 
     # TEST
-    ok (scalar($parser->at_line_start()),
-        "Parser is at line start.");
+    ok( scalar( $parser->at_line_start() ), "Parser is at line start." );
 
     {
-        my ($l_ref, $pos) = $parser->curr_line_and_pos();
+        my ( $l_ref, $pos ) = $parser->curr_line_and_pos();
 
         # TEST
-        is ($$l_ref,
-            qq{I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of\n},
+        is(
+            $$l_ref,
+qq{I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of\n},
             "Line ref of ->curr_line_and_pos() is OK."
         );
 
         # TEST
-        is ($pos, 0, "Pos of ->curr_line_and_pos() is OK.")
+        is( $pos, 0, "Pos of ->curr_line_and_pos() is OK." )
     }
 
-    my $verdict = ${$parser->curr_line_ref()} =~ m{\G.*?(my f[^d]*d)}g;
+    my $verdict = ${ $parser->curr_line_ref() } =~ m{\G.*?(my f[^d]*d)}g;
 
     my $match = $1;
 
     # TEST
-    ok ($verdict, 'Matched.');
+    ok( $verdict, 'Matched.' );
+
     # TEST
-    is ($match, 'my friend', 'Match is correct');
+    is( $match, 'my friend', 'Match is correct' );
+
     # TEST
-    is (substr(${$parser->curr_line_ref()}, $parser->curr_pos()),
+    is(
+        substr( ${ $parser->curr_line_ref() }, $parser->curr_pos() ),
         qq{, Mr. Sherlock Holmes, one day in the autumn of\n},
         'curr_pos() is correct.'
     );
 
     # TEST
-    ok (!$parser->at_line_start(), "Not at line start.");
+    ok( !$parser->at_line_start(), "Not at line start." );
 }

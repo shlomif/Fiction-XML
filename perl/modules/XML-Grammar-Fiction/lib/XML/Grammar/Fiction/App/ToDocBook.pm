@@ -4,20 +4,18 @@ use strict;
 use warnings;
 use autodie;
 
-use base 'Exporter';
+use parent 'Exporter';
 
 our @EXPORT = (qw(run));
 
-use Getopt::Long;
+use Getopt::Long qw/ GetOptions /;
 
-use XML::Grammar::Fiction::ToDocBook;
+use XML::Grammar::Fiction::ToDocBook ();
 
 =head1 NAME
 
 XML::Grammar::Fiction::App::ToDocBook - command line app-in-a-module
 to convert a Fiction XML file to DocBook 5.
-
-=cut
 
 =head1 SYNOPSIS
 
@@ -34,27 +32,25 @@ Call with no arguments to run the application from the commandline.
 
 sub run
 {
-    my $output_filename;
+    my $output_fn;
 
-    GetOptions(
-        "output|o=s" => \$output_filename,
-    );
+    GetOptions( "output|o=s" => \$output_fn, );
 
-    if (!defined($output_filename))
+    if ( !defined($output_fn) )
     {
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
     my $converter = XML::Grammar::Fiction::ToDocBook->new();
 
-    my $output_text = $converter->translate_to_docbook({
+    my $output_text = $converter->translate_to_docbook(
+        {
             source => { file => shift(@ARGV), },
             output => "string",
         }
     );
 
-    open my $out, ">", $output_filename;
-    binmode $out, ":utf8";
+    open my $out, ">:encoding(utf-8)", $output_fn;
     print {$out} $output_text;
     close($out);
 

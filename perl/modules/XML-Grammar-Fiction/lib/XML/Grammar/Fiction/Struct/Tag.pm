@@ -5,7 +5,7 @@ use warnings;
 
 use MooX 'late';
 
-use List::MoreUtils;
+use List::MoreUtils ();
 
 =head1 NAME
 
@@ -16,35 +16,35 @@ B<For internal use only>.
 
 =cut
 
-has 'name' => (is => "rw", isa => "Str");
-has 'line' => (is => "rw", isa => "Int");
-has 'is_standalone' => (is => "rw", isa => "Bool");
-has 'attrs' => (is => "rw", isa => "ArrayRef");
-has 'children' => (
-    is => "rw",
+has 'name'          => ( is => "rw", isa => "Str" );
+has 'line'          => ( is => "rw", isa => "Int" );
+has 'is_standalone' => ( is => "rw", isa => "Bool" );
+has 'attrs'         => ( is => "rw", isa => "ArrayRef" );
+has 'children'      => (
+    is  => "rw",
     isa => "Maybe[ArrayRef]",
 );
 
 sub append_children
 {
-    my ($self, $children) = @_;
+    my ( $self, $children ) = @_;
 
     # This is an assert / sanity check.
-    if (List::MoreUtils::any { !defined ($_) } @$children)
+    if ( List::MoreUtils::any { !defined($_) } @$children )
     {
         Carp::confess("append_children with undef.");
     }
 
-    push @{$self->children()}, @$children;
+    push @{ $self->children() }, @$children;
 
     return;
 }
 
 sub append_child
 {
-    my ($self, $child) = @_;
+    my ( $self, $child ) = @_;
 
-    return $self->append_children( [ $child ] );
+    return $self->append_children( [$child] );
 }
 
 sub detach_children

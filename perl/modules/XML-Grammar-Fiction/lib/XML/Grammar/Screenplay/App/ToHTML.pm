@@ -4,13 +4,13 @@ use strict;
 use warnings;
 use autodie;
 
-use base 'Exporter';
+use parent 'Exporter';
 
 our @EXPORT = (qw(run));
 
-use Getopt::Long;
+use Getopt::Long qw/ GetOptions /;
 
-use XML::Grammar::Screenplay::ToHTML;
+use XML::Grammar::Screenplay::ToHTML ();
 
 =head1 NAME
 
@@ -29,18 +29,17 @@ sub run
 {
     my $output_filename;
 
-    GetOptions(
-        "output|o=s" => \$output_filename,
-    );
+    GetOptions( "output|o=s" => \$output_filename, );
 
-    if (!defined($output_filename))
+    if ( !defined($output_filename) )
     {
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
     my $converter = XML::Grammar::Screenplay::ToHTML->new();
 
-    my $output_text = $converter->translate_to_html({
+    my $output_text = $converter->translate_to_html(
+        {
             source => { file => shift(@ARGV), },
             output => "string",
         }

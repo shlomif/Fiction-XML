@@ -4,20 +4,18 @@ use strict;
 use warnings;
 use autodie;
 
-use base 'Exporter';
+use parent 'Exporter';
 
 our @EXPORT = (qw(run));
 
-use Getopt::Long;
+use Getopt::Long qw/ GetOptions /;
 
-use XML::Grammar::Fiction::ToHTML;
+use XML::Grammar::Fiction::ToHTML ();
 
 =head1 NAME
 
 XML::Grammar::Fiction::App::ToHTML - command line app-in-a-module to convert
 Fiction-XML file to HTML
-
-=cut
 
 =head1 SYNOPSIS
 
@@ -34,13 +32,13 @@ Call with no arguments to run the application from the commandline.
 
 sub run
 {
-    my $output_filename;
+    my $output_fn;
 
     GetOptions(
-        "output|o=s" => \$output_filename,
+        "output|o=s" => \$output_fn,
     );
 
-    if (!defined($output_filename))
+    if (!defined($output_fn))
     {
         die "Output filename not specified! Use the -o|--output flag!";
     }
@@ -53,8 +51,7 @@ sub run
         }
     );
 
-    open my $out, ">", $output_filename;
-    binmode $out, ":utf8";
+    open my $out, ">:encoding(utf-8)", $output_fn;
     print {$out} $output_text;
     close($out);
 
@@ -62,4 +59,3 @@ sub run
 }
 
 1;
-

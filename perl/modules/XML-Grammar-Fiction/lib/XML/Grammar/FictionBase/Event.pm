@@ -10,32 +10,34 @@ B<For internal use only>.
 
 use MooX 'late';
 
-use XML::Grammar::Fiction::FromProto::Node;
+use XML::Grammar::Fiction::FromProto::Node ();
 
-has 'type' => (isa => "Str", is => "ro");
-has 'tag' => (isa => "Maybe[Str]", is => "ro", predicate => '_has_tag',);
-has 'elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
-has 'tag_elem' => (isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro");
+has 'type' => ( isa => "Str",        is => "ro" );
+has 'tag'  => ( isa => "Maybe[Str]", is => "ro", predicate => '_has_tag', );
+has 'elem' =>
+    ( isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro" );
+has 'tag_elem' =>
+    ( isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro" );
 
 sub is_tag_of_name
 {
-    my ($self, $name) = @_;
+    my ( $self, $name ) = @_;
 
-    return ($self->_has_tag() && ($self->tag() eq $name));
+    return ( $self->_has_tag() && ( $self->tag() eq $name ) );
 }
 
 sub is_open
 {
     my $self = shift;
 
-    return ($self->type() eq "open");
+    return ( $self->type() eq "open" );
 }
 
 sub is_open_or_close
 {
     my $self = shift;
 
-    return (($self->type() eq "open") || ($self->type() eq "close"));
+    return ( ( $self->type() eq "open" ) || ( $self->type() eq "close" ) );
 }
 
 1;

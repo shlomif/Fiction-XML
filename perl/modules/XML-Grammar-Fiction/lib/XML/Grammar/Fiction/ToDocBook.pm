@@ -3,23 +3,19 @@ package XML::Grammar::Fiction::ToDocBook;
 use strict;
 use warnings;
 
-use Carp;
-
 use MooX 'late';
 
-use XML::GrammarBase::Role::RelaxNG;
+use XML::GrammarBase::Role::RelaxNG ();
 use XML::GrammarBase::Role::XSLT;
 
-with ('XML::GrammarBase::Role::RelaxNG');
-with XSLT(output_format => 'docbook');
+with('XML::GrammarBase::Role::RelaxNG');
+with XSLT( output_format => 'docbook' );
 
-has '+module_base' => (default => 'XML-Grammar-Fiction');
-has '+rng_schema_basename' => (default => 'fiction-xml.rng');
+has '+module_base'         => ( default => 'XML-Grammar-Fiction' );
+has '+rng_schema_basename' => ( default => 'fiction-xml.rng' );
 
 has '+to_docbook_xslt_transform_basename' =>
-(
-    default => 'fiction-xml-to-docbook.xslt',
-);
+    ( default => 'fiction-xml-to-docbook.xslt', );
 
 =head1 NAME
 
@@ -78,9 +74,10 @@ L<XML::LibXML> DOM object.
 
 sub translate_to_docbook
 {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
-    return $self->perform_xslt_translation({output_format => 'docbook', %{$args}});
+    return $self->perform_xslt_translation(
+        { output_format => 'docbook', %{$args} } );
 }
 
 1;

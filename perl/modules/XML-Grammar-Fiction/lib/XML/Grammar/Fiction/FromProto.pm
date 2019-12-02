@@ -4,13 +4,14 @@ use strict;
 use warnings;
 use autodie;
 
-use Carp;
+use Carp ();
 
 use MooX 'late';
 
 extends("XML::Grammar::FictionBase::TagsTree2XML");
 
-my $fiction_ns = q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
+my $fiction_ns =
+    q{http://web-cpan.berlios.de/modules/XML-Grammar-Fortune/fiction-xml-0.2/};
 
 =head1 NAME
 
@@ -35,67 +36,65 @@ on failure.
 
 =cut
 
-my %lookup = (map { $_ => $_ } qw( li ol ul ));
+my %lookup = ( map { $_ => $_ } qw( li ol ul ) );
 
-around '_calc_passthrough_cb' => sub
-{
-    my $orig = shift;
-    my $self = shift;
+around '_calc_passthrough_cb' => sub {
+    my $orig   = shift;
+    my $self   = shift;
     my ($name) = @_;
 
-    if ($lookup{$name})
+    if ( $lookup{$name} )
     {
         return $name;
     }
 
-    return $orig->($self, @_);
+    return $orig->( $self, @_ );
 };
 
 sub _output_tag_with_childs_and_common_attributes
 {
-    my ($self, $elem, $tag_name, $args) = @_;
+    my ( $self, $elem, $tag_name, $args ) = @_;
 
-    my $id = $elem->lookup_attr("id");
+    my $id   = $elem->lookup_attr("id");
     my $lang = $elem->lookup_attr("lang");
     my $href = $elem->lookup_attr("href");
 
     my @attr;
 
-    if (!defined($id))
+    if ( !defined($id) )
     {
-        if (! $args->{optional_id} )
+        if ( !$args->{optional_id} )
         {
-            Carp::confess($args->{missing_id_msg} || "Unspecified id!");
+            Carp::confess( $args->{missing_id_msg} || "Unspecified id!" );
         }
     }
     else
     {
-        push @attr, ([$self->_get_xml_xml_ns, "id"] => $id);
+        push @attr, ( [ $self->_get_xml_xml_ns, "id" ] => $id );
     }
 
-    if (defined($lang))
+    if ( defined($lang) )
     {
-        push @attr, ([$self->_get_xml_xml_ns, 'lang'] => $lang);
+        push @attr, ( [ $self->_get_xml_xml_ns, 'lang' ] => $lang );
     }
 
-    if (! defined($href))
+    if ( !defined($href) )
     {
-        if ($args->{required_href})
+        if ( $args->{required_href} )
         {
-            Carp::confess(
-                $args->{missing_href_msg} || 'Unspecified href in tag!'
-            );
+            Carp::confess( $args->{missing_href_msg}
+                    || 'Unspecified href in tag!' );
         }
     }
     else
     {
-        push @attr, ([$self->_get_xlink_xml_ns(), 'href'] => $href);
+        push @attr, ( [ $self->_get_xlink_xml_ns(), 'href' ] => $href );
     }
 
     return $self->_output_tag_with_childs(
         {
-            'start' => [$tag_name, @attr,],
-            elem => $elem,
+            'start' => [ $tag_name, @attr, ],
+            elem    => $elem,
         }
     );
 }
@@ -107,14 +106,13 @@ sub _paragraph_tag
 
 sub _handle_elem_of_name_a
 {
-    my ($self, $elem) = @_;
+    my ( $self, $elem ) = @_;
 
     $self->_output_tag_with_childs_and_common_attributes(
-        $elem,
-        'span',
+        $elem, 'span',
         {
-            optional_id => 1,
-            required_href => 1,
+            optional_id      => 1,
+            required_href    => 1,
             missing_href_msg => 'Unspecified href in a tag.',
         },
     );
@@ -124,7 +122,7 @@ sub _handle_elem_of_name_a
 
 sub _handle_elem_of_name_blockquote
 {
-    my ($self, $elem) = @_;
+    my ( $self, $elem ) = @_;
 
     $self->_output_tag_with_childs_and_common_attributes(
         $elem,
@@ -137,34 +135,32 @@ sub _handle_elem_of_name_blockquote
     return;
 }
 
-
 sub _handle_elem_of_name_programlisting
 {
-    my ($self, $elem) = @_;
+    my ( $self, $elem ) = @_;
 
     my $throw_found_tag_exception = sub {
         XML::Grammar::Fiction::Err::Parse::ProgramListingContainsTags->throw(
             error => "<programlisting> tag cannot contain other tags.",
-            line => $elem->open_line(),
+            line  => $elem->open_line(),
         );
     };
 
     return $self->_output_tag(
         {
             start => ['programlisting'],
-            elem => $elem,
-            'in' => sub {
-                foreach my $child (@{ $elem->_get_childs() })
+            elem  => $elem,
+            'in'  => sub {
+                foreach my $child ( @{ $elem->_get_childs() } )
                 {
-                    if ($child->_short_isa("Paragraph"))
+                    if ( $child->_short_isa("Paragraph") )
                     {
                         foreach my $text_node (
-                            @{ $child->children()->contents() }
-                        )
+                            @{ $child->children()->contents() } )
                         {
-                            if ($text_node->_short_isa("Text"))
+                            if ( $text_node->_short_isa("Text") )
                             {
-                                $self->_write_elem({elem => $text_node});
+                                $self->_write_elem( { elem => $text_node } );
                             }
                             else
                             {
@@ -176,6 +172,7 @@ sub _handle_elem_of_name_programlisting
                     {
                         $throw_found_tag_exception->();
                     }
+
                     # End of paragraph.
                     $self->_writer->characters("\n\n");
                 }
@@ -190,13 +187,12 @@ sub _handle_elem_of_name_programlisting
 
 sub _handle_elem_of_name_span
 {
-    my ($self, $elem) = @_;
+    my ( $self, $elem ) = @_;
 
     $self->_output_tag_with_childs_and_common_attributes(
-        $elem,
-        'span',
+        $elem, 'span',
         {
-            optional_id => 1,
+            optional_id    => 1,
             missing_id_msg => "Unspecified id for span!",
         },
     );
@@ -206,7 +202,7 @@ sub _handle_elem_of_name_span
 
 sub _handle_elem_of_name_title
 {
-    my ($self, $elem) = @_;
+    my ( $self, $elem ) = @_;
 
     # TODO :
     # Eliminate the Law-of-Demeter-syndrome here.
@@ -215,12 +211,13 @@ sub _handle_elem_of_name_title
     $self->_output_tag(
         {
             start => ["title"],
-            in => sub {
+            in    => sub {
                 $self->_write_elem(
                     {
                         elem => $list,
                     }
-                ),
+                    ),
+                    ;
             },
         },
     );
@@ -245,31 +242,28 @@ sub _write_Element_Text
 
 sub _write_Element_List
 {
-    my ($self, $elem) = @_;
+    my ( $self, $elem ) = @_;
 
-    foreach my $child (@{$elem->contents()})
+    foreach my $child ( @{ $elem->contents() } )
     {
-        $self->_write_elem({elem => $child, });
+        $self->_write_elem( { elem => $child, } );
     }
 
     return;
 }
 
-around '_calc_write_elem_obj_classes' => sub
-{
+around '_calc_write_elem_obj_classes' => sub {
     my $orig = shift;
     my $self = shift;
 
-    return ['List', @{$orig->($self)}];
+    return [ 'List', @{ $orig->($self) } ];
 };
 
 sub _write_scene_main
 {
-    my ($self, $scene) = @_;
+    my ( $self, $scene ) = @_;
 
-    $self->_output_tag_with_childs_and_common_attributes(
-        $scene,
-        "section",
+    $self->_output_tag_with_childs_and_common_attributes( $scene, "section",
         { missing_id_msg => "Unspecified id for scene!", },
     );
 
@@ -285,14 +279,12 @@ sub _write_body
 
     my $tag = $body->name;
 
-    if ($tag ne "body")
+    if ( $tag ne "body" )
     {
         confess "Improper body tag - should be '<body>'!";
     }
 
-    $self->_output_tag_with_childs_and_common_attributes(
-        $body,
-        'body',
+    $self->_output_tag_with_childs_and_common_attributes( $body, 'body',
         { missing_id_msg => "Unspecified id for body tag!", },
     );
 
@@ -306,15 +298,15 @@ sub _get_default_xml_ns
 
 sub _convert_write_content
 {
-    my ($self, $tree) = @_;
+    my ( $self, $tree ) = @_;
 
     my $writer = $self->_writer;
 
-    $writer->startTag([$fiction_ns, "document"], "version" => "0.2");
-    $writer->startTag([$fiction_ns, "head"]);
+    $writer->startTag( [ $fiction_ns, "document" ], "version" => "0.2" );
+    $writer->startTag( [ $fiction_ns, "head" ] );
     $writer->endTag();
 
-    $self->_write_body({body => $tree});
+    $self->_write_body( { body => $tree } );
 
     $writer->endTag();
 
