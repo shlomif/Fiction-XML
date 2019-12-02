@@ -1,5 +1,8 @@
 package XML::Grammar::Screenplay::ToHTML;
 
+use strict;
+use warnings;
+
 use MooX 'late';
 
 use XML::GrammarBase::Role::RelaxNG ();

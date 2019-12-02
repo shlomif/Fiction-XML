@@ -8,6 +8,9 @@ B<For internal use only>.
 
 =cut
 
+use strict;
+use warnings;
+
 use MooX 'late';
 
 use XML::Grammar::Fiction::FromProto::Node ();

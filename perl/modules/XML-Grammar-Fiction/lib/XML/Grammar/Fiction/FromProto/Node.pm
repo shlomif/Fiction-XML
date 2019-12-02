@@ -16,13 +16,10 @@ use MooX 'late';
 
 sub _short_isa
 {
-    my $self = shift;
+    my $self         = shift;
     my $isa_classish = shift;
 
-    return
-        $self->isa(
-            "XML::Grammar::Fiction::FromProto::Node::$isa_classish"
-        );
+    return $self->isa("XML::Grammar::Fiction::FromProto::Node::$isa_classish");
 }
 
 1;

@@ -6,13 +6,16 @@ XML::Grammar::Fiction::FromProto::Node::Element - an XML element node.
 
 =cut
 
+use strict;
+use warnings;
+
 use MooX 'late';
 
 extends("XML::Grammar::Fiction::FromProto::Node::WithContent");
 
-has 'name' => (isa => 'Str', is => 'rw');
-has 'attrs' => (isa => 'ArrayRef', is => 'rw');
-has 'open_line' => (isa => 'Maybe[Int]', is => 'rw');
+has 'name'      => ( isa => 'Str',        is => 'rw' );
+has 'attrs'     => ( isa => 'ArrayRef',   is => 'rw' );
+has 'open_line' => ( isa => 'Maybe[Int]', is => 'rw' );
 
 =head1 METHODS
 
@@ -24,13 +27,14 @@ Internal use.
 
 sub lookup_attr
 {
-    my ($self, $attr_name) = @_;
+    my ( $self, $attr_name ) = @_;
 
-    my $pair = List::Util::first { $_->{key} eq $attr_name } (@{$self->attrs()});
+    my $pair =
+        List::Util::first { $_->{key} eq $attr_name } ( @{ $self->attrs() } );
 
-    if (!defined($pair))
+    if ( !defined($pair) )
     {
-        return undef;
+        return;
     }
     else
     {

@@ -34,18 +34,17 @@ sub run
 {
     my $output_fn;
 
-    GetOptions(
-        "output|o=s" => \$output_fn,
-    );
+    GetOptions( "output|o=s" => \$output_fn, );
 
-    if (!defined($output_fn))
+    if ( !defined($output_fn) )
     {
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
     my $converter = XML::Grammar::Fiction::ToHTML->new();
 
-    my $output_text = $converter->translate_to_html({
+    my $output_text = $converter->translate_to_html(
+        {
             source => { file => shift(@ARGV), },
             output => "string",
         }

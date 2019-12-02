@@ -17,7 +17,7 @@ Internal use.
 
 sub get_text
 {
-    my ($self, $re) = @_;
+    my ( $self, $re ) = @_;
 
     return $self->children->contents->[0];
 }

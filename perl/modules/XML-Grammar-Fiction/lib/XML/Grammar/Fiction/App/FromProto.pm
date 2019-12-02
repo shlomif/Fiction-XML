@@ -10,9 +10,8 @@ our @EXPORT = (qw(run));
 
 use Getopt::Long qw/ GetOptions /;
 
-use XML::Grammar::Fiction::FromProto ();
+use XML::Grammar::Fiction::FromProto              ();
 use XML::Grammar::Fiction::FromProto::Parser::QnD ();
-
 
 =head1 NAME
 
@@ -36,23 +35,22 @@ sub run
 {
     my $output_filename;
 
-    GetOptions(
-        "output|o=s" => \$output_filename,
-    );
+    GetOptions( "output|o=s" => \$output_filename, );
 
-    if (!defined($output_filename))
+    if ( !defined($output_filename) )
     {
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
-    my $converter = XML::Grammar::Fiction::FromProto->new({
-        parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
-    });
+    my $converter = XML::Grammar::Fiction::FromProto->new(
+        {
+            parser_class => "XML::Grammar::Fiction::FromProto::Parser::QnD",
+        }
+    );
 
     $converter->_convert_while_handling_errors(
         {
-            convert_args =>
-            {
+            convert_args => {
                 source => { file => shift(@ARGV), },
             },
             output_filename => $output_filename,

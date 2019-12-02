@@ -12,9 +12,10 @@ use Path::Class;
 use lib dir($Bin)->parent->subdir(qw(t lib))->stringify;
 
 my $aggregate_test_dir = dir($Bin)->parent->subdir('t')->stringify;
+
 # need set_filenames to auto-load fixtures correctly
-my $tests = Test::Aggregate
-    ->new( { dirs => $aggregate_test_dir, set_filenames => 1, verbose => 0,} );
+my $tests = Test::Aggregate->new(
+    { dirs => $aggregate_test_dir, set_filenames => 1, verbose => 0, } );
 $tests->run;
 
 done_testing;

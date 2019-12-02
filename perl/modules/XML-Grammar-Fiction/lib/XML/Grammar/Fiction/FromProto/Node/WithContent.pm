@@ -16,7 +16,7 @@ extends("XML::Grammar::Fiction::FromProto::Node");
 
 has 'children' => (
     isa => 'XML::Grammar::Fiction::FromProto::Node::List',
-    is => 'rw'
+    is  => 'rw'
 );
 
 sub _get_childs

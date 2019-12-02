@@ -1,5 +1,8 @@
 package XML::Grammar::Fiction::FromProto::Node::InnerDesc;
 
+use strict;
+use warnings;
+
 use MooX 'late';
 
 extends("XML::Grammar::Fiction::FromProto::Node::Element");

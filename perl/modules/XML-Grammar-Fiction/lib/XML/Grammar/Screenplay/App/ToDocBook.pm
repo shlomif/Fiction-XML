@@ -45,8 +45,7 @@ sub run
         }
     );
 
-    open my $out, ">", $output_filename;
-    binmode $out, ":utf8";
+    open my $out, ">:encoding(UTF-8)", $output_filename;
     print {$out} $output_text;
     close($out);
 
