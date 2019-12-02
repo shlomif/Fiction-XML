@@ -1,12 +1,53 @@
 Revision history for XML-Grammar-Fiction.
 
+0.18.1      2019-12-02
+    - Merge in XHTML5 changes from hg repo and restore broken functionality.
+
 0.18.0      2019-12-02
     - Convert to @SHLOMIF dzil+podweaver.
     - Explicit imports
     - TidyAll
-
-0.16.0      2019-08-23
     - Move repo to https://github.com/shlomif/fiction-xml .
+
+v0.16.0     2018-10-16
+    * Add a lang attribute to scenes in the screenplays.
+
+v0.15.0     2018-09-28
+    * Convert dist.ini to @SHLOMIF .
+    * Convert extradata/screenplay-xml-to-html.xslt to emit XHTML5.
+
+v0.14.12    2017-08-20
+    * [RewriteVersion] in dist.ini.
+
+v0.14.11    2014-10-27
+    * Change Encoding to SingleEncoding in weaver.ini.
+        - Thanks to sromanov.
+        - https://bitbucket.org/shlomif/fiction-xml/pull-request/1/change-pwp-encoding-to-pwp-singleencoding/diff
+
+v0.14.10    2014-08-18
+    * Fix code and tests with the recent Type::Tiny that no longer accepts
+    isa => classname.
+
+v0.14.9     2014-08-06
+    * Add the meta content directive to the HTMLs in the XSLT.
+
+v0.14.8     2014-02-01
+    * Add "use strict;" and "use warnings;" to all modules (CPANTS).
+    * Remove the rejects directory from the distribution - it confused
+    CPANTS.
+    * Add provides to META.yml (CPANTS).
+
+v0.14.7     2013-07-15
+    * Skip compiling the scripts with extra dependencies.
+
+v0.14.6     2013-05-14
+    * Minimal version of perl is now 5.14.x.
+        - to avoid test failures like:
+        - http://www.cpantesters.org/cpan/report/1cf5be2e-bc06-11e2-8c80-50d7c5c10595
+
+v0.14.5     2013-05-09
+    * Increase dependency of XML::GrammarBase to 0.2.2.
+        - For a better minimal version of libxml2 to avoid test failures.
 
 v0.14.4     2013-05-01
     * Got rid of trailing space in comments with newlines.

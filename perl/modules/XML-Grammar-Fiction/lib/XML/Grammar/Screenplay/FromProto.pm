@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use autodie;
 
-use Carp ();
+use Carp;
 
 use MooX 'late';
 
@@ -134,7 +134,12 @@ sub _write_scene_main
     }
 
     my $title = $scene->lookup_attr("title");
+    my $lang  = $scene->lookup_attr("lang");
     my @t     = ( defined($title) ? ( title => $title ) : () );
+    if ( defined($lang) )
+    {
+        push @t, ( [ $self->_get_xml_xml_ns, 'lang' ] => $lang );
+    }
 
     $self->_output_tag_with_childs(
         {
