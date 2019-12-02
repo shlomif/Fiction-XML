@@ -1,5 +1,10 @@
 Revision history for XML-Grammar-Fiction.
 
+0.18.0      2019-12-02
+    - Convert to @SHLOMIF dzil+podweaver.
+    - Explicit imports
+    - TidyAll
+
 0.16.0      2019-08-23
     - Move repo to https://github.com/shlomif/fiction-xml .
 
