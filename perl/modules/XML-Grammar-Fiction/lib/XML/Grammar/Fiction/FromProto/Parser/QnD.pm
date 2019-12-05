@@ -152,7 +152,7 @@ sub _look_ahead_for_tag
     my $l = $self->curr_line_copy();
 
     my $is_tag_cond = ( $$l =~ m{\G<}cg );
-    my $is_close = $is_tag_cond && ( $$l =~ m{\G/}cg );
+    my $is_close    = $is_tag_cond && ( $$l =~ m{\G/}cg );
 
     return ( $is_tag_cond, $is_close );
 }

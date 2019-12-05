@@ -5,7 +5,7 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 80;
+use Test::More tests => 84;
 
 use XmlGrammarTestXML qw(my_is_xml);
 
@@ -51,10 +51,11 @@ my @tests = (
         with-colon-inside-description
         with-numeric-entities
         scenes-with-langs
+        main-title
         )
 );
 
-# TEST:$num_texts=20
+# TEST:$num_texts=21
 
 my $grammar = XML::Grammar::Screenplay::FromProto->new(
     {
