@@ -7,7 +7,7 @@ use Test::More;
 
 use lib './t/lib';
 
-use Test::More tests => 6;
+use Test::More tests => 8;
 
 use File::Spec                       ();
 use XML::LibXML                      ();
@@ -42,8 +42,11 @@ my $converter = XML::Grammar::Screenplay::ToHTML->new(
     }
 );
 
-foreach my $fn (@tests)
+sub _calc_xpc_and_doc
 {
+    my ($fn) = @_;
+
+    #body ...
     my $xhtml_text = $converter->translate_to_html(
         {
             source => { file => "t/screenplay/data/xml/$fn.xml", },
@@ -60,6 +63,13 @@ foreach my $fn (@tests)
     my $xpc = XML::LibXML::XPathContext->new();
     $xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
 
+    return ( $xpc, $doc );
+}
+
+foreach my $fn (@tests)
+{
+    my ( $xpc, $doc ) = _calc_xpc_and_doc($fn);
+
     # TEST*$num_texts
     my $r = $xpc->find( q{//x:html}, $doc );
     is( $r->size(), 1, "Found one article with id index", );
@@ -74,6 +84,21 @@ foreach my $fn (@tests)
 
     # TEST*$num_texts
     ok( ( $r->size() >= 1 ), "Found role=description sections", );
+}
+
+{
+    my ( $xpc, $doc ) = _calc_xpc_and_doc('main-title');
+    my $r = $xpc->find( q{./x:html/x:head/x:title}, $doc );
+
+    # TEST
+    is( $r->size(), 1, "Found one title", );
+
+    # TEST
+    is(
+        $r->[0]->textContent(),
+        "My Lame Screenplay: Joshua Gets a Life",
+        "Correct textContent()",
+    );
 }
 
 1;

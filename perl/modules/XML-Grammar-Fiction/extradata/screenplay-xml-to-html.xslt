@@ -18,7 +18,17 @@
             <xsl:value-of select="@xml:lang|./sp:scene/@xml:lang" />
         </xsl:attribute>
         <head>
-            <title>My Screenplay</title>
+            <xsl:element name="title">
+                <xsl:choose>
+                    <xsl:when test="/sp:document/sp:body/sp:scene/@title">
+                        <xsl:value-of select="/sp:document/sp:body/sp:scene/@title" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>My Screenplay</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+
+            </xsl:element>
             <meta charset="utf-8" />
         </head>
         <body>

@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.18.2      2019-12-05
+    - Propagate the toplevel scene's title="" attribute to the HTML <title>
+    tag in Screenplay-Text.
+
 0.18.1      2019-12-02
     - Merge in XHTML5 changes from hg repo and restore broken functionality.
 
