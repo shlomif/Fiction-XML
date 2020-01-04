@@ -11,20 +11,7 @@ use XmlGrammarTestXML qw(my_is_xml);
 use XML::LibXML                                   ();
 use XML::Grammar::Fiction::FromProto              ();
 use XML::Grammar::Fiction::FromProto::Parser::QnD ();
-
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path;
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>
-    }
-    close($in);
-    return $contents;
-}
+use Path::Tiny qw/ path tempdir tempfile cwd /;
 
 my @tests = (
     qw(
@@ -82,7 +69,7 @@ foreach my $fn (@tests)
     # TEST*$num_texts
     my_is_xml(
         [ string => $got_xml, ],
-        [ string => load_xml("t/fiction/data/xml/$fn.xml"), ],
+        [ string => path("t/fiction/data/xml/$fn.xml")->slurp_utf8, ],
         "Output of the Proto Text \"$fn\"",
     );
 
@@ -95,7 +82,7 @@ foreach my $fn (@tests)
     ok(
         ( defined($code) && ( $code == 0 ) ),
         "The validation of '$fn' succeeded."
-    ) || diag("\$@ == $@");
+    ) || diag("\$\@ == $@");
 }
 
 1;

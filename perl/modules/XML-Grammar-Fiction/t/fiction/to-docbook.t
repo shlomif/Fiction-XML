@@ -8,8 +8,8 @@ use lib './t/lib';
 use Test::More tests => 33;
 
 use XmlGrammarTestXML qw(my_is_xml);
+use Path::Tiny qw/ path tempdir tempfile cwd /;
 
-use File::Spec                       ();
 use XML::LibXML                      ();
 use XML::Grammar::Fiction::ToDocBook ();
 
@@ -29,26 +29,11 @@ my @tests = (
         )
 );
 
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path
-        or die "Cannot open '$path' for reading";
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>;
-    }
-    close($in);
-    return $contents;
-}
-
 # TEST:$num_texts=11
 
 my $converter = XML::Grammar::Fiction::ToDocBook->new(
     {
-        data_dir => File::Spec->catdir( File::Spec->curdir(), "extradata" ),
+        data_dir => cwd()->child("extradata")->absolute->stringify,
     }
 );
 
@@ -84,10 +69,10 @@ foreach my $fn (@tests)
     # TEST*$num_texts
     my_is_xml(
         [ string => $docbook_text, ],
-        [ string => load_xml("t/fiction/data/docbook/$fn.docbook.xml"), ],
+        [
+            string =>
+                path("t/fiction/data/docbook/$fn.docbook.xml")->slurp_utf8,
+        ],
         "Output of the DocBook \"$fn\"",
     );
 }
-
-1;
-

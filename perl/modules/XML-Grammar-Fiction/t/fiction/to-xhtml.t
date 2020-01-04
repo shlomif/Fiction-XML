@@ -4,8 +4,8 @@ use strict;
 use warnings;
 
 use Test::More tests => 34;
+use Path::Tiny qw/ path tempdir tempfile cwd /;
 
-use File::Spec                       ();
 use XML::LibXML                      ();
 use XML::Grammar::Fiction::ToHTML    ();
 use XML::Grammar::Fiction::ToDocBook ();
@@ -16,20 +16,6 @@ my @tests = (
         sections-p-b-i
         )
 );
-
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path;
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>
-    }
-    close($in);
-    return $contents;
-}
 
 # TEST:$num_texts=2
 
@@ -49,7 +35,7 @@ foreach my $conv_id ( keys(%converters) )
     my $h_ref = $converters{$conv_id};
     $h_ref->{obj} = $h_ref->{class}->new(
         {
-            data_dir => File::Spec->catdir( File::Spec->curdir(), "extradata" ),
+            data_dir => cwd()->child("extradata")->absolute->stringify,
         }
     );
 }
@@ -79,7 +65,8 @@ foreach my $fn (@tests)
         );
         if ( $format_id eq "xhtml" )
         {
-            my $file_contents = load_xml($xml_fn);
+            my $file_contents = path($xml_fn)->slurp_utf8;
+
             {
                 my $from_string_text = $format_hash->{'obj'}->$m(
                     {
@@ -107,10 +94,9 @@ foreach my $fn (@tests)
                 is( $from_string_text, $text, "From-dom text is OK." )
             }
         }
+
         my $parser = XML::LibXML->new();
-
         $parser->load_ext_dtd(0);
-
         my $doc = $parser->parse_string($text);
 
         return sub {

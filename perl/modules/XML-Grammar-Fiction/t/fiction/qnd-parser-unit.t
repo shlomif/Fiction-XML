@@ -79,4 +79,3 @@ EOF
         "Checking _parse_opening_tag() - #1",
     );
 }
-
