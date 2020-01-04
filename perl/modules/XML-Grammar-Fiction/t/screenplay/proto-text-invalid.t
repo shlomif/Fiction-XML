@@ -3,27 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More;
-
 use Test::More tests => 2;
 
-use XML::LibXML                                      ();
 use XML::Grammar::Screenplay::FromProto              ();
 use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
-
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path;
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>
-    }
-    close($in);
-    return $contents;
-}
 
 {
     my $grammar = XML::Grammar::Screenplay::FromProto->new(
@@ -81,4 +64,3 @@ sub load_xml
 }
 
 1;
-
