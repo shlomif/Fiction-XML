@@ -3,15 +3,12 @@
 use strict;
 use warnings;
 
-use Test::More;
-
 use lib './t/lib';
-
 use Test::More tests => 8;
 
-use File::Spec                       ();
 use XML::LibXML                      ();
 use XML::Grammar::Screenplay::ToHTML ();
+use Path::Tiny qw/ path tempdir tempfile cwd /;
 
 my @tests = (
     qw(
@@ -20,25 +17,11 @@ my @tests = (
         )
 );
 
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path;
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>
-    }
-    close($in);
-    return $contents;
-}
-
 # TEST:$num_texts=2
 
 my $converter = XML::Grammar::Screenplay::ToHTML->new(
     {
-        data_dir => File::Spec->catdir( File::Spec->curdir(), "extradata" ),
+        data_dir => cwd()->child("extradata")->absolute->stringify,
     }
 );
 

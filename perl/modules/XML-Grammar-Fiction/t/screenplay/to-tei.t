@@ -8,9 +8,9 @@ use Test::More tests => 17;
 use lib './t/lib';
 use XmlGrammarTestXML qw(my_is_xml);
 
-use File::Spec                      ();
 use XML::LibXML                     ();
 use XML::Grammar::Screenplay::ToTEI ();
+use Path::Tiny qw/ path tempdir tempfile cwd /;
 
 # TEST:$num_texts=17
 my @tests = (
@@ -35,23 +35,9 @@ my @tests = (
         )
 );
 
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path;
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>;
-    }
-    close($in);
-    return $contents;
-}
-
 my $converter = XML::Grammar::Screenplay::ToTEI->new(
     {
-        data_dir => File::Spec->catdir( File::Spec->curdir(), "extradata" ),
+        data_dir => cwd()->child("extradata")->absolute->stringify,
     }
 );
 
@@ -67,10 +53,7 @@ foreach my $fn (@tests)
     # TEST*$num_texts
     my_is_xml(
         [ string => $tei_text, ],
-        [ string => load_xml("t/screenplay/data/tei/$fn.tei.xml"), ],
+        [ string => path("t/screenplay/data/tei/$fn.tei.xml")->slurp_utf8, ],
         "Output of the TEI \"$fn\"",
     );
 }
-
-1;
-

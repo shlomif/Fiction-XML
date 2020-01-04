@@ -31,7 +31,6 @@ use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
     # TEST
     like( $err, qr{inner-desc.*?addressing},
         "Tried to put an inner-desc inside an addressing " );
-
 }
 
 {
@@ -60,7 +59,6 @@ use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
         qr{Tag not closed at EOF},
         "Screenplay with a description that did not terminate"
     );
-
 }
 
 1;

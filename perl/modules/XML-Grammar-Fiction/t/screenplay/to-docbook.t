@@ -15,20 +15,6 @@ my @tests = (
         )
 );
 
-sub load_xml
-{
-    my $path = shift;
-
-    open my $in, "<", $path;
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>
-    }
-    close($in);
-    return $contents;
-}
-
 # TEST:$num_texts=1
 
 my $converter = XML::Grammar::Screenplay::ToDocBook->new(
@@ -67,4 +53,3 @@ foreach my $fn (@tests)
 }
 
 1;
-
