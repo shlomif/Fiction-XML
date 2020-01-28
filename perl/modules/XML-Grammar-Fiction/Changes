@@ -1,5 +1,13 @@
 Revision history for XML-Grammar-Fiction.
 
+0.18.3       2020-01-28
+    - Rebuild for order of 'NAME' and 'VERSION' sections in the generated
+    POD documentation (see:
+    https://metacpan.org/changes/distribution/Pod-Weaver-PluginBundle-SHLOMIF#L3
+    ).
+        - VERSION used to appear before NAME.
+    - Remove the libxml version check test.
+
 0.18.2      2019-12-05
     - Propagate the toplevel scene's title="" attribute to the HTML <title>
     tag in Screenplay-Text.
