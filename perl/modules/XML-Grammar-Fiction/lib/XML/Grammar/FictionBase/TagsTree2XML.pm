@@ -8,6 +8,8 @@ use MooX 'late';
 use XML::Writer    ();
 use HTML::Entities ();
 
+use Path::Tiny qw/ path /;
+
 sub _get_xml_xml_ns
 {
     return "http://www.w3.org/XML/1998/namespace";
@@ -368,22 +370,6 @@ sub _convert_while_handling_errors
     return;
 }
 
-sub _read_file
-{
-    my ( $self, $filename ) = @_;
-
-    open my $in, "<:encoding(UTF-8)", $filename
-        or Carp::confess("Could not open the file \"$filename\" for slurping.");
-    my $contents;
-    {
-        local $/;
-        $contents = <$in>;
-    }
-    close($in);
-
-    return $contents;
-}
-
 sub _calc_tree
 {
     my ( $self, $args ) = @_;
@@ -391,7 +377,7 @@ sub _calc_tree
     my $filename = $args->{source}->{file}
         or confess "Wrong filename given.";
 
-    return $self->_parser->process_text( $self->_read_file($filename) );
+    return $self->_parser->process_text( path($filename)->slurp_utf8() );
 }
 
 sub _write_scene
