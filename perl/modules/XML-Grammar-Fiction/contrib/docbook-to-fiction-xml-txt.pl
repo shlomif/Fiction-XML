@@ -180,10 +180,6 @@ You can look for information at:
 
 L<http://search.cpan.org/dist/XML-Grammar-Fiction/>
 
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/XML::Grammar::Fiction>
-
 =item * CPAN Ratings
 
 L<http://cpanratings.perl.org/d/XML::Grammar::Fiction>

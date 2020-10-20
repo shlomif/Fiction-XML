@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.18.4       2020-10-20
+    - dist.ini / weaver.ini / .tidyallrc / etc. cleanup
+        - Move to @SHLOMIF
+
 0.18.3       2020-01-28
     - Rebuild for order of 'NAME' and 'VERSION' sections in the generated
     POD documentation (see:
