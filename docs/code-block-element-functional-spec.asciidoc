@@ -8,3 +8,6 @@ Shlomi Fish <shlomif@cpan.org>
 Motivation:
 -----------
 
+Use to encapsulate the ascii art at https://github.com/shlomif/shlomi-fish-homepage/blob/216ea2b871fa24d07d74ae68dda51b3b7b9e47b7/src/humour/by-others/hitchhiker-guide-to-star-trek-tng.txt
+in an https://stackoverflow.com/questions/33929647/alt-attribute-for-ascii-art-in-html[accessible manner]
+(and also better formatted for non-visual-impaired users).
