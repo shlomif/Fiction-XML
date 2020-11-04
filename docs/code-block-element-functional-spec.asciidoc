@@ -75,4 +75,6 @@ Notes:
 
 * `alt=` must be specified, but can be any utf8 text.
 
-
+* There shall be an implicit removal of leading and trailing newlines
+from the codeblock (matching the regex `(?:\r?\n)*`.
+** There may be an attribute to override it in the future.
