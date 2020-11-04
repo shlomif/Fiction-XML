@@ -11,3 +11,68 @@ Motivation:
 Used to encapsulate the ascii art at https://github.com/shlomif/shlomi-fish-homepage/blob/216ea2b871fa24d07d74ae68dda51b3b7b9e47b7/src/humour/by-others/hitchhiker-guide-to-star-trek-tng.txt
 in an https://stackoverflow.com/questions/33929647/alt-attribute-for-ascii-art-in-html[accessible manner]
 (and also better formatted for non-visual-impaired users).
+
+[id="screenplay_text"]
+Screenplay-Text:
+----------------
+
+[source,text]
+----
+<s id="top">
+
+<s id="david_and_goliath">
+
+[
+
+<code_blk syntax="text" role="asciiart" title="Star square" alt="The logo of the Square company">
+******
+*    *
+*    *
+*    *
+*    *
+******
+</code_blk>
+
+David and <a href="http://en.wikipedia.org/wiki/Goliath">Goliath</a> are
+standing by each other.
+
+
+
+]
+
+David: I will kill you.
+
+Goliath: no way, you little idiot!
+
+David: yes way!
+
+++++: In the name of <a href="http://real-allah.tld/">Allah, the
+<b>merciful</b>, real merciful</a>, I will show you the power of my sling.
+
+++: I shall sling you and bing you till infinity.
+
+[David takes his sling.]
+
+Goliath: I'm still <a href="http://wait.tld/">waiting</a>.
+
+David: so you are.
+
+[David puts a stone in his sling and shoots Goliath. He hits.]
+
+</s>
+
+</s>
+----
+
+Notes:
+~~~~~~
+
+* For now `syntax` must be specified and have a `text` value.
+
+* Similarly, `role` must be specified and have an `asciiart` value.
+
+* `title=` must be specified, but can be any utf8 text.
+
+* `alt=` must be specified, but can be any utf8 text.
+
+
