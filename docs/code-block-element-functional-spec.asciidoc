@@ -24,7 +24,7 @@ Screenplay-Text:
 
 [
 
-<code_blk syntax="text" role="asciiart" title="Star square" alt="The logo of the Square company">
+<code_blk syntax="text" tag_role="asciiart" title="Star square" alt="The logo of the Square company">
 ******
 *    *
 *    *
@@ -69,7 +69,7 @@ Notes:
 
 * For now `syntax` must be specified and have a `text` value.
 
-* Similarly, `role` must be specified and have an `asciiart` value.
+* Similarly, `tag_role` must be specified and have an `asciiart` value.
 
 * `title=` must be specified, but can be any utf8 text.
 
