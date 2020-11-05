@@ -16,7 +16,7 @@ in an https://stackoverflow.com/questions/33929647/alt-attribute-for-ascii-art-i
 Screenplay-Text:
 ----------------
 
-[source,text]
+[source,text,filename="perl/modules/XML-Grammar-Fiction/t/screenplay/data/proto-text/with-tags-inside-paragraphs.txt"]
 ----
 <s id="top">
 
@@ -78,3 +78,87 @@ Notes:
 * There shall be an implicit removal of leading and trailing newlines
 from the codeblock (matching the regex `(?:\r?\n)*`.
 ** There may be an attribute to override it in the future.
+
+[id="screenplay_text_generated_html"]
+Screenplay-Text rendered to HTML:
+---------------------------------
+
+[source,text,filename="perl/modules/XML-Grammar-Fiction/t/screenplay/data/proto-text/with-tags-inside-paragraphs--with-code_blk.xhtml"]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sp="http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/" xml:lang="">
+  <head>
+    <title>My Screenplay</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <main class="screenplay" id="index">
+      <section class="scene" id="scene-top">
+        <header>
+          <h1 id="top">top</h1>
+        </header>
+        <section class="scene" id="scene-david_and_goliath">
+          <header>
+            <h2 id="david_and_goliath">david_and_goliath</h2>
+          </header>
+          <div class="description">
+            <p>
+            [
+<pre aria-label="The logo of the Square company" class="asciiart" title="Star square">
+******
+*    *
+*    *
+*    *
+*    *
+******
+</pre>
+        David and <a href="http://en.wikipedia.org/wiki/Goliath">Goliath</a> are
+standing by each other.
+            ]
+        </p>
+          </div>
+          <div class="saying">
+            <p><strong class="sayer">David:</strong> I will kill you.
+</p>
+          </div>
+          <div class="saying">
+            <p><strong class="sayer">Goliath:</strong> no way, you little idiot!
+</p>
+          </div>
+          <div class="saying">
+            <p><strong class="sayer">David:</strong> yes way!
+</p>
+            <p><strong class="sayer">David:</strong> In the name of <a href="http://real-allah.tld/">Allah, the
+<strong class="bold">merciful</strong>, real merciful</a>, I will show you the power of my sling.
+</p>
+            <p><strong class="sayer">David:</strong> I shall sling you and bing you till infinity.
+</p>
+          </div>
+          <div class="description">
+            <p>
+            [
+        David takes his sling.
+            ]
+        </p>
+          </div>
+          <div class="saying">
+            <p><strong class="sayer">Goliath:</strong> I'm still <a href="http://wait.tld/">waiting</a>.
+</p>
+          </div>
+          <div class="saying">
+            <p><strong class="sayer">David:</strong> so you are.
+</p>
+          </div>
+          <div class="description">
+            <p>
+            [
+        David puts a stone in his sling and shoots Goliath. He hits.
+            ]
+        </p>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
+----
