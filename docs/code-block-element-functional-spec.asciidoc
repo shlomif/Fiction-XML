@@ -104,6 +104,7 @@ Screenplay-Text rendered to HTML:
           <div class="description">
             <p>
             [
+            </p>
 <pre aria-label="The logo of the Square company" class="asciiart" title="Star square">
 ******
 *    *
@@ -112,6 +113,7 @@ Screenplay-Text rendered to HTML:
 *    *
 ******
 </pre>
+        <p>
         David and <a href="http://en.wikipedia.org/wiki/Goliath">Goliath</a> are
 standing by each other.
             ]
