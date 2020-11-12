@@ -25,12 +25,12 @@ Screenplay-Text:
 [
 
 <code_blk syntax="text" tag_role="asciiart" title="Star square" alt="The logo of the Square company">
-******
-*    *
-*    *
-*    *
-*    *
-******
+&#124;******
+&#124; *   *
+&#124;  *  *
+&#124; *   *
+&#124;*    *
+&#124;******
 </code_blk>
 
 David and <a href="http://en.wikipedia.org/wiki/Goliath">Goliath</a> are
@@ -79,6 +79,10 @@ Notes:
 from the codeblock (matching the regex `(?:\r?\n)*`.
 ** There may be an attribute to override it in the future.
 
+* Each line must start with a https://en.wikipedia.org/wiki/Vertical_bar or its
+SGML entity which will be removed (to overcome the plaintext's processor's policy against
+leading whitespace).
+
 [id="screenplay_text_generated_html"]
 Screenplay-Text rendered to HTML:
 ---------------------------------
@@ -108,9 +112,9 @@ Screenplay-Text rendered to HTML:
             <figure class="asciiart">
 <pre class="asciiart" title="Star square">
 ******
-*    *
-*    *
-*    *
+ *   *
+  *  *
+ *   *
 *    *
 ******
 </pre>
