@@ -72,6 +72,70 @@ sub _paragraph_tag
     return "para";
 }
 
+sub _handle_elem_of_name_code_blk
+{
+    my ( $self, $elem ) = @_;
+
+    my $good = sub {
+        my ( $k, $v ) = @_;
+        my $input_v = $elem->lookup_attr($k);
+        die "wrong value \"$v\""
+            if ( ref($v) eq "" ? ( $v ne $input_v ) : ( $input_v !~ /$v/ ) );
+        return ( $k, $input_v );
+    };
+
+    $self->_output_tag(
+        {
+            start => [ $self->_paragraph_tag() ],
+            in    => sub {
+                $self->_output_tag(
+                    {
+                        start => [
+                            "code_blk",
+                            $good->( "syntax",   "text" ),
+                            $good->( "tag_role", "asciiart" ),
+                            $good->( "title",    qr#.#ms ),
+                            $good->( "alt",      qr#.#ms ),
+                        ],
+                        in => sub {
+                            my $ret =
+                                $elem->_get_childs()->[0]->_get_childs()->[0]
+                                ->children->contents()->[0];
+
+                            # $DB::single = 1;
+                            die if ( ref($ret) ne "" );
+                            my @lines = split /^/ms, $ret;
+                            while ( @lines and $lines[0] =~ /\A\r?\n\z/ms )
+                            {
+                                shift @lines;
+                            }
+                            while ( @lines and $lines[-1] =~ /\A\r?\n\z/ms )
+                            {
+                                pop @lines;
+                            }
+                        LINES:
+                            foreach my $l (@lines)
+                            {
+                                # next LINES if $l =~ /\A\r?\n/
+                                $l =~ s#^\|##ms
+                                    or die
+                                    qq#code_blk line did not start with a '|'#;
+                            }
+                            return $self->_write_elem(
+                                {
+                                    elem => ( join "", @lines )
+                                }
+                            );
+                        },
+                    }
+                );
+            },
+        },
+    );
+
+    return;
+}
+
 sub _handle_elem_of_name_img
 {
     my ( $self, $elem ) = @_;

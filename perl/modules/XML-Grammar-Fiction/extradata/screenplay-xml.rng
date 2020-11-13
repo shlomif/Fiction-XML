@@ -29,6 +29,30 @@
             <ref name="para"/>
         </oneOrMore>
     </define>
+    <define name="description_paras">
+        <oneOrMore>
+            <choice>
+                <ref name="para"/>
+                <element name="sp:para">
+                    <element name="sp:code_blk">
+                        <attribute name="syntax">
+                            <value>text</value>
+                        </attribute>
+                        <attribute name="tag_role">
+                            <value>asciiart</value>
+                        </attribute>
+                        <attribute name="title">
+                            <text/>
+                        </attribute>
+                        <attribute name="alt">
+                            <text/>
+                        </attribute>
+                        <text />
+                    </element>
+                </element>
+            </choice>
+        </oneOrMore>
+    </define>
     <define name="single_inline_elem">
         <choice>
             <text/>
@@ -56,7 +80,7 @@
             <zeroOrMore>
                 <choice>
                     <element name="sp:description">
-                        <ref name="several_paras"/>
+                        <ref name="description_paras"/>
                     </element>
                     <element name="sp:saying">
                         <attribute name="character">
