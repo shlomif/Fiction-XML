@@ -1,5 +1,11 @@
 Revision history for XML-Grammar-Fiction.
 
+0.20.0       2020-11-13
+    - Add the <code_blk /> element for encapsulating ASCII art
+        - t/screenplay/data/proto-text/with-tags-inside-paragraphs-with-code-block.txt
+        - Thanks to perryprog
+    - Add bin/screenplay-text-to-xhtml5
+
 0.18.4       2020-10-20
     - dist.ini / weaver.ini / .tidyallrc / etc. cleanup
         - Move to @SHLOMIF
