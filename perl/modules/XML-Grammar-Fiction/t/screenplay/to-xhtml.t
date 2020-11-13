@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 13;
+use Test::More tests => 15;
 
 use XML::LibXML                      ();
 use XML::Grammar::Screenplay::ToHTML ();
@@ -96,13 +96,30 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
     # TEST
     is( $r->size(), 1, "Found one title", );
 
-    $DB::single = 1;
-    my $child =
-        $xpc->find( q{./x:pre[@class='asciiart' and @title='Star square']},
-        $r->[0], );
+    # $DB::single = 1;
+    {
+        my $child =
+            $xpc->find( q{./x:pre[@class='asciiart' and @title='Star square']},
+            $r->[0], );
 
-    # TEST
-    is( $child->size(), 1, "Found one pre", );
+        # TEST
+        is( $child->size(), 1, "Found one pre", );
+    }
+
+    {
+        my $child = $xpc->find( q{./x:figcaption}, $r->[0], );
+
+        # TEST
+        is( $child->size(), 1, "Found one pre", );
+
+        # TEST
+        is(
+            $child->[0]->textContent(),
+            "The logo of the Square company",
+            "Correct figcaption textContent()",
+        );
+
+    }
 }
 
 1;
