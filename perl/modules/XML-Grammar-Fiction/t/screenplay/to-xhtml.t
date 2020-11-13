@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 8;
+use Test::More tests => 12;
 
 use XML::LibXML                      ();
 use XML::Grammar::Screenplay::ToHTML ();
@@ -14,10 +14,11 @@ my @tests = (
     qw(
         with-internal-description
         with-img-element-inside-paragraphs
+        with-tags-inside-paragraphs-with-code-block
         )
 );
 
-# TEST:$num_texts=2
+# TEST:$num_texts=3
 
 my $converter = XML::Grammar::Screenplay::ToHTML->new(
     {
@@ -84,5 +85,16 @@ foreach my $fn (@tests)
     );
 }
 
-1;
+{
+    my ( $xpc, $doc ) =
+        _calc_xpc_and_doc('with-tags-inside-paragraphs-with-code-block');
+    my $r = $xpc->find(
+q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_and_goliath']/x:div/x:figure[@class='asciiart']},
+        $doc
+    );
 
+    # TEST
+    is( $r->size(), 1, "Found one title", );
+}
+
+1;

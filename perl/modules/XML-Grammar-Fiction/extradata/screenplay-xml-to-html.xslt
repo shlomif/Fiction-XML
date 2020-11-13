@@ -79,7 +79,21 @@
     </div>
 </xsl:template>
 
+<xsl:template match="sp:code_blk">
+    <figure class="{@tag_role}">
+        <pre><xsl:value-of select="*"/></pre>
+        <figcaption class="{@tag_role}" title="{@title}">
+            <xsl:value-of select="@alt"/>
+        </figcaption>
+    </figure>
+</xsl:template>
+
 <xsl:template match="sp:para">
+    <xsl:choose>
+    <xsl:when test="sp:code_blk">
+        <xsl:apply-templates select="sp:code_blk" />
+    </xsl:when>
+    <xsl:otherwise>
     <p>
         <xsl:if test="local-name(..) = 'saying'">
             <strong class="sayer"><xsl:value-of select="../@character" />:</strong>
@@ -93,6 +107,8 @@
             ]
         </xsl:if>
     </p>
+    </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 <xsl:template match="sp:ulink">
