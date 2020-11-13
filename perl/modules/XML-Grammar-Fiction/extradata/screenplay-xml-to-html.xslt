@@ -81,8 +81,8 @@
 
 <xsl:template match="sp:code_blk">
     <figure class="{@tag_role}">
-        <pre><xsl:value-of select="*"/></pre>
-        <figcaption class="{@tag_role}" title="{@title}">
+        <pre class="{@tag_role}" title="{@title}"><xsl:apply-templates/></pre>
+        <figcaption>
             <xsl:value-of select="@alt"/>
         </figcaption>
     </figure>
