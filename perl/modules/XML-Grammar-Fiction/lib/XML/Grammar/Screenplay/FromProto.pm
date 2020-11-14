@@ -98,21 +98,15 @@ sub _handle_elem_of_name_code_blk
                             $good->( "alt",      qr#.#ms ),
                         ],
                         in => sub {
-                            my $ret =
+                            my $inner_text =
                                 $elem->_get_childs()->[0]->_get_childs()->[0]
                                 ->children->contents()->[0];
 
                             # $DB::single = 1;
-                            die if ( ref($ret) ne "" );
-                            my @lines = split /^/ms, $ret;
-                            while ( @lines and $lines[0] =~ /\A\r?\n\z/ms )
-                            {
-                                shift @lines;
-                            }
-                            while ( @lines and $lines[-1] =~ /\A\r?\n\z/ms )
-                            {
-                                pop @lines;
-                            }
+                            die if ( ref($inner_text) ne "" );
+                            $inner_text =~ s/\A(?:\r?\n)*//ms;
+                            $inner_text =~ s/(?:^\r?\n)*\z//ms;
+                            my @lines = split /^/ms, $inner_text;
                         LINES:
                             foreach my $l (@lines)
                             {
