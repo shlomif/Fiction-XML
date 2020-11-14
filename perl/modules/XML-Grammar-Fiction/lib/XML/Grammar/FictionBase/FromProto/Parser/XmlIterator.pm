@@ -7,6 +7,8 @@ use Carp ();
 
 use MooX 'late';
 
+use HTML::Entities ();
+
 use XML::Grammar::Fiction::Err         ();
 use XML::Grammar::Fiction::Struct::Tag ();
 use XML::Grammar::FictionBase::Event   ();
@@ -332,7 +334,9 @@ sub _parse_opening_tag_attrs
 
     while ( $$l =~ m{\G\s*($id_regex)="([^"]+)"\s*}cg )
     {
-        push @attrs, { 'key' => $1, 'value' => $2, };
+        my ( $k, $v ) = ( $1, $2 );
+        push @attrs,
+            +{ 'key' => $k, 'value' => HTML::Entities::decode_entities($v), };
     }
 
     return \@attrs;
