@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.20.1       2020-11-14
+    - Fix the handling of SGML/HTML/XML Entities inside tag attributes:
+        - Reference: https://stackoverflow.com/questions/9187946/escaping-inside-html-tag-attribute-value
+
 0.20.0       2020-11-13
     - Add the <code_blk /> element for encapsulating ASCII art
         - t/screenplay/data/proto-text/with-tags-inside-paragraphs-with-code-block.txt
