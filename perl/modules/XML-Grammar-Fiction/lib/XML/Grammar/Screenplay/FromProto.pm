@@ -100,7 +100,7 @@ sub _handle_elem_of_name_code_blk
                         in => sub {
                             my $inner_text =
                                 $elem->_get_childs()->[0]->_get_childs()->[0]
-                                ->children->contents()->[0];
+                                ->_get_childs()->[0];
 
                             # $DB::single = 1;
                             die if ( ref($inner_text) ne "" );
