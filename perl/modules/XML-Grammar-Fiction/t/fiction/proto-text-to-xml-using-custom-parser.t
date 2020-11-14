@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 46;
+use Test::More tests => 49;
 
 use lib './t/lib';
 use XmlGrammarTestXML qw(my_is_xml);
@@ -30,10 +30,11 @@ my @tests = (
         with-blockquote-with-lang-and-id
         with-style-tag-at-start-of-paragraph
         with-comment-with-newlines
+        with-entities-in-tag-attrs
         )
 );
 
-# TEST:$num_texts=15
+# TEST:$num_texts=16
 
 my $grammar = XML::Grammar::Fiction::FromProto->new(
     {
