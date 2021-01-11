@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 15;
+use Test::More tests => 16;
 
 use XML::LibXML                      ();
 use XML::Grammar::Screenplay::ToHTML ();
@@ -120,6 +120,14 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
         );
 
     }
+}
+
+{
+    my ( $xpc, $doc ) = _calc_xpc_and_doc('with-i-element-inside-paragraphs');
+    my $r = $xpc->find( q{.//x:a/x:i[text()='merciful']}, $doc, );
+
+    # TEST
+    is( $r->size(), 1, "Found one italics", );
 }
 
 1;

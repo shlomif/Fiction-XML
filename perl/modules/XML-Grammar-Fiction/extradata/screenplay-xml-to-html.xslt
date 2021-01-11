@@ -121,9 +121,9 @@
 </xsl:template>
 
 <xsl:template match="sp:bold">
-    <strong class="bold">
+    <b class="bold">
         <xsl:apply-templates />
-    </strong>
+    </b>
 </xsl:template>
 
 <xsl:template match="sp:image">
@@ -141,9 +141,9 @@
 </xsl:template>
 
 <xsl:template match="sp:italics">
-    <em class="italics">
+    <i class="italics">
         <xsl:apply-templates />
-    </em>
+    </i>
 </xsl:template>
 
 <xsl:template match="sp:inlinedesc">
