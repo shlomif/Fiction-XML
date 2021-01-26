@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+0.20.2       2021-01-26
+    - Allow for a single <image> tag inside a description paragraph
+
 0.20.1       2020-11-14
     - Fix the handling of SGML/HTML/XML Entities inside tag attributes:
         - Reference: https://stackoverflow.com/questions/9187946/escaping-inside-html-tag-attribute-value
