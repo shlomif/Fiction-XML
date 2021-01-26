@@ -102,7 +102,6 @@ sub _handle_elem_of_name_code_blk
                                 $elem->_get_childs()->[0]->_get_childs()->[0]
                                 ->_get_childs()->[0];
 
-                            # $DB::single = 1;
                             die if ( ref($inner_text) ne "" );
                             $inner_text =~ s/\A(?:\r?\n)*//ms;
                             $inner_text =~ s/(?:^\r?\n)*\z//ms;
@@ -148,16 +147,11 @@ sub _handle_elem_of_name_img
         );
     };
 
-    # $DB::single = 1;
-
-    use 5.014;
-    say( $self->_writer->ancestor(0), "==", $self->_paragraph_tag );
     return (
         ( $self->_writer->ancestor(0) eq $self->_paragraph_tag )
         ? $image->()
         : (
             sub {
-                $DB::single = 1;
                 return $self->_output_tag(
                     {
                         start => [ "para", ],

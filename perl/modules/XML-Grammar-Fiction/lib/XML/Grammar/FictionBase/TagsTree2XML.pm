@@ -221,7 +221,6 @@ sub _write_elem_childs
     {
         return;
 
-        # $DB::single = 1;
         die "elem=[$elem]";
     }
     if ( ref($elem) eq 'ARRAY' )
