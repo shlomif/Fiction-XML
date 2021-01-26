@@ -5,7 +5,7 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 88;
+use Test::More tests => 92;
 use XmlGrammarTestXML qw(my_is_xml);
 use Path::Tiny qw/ path /;
 
@@ -22,6 +22,7 @@ my @tests = (
         with-description
         with-tags-inside-paragraphs
         with-i-element-inside-paragraphs
+        with-img-element-as-whole-para
         with-img-element-inside-paragraphs
         with-internal-description
         with-comments
@@ -37,10 +38,10 @@ my @tests = (
         scenes-with-langs
         main-title
         with-tags-inside-paragraphs-with-code-block
-        )
+    )
 );
 
-# TEST:$num_texts=22
+# TEST:$num_texts=23
 
 my $grammar = XML::Grammar::Screenplay::FromProto->new(
     {
@@ -69,13 +70,20 @@ foreach my $fn (@tests)
 
     # TEST*$num_texts
     unlike( $got_xml, qr{[ \t+]$}ms, "No trailing space in \"$fn\"" );
+    my $want_xml = path("t/screenplay/data/xml/$fn.xml")->slurp_utf8;
 
     # TEST*$num_texts
-    my_is_xml(
-        [ string => $got_xml, ],
-        [ string => path("t/screenplay/data/xml/$fn.xml")->slurp_utf8, ],
-        "Output of the Proto Text \"$fn\""
-    );
+    if (
+        !my_is_xml(
+            [ string => $got_xml, ],
+            [ string => $want_xml, ],
+            "Output of the Proto Text \"$fn\""
+        )
+        )
+    {
+        diag($got_xml);
+        diag($want_xml);
+    }
 
     my $dom = $xml_parser->parse_string($got_xml);
 

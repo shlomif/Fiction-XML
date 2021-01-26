@@ -15,7 +15,7 @@ my @tests = (
         with-internal-description
         with-img-element-inside-paragraphs
         with-tags-inside-paragraphs-with-code-block
-        )
+    )
 );
 
 # TEST:$num_texts=3
@@ -96,7 +96,6 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
     # TEST
     is( $r->size(), 1, "Found one title", );
 
-    # $DB::single = 1;
     {
         my $child =
             $xpc->find( q{./x:pre[@class='asciiart' and @title='Star square']},

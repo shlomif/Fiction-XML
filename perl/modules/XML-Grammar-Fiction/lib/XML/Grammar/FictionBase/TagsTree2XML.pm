@@ -203,6 +203,10 @@ sub _output_tag_with_childs
         {
             %$args,
             'in' => sub {
+                if ( not $args->{elem} )
+                {
+                    die "args elem";
+                }
                 return $self->_write_elem_childs( $args->{elem} );
             },
         }
@@ -213,6 +217,21 @@ sub _write_elem_childs
 {
     my ( $self, $elem ) = @_;
 
+    if ( not ref $elem )
+    {
+        return;
+
+        die "elem=[$elem]";
+    }
+    if ( ref($elem) eq 'ARRAY' )
+    {
+        # body...
+        foreach my $child (@$elem)
+        {
+            $self->_write_elem( { elem => $child, }, );
+        }
+        return;
+    }
     foreach my $child ( @{ $elem->_get_childs() } )
     {
         $self->_write_elem( { elem => $child, }, );

@@ -102,7 +102,6 @@ sub _handle_elem_of_name_code_blk
                                 $elem->_get_childs()->[0]->_get_childs()->[0]
                                 ->_get_childs()->[0];
 
-                            # $DB::single = 1;
                             die if ( ref($inner_text) ne "" );
                             $inner_text =~ s/\A(?:\r?\n)*//ms;
                             $inner_text =~ s/(?:^\r?\n)*\z//ms;
@@ -134,19 +133,37 @@ sub _handle_elem_of_name_img
 {
     my ( $self, $elem ) = @_;
 
-    $self->_output_tag_with_childs(
-        {
-            start => [
-                "image",
-                "url"   => $elem->lookup_attr("src"),
-                "alt"   => $elem->lookup_attr("alt"),
-                "title" => $elem->lookup_attr("title"),
-            ],
-            elem => $elem,
-        }
+    my $image = sub {
+        return $self->_output_tag_with_childs(
+            {
+                start => [
+                    "image",
+                    "url"   => $elem->lookup_attr("src"),
+                    "alt"   => $elem->lookup_attr("alt"),
+                    "title" => $elem->lookup_attr("title"),
+                ],
+                elem => $elem,
+            }
+        );
+    };
+
+    return (
+        ( $self->_writer->ancestor(0) eq $self->_paragraph_tag )
+        ? $image->()
+        : (
+            sub {
+                return $self->_output_tag(
+                    {
+                        start => [ "para", ],
+                        in    => $image,
+
+                        # elem  => [ scalar( $image->() ) ],
+                    }
+                );
+            }
+        )->()
     );
 
-    return;
 }
 
 sub _handle_elem_of_name_a
