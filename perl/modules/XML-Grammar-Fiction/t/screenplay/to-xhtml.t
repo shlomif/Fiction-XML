@@ -15,7 +15,7 @@ my @tests = (
         with-internal-description
         with-img-element-inside-paragraphs
         with-tags-inside-paragraphs-with-code-block
-        )
+    )
 );
 
 # TEST:$num_texts=3

@@ -232,7 +232,7 @@ sub _is_there_a_speech_unit
 
     return (   $self->at_line_start()
             && ( !$self->_top_is_desc() )
-            && ( $$l =~ m{\A[^\[<][^:]*:} ) );
+            && ( $$l =~ m{\A[^\[][^:]*:} ) );
 }
 
 around '_parse_non_tag_text_unit' => sub {

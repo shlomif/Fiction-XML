@@ -38,7 +38,7 @@ my @tests = (
         scenes-with-langs
         main-title
         with-tags-inside-paragraphs-with-code-block
-        )
+    )
 );
 
 # TEST:$num_texts=23

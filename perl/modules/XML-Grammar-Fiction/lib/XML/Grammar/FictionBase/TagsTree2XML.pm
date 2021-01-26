@@ -219,8 +219,19 @@ sub _write_elem_childs
 
     if ( not ref $elem )
     {
-        $DB::single = 1;
+        return;
+
+        # $DB::single = 1;
         die "elem=[$elem]";
+    }
+    if ( ref($elem) eq 'ARRAY' )
+    {
+        # body...
+        foreach my $child (@$elem)
+        {
+            $self->_write_elem( { elem => $child, }, );
+        }
+        return;
     }
     foreach my $child ( @{ $elem->_get_childs() } )
     {

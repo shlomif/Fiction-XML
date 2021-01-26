@@ -148,20 +148,26 @@ sub _handle_elem_of_name_img
         );
     };
 
+    # $DB::single = 1;
+
+    use 5.014;
+    say( $self->_writer->ancestor(0), "==", $self->_paragraph_tag );
     return (
         ( $self->_writer->ancestor(0) eq $self->_paragraph_tag )
         ? $image->()
-        : do
-        {
+        : (
             sub {
-                $self->_output_tag_with_childs(
+                $DB::single = 1;
+                return $self->_output_tag(
                     {
                         start => [ "para", ],
-                        elem  => scalar( $image->() ),
+                        in    => $image,
+
+                        # elem  => [ scalar( $image->() ) ],
                     }
                 );
-            };
-        },
+            }
+        )->()
     );
 
 }
