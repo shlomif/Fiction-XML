@@ -206,7 +206,7 @@ sub _handle_elem_of_name_title
 
     # TODO :
     # Eliminate the Law-of-Demeter-syndrome here.
-    my $list = $elem->_get_childs()->[0];
+    my $list = $elem->_first();
 
     $self->_output_tag(
         {

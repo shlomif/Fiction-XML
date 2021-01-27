@@ -31,7 +31,7 @@ my @tests = (
         with-style-tag-at-start-of-paragraph
         with-comment-with-newlines
         with-entities-in-tag-attrs
-        )
+    )
 );
 
 # TEST:$num_texts=16

@@ -14,7 +14,7 @@ use warnings;
     my @t =
     (
           defined($title)
-        ? (title => $title->_get_childs()->[0])
+        ? (title => $title->_first())
         : ()
     );
 

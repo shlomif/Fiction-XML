@@ -14,7 +14,7 @@ my @tests = (
     qw(
         sections-and-paras
         sections-p-b-i
-        )
+    )
 );
 
 # TEST:$num_texts=2

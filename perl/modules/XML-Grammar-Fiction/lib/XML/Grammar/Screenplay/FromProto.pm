@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use autodie;
 
-use Carp;
+use Carp ();
 
 use MooX 'late';
 
@@ -99,8 +99,7 @@ sub _handle_elem_of_name_code_blk
                         ],
                         in => sub {
                             my $inner_text =
-                                $elem->_get_childs()->[0]->_get_childs()->[0]
-                                ->_get_childs()->[0];
+                                $elem->_first()->_first()->_first();
 
                             die if ( ref($inner_text) ne "" );
                             $inner_text =~ s/\A(?:\r?\n)*//ms;
@@ -247,4 +246,3 @@ sub _convert_write_content
 }
 
 1;
-

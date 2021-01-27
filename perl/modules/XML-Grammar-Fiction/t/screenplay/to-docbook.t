@@ -12,7 +12,7 @@ use XML::Grammar::Screenplay::ToDocBook ();
 my @tests = (
     qw(
         with-internal-description
-        )
+    )
 );
 
 # TEST:$num_texts=1

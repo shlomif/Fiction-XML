@@ -32,7 +32,7 @@ my @tests = (
         with-multi-para-desc
         with-numeric-entities
         with-tags-inside-paragraphs
-        )
+    )
 );
 
 my $converter = XML::Grammar::Screenplay::ToTEI->new(

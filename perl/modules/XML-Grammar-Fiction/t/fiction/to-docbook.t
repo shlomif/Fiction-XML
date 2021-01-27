@@ -26,7 +26,7 @@ my @tests = (
         with-span
         a-href-with-id-and-lang
         with-blockquote-with-lang-and-id
-        )
+    )
 );
 
 # TEST:$num_texts=11

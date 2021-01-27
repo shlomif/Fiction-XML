@@ -28,4 +28,11 @@ sub _get_childs
     return $childs || [];
 }
 
+sub _first
+{
+    my ($self) = @_;
+
+    return $self->_get_childs()->[0];
+}
+
 1;
