@@ -133,7 +133,7 @@ sub _handle_elem_of_name_img
 {
     my ( $self, $elem ) = @_;
 
-    my $image = sub {
+    my $image_cb = sub {
         return $self->_output_tag_with_childs(
             {
                 start => [
@@ -149,19 +149,13 @@ sub _handle_elem_of_name_img
 
     return (
         ( $self->_writer->ancestor(0) eq $self->_paragraph_tag )
-        ? $image->()
-        : (
-            sub {
-                return $self->_output_tag(
-                    {
-                        start => [ "para", ],
-                        in    => $image,
-
-                        # elem  => [ scalar( $image->() ) ],
-                    }
-                );
+        ? $image_cb->()
+        : $self->_output_tag(
+            {
+                start => [ "para", ],
+                in    => $image_cb,
             }
-        )->()
+        )
     );
 
 }
