@@ -6,10 +6,16 @@ https://www.shlomifish.org/open-source/projects/XML-Grammar/Fiction/[XML-Grammar
 * Fiction-XML
 * Fiction-Text
 
+These can be converted to XHTML5 and to PDF.
+
 The CPAN sources are under perl/ . There's also a ctags generation file under build.
 
-**Note:** we do not use the Hollywood-blessed format which is boring, finicky and requires
+**Note:** we do not use the Hollywood-blessed screenplay format because it is boring, finicky and requires
 a lot of time to prepare, and is the antithesis of https://www.shlomifish.org/philosophy/culture/my-real-person-fan-fiction/take2/["hacking"/action heroism]. For more info, see:
 
 * https://www.shlomifish.org/philosophy/culture/my-real-person-fan-fiction/take2/["Real Person Fan Fiction, crossovers and parodies as a geeky Hollywood imperative."]
 * https://www.shlomifish.org/humour/Queen-Padme-Tales/teaser/[Queen Padmé Tales Teaser] and https://www.shlomifish.org/humour/Queen-Padme-Tales/[Queen Padmé Tales (Star Wars / Star Trek / Real Life Crossover)]
+
+Examples:
+=========
+
