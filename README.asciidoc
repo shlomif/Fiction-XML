@@ -1,0 +1,9 @@
+Sources for
+https://www.shlomifish.org/open-source/projects/XML-Grammar/Fiction/[XML-Grammar-Fiction] which comprises of:
+
+* Screenplay-XML
+* Screenplay-Text
+* Fiction-XML
+* Fiction-Text
+
+The CPAN sources are under perl/ . There's also a ctags generation file under build.
