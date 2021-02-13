@@ -6,7 +6,7 @@ use warnings;
 use Path::Tiny qw/ path /;
 
 my ($version) =
-    ( map { m{\Aversion * = *(\S+)} ? ($1) : () }
+    ( map { m{\Aversion *= *(\S+)} ? ($1) : () }
         path("./dist.ini")->lines_utf8() );
 
 if ( !defined($version) )
