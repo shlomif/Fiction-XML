@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+
+use 5.014;
+use strict;
+use warnings;
+
+use XML::Grammar::Screenplay::FromProto::API::ListImages ();
+use XML::Grammar::Screenplay::FromProto::Parser::QnD     ();
+
+use Getopt::Long qw/ GetOptions /;
+
+my $output_fn;
+GetOptions( "output|o=s" => \$output_fn, );
+
+my $image_lister =
+    XML::Grammar::Screenplay::FromProto::API::ListImages->new( {} );
+
+foreach my $fn (@ARGV)
+{
+    my $got_doc = $image_lister->calc_doc__from_proto_text(
+        {
+            source => {
+                file => $fn,
+            },
+        }
+    );
+
+    foreach my $img ( @{ $got_doc->list_images() } )
+    {
+        say $img->uri();
+    }
+}
+
+1;

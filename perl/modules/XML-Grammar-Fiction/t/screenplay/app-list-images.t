@@ -5,7 +5,7 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 1;
+use Test::More tests => 2;
 use XmlGrammarTestXML qw(my_is_xml);
 use Path::Tiny qw/ path /;
 
@@ -26,18 +26,28 @@ my $image_lister =
 
 foreach my $fn (@tests)
 {
+    my $full_fn = "t/screenplay/data/proto-text/$fn.txt";
     my $got_doc = $image_lister->calc_doc__from_proto_text(
         {
             source => {
-                file => "t/screenplay/data/proto-text/$fn.txt",
+                file => $full_fn,
             },
         }
     );
 
+    my $WANT_IMAGES = [ 'david.webp', 'sling.png', 'zebra.jpg', ];
+
+    # TEST*$num_texts
+    is_deeply( [ map { $_->uri() } @{ $got_doc->list_images() }, ],
+        $WANT_IMAGES, "image list", );
+
     # TEST*$num_texts
     is_deeply(
-        [ map { $_->uri() } @{ $got_doc->list_images() }, ],
-        [ 'david.webp', 'sling.png', 'zebra.jpg', ],
+        [
+            split /\r?\n/,
+            scalar(`$^X -I lib bin/screenplay-text--list-images -- "$full_fn"`)
+        ],
+        $WANT_IMAGES,
         "image list",
     );
 }
