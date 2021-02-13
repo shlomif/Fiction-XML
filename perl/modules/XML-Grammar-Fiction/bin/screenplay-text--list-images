@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 use 5.014;
 use strict;
@@ -37,3 +37,29 @@ foreach my $fn (@ARGV)
 }
 
 1;
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+screenplay-text--list-images - list images
+
+=head1 SYNOPSIS
+
+    screenplay-text--list-images --with-filename -- t/screenplay/data/proto-text/*.txt
+
+=head1 DESCRIPTION
+
+    $ screenplay-text--list-images --with-filename -- t/screenplay/data/proto-text/*.txt
+    t/screenplay/data/proto-text/with-img-element-as-whole-para.txt:sling.png
+    t/screenplay/data/proto-text/with-img-element-inside-paragraphs.txt:sling.png
+    t/screenplay/data/proto-text/with-multiple-img-elements.txt:david.webp
+    t/screenplay/data/proto-text/with-multiple-img-elements.txt:sling.png
+    t/screenplay/data/proto-text/with-multiple-img-elements.txt:zebra.jpg
+
+=head2
+
+=cut
+
