@@ -10,7 +10,8 @@ use XML::Grammar::Screenplay::FromProto::Parser::QnD     ();
 use Getopt::Long qw/ GetOptions /;
 
 my $output_fn;
-GetOptions( "output|o=s" => \$output_fn, );
+my $show_fn = '';
+GetOptions( "output|o=s" => \$output_fn, 'with-filename!' => \$show_fn, );
 
 my $image_lister =
     XML::Grammar::Screenplay::FromProto::API::ListImages->new( {} );
@@ -27,6 +28,10 @@ foreach my $fn (@ARGV)
 
     foreach my $img ( @{ $got_doc->list_images() } )
     {
+        if ($show_fn)
+        {
+            print $fn, ":";
+        }
         say $img->uri();
     }
 }
