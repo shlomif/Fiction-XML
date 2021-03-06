@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+0.22.1       2021-03-06
+    - Add a tag_role="code_block" option for code_blk.
+
 0.22.0       2021-02-13
     - Add bin/screenplay-text--list-images
 

@@ -79,7 +79,8 @@ sub _handle_elem_of_name_code_blk
     my $good = sub {
         my ( $k, $v ) = @_;
         my $input_v = $elem->lookup_attr($k);
-        die "wrong value \"$v\""
+        die
+"wrong value \"$input_v\" for attribute \"$k\" for element \"<code_blk>\""
             if ( ref($v) eq "" ? ( $v ne $input_v ) : ( $input_v !~ /$v/ ) );
         return ( $k, $input_v );
     };
@@ -92,10 +93,12 @@ sub _handle_elem_of_name_code_blk
                     {
                         start => [
                             "code_blk",
-                            $good->( "syntax",   "text" ),
-                            $good->( "tag_role", "asciiart" ),
-                            $good->( "title",    qr#.#ms ),
-                            $good->( "alt",      qr#.#ms ),
+                            $good->( "syntax", "text" ),
+                            $good->(
+                                "tag_role", qr#\A(?:asciiart|code_block)\z#,
+                            ),
+                            $good->( "title", qr#.#ms ),
+                            $good->( "alt",   qr#.#ms ),
                         ],
                         in => sub {
                             my $inner_text =

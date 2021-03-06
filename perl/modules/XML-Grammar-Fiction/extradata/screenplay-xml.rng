@@ -39,7 +39,10 @@
                             <value>text</value>
                         </attribute>
                         <attribute name="tag_role">
-                            <value>asciiart</value>
+                            <choice>
+                                <value>asciiart</value>
+                                <value>code_block</value>
+                            </choice>
                         </attribute>
                         <attribute name="title">
                             <text/>
