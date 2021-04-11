@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<document xmlns="http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/">
+<document xmlns="http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/" xmlns:xlink="http://www.w3.org/1999/xlink">
     <head>
     </head>
     <body id="index">
@@ -8,7 +8,7 @@
         <description>
             <para>
                 David and
-                <ulink url="http://en.wikipedia.org/wiki/Goliath">Goliath</ulink>
+                <a xlink:href="http://en.wikipedia.org/wiki/Goliath">Goliath</a>
                 are standing by each other.
             </para>
         </description>
@@ -27,7 +27,7 @@
                 yes way!
             </para>
             <para>
-                In the name of <ulink url="http://real-allah.tld/">Allah, the <bold>merciful</bold>, real merciful</ulink>, I will show you the power
+                In the name of <a xlink:href="http://real-allah.tld/">Allah, the <bold>merciful</bold>, real merciful</a>, I will show you the power
                 of my sling.
             </para>
             <para>
@@ -41,7 +41,7 @@
         </description>
     <saying character="Goliath">
         <para>
-            I'm still <ulink url="http://wait.tld/">waiting</ulink>.
+            I'm still <a xlink:href="http://wait.tld/">waiting</a>.
         </para>
     </saying>
     <saying character="David">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version = '1.0'
      xmlns='http://www.w3.org/1999/xhtml'
-    xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
      xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
      xmlns:sp="http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/"
      >

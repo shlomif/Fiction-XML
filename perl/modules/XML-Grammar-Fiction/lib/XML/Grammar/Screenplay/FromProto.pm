@@ -168,8 +168,12 @@ sub _handle_elem_of_name_a
 
     $self->_output_tag_with_childs(
         {
-            start => [ "ulink", "url" => $elem->lookup_attr("href") ],
-            elem  => $elem,
+            start => [
+                "a",
+                [ "http://www.w3.org/1999/xlink", "href" ],
+                $elem->lookup_attr("href"),
+            ],
+            elem => $elem,
         }
     );
 
