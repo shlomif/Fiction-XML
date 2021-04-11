@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: testSuite.rng,v 1.12 2003/01/29 12:24:07 jjc Exp $ -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:sp="http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/"
     datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
     >
@@ -139,19 +140,30 @@
             <text />
         </element>
     </define>
+    <define name="hyperlink_inner">
+        <zeroOrMore>
+            <choice>
+                <text />
+                <ref name="bold"/>
+                <ref name="italics"/>
+            </choice>
+        </zeroOrMore>
+    </define>
     <define name="ulink">
-        <element name="sp:ulink">
+        <choice>
+            <element name="sp:ulink">
                 <attribute name="url">
                     <text/>
                 </attribute>
-                <zeroOrMore>
-                    <choice>
-                        <text />
-                        <ref name="bold"/>
-                        <ref name="italics"/>
-                    </choice>
-            </zeroOrMore>
-        </element>
+                <ref name="hyperlink_inner"/>
+            </element>
+            <element name="sp:a">
+                <attribute name="xlink:href">
+                    <text/>
+                </attribute>
+                <ref name="hyperlink_inner"/>
+            </element>
+        </choice>
     </define>
 </grammar>
 
