@@ -1,5 +1,10 @@
 Revision history for XML-Grammar-Fiction.
 
+0.22.2       2021-04-11
+    - Use an <a xlink:href=""> tag as an alias to "ulink url="
+        - Screenplay-XML
+        - Modernised XML.
+
 0.22.1       2021-03-06
     - Add a tag_role="code_block" option for code_blk.
 
