@@ -74,7 +74,15 @@ sub _push_tag
 {
     my $self = shift;
 
-    push( @{ $self->_tags_stack }, @_ );
+    my $tag = shift;
+
+    die if @_;
+
+    if ( @{ $self->_tags_stack } )
+    {
+        die if $tag->name eq 'para' and $self->_top_is_para();
+    }
+    push( @{ $self->_tags_stack }, $tag );
 
     return;
 }
@@ -822,8 +830,29 @@ sub _handle_open_tag
     }
     else
     {
-        $self->_push_tag($open);
+        my $cb = sub {
+            $self->_push_tag($open);
+        };
 
+=begin removed
+        if ( $self->_in_para()
+            or ( not exists +{ b => 1, i => 1, }->{ $open->name() } ) )
+        {
+            $cb->();
+        }
+        else
+        {
+            warn "before _new_para[[["
+                . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
+                . ${ $self->curr_line_ref } . "]]]";
+            $self->_new_para( [] );
+            $cb->();
+        }
+=end removed
+
+=cut
+
+        $cb->();
         return;
     }
 }

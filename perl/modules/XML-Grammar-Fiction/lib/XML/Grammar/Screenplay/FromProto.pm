@@ -85,47 +85,60 @@ sub _handle_elem_of_name_code_blk
         return ( $k, $input_v );
     };
 
-    $self->_output_tag(
-        {
-            start => [ $self->_paragraph_tag() ],
-            in    => sub {
-                $self->_output_tag(
-                    {
-                        start => [
-                            "code_blk",
-                            $good->( "syntax", "text" ),
-                            $good->(
-                                "tag_role", qr#\A(?:asciiart|code_block)\z#,
-                            ),
-                            $good->( "title", qr#.#ms ),
-                            $good->( "alt",   qr#.#ms ),
-                        ],
-                        in => sub {
-                            my $inner_text =
-                                $elem->_first()->_first()->_first();
+    my $out_cb = sub {
+        $self->_output_tag(
+            {
+                start => [
+                    "code_blk",
+                    $good->( "syntax",   "text" ),
+                    $good->( "tag_role", qr#\A(?:asciiart|code_block)\z#, ),
+                    $good->( "title",    qr#.#ms ),
+                    $good->( "alt",      qr#.#ms ),
+                ],
+                in => sub {
+                    my $inner_text = $elem->_first()->_first();
 
-                            die if ( ref($inner_text) ne "" );
-                            $inner_text =~ s/\A(?:\r?\n)*//ms;
-                            $inner_text =~ s/(?:^\r?\n)*\z//ms;
-                            my @lines = split /^/ms, $inner_text;
-                        LINES:
-                            foreach my $l (@lines)
-                            {
-                                # next LINES if $l =~ /\A\r?\n/
-                                $l =~ s#^\|##ms
-                                    or die
-                                    qq#code_blk line did not start with a '|'#;
-                            }
-                            return $self->_write_elem(
-                                {
-                                    elem => ( join "", @lines )
-                                }
-                            );
-                        },
+                    foreach my $cnt ( 1 .. 2 )
+                    {
+                        my $x;
+
+                        eval { $x = $inner_text->_first(); };
+
+                        if ($x)
+                        {
+                            $inner_text = $x;
+                        }
+
                     }
-                );
-            },
-        },
+                    die if ( ref($inner_text) ne "" );
+                    $inner_text =~ s/\A(?:\r?\n)*//ms;
+                    $inner_text =~ s/(?:^\r?\n)*\z//ms;
+                    my @lines = split /^/ms, $inner_text;
+                LINES:
+                    foreach my $l (@lines)
+                    {
+                        # next LINES if $l =~ /\A\r?\n/
+                        $l =~ s#^\|##ms
+                            or die qq#code_blk line did not start with a '|'#;
+                    }
+                    return $self->_write_elem(
+                        {
+                            elem => ( join "", @lines )
+                        }
+                    );
+                },
+            }
+        );
+    };
+    return (
+        ( $self->_writer->within_element( $self->_paragraph_tag ) )
+        ? $out_cb->()
+        : $self->_output_tag(
+            {
+                start => [ $self->_paragraph_tag, ],
+                in    => $out_cb,
+            }
+        )
     );
 
     return;
@@ -150,7 +163,7 @@ sub _handle_elem_of_name_img
     };
 
     return (
-        ( $self->_writer->ancestor(0) eq $self->_paragraph_tag )
+        ( $self->_writer->within_element( $self->_paragraph_tag ) )
         ? $image_cb->()
         : $self->_output_tag(
             {

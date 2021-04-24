@@ -3,6 +3,7 @@ package XML::Grammar::Screenplay::FromProto::Parser::QnD;
 use strict;
 use warnings;
 
+use Carp qw/ cluck /;
 use MooX 'late';
 
 extends('XML::Grammar::FictionBase::FromProto::Parser::XmlIterator');
@@ -44,7 +45,8 @@ sub _top_is
 {
     my ( $self, $want_name ) = @_;
 
-    return ( $self->_top_tag->name eq $want_name );
+    my $_top_tag = $self->_top_tag;
+    return ( $_top_tag and $_top_tag->name eq $want_name );
 }
 
 sub _top_is_desc
@@ -81,13 +83,18 @@ after '_push_tag' => sub {
     my $self = shift;
 
     # This is an assert - it must never happen.
-    if ( $self->_count_tags_in_stack("p") == 2 )
+    if ( $self->_count_tags_in_stack("p") >= 2 )
+    {
+        Carp::confess(qq{Two paragraphs in the tags stack.});
+    }
+
+    if ( $self->_count_tags_in_stack("para") >= 2 )
     {
         Carp::confess(qq{Two paragraphs in the tags stack.});
     }
 
     # This is an assert - it must never happen.
-    if ( $self->_count_tags_in_stack("saying") == 2 )
+    if ( $self->_count_tags_in_stack("saying") >= 2 )
     {
         Carp::confess(qq{Two sayings in the tags stack at the same time.});
     }
@@ -411,6 +418,14 @@ sub _process_closed_para
 sub _close_para
 {
     my $self = shift;
+    if (0)
+    {
+        warn "_close_para[[["
+            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
+            . ${ $self->curr_line_ref } . "]]]";
+
+        # body...
+    }
 
     my $open = $self->_pop_tag();
 
@@ -439,10 +454,25 @@ sub _create_start_para
 sub _start_para
 {
     my $self = shift;
+    if (0)
+    {
+        warn "start---_start_para[[["
+            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
+            . ${ $self->curr_line_ref } . "]]]";
 
+        # body...
+    }
     $self->_push_tag( $self->_create_start_para() );
 
     $self->_in_para(1);
+    if (0)
+    {
+        warn "_start_para[[["
+            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
+            . ${ $self->curr_line_ref } . "]]]";
+
+        # body...
+    }
 
     return;
 }
@@ -524,14 +554,25 @@ sub _list_valid_tag_events
     return [qw(para saying)];
 }
 
-after '_handle_open_tag' => sub {
+before '_handle_open_tag' => sub {
     my $self = shift;
 
     if ( $self->_top_is_desc )
     {
-        $self->_start_para();
+        if ( !$self->_in_para() )
+        {
+            $self->_start_para();
+        }
     }
 
+    if (0)
+    {
+        cluck "_handle_open_tag[[["
+            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
+            . ${ $self->curr_line_ref } . "]]]";
+
+        # body...
+    }
     return;
 };
 

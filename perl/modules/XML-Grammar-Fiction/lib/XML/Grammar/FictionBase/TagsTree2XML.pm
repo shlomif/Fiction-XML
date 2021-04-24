@@ -158,12 +158,21 @@ sub _write_Element_Paragraph
 {
     my ( $self, $elem ) = @_;
 
-    return $self->_output_tag_with_childs(
-        {
-            start => [ $self->_paragraph_tag() ],
-            elem  => $elem,
-        },
+    my $out_cb = sub {
+        return $self->_write_elem_childs( $elem, );
+    };
+    return (
+        ( $self->_writer->within_element( $self->_paragraph_tag ) )
+        ? $out_cb->()
+        : $self->_output_tag(
+            {
+                start => [ $self->_paragraph_tag, ],
+                in    => $out_cb,
+            }
+        )
     );
+
+    # ( $self->_writer->within_element( $self->_paragraph_tag ) )
 }
 
 sub _write_Element_Element
@@ -279,11 +288,25 @@ sub _write_Element_elem
         defined( my $out_name = $self->_calc_passthrough_name( $name, $elem ) )
         )
     {
-        return $self->_output_tag_with_childs(
-            {
-                start => [$out_name],
-                elem  => $elem,
-            }
+        my $out_cb = sub {
+            return $self->_output_tag_with_childs(
+                {
+                    start => [$out_name],
+                    elem  => $elem,
+                }
+            );
+        };
+
+        # warn "\$out_name=[$out_name]";
+        return (
+            ( $self->_writer->within_element( $self->_paragraph_tag ) )
+            ? $out_cb->()
+            : $self->_output_tag(
+                {
+                    start => [ $self->_paragraph_tag, ],
+                    in    => $out_cb,
+                }
+            )
         );
     }
     else

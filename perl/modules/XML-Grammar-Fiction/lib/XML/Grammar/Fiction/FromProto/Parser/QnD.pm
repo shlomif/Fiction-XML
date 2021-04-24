@@ -112,6 +112,8 @@ sub _handle_open_para
 {
     my ( $self, $event ) = @_;
 
+    die if $self->_in_para();
+
     $self->_push_tag( $self->_calc_open_para() );
 
     $self->_in_para(1);
