@@ -27,6 +27,21 @@ before 'next_line_ref' => sub {
     return;
 };
 
+sub _debug
+{
+    my ( $self, $args ) = @_;
+
+    if (1)
+    {
+        my $name = $args->{name};
+        cluck "${name}[[["
+            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
+            . ${ $self->curr_line_ref } . "]]]";
+    }
+
+    return;
+}
+
 sub _top_is_para
 {
     my $self = shift;
