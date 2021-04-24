@@ -104,8 +104,9 @@ sub _flush_buffer
 }
 
 my %passthrough_elem = (
-    b => sub { return shift->_bold_tag_name(); },
-    i => sub { return shift->_italics_tag_name(); },
+    b => sub { return +{ tag => shift->_bold_tag_name(), wrap_para => 1, }; },
+    i =>
+        sub { return +{ tag => shift->_italics_tag_name(), wrap_para => 1, }; },
 );
 
 sub _calc_passthrough_cb
@@ -171,8 +172,6 @@ sub _write_Element_Paragraph
             }
         )
     );
-
-    # ( $self->_writer->within_element( $self->_paragraph_tag ) )
 }
 
 sub _write_Element_Element
@@ -288,10 +287,6 @@ sub _write_Element_elem
         defined( my $out_name = $self->_calc_passthrough_name( $name, $elem ) )
         )
     {
-        if ( "" eq ref $out_name )
-        {
-            $out_name = { tag => $out_name, wrap_para => 1, };
-        }
         my $out_cb = sub {
             return $self->_output_tag_with_childs(
                 {

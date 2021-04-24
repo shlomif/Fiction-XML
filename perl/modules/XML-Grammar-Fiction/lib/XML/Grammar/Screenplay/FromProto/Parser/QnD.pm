@@ -418,14 +418,6 @@ sub _process_closed_para
 sub _close_para
 {
     my $self = shift;
-    if (0)
-    {
-        warn "_close_para[[["
-            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
-            . ${ $self->curr_line_ref } . "]]]";
-
-        # body...
-    }
 
     my $open = $self->_pop_tag();
 
@@ -454,25 +446,9 @@ sub _create_start_para
 sub _start_para
 {
     my $self = shift;
-    if (0)
-    {
-        warn "start---_start_para[[["
-            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
-            . ${ $self->curr_line_ref } . "]]]";
-
-        # body...
-    }
     $self->_push_tag( $self->_create_start_para() );
 
     $self->_in_para(1);
-    if (0)
-    {
-        warn "_start_para[[["
-            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
-            . ${ $self->curr_line_ref } . "]]]";
-
-        # body...
-    }
 
     return;
 }
@@ -565,14 +541,6 @@ before '_handle_open_tag' => sub {
         }
     }
 
-    if (0)
-    {
-        cluck "_handle_open_tag[[["
-            . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
-            . ${ $self->curr_line_ref } . "]]]";
-
-        # body...
-    }
     return;
 };
 

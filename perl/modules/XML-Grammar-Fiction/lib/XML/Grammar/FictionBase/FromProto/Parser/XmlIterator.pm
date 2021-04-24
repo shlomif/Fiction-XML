@@ -76,11 +76,14 @@ sub _push_tag
 
     my $tag = shift;
 
-    die if @_;
+    die "extra args" if @_;
 
     if ( @{ $self->_tags_stack } )
     {
-        die if $tag->name eq 'para' and $self->_top_is_para();
+        if ( $tag->name eq 'para' and $self->_top_is_para() )
+        {
+            die "extra paragraph";
+        }
     }
     push( @{ $self->_tags_stack }, $tag );
 
@@ -834,26 +837,7 @@ sub _handle_open_tag
             $self->_push_tag($open);
         };
 
-=begin removed
-        if ( $self->_in_para()
-            or ( not exists +{ b => 1, i => 1, }->{ $open->name() } ) )
-        {
-            $cb->();
-        }
-        else
-        {
-            warn "before _new_para[[["
-                . join( ",", map { $_->name() } @{ $self->_tags_stack } ) . "; "
-                . ${ $self->curr_line_ref } . "]]]";
-            $self->_new_para( [] );
-            $cb->();
-        }
-=end removed
-
-=cut
-
-        $cb->();
-        return;
+        return $cb->();
     }
 }
 

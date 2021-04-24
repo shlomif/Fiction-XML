@@ -36,19 +36,14 @@ on failure.
 
 =cut
 
-my %lookup = ( map { $_ => $_ } qw( li ol ul ) );
+my %lookup = ( map { $_ => +{ tag => $_, wrap_para => 0, }, } qw( li ol ul ) );
 
 around '_calc_passthrough_cb' => sub {
     my $orig   = shift;
     my $self   = shift;
     my ($name) = @_;
 
-    if ( $lookup{$name} )
-    {
-        return +{ tag => $name, wrap_para => 0, };
-    }
-
-    return $orig->( $self, @_ );
+    return ( $lookup{$name} // $orig->( $self, @_ ) );
 };
 
 sub _output_tag_with_childs_and_common_attributes
