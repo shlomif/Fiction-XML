@@ -6,7 +6,7 @@ use warnings;
 use lib './t/lib';
 
 use Test::More tests => 104;
-use XmlGrammarTestXML qw(my_is_xml);
+use XmlGrammarTestXML qw( my_is_xml );
 use Path::Tiny qw/ path /;
 
 use XML::LibXML ();

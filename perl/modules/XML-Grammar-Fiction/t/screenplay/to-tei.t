@@ -6,7 +6,7 @@ use warnings;
 use Test::More tests => 17;
 
 use lib './t/lib';
-use XmlGrammarTestXML qw(my_is_xml);
+use XmlGrammarTestXML qw( my_is_xml );
 
 use XML::LibXML                     ();
 use XML::Grammar::Screenplay::ToTEI ();
