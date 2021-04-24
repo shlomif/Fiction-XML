@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+0.22.3       2021-04-24
+    - Support <b> tags in the beginning of paragraphs in Screenplay-Text.
+
 0.22.2       2021-04-11
     - Use an <a xlink:href=""> tag as an alias to "ulink url="
         - Screenplay-XML
