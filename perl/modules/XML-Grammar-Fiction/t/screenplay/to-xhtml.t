@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 19;
+use Test::More tests => 25;
 
 use XML::LibXML                      ();
 use XML::Grammar::Screenplay::ToHTML ();
@@ -16,10 +16,12 @@ my @tests = (
         with-img-element-inside-paragraphs
         with-tags-inside-paragraphs-with-code-block
         with-code-block--with-tag_role-as-code_block
+        with-bold-tag-at-paragraph-start
+        with-italics-tag-at-paragraph-start
     )
 );
 
-# TEST:$num_texts=4
+# TEST:$num_texts=6
 
 my $converter = XML::Grammar::Screenplay::ToHTML->new(
     {

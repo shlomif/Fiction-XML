@@ -5,7 +5,7 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 100;
+use Test::More tests => 104;
 use XmlGrammarTestXML qw(my_is_xml);
 use Path::Tiny qw/ path /;
 
@@ -40,10 +40,11 @@ my @tests = (
         with-tags-inside-paragraphs-with-code-block
         with-code-block--with-tag_role-as-code_block
         with-bold-tag-at-paragraph-start
+        with-italics-tag-at-paragraph-start
     )
 );
 
-# TEST:$num_texts=25
+# TEST:$num_texts=26
 
 my $grammar = XML::Grammar::Screenplay::FromProto->new(
     {
