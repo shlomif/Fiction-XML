@@ -45,7 +45,7 @@ around '_calc_passthrough_cb' => sub {
 
     if ( $lookup{$name} )
     {
-        return $name;
+        return +{ tag => $name, wrap_para => 0, };
     }
 
     return $orig->( $self, @_ );

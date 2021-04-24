@@ -288,10 +288,14 @@ sub _write_Element_elem
         defined( my $out_name = $self->_calc_passthrough_name( $name, $elem ) )
         )
     {
+        if ( "" eq ref $out_name )
+        {
+            $out_name = { tag => $out_name, wrap_para => 1, };
+        }
         my $out_cb = sub {
             return $self->_output_tag_with_childs(
                 {
-                    start => [$out_name],
+                    start => [ $out_name->{tag} ],
                     elem  => $elem,
                 }
             );
@@ -299,14 +303,18 @@ sub _write_Element_elem
 
         # warn "\$out_name=[$out_name]";
         return (
-            ( $self->_writer->within_element( $self->_paragraph_tag ) )
-            ? $out_cb->()
-            : $self->_output_tag(
+            (
+                $out_name->{wrap_para}
+                    && (
+                    !$self->_writer->within_element( $self->_paragraph_tag ) )
+            )
+            ? $self->_output_tag(
                 {
                     start => [ $self->_paragraph_tag, ],
                     in    => $out_cb,
                 }
-            )
+                )
+            : $out_cb->()
         );
     }
     else
