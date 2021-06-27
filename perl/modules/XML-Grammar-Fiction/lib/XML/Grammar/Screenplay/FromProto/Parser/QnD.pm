@@ -414,35 +414,36 @@ sub _assert_top_is_para
 
     return;
 }
-
-sub _process_closed_para
 {
-    my ( $self, $open ) = @_;
+    my $ALLOWED_PARA_PARENTS = +{ 'desc' => 1, 'saying' => 1, };
 
-    my $children = $open->detach_children();
-
-    # Filter away empty paragraphs.
-    if ( defined($children) && @$children )
+    sub _process_closed_para
     {
-        my $para = $self->_new_para($children);
-        my $name = $self->_top_tag->name;
+        my ( $self, $open ) = @_;
 
-        # use 5.020; say $name;
-        if (
-            not exists { 'desc' => 1, 'innerdesc' => 1, 'saying' => 1, }
+        my $children = $open->detach_children();
 
-            # exists +{ scene => 1, }
-            ->{$name}
-            )
+        # Filter away empty paragraphs.
+        if ( defined($children) && @$children )
         {
-            Carp::confess(
-qq#Unanchored paragraph not inside a saying or a description at line @{[$open->line()]}#
-            );
-        }
-        $self->_add_to_top_tag($para);
-    }
+            my $para = $self->_new_para($children);
+            my $name = $self->_top_tag->name;
 
-    return;
+            if (
+                not exists
+
+                $ALLOWED_PARA_PARENTS->{$name}
+                )
+            {
+                Carp::confess(
+qq#Unanchored paragraph not inside a saying or a description at line @{[$open->line()]}#
+                );
+            }
+            $self->_add_to_top_tag($para);
+        }
+
+        return;
+    }
 }
 
 sub _close_para
