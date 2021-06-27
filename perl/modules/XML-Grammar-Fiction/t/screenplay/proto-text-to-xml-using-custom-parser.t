@@ -5,13 +5,50 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 104;
+use Test::More tests => 105;
 use XmlGrammarTestXML qw( my_is_xml );
 use Path::Tiny qw/ path /;
 
 use XML::LibXML ();
 require XML::Grammar::Screenplay::FromProto;
 require XML::Grammar::Screenplay::FromProto::Parser::QnD;
+
+sub _unanchored_paragraph
+{
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $self, $param ) = @_;
+
+    my $got_xml;
+
+    my $grammar = XML::Grammar::Screenplay::FromProto->new(
+        {
+            parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
+        }
+    );
+    eval {
+        $got_xml = $grammar->convert(
+            {
+                source => {
+                    file =>
+"t/screenplay/data/proto-text-invalid/unanchored_paragraph.txt",
+                },
+            }
+        );
+    };
+
+    my $err = $@;
+
+    # TEST
+    like(
+        $err,
+qr#\AUnanchored paragraph not inside a saying or a description at line 11\b#,
+        "unanchored paragraph",
+    );
+
+    return;
+}
+
+_unanchored_paragraph();
 
 my @tests = (
     qw(

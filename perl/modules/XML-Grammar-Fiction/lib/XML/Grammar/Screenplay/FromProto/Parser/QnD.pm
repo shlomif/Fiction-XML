@@ -424,7 +424,22 @@ sub _process_closed_para
     # Filter away empty paragraphs.
     if ( defined($children) && @$children )
     {
-        $self->_add_to_top_tag( $self->_new_para($children) );
+        my $para = $self->_new_para($children);
+        my $name = $self->_top_tag->name;
+
+        # use 5.020; say $name;
+        if (
+            not exists { 'desc' => 1, 'innerdesc' => 1, 'saying' => 1, }
+
+            # exists +{ scene => 1, }
+            ->{$name}
+            )
+        {
+            Carp::confess(
+qq#Unanchored paragraph not inside a saying or a description at line @{[$open->line()]}#
+            );
+        }
+        $self->_add_to_top_tag($para);
     }
 
     return;
