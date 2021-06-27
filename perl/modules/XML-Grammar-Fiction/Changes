@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.22.5       2021-06-27
+    - Handle unanchored paragraphs in*.screenplay-text.txt
+    files more gracefully.
+
 0.22.4       2021-04-24
     - Test <i> tags in the beginning of paragraphs in Screenplay-Text.
     - Cleanup the previous changes.
