@@ -13,18 +13,23 @@ use XML::LibXML ();
 require XML::Grammar::Screenplay::FromProto;
 require XML::Grammar::Screenplay::FromProto::Parser::QnD;
 
-sub _unanchored_paragraph
+sub _parser
 {
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-    my ( $self, $param ) = @_;
-
-    my $got_xml;
-
-    my $grammar = XML::Grammar::Screenplay::FromProto->new(
+    return XML::Grammar::Screenplay::FromProto->new(
         {
             parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
         }
     );
+}
+
+sub _unanchored_paragraph
+{
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my $got_xml;
+
+    my $grammar = _parser();
+
     eval {
         $got_xml = $grammar->convert(
             {
@@ -83,11 +88,7 @@ my @tests = (
 
 # TEST:$num_texts=26
 
-my $grammar = XML::Grammar::Screenplay::FromProto->new(
-    {
-        parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
-    }
-);
+my $grammar = _parser();
 
 my $rngschema =
     XML::LibXML::RelaxNG->new( location => "./extradata/screenplay-xml.rng" );
