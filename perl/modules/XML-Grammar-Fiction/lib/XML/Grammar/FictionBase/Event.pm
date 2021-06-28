@@ -39,8 +39,8 @@ sub is_open
 sub is_open_or_close
 {
     my $self = shift;
-
-    return ( ( $self->type() eq "open" ) || ( $self->type() eq "close" ) );
+    my $type = $self->type();
+    return ( ( $type eq "open" ) || ( $type eq "close" ) );
 }
 
 1;

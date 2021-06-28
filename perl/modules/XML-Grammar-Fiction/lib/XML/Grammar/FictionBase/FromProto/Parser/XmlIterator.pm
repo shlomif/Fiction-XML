@@ -758,14 +758,11 @@ sub _look_for_tag_opener
 
     my $l = $self->curr_line_ref();
 
-    if ( $$l =~ m{\G(<(?:/)?)}cg )
+    if ( my ($str) = $$l =~ m{\G(<(?:/)?)}cg )
     {
-        return $1;
+        return $str;
     }
-    else
-    {
-        return;
-    }
+    return;
 }
 
 sub _is_closing_tag
@@ -833,11 +830,7 @@ sub _handle_open_tag
     }
     else
     {
-        my $cb = sub {
-            $self->_push_tag($open);
-        };
-
-        return $cb->();
+        return $self->_push_tag($open);
     }
 }
 
