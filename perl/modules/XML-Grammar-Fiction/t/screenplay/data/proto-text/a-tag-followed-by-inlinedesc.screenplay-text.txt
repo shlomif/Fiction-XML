@@ -1,0 +1,11 @@
+<s id="main" lang="en" title="Queen Padmé Tales: The Fifth Sith">
+
+<s id="scene" title="test scene">
+
+Padme: Text before <a href="https://stexpanded.fandom.com/wiki/Katie_Jacobson">Link followed by space</a> [desc with space before] text after desc.
+
+[ She opens a videochat to Katie. ]
+
+</s>
+
+</s>

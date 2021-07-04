@@ -4,10 +4,12 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 25;
+use Test::More tests => 30;
 
-use XML::LibXML                      ();
-use XML::Grammar::Screenplay::ToHTML ();
+use XML::LibXML qw(XML_TEXT_NODE);
+use XML::Grammar::Screenplay::FromProto              ();
+use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
+use XML::Grammar::Screenplay::ToHTML                 ();
 use Path::Tiny qw/ path tempdir tempfile cwd /;
 
 my @tests = (
@@ -28,6 +30,42 @@ my $converter = XML::Grammar::Screenplay::ToHTML->new(
         data_dir => cwd()->child("extradata")->absolute->stringify,
     }
 );
+
+sub _calc_xpc_and_doc__from_text
+{
+    my ($fn) = @_;
+
+    my $text_converter = XML::Grammar::Screenplay::FromProto->new(
+        {
+            parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
+        }
+    );
+
+    my $xml = $text_converter->convert(
+        {
+            source => { file => $fn, },
+        },
+    );
+
+    #body ...
+    my $xhtml_text = $converter->translate_to_html(
+        {
+            source => { string_ref => \$xml, },
+            output => "string",
+        }
+    );
+
+    my $parser = XML::LibXML->new();
+
+    $parser->load_ext_dtd(0);
+
+    my $doc = $parser->parse_string($xhtml_text);
+
+    my $xpc = XML::LibXML::XPathContext->new();
+    $xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
+
+    return ( $xpc, $doc );
+}
 
 sub _calc_xpc_and_doc
 {
@@ -130,6 +168,40 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
 
     # TEST
     is( $r->size(), 1, "Found one italics", );
+}
+
+{
+    my ( $xpc, $doc ) = _calc_xpc_and_doc__from_text(
+'./t/screenplay/data/proto-text/a-tag-followed-by-inlinedesc.screenplay-text.txt'
+    );
+    {
+        my $r = $xpc->find( q{./x:html/x:head/x:title}, $doc );
+
+        # TEST
+        is( $r->size(), 1, "Found one title", );
+
+        # TEST
+        like( $r->[0]->textContent(), qr/\AQueen /ms, "Correct textContent()",
+        );
+    }
+    {
+        my $r = $xpc->find(
+            q{//x:a[@href='https://stexpanded.fandom.com/wiki/Katie_Jacobson']},
+            $doc
+        );
+
+        # TEST
+        is( $r->size(), 1, "Found one link tag", );
+
+        my $tag    = $r->[0];
+        my $ws_tag = $tag->nextSibling();
+
+        # TEST
+        is( $ws_tag->nodeType(), XML_TEXT_NODE, 'text node', );
+
+        # TEST
+        like( $ws_tag->textContent(), qr/\A\s+\z/ms, "whitespace text", );
+    }
 }
 
 1;

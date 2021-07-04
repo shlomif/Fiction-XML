@@ -71,6 +71,12 @@ has "_writer" => (
     default => sub { return shift->_get_initial_writer(); },
 );
 
+has "_wrote_last" => (
+    'isa'   => "Str",
+    'is'    => "rw",
+    default => "nothing",
+);
+
 sub _get_initial_buffer
 {
     my $buffer = '';
@@ -148,6 +154,7 @@ sub _write_elem
     if ( ref($elem) eq "" )
     {
         $self->_writer->characters($elem);
+        $self->_wrote_last("characters");
     }
     else
     {
@@ -196,6 +203,7 @@ sub _write_Element_Comment
     }
 
     $self->_writer->comment($text);
+    $self->_wrote_last("comment");
 }
 
 sub _calc_write_elem_obj_classes
@@ -275,6 +283,10 @@ sub _write_Element_elem
 
     if ( $elem->_short_isa("InnerDesc") )
     {
+        if ( "endTag" eq $self->_wrote_last() )
+        {
+            $self->_write_elem( { elem => ' ', }, );
+        }
         $self->_output_tag_with_childs(
             {
                 start => ["inlinedesc"],
@@ -334,6 +346,7 @@ sub _handle_elem_of_name_br
     my ( $self, $elem ) = @_;
 
     $self->_writer->emptyTag("br");
+    $self->_wrote_last("endTag");
 
     return;
 }
@@ -349,6 +362,7 @@ sub _output_tag
     $args->{in}->( $self, $args );
 
     $self->_writer->endTag();
+    $self->_wrote_last("endTag");
 }
 
 sub _convert_while_handling_errors
