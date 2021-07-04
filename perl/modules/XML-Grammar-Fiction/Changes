@@ -1,5 +1,8 @@
 Revision history for XML-Grammar-Fiction.
 
+0.22.6       2021-07-04
+    - Handle space between a closing tag and an innerdesc.
+
 0.22.5       2021-06-27
     - Handle unanchored paragraphs in*.screenplay-text.txt
     files more gracefully.
