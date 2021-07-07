@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.22.7       2021-07-07
+    - extradata/screenplay-xml-to-html.xslt: Avoid emitting square brackets
+    when the "description" element contains only a single image.
+
 0.22.6       2021-07-04
     - Handle space between a closing tag and an innerdesc.
 

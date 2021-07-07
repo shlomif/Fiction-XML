@@ -70,7 +70,14 @@
 
 <xsl:template match="sp:description">
     <div class="description">
-        <xsl:apply-templates />
+        <xsl:choose>
+            <xsl:when test="count(*) = 1 and sp:para[count(*) = 1 and sp:image]">
+                <xsl:apply-templates select="sp:para/sp:image" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates />
+            </xsl:otherwise>
+        </xsl:choose>
     </div>
 </xsl:template>
 
