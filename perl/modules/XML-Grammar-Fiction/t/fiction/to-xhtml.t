@@ -40,12 +40,12 @@ foreach my $conv_id ( keys(%converters) )
     );
 }
 
+my $xpc = XML::LibXML::XPathContext->new();
+$xpc->registerNs( 'x',  q{http://www.w3.org/1999/xhtml} );
+$xpc->registerNs( 'db', q{http://docbook.org/ns/docbook} );
+
 foreach my $fn (@tests)
 {
-    my $xpc = XML::LibXML::XPathContext->new();
-    $xpc->registerNs( 'x',  q{http://www.w3.org/1999/xhtml} );
-    $xpc->registerNs( 'db', q{http://docbook.org/ns/docbook} );
-
     # This is a closure that returns a closure (like shown in "On Lisp" :
     # http://www.paulgraham.com/onlisptext.html ) for a finder in
     # one of the documents
