@@ -37,6 +37,9 @@ my $converter = XML::Grammar::Fiction::ToDocBook->new(
     }
 );
 
+my $xpc = XML::LibXML::XPathContext->new();
+$xpc->registerNs( 'db', 'http://docbook.org/ns/docbook' );
+
 foreach my $fn (@tests)
 {
     my $docbook_text = $converter->translate_to_docbook(
@@ -51,18 +54,15 @@ foreach my $fn (@tests)
     my $parser = XML::LibXML->new();
 
     my $doc = $parser->parse_string($docbook_text);
-
-    my $xc = XML::LibXML::XPathContext->new($doc);
-
-    $xc->registerNs( 'db', 'http://docbook.org/ns/docbook' );
+    $xpc->setContextNode($doc);
 
     is(
-        scalar( () = $xc->findnodes(q{//db:article[@xml:id='index']}) ),
+        scalar( () = $xpc->findnodes(q{//db:article[@xml:id='index']}) ),
         1, "Found one article with id index",
     );
 
     ok(
-        ( scalar( () = $xc->findnodes(q{//db:section}) ) >= 1 ),
+        ( scalar( () = $xpc->findnodes(q{//db:section}) ) >= 1 ),
         "Found role=description sections",
     );
 
