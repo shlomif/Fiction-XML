@@ -31,7 +31,10 @@ my $converter = XML::Grammar::Screenplay::ToHTML->new(
     }
 );
 
-sub _calc_xpc_and_doc__from_text
+my $xpc = XML::LibXML::XPathContext->new();
+$xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
+
+sub _calc_doc__from_text
 {
     my ($fn) = @_;
 
@@ -61,13 +64,10 @@ sub _calc_xpc_and_doc__from_text
 
     my $doc = $parser->parse_string($xhtml_text);
 
-    my $xpc = XML::LibXML::XPathContext->new();
-    $xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
-
-    return ( $xpc, $doc );
+    return ($doc);
 }
 
-sub _calc_xpc_and_doc
+sub _calc_doc
 {
     my ($fn) = @_;
 
@@ -85,15 +85,12 @@ sub _calc_xpc_and_doc
 
     my $doc = $parser->parse_string($xhtml_text);
 
-    my $xpc = XML::LibXML::XPathContext->new();
-    $xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
-
-    return ( $xpc, $doc );
+    return ($doc);
 }
 
 foreach my $fn (@tests)
 {
-    my ( $xpc, $doc ) = _calc_xpc_and_doc($fn);
+    my ($doc) = _calc_doc($fn);
 
     # TEST*$num_texts
     my $r = $xpc->find( q{//x:html}, $doc );
@@ -112,7 +109,7 @@ foreach my $fn (@tests)
 }
 
 {
-    my ( $xpc, $doc ) = _calc_xpc_and_doc('main-title');
+    my ($doc) = _calc_doc('main-title');
     my $r = $xpc->find( q{./x:html/x:head/x:title}, $doc );
 
     # TEST
@@ -127,8 +124,7 @@ foreach my $fn (@tests)
 }
 
 {
-    my ( $xpc, $doc ) =
-        _calc_xpc_and_doc('with-tags-inside-paragraphs-with-code-block');
+    my ($doc) = _calc_doc('with-tags-inside-paragraphs-with-code-block');
     my $r = $xpc->find(
 q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_and_goliath']/x:div/x:figure[@class='asciiart']},
         $doc
@@ -163,7 +159,7 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
 }
 
 {
-    my ( $xpc, $doc ) = _calc_xpc_and_doc('with-i-element-inside-paragraphs');
+    my ($doc) = _calc_doc('with-i-element-inside-paragraphs');
     my $r = $xpc->find( q{.//x:a/x:i[text()='merciful']}, $doc, );
 
     # TEST
@@ -171,7 +167,7 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
 }
 
 {
-    my ( $xpc, $doc ) = _calc_xpc_and_doc__from_text(
+    my ($doc) = _calc_doc__from_text(
 './t/screenplay/data/proto-text/a-tag-followed-by-inlinedesc.screenplay-text.txt'
     );
     {
