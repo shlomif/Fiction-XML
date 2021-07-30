@@ -1,5 +1,11 @@
 Revision history for XML-Grammar-Fiction.
 
+0.24.0       2021-07-30
+
+    - Add support for xml to bin/screenplay-text--list-images
+    - Add bin/screenplay-text-to-screenplay-xml
+    - Refactoring
+
 0.22.7       2021-07-07
     - extradata/screenplay-xml-to-html.xslt: Avoid emitting square brackets
     when the "description" element contains only a single image.

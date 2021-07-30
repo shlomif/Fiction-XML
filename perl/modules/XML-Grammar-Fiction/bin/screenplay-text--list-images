@@ -18,12 +18,18 @@ my $image_lister =
 
 foreach my $fn (@ARGV)
 {
-    my $got_doc = $image_lister->calc_doc__from_proto_text(
-        {
-            source => {
-                file => $fn,
-            },
-        }
+    my $got_doc = (
+        ( $fn =~ /\.screenplay-xml\.xml\z/ )
+        ? $image_lister->calc_doc__from_intermediate_xml(
+            { filename => $fn, }
+            )
+        : $image_lister->calc_doc__from_proto_text(
+            {
+                source => {
+                    file => $fn,
+                },
+            }
+        )
     );
 
     foreach my $img ( @{ $got_doc->list_images() } )

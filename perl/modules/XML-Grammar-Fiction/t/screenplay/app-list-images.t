@@ -5,7 +5,7 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 2;
+use Test::More tests => 3;
 use Path::Tiny qw/ path /;
 
 use XML::LibXML                                          ();
@@ -26,6 +26,7 @@ my $image_lister =
 foreach my $fn (@tests)
 {
     my $full_fn = "t/screenplay/data/proto-text/$fn.txt";
+    my $xml_fn  = "t/screenplay/data/xml/$fn.screenplay-xml.xml";
     my $got_doc = $image_lister->calc_doc__from_proto_text(
         {
             source => {
@@ -48,6 +49,16 @@ foreach my $fn (@tests)
         ],
         $WANT_IMAGES,
         "image list",
+    );
+
+    # TEST*$num_texts
+    is_deeply(
+        [
+            split /\r?\n/,
+            scalar(`$^X -I lib bin/screenplay-text--list-images -- "$xml_fn"`)
+        ],
+        $WANT_IMAGES,
+        "xml image list",
     );
 }
 
