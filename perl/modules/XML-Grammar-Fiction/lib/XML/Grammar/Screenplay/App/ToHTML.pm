@@ -19,14 +19,17 @@ a command line application to convert a Screenplay XML file to HTML
 
 =head1 FUNCTIONS
 
-=head2 run()
+=head2 XML::Grammar::Screenplay::App::ToHTML->run(\%args)
 
 Call with no arguments to run the application from the commandline.
+
+%args may contain dom_post_proc.
 
 =cut
 
 sub run
 {
+    my ( $self, $args ) = @_;
     my $output_filename;
 
     GetOptions( "output|o=s" => \$output_filename, );
@@ -38,19 +41,29 @@ sub run
 
     my $converter = XML::Grammar::Screenplay::ToHTML->new();
 
-    my $output_text = $converter->translate_to_html(
+    my $output_dom = $converter->translate_to_html(
         {
             source => { file => shift(@ARGV), },
-            output => "string",
+            output => "dom",
         }
     );
+    if ( defined($args) )
+    {
+        $args->{dom_post_proc}->(
+            +{
+                dom => ( \$output_dom ),
+            }
+        );
+    }
+    my $chars = $converter->_to_html_stylesheet()->output_as_chars($output_dom);
+
+    $chars =~ s/[ \t]+$//gms;
 
     open my $out, ">:encoding(UTF-8)", $output_filename;
-    print {$out} $output_text;
+    print {$out} $chars;
     close($out);
 
     return;
 }
 
 1;
-

@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 use XML::LibXML qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::App::ToHTML            ();
@@ -22,8 +22,9 @@ my $converter = XML::Grammar::Screenplay::ToHTML->new(
     }
 );
 
-my $xpc = XML::LibXML::XPathContext->new();
-$xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
+my $xpc     = XML::LibXML::XPathContext->new();
+my $XHTMLNS = "http://www.w3.org/1999/xhtml";
+$xpc->registerNs( 'x', $XHTMLNS, );
 
 sub _calc_doc__from_text
 {
@@ -38,7 +39,27 @@ sub _calc_doc__from_text
     }
     {
         local @ARGV = ( "--output", $outfn, $xmlfn );
-        XML::Grammar::Screenplay::App::ToHTML::run();
+        XML::Grammar::Screenplay::App::ToHTML->run(
+            +{
+                dom_post_proc => sub {
+                    my $output_dom = shift()->{dom};
+                    my @list       = $xpc->findnodes(
+                        q#descendant::x:figure[contains(@class, 'asciiart')]#,
+                        ($$output_dom) );
+
+                    foreach my $el (@list)
+                    {
+                        my $parent = $el->parentNode;
+                        my $wrapper =
+                            $$output_dom->createElementNS( $XHTMLNS, 'div' );
+                        $wrapper->setAttribute( 'class', 'asciiart_wrapper' );
+                        $wrapper->appendChild( $el->cloneNode(1) );
+                        $parent->replaceChild( $wrapper, $el );
+                    }
+                    return;
+                },
+            }
+        );
     }
     my $doc = XML::LibXML->load_xml( location => $outfn );
 
@@ -61,6 +82,13 @@ sub _calc_doc__from_text
     }
     {
         my $r = $xpc->find( q{//x:figure}, $doc, );
+
+        # TEST
+        is( $r->size(), 1, "Found one link tag", );
+    }
+    {
+        my $r = $xpc->find( q{//x:div[@class='asciiart_wrapper' and x:figure]},
+            $doc, );
 
         # TEST
         is( $r->size(), 1, "Found one link tag", );
