@@ -49,7 +49,7 @@ sub run
     print {$out} $output_text;
     close($out);
 
-    exit(0);
+    return;
 }
 
 1;

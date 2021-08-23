@@ -1,0 +1,44 @@
+<s id="main" lang="en" title="Queen Padmé Tales: The Fifth Sith">
+
+<s id="scene" title="test scene">
+
+[
+
+Here comes a code block
+
+<code_blk syntax="text" tag_role="asciiart" title="The Hitchhiker’s Guide to Star Trek - The Next Generation" alt="The Hitchhiker’s Guide to Star Trek - The Next Generation [ Don’t  Panic! ]">
+&#124;              T h e    H i t c h h i k e r ' s    G u i d e
+&#124;
+&#124;                                    to
+&#124;
+&#124;
+&#124;    *******  ******** ********  *******
+&#124;   *******  ******** ********  *******
+&#124;    **                    **       **
+&#124;     **       **    **   **  *******
+&#124;      **     **    **   **  ******
+&#124;       **   **    **   **  **   **
+&#124;  *******  **    *******  **    **   ******** *******   ********  **  ****
+&#124; *******  **    *******  **     **  ******** *******   ********  ********
+&#124;                                                 **
+&#124;                                     **    *******   ********  ****
+&#124;                                    **    ******    ********  **  **
+&#124;                                   **    **   **   **        **    **
+&#124;                                  **    **    **  ********  **      **
+&#124;                                 **    **     ** ********  **        **
+&#124;
+&#124;
+&#124;                 T h e    N e x t    G e n e r a t i o n
+&#124;
+&#124;                        &#91; Don't  Panic! &#93;
+</code_blk>
+
+]
+
+Padme: Text before <a href="https://stexpanded.fandom.com/wiki/Katie_Jacobson">Link followed by space</a> [desc with space before] text after desc.
+
+[ She opens a videochat to Katie. ]
+
+</s>
+
+</s>
