@@ -1,4 +1,4 @@
-<s id="main" lang="en" title="Queen Padmé Tales: The Fifth Sith">
+<s id="main" lang="en" title="Stub title">
 
 <s id="scene" title="test scene">
 

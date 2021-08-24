@@ -4,27 +4,20 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 use XML::LibXML qw(XML_TEXT_NODE);
-use XML::Grammar::Screenplay::App::ToHTML            ();
-use XML::Grammar::Screenplay::App::FromProto         ();
-use XML::Grammar::Screenplay::FromProto              ();
-use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
-use XML::Grammar::Screenplay::ToHTML                 ();
+use XML::Grammar::Screenplay::App::ToHTML    ();
+use XML::Grammar::Screenplay::App::FromProto ();
 use Path::Tiny qw/ path tempdir tempfile cwd /;
 
-# TEST:$num_texts=6
-
-my $converter = XML::Grammar::Screenplay::ToHTML->new(
-    {
-        data_dir => cwd()->child("extradata")->absolute->stringify,
-    }
-);
+# TEST:$num_texts=1
 
 my $xpc     = XML::LibXML::XPathContext->new();
 my $XHTMLNS = "http://www.w3.org/1999/xhtml";
 $xpc->registerNs( 'x', $XHTMLNS, );
+
+my %dom_post_proc__was_called__counts;
 
 sub _calc_doc__from_text
 {
@@ -43,7 +36,10 @@ sub _calc_doc__from_text
             +{
                 dom_post_proc => sub {
                     my $output_dom = shift()->{dom};
-                    my @list       = $xpc->findnodes(
+
+                    ++$dom_post_proc__was_called__counts{$fn};
+
+                    my @list = $xpc->findnodes(
                         q#descendant::x:figure[contains(@class, 'asciiart')]#,
                         ($$output_dom) );
 
@@ -77,7 +73,9 @@ sub _calc_doc__from_text
         is( $r->size(), 1, "Found one title", );
 
         # TEST
-        like( $r->[0]->textContent(), qr/\AQueen /ms, "Correct textContent()",
+        is(
+            $r->[0]->textContent(),
+            "Stub title", "Correct title textContent()",
         );
     }
     {
@@ -91,8 +89,15 @@ sub _calc_doc__from_text
             $doc, );
 
         # TEST
-        is( $r->size(), 1, "Found one link tag", );
+        is( $r->size(), 1, "Preprocessing was done", );
     }
 }
 
-1;
+# TEST
+is_deeply(
+    ( \%dom_post_proc__was_called__counts ),
+    +{
+        './t/screenplay/data/proto-text/html-figure.screenplay-text.txt' => 1,
+    },
+    "dom_post_proc__was_called__counts",
+);
