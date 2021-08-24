@@ -23,7 +23,7 @@ a command line application to convert a Screenplay XML file to HTML
 
 Call with no arguments to run the application from the commandline.
 
-%args may contain dom_post_proc.
+%args may contain dom_post_proc (Added at version 0.26.0).
 
 =cut
 
