@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.26.1       2021-08-24
+
+    - Set homepage in dist.ini / META.yml.
+
 0.26.0       2021-08-24
 
     - Add dom_post_proc to XML::Grammar::Screenplay::App::ToHTML .

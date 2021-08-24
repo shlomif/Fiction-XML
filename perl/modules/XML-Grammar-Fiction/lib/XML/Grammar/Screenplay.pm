@@ -171,6 +171,10 @@ L<http://www.shlomifish.org/humour/Selina-Mandrake/>
 
 L<http://www.shlomifish.org/humour/Summerschool-at-the-NSA/>
 
+=item * B<More:>
+
+L<https://www.shlomifish.org/open-source/projects/XML-Grammar/Fiction/#screenplay_examples>
+
 =back
 
 =cut
