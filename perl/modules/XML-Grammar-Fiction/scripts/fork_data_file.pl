@@ -34,8 +34,7 @@ use Docker::CLI::Wrapper::Container v0.0.4 ();
 my $container = "foo";
 my $sys       = "sys";
 my $obj       = Docker::CLI::Wrapper::Container->new(
-    { container => $container, sys => $sys, },
-);
+    { container => $container, sys => $sys, }, );
 foreach my $rec (
     {
         prefix => "proto-text",

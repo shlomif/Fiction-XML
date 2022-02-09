@@ -64,8 +64,7 @@ sub _calc_doc__from_text
 
 {
     my ($doc) = _calc_doc__from_text(
-        './t/screenplay/data/proto-text/html-figure.screenplay-text.txt',
-    );
+        './t/screenplay/data/proto-text/html-figure.screenplay-text.txt', );
     {
         my $r = $xpc->find( q{./x:html/x:head/x:title}, $doc );
 

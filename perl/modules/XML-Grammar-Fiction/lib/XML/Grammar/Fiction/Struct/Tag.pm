@@ -20,7 +20,7 @@ has 'name'          => ( is => "rw", isa => "Str" );
 has 'line'          => ( is => "rw", isa => "Int" );
 has 'is_standalone' => ( is => "rw", isa => "Bool" );
 has 'attrs'         => ( is => "rw", isa => "ArrayRef" );
-has 'children'      => (
+has 'children' => (
     is  => "rw",
     isa => "Maybe[ArrayRef]",
 );
