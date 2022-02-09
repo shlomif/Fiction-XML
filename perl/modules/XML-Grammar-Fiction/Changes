@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.26.2       2022-02-09
+
+    - avoid trailing space on lines on output.
+
 0.26.1       2021-08-24
 
     - Set homepage in dist.ini / META.yml.
