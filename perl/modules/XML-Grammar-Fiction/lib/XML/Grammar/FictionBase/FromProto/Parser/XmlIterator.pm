@@ -673,6 +673,7 @@ sub _parse_non_tag_text_unit
         $self->consume_up_to( $self->_non_tag_text_unit_consume_regex );
 
     my $text = $self->_decode_entities_in_text($orig_text);
+    $text =~ s#[ \t]+$##gms;
 
     my $l = $self->curr_line_ref();
 

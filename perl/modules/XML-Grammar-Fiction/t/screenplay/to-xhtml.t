@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 30;
+use Test::More tests => 31;
 
 use XML::LibXML qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::FromProto              ();
@@ -197,6 +197,17 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
 
         # TEST
         like( $ws_tag->textContent(), qr/\A\s+\z/ms, "whitespace text", );
+    }
+}
+
+{
+    my ($doc) = _calc_doc__from_text(
+        './t/screenplay/data/proto-text/with-trailing-space.screenplay-text.txt'
+    );
+
+    # TEST
+    {
+        unlike( scalar( $doc->toString() ), qr#[ \t]+$#ms, "Trailing space", );
     }
 }
 
