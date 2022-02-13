@@ -1,5 +1,10 @@
 Revision history for XML-Grammar-Fiction.
 
+0.26.3       2022-02-13
+
+    - revert trailing space change from v 0.26.2 due to an HTML
+    minifier issue.
+
 0.26.2       2022-02-09
 
     - avoid trailing space on lines on output.
