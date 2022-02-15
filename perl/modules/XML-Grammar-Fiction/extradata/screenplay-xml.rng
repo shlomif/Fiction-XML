@@ -57,12 +57,18 @@
             </choice>
         </oneOrMore>
     </define>
-    <define name="single_inline_elem">
+    <define name="style_elems">
         <choice>
             <text/>
-            <ref name="ulink"/>
             <ref name="bold"/>
             <ref name="italics"/>
+            <ref name="strong"/>
+        </choice>
+    </define>
+    <define name="single_inline_elem">
+        <choice>
+            <ref name="ulink"/>
+            <ref name="style_elems"/>
             <ref name="image"/>
         </choice>
     </define>
@@ -140,13 +146,14 @@
             <text />
         </element>
     </define>
+    <define name="strong">
+        <element name="sp:strong">
+            <text />
+        </element>
+    </define>
     <define name="hyperlink_inner">
         <zeroOrMore>
-            <choice>
-                <text />
-                <ref name="bold"/>
-                <ref name="italics"/>
-            </choice>
+            <ref name="style_elems"/>
         </zeroOrMore>
     </define>
     <define name="ulink">

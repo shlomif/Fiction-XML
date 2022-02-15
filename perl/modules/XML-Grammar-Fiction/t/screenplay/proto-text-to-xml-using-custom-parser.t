@@ -5,7 +5,7 @@ use warnings;
 
 use lib './t/lib';
 
-use Test::More tests => 105;
+use Test::More tests => 109;
 use XmlGrammarTestXML qw( my_is_xml );
 use Path::Tiny qw/ path /;
 
@@ -83,10 +83,11 @@ my @tests = (
         with-code-block--with-tag_role-as-code_block
         with-bold-tag-at-paragraph-start
         with-italics-tag-at-paragraph-start
+        with-strong-tag-at-paragraph-start
     )
 );
 
-# TEST:$num_texts=26
+# TEST:$num_texts=27
 
 my $grammar = _parser();
 

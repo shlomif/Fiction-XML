@@ -200,6 +200,20 @@ sub _handle_elem_of_name_section
     return $self->_handle_elem_of_name_s($elem);
 }
 
+sub _handle_elem_of_name_strong
+{
+    my ( $self, $elem ) = @_;
+
+    $self->_output_tag_with_childs(
+        {
+            start => [ "strong", ],
+            elem  => $elem,
+        }
+    );
+
+    return;
+}
+
 sub _bold_tag_name
 {
     return "bold";

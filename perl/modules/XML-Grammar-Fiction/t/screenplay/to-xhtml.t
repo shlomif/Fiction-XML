@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 31;
+use Test::More tests => 35;
 
 use XML::LibXML qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::FromProto              ();
@@ -20,10 +20,11 @@ my @tests = (
         with-code-block--with-tag_role-as-code_block
         with-bold-tag-at-paragraph-start
         with-italics-tag-at-paragraph-start
+        with-strong-tag-at-paragraph-start
     )
 );
 
-# TEST:$num_texts=6
+# TEST:$num_texts=7
 
 my $converter = XML::Grammar::Screenplay::ToHTML->new(
     {
@@ -197,6 +198,18 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
 
         # TEST
         like( $ws_tag->textContent(), qr/\A\s+\z/ms, "whitespace text", );
+    }
+}
+
+{
+    my ($doc) = _calc_doc__from_text(
+        './t/screenplay/data/proto-text/with-strong-tag-at-paragraph-start.txt',
+    );
+    {
+        my $r = $xpc->find( q{.//x:strong[@class = 'strong']}, $doc );
+
+        # TEST
+        is( $r->size(), 1, "Found one 'strong' elem", );
     }
 }
 
