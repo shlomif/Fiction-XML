@@ -239,18 +239,28 @@ sub _write_elem_childs
 
         die "elem=[$elem]";
     }
+    my $kids;
     if ( ref($elem) eq 'ARRAY' )
     {
-        # body...
-        foreach my $child (@$elem)
-        {
-            $self->_write_elem( { elem => $child, }, );
-        }
-        return;
+        $kids = $elem;
     }
-    foreach my $child ( @{ $elem->_get_childs() } )
+    else
     {
+        $kids = $elem->_get_childs();
+    }
+    my $prev_child;
+    foreach my $child ( @{$kids} )
+    {
+        if ( defined $prev_child )
+        {
+            if ( $prev_child->_short_isa("InnerDesc")
+                and ( ref($child) and !$child->_short_isa("Text") ) )
+            {
+                $self->_write_elem( { elem => ' ', }, );
+            }
+        }
         $self->_write_elem( { elem => $child, }, );
+        $prev_child = $child;
     }
 
     return;

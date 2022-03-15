@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 35;
+use Test::More tests => 36;
 
 use XML::LibXML qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::FromProto              ();
@@ -210,6 +210,22 @@ q{./x:html/x:body/x:main/x:section[@id='scene-top']/x:section[@id='scene-david_a
 
         # TEST
         is( $r->size(), 1, "Found one 'strong' elem", );
+    }
+}
+
+{
+    my ($doc) = _calc_doc__from_text(
+        './t/screenplay/data/proto-text/opening-tag-after-innerdesc.txt', );
+    {
+        my $r = $xpc->find(
+            q{.//x:span[@class = 'inlinedesc']}
+                . q{[following-sibling::text()[starts-with(., ' ')]]},
+            $doc
+        );
+
+        # TEST
+        is( $r->size(), 1, 'opening-tag-after-innerdesc.txt', );
+
     }
 }
 
