@@ -1,5 +1,11 @@
 Revision history for XML-Grammar-Fiction.
 
+0.28.0       2022-03-16
+
+    - add the <strong> element to screenplays.
+    - fix missing space when there is an inlinedesc followed by an
+    opening tag.
+
 0.26.3       2022-02-13
 
     - revert trailing space change from v 0.26.2 due to an HTML
