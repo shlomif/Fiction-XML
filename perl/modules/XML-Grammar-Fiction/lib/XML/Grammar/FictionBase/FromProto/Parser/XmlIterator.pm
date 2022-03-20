@@ -792,7 +792,8 @@ sub _generate_tag_event
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
                 {
-                    'type' => (
+                    line_idx => scalar( $self->line_idx() ),
+                    'type'   => (
                         $self->_is_closing_tag($tag_start) ? "close" : "open"
                     )
                 }

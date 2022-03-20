@@ -315,7 +315,12 @@ sub _generate_non_tag_text_event
     {
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-                { type => "close", tag => "para" }
+                {
+                    line_idx => scalar( $self->line_idx() ),
+
+                    type => "close",
+                    tag  => "para"
+                }
             )
         );
         $in_para = 0;
@@ -325,7 +330,11 @@ sub _generate_non_tag_text_event
     {
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-                { type => "close", tag => "saying" }
+                {
+                    line_idx => scalar( $self->line_idx() ),
+                    type     => "close",
+                    tag      => "saying"
+                }
             )
         );
     }
@@ -334,14 +343,24 @@ sub _generate_non_tag_text_event
     {
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-                { type => "open", tag => "saying", tag_elem => $elem, },
+                {
+
+                    line_idx => scalar( $self->line_idx() ),
+                    type     => "open",
+                    tag      => "saying",
+                    tag_elem => $elem,
+                },
             ),
         );
         $was_already_enqueued = 1;
 
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-                { type => "open", tag => "para" }
+                {
+                    line_idx => scalar( $self->line_idx() ),
+                    type     => "open",
+                    tag      => "para"
+                }
             )
         );
         $in_para = 1;
@@ -350,7 +369,11 @@ sub _generate_non_tag_text_event
     {
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-                { type => "open", tag => "para" }
+                {
+                    line_idx => scalar( $self->line_idx() ),
+                    type     => "open",
+                    tag      => "para"
+                }
             ),
         );
         $in_para = 1;
@@ -363,14 +386,22 @@ sub _generate_non_tag_text_event
         {
             $self->_enqueue_event(
                 XML::Grammar::FictionBase::Event->new(
-                    { type => "open", tag => "para" },
+                    {
+                        line_idx => scalar( $self->line_idx() ),
+                        type     => "open",
+                        tag      => "para"
+                    },
                 )
             );
             $in_para = 1;
         }
         $self->_enqueue_event(
             XML::Grammar::FictionBase::Event->new(
-                { type => "elem", elem => $elem, }
+                {
+                    line_idx => scalar( $self->line_idx() ),
+                    type     => "elem",
+                    elem     => $elem,
+                }
             )
         );
         $was_already_enqueued = 1;
@@ -387,7 +418,10 @@ sub _handle_close_saying
     # This is an assert.
     if ( $open->name() ne "saying" )
     {
-        Carp::confess(qq{Not a saying tag.});
+        Carp::confess(
+            sprintf( qq{Not a saying tag. open-line = %d .},
+                scalar( eval { $open->line() } || $open->line_idx() ) )
+        );
     }
 
     my $new_elem = $self->_new_saying(

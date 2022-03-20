@@ -19,6 +19,7 @@ has 'type' => ( isa => "Str", is => "ro" );
 has 'tag' => ( isa => "Maybe[Str]", is => "ro", predicate => '_has_tag', );
 has 'elem' =>
     ( isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro" );
+has 'line_idx' => ( isa => "Maybe[Int]", is => "ro" );
 has 'tag_elem' =>
     ( isa => "Maybe[XML::Grammar::Fiction::FromProto::Node]", is => "ro" );
 
@@ -77,6 +78,10 @@ Returns true if the $event 's type is "open".
 =head2 $event->is_open_or_close()
 
 Returns true if the $event 's type is either "open" or "close".
+
+=head2 $event->line_idx()
+
+Returns an optional line number.
 
 =head2 $self->meta()
 
