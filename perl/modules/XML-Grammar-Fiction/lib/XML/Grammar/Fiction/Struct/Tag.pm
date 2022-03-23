@@ -25,6 +25,13 @@ has 'children' => (
     isa => "Maybe[ArrayRef]",
 );
 
+sub line_idx
+{
+    my ( $self, ) = @_;
+
+    return $self->line();
+}
+
 sub append_children
 {
     my ( $self, $children ) = @_;
@@ -71,6 +78,10 @@ extends("XML::Grammar::Fiction::Struct::Tag");
 The tag's name.
 
 =head2 $self->line()
+
+The tag's line number.
+
+=head2 $self->line_idx()
 
 The tag's line number.
 

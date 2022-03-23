@@ -420,7 +420,7 @@ sub _handle_close_saying
     {
         Carp::confess(
             sprintf( qq{Not a saying tag. open-line = %d .},
-                scalar( eval { $open->line() } || $open->line_idx() ) )
+                scalar( $open->line_idx() ) )
         );
     }
 
