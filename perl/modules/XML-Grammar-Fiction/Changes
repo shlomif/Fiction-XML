@@ -1,5 +1,9 @@
 Revision history for XML-Grammar-Fiction.
 
+0.28.1       2022-03-23
+
+    - Better error handling.
+
 0.28.0       2022-03-16
 
     - add the <strong> element to screenplays.
