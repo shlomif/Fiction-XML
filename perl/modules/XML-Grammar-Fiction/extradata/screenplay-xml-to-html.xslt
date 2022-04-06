@@ -167,6 +167,12 @@
     <span class="inlinedesc">[<xsl:apply-templates />]</span>
 </xsl:template>
 
+<xsl:template match="sp:q">
+    <q>
+        <xsl:apply-templates />
+    </q>
+</xsl:template>
+
 <xsl:template match="sp:strong">
     <strong class="strong">
         <xsl:apply-templates />

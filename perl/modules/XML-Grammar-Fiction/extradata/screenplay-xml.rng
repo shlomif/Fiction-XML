@@ -105,20 +105,30 @@
             </zeroOrMore>
         </element>
     </define>
+    <define name="para_contents">
+        <zeroOrMore>
+            <choice>
+                <text/>
+                <ref name="single_inline_elem"/>
+                <element name="sp:br">
+                    <empty/>
+                </element>
+            </choice>
+        </zeroOrMore>
+    </define>
     <define name="para">
         <element name="sp:para">
             <zeroOrMore>
                 <choice>
-                    <text/>
                     <element name="sp:inlinedesc">
                         <zeroOrMore>
                             <ref name="single_inline_elem"/>
                         </zeroOrMore>
                     </element>
-                    <ref name="single_inline_elem"/>
-                    <element name="sp:br">
-                        <empty/>
+                    <element name="sp:q">
+                        <ref name="para_contents"/>
                     </element>
+                    <ref name="para_contents"/>
                 </choice>
             </zeroOrMore>
         </element>

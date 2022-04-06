@@ -175,6 +175,36 @@ sub _handle_elem_of_name_img
 
 }
 
+sub _handle_elem_of_name_q
+{
+    my ( $self, $elem ) = @_;
+
+    my $q_cb = sub {
+        return $self->_output_tag_with_childs(
+            {
+                start => [ "q", ],
+                elem  => $elem,
+            }
+        );
+    };
+
+    return (
+        ( $self->_writer->within_element( $self->_paragraph_tag ) )
+        ? $q_cb->()
+        : do
+        {
+            Carp::confess("<q> element not at toplevel!");
+            $self->_output_tag(
+                {
+                    start => [ "para", ],
+                    in    => $q_cb,
+                }
+            );
+        }
+    );
+
+}
+
 sub _handle_elem_of_name_a
 {
     my ( $self, $elem ) = @_;
