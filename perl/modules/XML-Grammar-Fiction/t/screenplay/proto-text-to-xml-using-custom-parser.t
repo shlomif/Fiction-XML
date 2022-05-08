@@ -85,10 +85,11 @@ my @tests = (
         with-italics-tag-at-paragraph-start
         with-strong-tag-at-paragraph-start
         with-at-sign-nickname
+        with-blockquote-tag-derived-from-with-at-sign
     )
 );
 
-# TEST:$num_texts=28
+# TEST:$num_texts=29
 
 my $grammar = _parser();
 

@@ -25,15 +25,24 @@
             </element>
         </element>
     </start>
+    <define name="blockquote">
+        <element name="sp:blockquote">
+        <ref name="several_paras"/>
+        </element>
+    </define>
     <define name="several_paras">
         <oneOrMore>
+        <choice>
+            <ref name="blockquote"/>
             <ref name="para"/>
+        </choice>
         </oneOrMore>
     </define>
     <define name="description_paras">
         <oneOrMore>
             <choice>
                 <ref name="para"/>
+                <ref name="several_paras"/>
                 <element name="sp:para">
                     <element name="sp:code_blk">
                         <attribute name="syntax">

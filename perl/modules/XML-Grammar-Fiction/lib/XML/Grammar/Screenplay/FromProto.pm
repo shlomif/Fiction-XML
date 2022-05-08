@@ -223,6 +223,21 @@ sub _handle_elem_of_name_a
     return;
 }
 
+sub _calc_passthrough_cb
+{
+    my ( $self, $name ) = @_;
+
+    if ( $name eq 'blockquote' )
+    {
+        # body...
+        return sub { return +{ tag => 'blockquote', wrap_para => 0, }; };
+    }
+    else
+    {
+        return $self->SUPER::_calc_passthrough_cb($name);
+    }
+}
+
 sub _handle_elem_of_name_section
 {
     my ( $self, $elem ) = @_;
@@ -286,6 +301,27 @@ sub _write_scene_main
 sub _get_default_xml_ns
 {
     return $screenplay_ns;
+}
+
+sub _handle_elem_of_name_blockquote
+{
+    my ( $self, $elem ) = @_;
+
+    my $q_cb = sub {
+        return $self->_output_tag_with_childs(
+            {
+                start => [ "blockquote", ],
+                elem  => $elem,
+            }
+        );
+    };
+
+    if ( $self->_writer->within_element( $self->_paragraph_tag ) )
+    {
+        Carp::confess("<blockquote> element not at toplevel!");
+    }
+    $self->_writer->pop();
+    return $q_cb->();
 }
 
 sub _convert_write_content
