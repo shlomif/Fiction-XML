@@ -461,6 +461,10 @@ sub _write_scene
     {
         $self->_write_scene_main($scene);
     }
+    elsif ( ( $tag eq "blockquote" ) )
+    {
+        $self->_write_blockquote_main($scene);
+    }
     else
     {
         confess "Improper scene tag - should be '<s>' or '<scene>'!";

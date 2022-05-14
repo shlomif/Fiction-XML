@@ -598,7 +598,12 @@ sub _list_valid_tag_events
 before '_handle_open_tag' => sub {
     my $self = shift;
 
-    if ( $self->_top_is_desc )
+    my $l    = $self->curr_line_ref();
+    my $pos  = pos($$l);
+    my $open = $self->_parse_opening_tag();
+    pos($$l) = $pos;
+    if ( $self->_top_is_desc
+        and ( ( $pos > 0 ) or ( $open->name() eq 'blockquote' ) ) )
     {
         if ( !$self->_in_para() )
         {

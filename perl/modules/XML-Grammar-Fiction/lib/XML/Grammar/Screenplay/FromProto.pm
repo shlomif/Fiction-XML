@@ -223,19 +223,11 @@ sub _handle_elem_of_name_a
     return;
 }
 
-sub _calc_passthrough_cb
+sub _handle_elem_of_name_blockquote
 {
-    my ( $self, $name ) = @_;
+    my ( $self, $elem ) = @_;
 
-    if ( $name eq 'blockquote' )
-    {
-        # body...
-        return sub { return +{ tag => 'blockquote', wrap_para => 0, }; };
-    }
-    else
-    {
-        return $self->SUPER::_calc_passthrough_cb($name);
-    }
+    return $self->_handle_elem_of_name_s($elem);
 }
 
 sub _handle_elem_of_name_section
@@ -267,6 +259,29 @@ sub _bold_tag_name
 sub _italics_tag_name
 {
     return "italics";
+}
+
+sub _write_blockquote_main
+{
+    my ( $self, $scene ) = @_;
+
+    warn "\<_write_blockquote_main\>";
+    if ( $self->_writer->within_element( $self->_paragraph_tag ) )
+    {
+        Carp::confess("in para");
+        exit(-1);
+    }
+
+    my $id = $scene->lookup_attr("id");
+
+    $self->_output_tag_with_childs(
+        {
+            'start' => [ "blockquote", ],
+            elem    => $scene,
+        }
+    );
+
+    return;
 }
 
 sub _write_scene_main
@@ -301,27 +316,6 @@ sub _write_scene_main
 sub _get_default_xml_ns
 {
     return $screenplay_ns;
-}
-
-sub _handle_elem_of_name_blockquote
-{
-    my ( $self, $elem ) = @_;
-
-    my $q_cb = sub {
-        return $self->_output_tag_with_childs(
-            {
-                start => [ "blockquote", ],
-                elem  => $elem,
-            }
-        );
-    };
-
-    if ( $self->_writer->within_element( $self->_paragraph_tag ) )
-    {
-        Carp::confess("<blockquote> element not at toplevel!");
-    }
-    $self->_writer->pop();
-    return $q_cb->();
 }
 
 sub _convert_write_content

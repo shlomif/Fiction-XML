@@ -517,6 +517,8 @@ sub _handle_para_event
 {
     my ( $self, $event ) = @_;
 
+    # Carp::confess("gool");
+
     return $event->is_open()
         ? $self->_handle_open_para($event)
         : $self->_handle_close_para($event);
