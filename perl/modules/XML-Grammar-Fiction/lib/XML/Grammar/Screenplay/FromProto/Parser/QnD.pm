@@ -449,7 +449,8 @@ sub _assert_top_is_para
     return;
 }
 {
-    my $ALLOWED_PARA_PARENTS = +{ 'desc' => 1, 'saying' => 1, };
+    my $ALLOWED_PARA_PARENTS =
+        +{ 'blockquote' => 1, 'desc' => 1, 'saying' => 1, };
 
     sub _process_closed_para
     {
@@ -470,7 +471,7 @@ sub _assert_top_is_para
                 )
             {
                 Carp::confess(
-qq#Unanchored paragraph not inside a saying or a description at line @{[$open->line()]}#
+qq#Unanchored paragraph inside "$name" tag which is not a saying or a description at line @{[$open->line()]}#
                 );
             }
             $self->_add_to_top_tag($para);
