@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use File::Find::Object ();
-use IO::All qw/ io /;
+use IO::All            qw/ io /;
 
 my $tree = File::Find::Object->new( {}, 'lib/' );
 

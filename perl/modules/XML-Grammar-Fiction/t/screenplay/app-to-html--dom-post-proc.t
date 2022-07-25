@@ -6,10 +6,10 @@ use warnings;
 use lib './t/lib';
 use Test::More tests => 5;
 
-use XML::LibXML qw(XML_TEXT_NODE);
+use XML::LibXML                              qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::App::ToHTML    ();
 use XML::Grammar::Screenplay::App::FromProto ();
-use Path::Tiny qw/ path tempdir tempfile cwd /;
+use Path::Tiny                               qw/ path tempdir tempfile cwd /;
 
 # TEST:$num_texts=1
 

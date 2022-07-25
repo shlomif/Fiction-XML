@@ -10,7 +10,7 @@ use XmlGrammarTestXML qw( my_is_xml );
 
 use XML::LibXML                     ();
 use XML::Grammar::Screenplay::ToTEI ();
-use Path::Tiny qw/ path tempdir tempfile cwd /;
+use Path::Tiny                      qw/ path tempdir tempfile cwd /;
 
 # TEST:$num_texts=17
 my @tests = (

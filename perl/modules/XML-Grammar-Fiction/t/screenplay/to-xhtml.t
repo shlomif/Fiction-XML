@@ -6,7 +6,7 @@ use warnings;
 use lib './t/lib';
 use Test::More tests => 36;
 
-use XML::LibXML qw(XML_TEXT_NODE);
+use XML::LibXML                                      qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::FromProto              ();
 use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
 use XML::Grammar::Screenplay::ToHTML                 ();

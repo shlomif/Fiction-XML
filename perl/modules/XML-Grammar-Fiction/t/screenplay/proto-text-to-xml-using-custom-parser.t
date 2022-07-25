@@ -7,7 +7,7 @@ use lib './t/lib';
 
 use Test::More tests => 113;
 use XmlGrammarTestXML qw( my_is_xml );
-use Path::Tiny qw/ path /;
+use Path::Tiny        qw/ path /;
 
 use XML::LibXML ();
 require XML::Grammar::Screenplay::FromProto;

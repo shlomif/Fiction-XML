@@ -8,7 +8,7 @@ use lib './t/lib';
 use Test::More tests => 33;
 
 use XmlGrammarTestXML qw( my_is_xml );
-use Path::Tiny qw/ path tempdir tempfile cwd /;
+use Path::Tiny        qw/ path tempdir tempfile cwd /;
 
 use XML::LibXML                      ();
 use XML::Grammar::Fiction::ToDocBook ();
