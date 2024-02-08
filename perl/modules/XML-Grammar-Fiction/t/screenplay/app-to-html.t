@@ -28,7 +28,8 @@ use Config;
 
     # TEST
     ok(
-        !system( $^X,
+        !system(
+            $^X,
             "-MXML::Grammar::Screenplay::App::ToHTML",
             "-e",
             "run()",
