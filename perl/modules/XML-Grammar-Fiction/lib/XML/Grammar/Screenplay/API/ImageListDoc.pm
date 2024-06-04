@@ -5,8 +5,6 @@ use warnings;
 
 use MooX 'late';
 
-use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
-
 extends('XML::Grammar::Screenplay::FromProto');
 
 has ['_dom'] => ( is => 'rw' );
@@ -70,6 +68,10 @@ sub uri
 =head1 METHODS
 
 =head2 my $aref = $self->list_images()
+
+Returns an array reference containing a list of image-encapsulating objects.
+One can call Each object's C<< $image_obj->url() >> method to get its URL as a
+string.
 
 =head2
 

@@ -8,7 +8,6 @@ use MooX 'late';
 use XML::LibXML ();
 
 use XML::Grammar::Screenplay::API::ImageListDoc ();
-use XML::Grammar::Screenplay::FromProto         ();
 
 sub calc_doc__from_proto_text
 {
