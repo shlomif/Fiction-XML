@@ -6,11 +6,8 @@ use warnings;
 use lib './t/lib';
 
 use Test::More tests => 3;
-use Path::Tiny qw/ path /;
 
-use XML::LibXML                                          ();
 use XML::Grammar::Screenplay::FromProto::API::ListImages ();
-use XML::Grammar::Screenplay::FromProto::Parser::QnD     ();
 
 my @tests = (
     qw(

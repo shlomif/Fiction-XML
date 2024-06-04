@@ -7,8 +7,10 @@ use MooX 'late';
 
 use XML::Writer    ();
 use HTML::Entities ();
+use Path::Tiny     qw/ path /;
 
-use Path::Tiny qw/ path /;
+require XML::Grammar::Fiction::FromProto::Parser::QnD;
+require XML::Grammar::Fiction::FromProto::Parser;
 
 sub _get_xml_xml_ns
 {

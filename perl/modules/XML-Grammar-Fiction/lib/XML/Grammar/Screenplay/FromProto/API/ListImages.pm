@@ -13,6 +13,7 @@ sub calc_doc__from_proto_text
 {
     my ( $self, $args ) = @_;
 
+    require XML::Grammar::Screenplay::FromProto::Parser::QnD;
     my $ret = XML::Grammar::Screenplay::API::ImageListDoc->new(
         {
             parser_class => 'XML::Grammar::Screenplay::FromProto::Parser::QnD',
@@ -31,6 +32,7 @@ sub calc_doc__from_intermediate_xml
 {
     my ( $self, $args ) = @_;
 
+    require XML::Grammar::Screenplay::FromProto::Parser::QnD;
     my $ret = XML::Grammar::Screenplay::API::ImageListDoc->new(
         {
             parser_class => 'XML::Grammar::Screenplay::FromProto::Parser::QnD',

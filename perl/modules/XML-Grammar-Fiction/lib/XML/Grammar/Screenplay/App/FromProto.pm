@@ -10,8 +10,7 @@ our @EXPORT = (qw(run));
 
 use Getopt::Long qw/ GetOptions /;
 
-use XML::Grammar::Screenplay::FromProto              ();
-use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
+use XML::Grammar::Screenplay::FromProto ();
 
 =head1 NAME
 
@@ -43,6 +42,7 @@ sub run
         die "Output filename not specified! Use the -o|--output flag!";
     }
 
+    require XML::Grammar::Screenplay::FromProto::Parser::QnD;
     my $converter = XML::Grammar::Screenplay::FromProto->new(
         {
             parser_class => "XML::Grammar::Screenplay::FromProto::Parser::QnD",
