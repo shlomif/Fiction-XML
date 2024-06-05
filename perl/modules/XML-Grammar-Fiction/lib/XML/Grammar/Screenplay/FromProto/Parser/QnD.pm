@@ -229,6 +229,14 @@ sub _parse_speech_unit
     # All pluses
     if ( $sayer =~ m{\A\++\z} )
     {
+        if ( not $self->_top_is_saying() )
+        {
+            Carp::confess(
+                sprintf(
+qq{Top element for a "+++:" sayer-syntax is not a saying at line %d},
+                    $self->line_num() )
+            );
+        }
         return { elem => $self->_new_para( [] ), para_end => 0 };
     }
     else
