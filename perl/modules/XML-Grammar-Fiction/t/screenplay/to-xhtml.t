@@ -4,9 +4,10 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 36;
+use Test::More tests => 37;
 
 use XML::LibXML                                      qw(XML_TEXT_NODE);
+use XML::Grammar::Screenplay::API::Concat            ();
 use XML::Grammar::Screenplay::FromProto              ();
 use XML::Grammar::Screenplay::FromProto::Parser::QnD ();
 use XML::Grammar::Screenplay::ToHTML                 ();
@@ -34,6 +35,29 @@ my $converter = XML::Grammar::Screenplay::ToHTML->new(
 
 my $xpc = XML::LibXML::XPathContext->new();
 $xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
+
+sub _calc_doc__from_xml_fn
+{
+    my ($fn) = @_;
+
+    my $xml = path($fn)->slurp_utf8();
+
+    #body ...
+    my $xhtml_text = $converter->translate_to_html(
+        {
+            source => { string_ref => \$xml, },
+            output => "string",
+        }
+    );
+
+    my $parser = XML::LibXML->new();
+
+    $parser->load_ext_dtd(0);
+
+    my $doc = $parser->parse_string($xhtml_text);
+
+    return ($doc);
+}
 
 sub _calc_doc__from_text
 {
@@ -239,6 +263,40 @@ SKIP:
     # TEST
     {
         unlike( scalar( $doc->toString() ), qr#[ \t]+$#ms, "Trailing space", );
+    }
+}
+
+{
+    my $TEMP      = tempdir();
+    my $OUTPUT_FN = $TEMP->child("test.screenplay-xml.xml");
+    my @inputs    = (
+        {
+            type     => "file",
+            filename =>
+                "t/screenplay/data/xml/dialogue-with-several-paragraphs.xml",
+        },
+        {
+            type     => "file",
+            filename => "t/screenplay/data/xml/main-title.xml",
+        },
+    );
+    my $output_xml = XML::Grammar::Screenplay::API::Concat->new()
+        ->concat( { inputs => [@inputs] } );
+    my $output_text = $output_xml->{'xml'}->toString();
+    path($OUTPUT_FN)->spew_utf8($output_text);
+    my ($doc) = _calc_doc__from_xml_fn(
+        $OUTPUT_FN,
+
+# './t/screenplay/data/proto-text/a-tag-followed-by-inlinedesc.screenplay-text.txt'
+    );
+    {
+        my $r = $xpc->find(
+q{.//x:p[contains(text(), 'the name of Allah')]/following::x:p/*[contains(text(), 'Joshua')]},
+            $doc
+        );
+
+        # TEST
+        is( $r->size(), 1, "concatenate XMLs: Found one title", );
     }
 }
 
