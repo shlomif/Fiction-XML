@@ -27,9 +27,15 @@ push @sources,
     )
     );
 
-my $new_xml = XML::LibXML::Element->new('XML');
+my $SCREENPLAY_XML_NS =
+"http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/";
+
+my $new_xml = $parser->parse_string(
+qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></document>#
+);
+my $root = $new_xml->documentElement();
 foreach my $src (@sources)
 {
-    $new_xml->appendWellBalancedChunk( $src->documentElement()->toString() );
+    $root->appendWellBalancedChunk( $src->documentElement()->toString() );
 }
 print $new_xml->toString(1);
