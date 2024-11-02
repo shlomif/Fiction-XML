@@ -47,11 +47,16 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
         my $doc    = $input->documentElement();
         my $xpc    = XML::LibXML::XPathContext->new($doc);
         $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
-        my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+        my @el       = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+        my $dest_xml = $parser->parse_string(
+            qq#<scene xmlns="$SCREENPLAY_XML_NS"></scene>#);
         foreach my $el (@el)
         {
-            $root->appendWellBalancedChunk( $el->toString() );
+            $dest_xml->documentElement()
+                ->appendWellBalancedChunk( $el->toString() );
         }
+        $root->appendWellBalancedChunk(
+            $dest_xml->documentElement()->toString() );
     }
     return $new_xml->toString(1);
 }
