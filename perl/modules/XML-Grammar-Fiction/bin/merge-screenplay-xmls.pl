@@ -36,6 +36,13 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
 my $root = $new_xml->documentElement();
 foreach my $src (@sources)
 {
-    $root->appendWellBalancedChunk( $src->documentElement()->toString() );
+    my $doc = $src->documentElement();
+    my $xpc = XML::LibXML::XPathContext->new($doc);
+    $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+    my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+    foreach my $el (@el)
+    {
+        $root->appendWellBalancedChunk( $el->toString() );
+    }
 }
 print $new_xml->toString(1);
