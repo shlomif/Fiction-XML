@@ -47,7 +47,15 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
         my $doc    = $input->documentElement();
         my $xpc    = XML::LibXML::XPathContext->new($doc);
         $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
-        my @el       = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+        my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+        if ( not @el )
+        {
+            Carp::confess(q#no scenes found in "$src_fn"#);
+        }
+        elsif ( 1 == @el )
+        {
+            @el = $xpc->findnodes("//sp:document/sp:body/sp:scene/sp:scene");
+        }
         my $dest_xml = $parser->parse_string(
             qq#<scene xmlns="$SCREENPLAY_XML_NS"></scene>#);
         foreach my $el (@el)
