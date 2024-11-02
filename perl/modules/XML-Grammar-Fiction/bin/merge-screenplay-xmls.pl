@@ -62,18 +62,32 @@ my $docs_dir_obj =
     path("/home/shlomif/Docs/homepage/homepage/trunk/lib/screenplay-xml/xml/");
 
 my @sources;
-push @sources,
-    {
-    filename => scalar(
-        $docs_dir_obj->child(
-            "Queen-Padme-Tales--Queen-Amidala-vs-the-Klingon-Warriors.xml")
-    ),
-    };
+foreach my $chapter ( @{ $rec[0]{'docs'} } )
+{
+    my $bn     = $chapter->{'base'};
+    my $xml_bn = "$bn.xml";
+    push @sources, { filename => scalar( $docs_dir_obj->child($xml_bn) ), };
 
-push @sources,
-    { filename =>
-        scalar( $docs_dir_obj->child("Queen-Padme-Tales--Planting-Trees.xml") )
-    };
+}
+
+if (0)
+{
+    push @sources,
+        {
+        filename => scalar(
+            $docs_dir_obj->child(
+                "Queen-Padme-Tales--Queen-Amidala-vs-the-Klingon-Warriors.xml")
+        ),
+        };
+
+    push @sources,
+        {
+        filename => scalar(
+            $docs_dir_obj->child("Queen-Padme-Tales--Planting-Trees.xml")
+        )
+        };
+
+}
 
 my $output_text = _merge( { inputs => [@sources] } );
 print $output_text;
