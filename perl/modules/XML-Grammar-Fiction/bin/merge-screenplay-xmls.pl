@@ -49,6 +49,15 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
     return $new_xml->toString(1);
 }
 
+my $yaml_fn =
+    qq#/home/shlomif/Docs/homepage/homepage/trunk/lib/screenplay-xml/list.yaml#;
+use YAML::XS ();
+my ($yaml) = YAML::XS::LoadFile($yaml_fn);
+my @rec = ( grep { "QUEEN_PADME_TALES" eq $_->{'base'} } @$yaml );
+if ( @rec != 1 )
+{
+    die;
+}
 my $docs_dir_obj =
     path("/home/shlomif/Docs/homepage/homepage/trunk/lib/screenplay-xml/xml/");
 
