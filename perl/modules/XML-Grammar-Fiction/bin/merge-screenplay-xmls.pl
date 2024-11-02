@@ -10,7 +10,6 @@ use XML::LibXML ();
 my $docs_dir_obj =
     path("/home/shlomif/Docs/homepage/homepage/trunk/lib/screenplay-xml/xml/");
 
-my $parser = XML::LibXML->new();
 my @sources;
 push @sources,
     {
@@ -33,8 +32,10 @@ print $output_text;
 
 sub _merge
 {
-    my $args    = shift;
-    my $inputs  = $args->{inputs};
+    my $args   = shift;
+    my $inputs = $args->{inputs};
+
+    my $parser  = XML::LibXML->new();
     my $new_xml = $parser->parse_string(
 qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></document>#
     );
