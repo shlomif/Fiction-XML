@@ -13,10 +13,17 @@ my $docs_dir_obj =
 my $parser = XML::LibXML->new();
 my @sources;
 push @sources,
-    $docs_dir_obj->child(
-    "Queen-Padme-Tales--Queen-Amidala-vs-the-Klingon-Warriors.xml");
+    {
+    filename => scalar(
+        $docs_dir_obj->child(
+            "Queen-Padme-Tales--Queen-Amidala-vs-the-Klingon-Warriors.xml")
+    ),
+    };
 
-push @sources, $docs_dir_obj->child("Queen-Padme-Tales--Planting-Trees.xml");
+push @sources,
+    { filename =>
+        scalar( $docs_dir_obj->child("Queen-Padme-Tales--Planting-Trees.xml") )
+    };
 
 my $SCREENPLAY_XML_NS =
 "http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/";
@@ -34,9 +41,10 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
     my $root = $new_xml->documentElement();
     foreach my $src (@$inputs)
     {
-        my $input = $parser->parse_file($src);
-        my $doc   = $input->documentElement();
-        my $xpc   = XML::LibXML::XPathContext->new($doc);
+        my $src_fn = $src->{filename};
+        my $input  = $parser->parse_file($src_fn);
+        my $doc    = $input->documentElement();
+        my $xpc    = XML::LibXML::XPathContext->new($doc);
         $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
         my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
         foreach my $el (@el)
