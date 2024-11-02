@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use autodie;
+use 5.014;
 
 use Path::Tiny  qw/ cwd path tempdir tempfile /;
 use XML::LibXML ();
@@ -89,5 +90,11 @@ if (0)
 
 }
 
+my $OUTPUT_FN   = "queen-padme.screenplay-xml.xml";
 my $output_text = _merge( { inputs => [@sources] } );
-print $output_text;
+path($OUTPUT_FN)->spew_utf8($output_text);
+print "Wrote : $OUTPUT_FN\n";
+my $XHTML_FN = "queen-padme.screenplay-output.xhtml";
+system( $^X, "-MXML::Grammar::Screenplay::App::ToHTML=run",
+    "-E", "run()", "--", "--output", $XHTML_FN, $OUTPUT_FN );
+print "Wrote : $XHTML_FN\n";
