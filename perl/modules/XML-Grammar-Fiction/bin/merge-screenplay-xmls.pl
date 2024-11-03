@@ -26,25 +26,40 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
     my ($root_body) = $root_xpc->findnodes('./sp:body');
 
     my $id_differentiator_counters = +{};
+    my $chspter_idx                = 0;
     foreach my $src (@$inputs)
     {
-        my $src_fn = $src->{filename};
-        my $input  = $parser->parse_file($src_fn);
-        my $doc    = $input->documentElement();
-        my $xpc    = XML::LibXML::XPathContext->new($doc);
+        my $this_chapter_idx = ( ++$chspter_idx );
+        my $src_fn           = $src->{filename};
+        my $input            = $parser->parse_file($src_fn);
+        my $doc              = $input->documentElement();
+        my $xpc              = XML::LibXML::XPathContext->new($doc);
         $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
         my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+        my $dest_xml;
+
         if ( not @el )
         {
             Carp::confess(q#no scenes found in "$src_fn"#);
         }
         elsif ( 1 == @el )
         {
-            @el = $xpc->findnodes("//sp:document/sp:body/sp:scene/sp:scene");
+            $dest_xml = $el[0];
+
+            # @el = $xpc->findnodes("//sp:document/sp:body/sp:scene/sp:scene");
         }
-        my $dest_xml = $parser->parse_string(
-            qq#<scene xmlns="$SCREENPLAY_XML_NS"></scene>#);
-        foreach my $el (@el)
+        else
+        {
+            $dest_xml = $parser->parse_string(
+qq#<scene xmlns="$SCREENPLAY_XML_NS" id="chapter_$this_chapter_idx" title="Chapter $this_chapter_idx"></scene>#
+            );
+            foreach my $el (@el)
+            {
+                $dest_xml->documentElement()
+                    ->appendWellBalancedChunk( $el->toString() );
+            }
+        }
+        foreach my $el ($dest_xml)
         {
             my $xpc = XML::LibXML::XPathContext->new($el);
             $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
@@ -63,11 +78,12 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
                     $id_differentiator_counters->{$old_id} = 1;
                 }
             }
-            $dest_xml->documentElement()
-                ->appendWellBalancedChunk( $el->toString() );
         }
         $root_body->appendWellBalancedChunk(
-            $dest_xml->documentElement()->toString() );
+
+            # $dest_xml->documentElement()->toString() );
+            $dest_xml->toString()
+        );
     }
     return $new_xml->toString(1);
 }
