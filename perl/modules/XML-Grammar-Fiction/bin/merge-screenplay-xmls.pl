@@ -25,6 +25,7 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
     $root_xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
     my ($root_body) = $root_xpc->findnodes('./sp:body');
 
+    my $id_differentiator_counters = +{};
     foreach my $src (@$inputs)
     {
         my $src_fn = $src->{filename};
@@ -45,6 +46,23 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
             qq#<scene xmlns="$SCREENPLAY_XML_NS"></scene>#);
         foreach my $el (@el)
         {
+            my $xpc = XML::LibXML::XPathContext->new($el);
+            $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+            my @idels = $xpc->findnodes("//sp:scene[\@id]");
+            foreach my $id_el (@idels)
+            {
+                my $old_id = $id_el->getAttribute('id');
+                if ( exists $id_differentiator_counters->{$old_id} )
+                {
+                    my $new_idx = $id_differentiator_counters->{$old_id}++;
+                    my $new_id  = sprintf( "%s_%d", $old_id, $new_idx );
+                    $id_el->setAttribute( 'id', $new_id );
+                }
+                else
+                {
+                    $id_differentiator_counters->{$old_id} = 1;
+                }
+            }
             $dest_xml->documentElement()
                 ->appendWellBalancedChunk( $el->toString() );
         }
