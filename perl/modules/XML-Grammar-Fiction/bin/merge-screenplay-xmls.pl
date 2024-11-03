@@ -20,7 +20,11 @@ sub _merge
     my $new_xml = $parser->parse_string(
 qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></document>#
     );
-    my $root = $new_xml->documentElement();
+    my $root     = $new_xml->documentElement();
+    my $root_xpc = XML::LibXML::XPathContext->new($root);
+    $root_xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+    my ($root_body) = $root_xpc->findnodes('./sp:body');
+
     foreach my $src (@$inputs)
     {
         my $src_fn = $src->{filename};
@@ -44,7 +48,7 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
             $dest_xml->documentElement()
                 ->appendWellBalancedChunk( $el->toString() );
         }
-        $root->appendWellBalancedChunk(
+        $root_body->appendWellBalancedChunk(
             $dest_xml->documentElement()->toString() );
     }
     return $new_xml->toString(1);
