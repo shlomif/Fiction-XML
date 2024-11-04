@@ -92,7 +92,7 @@ qq#<scene xmlns="$SCREENPLAY_XML_NS" id="chapter_$this_chapter_idx" title="Chapt
             $dest_xml->toString()
         );
     }
-    return $new_xml->toString(1);
+    return +{ xml => $new_xml, };
 }
 
 my $yaml_fn =
@@ -117,7 +117,8 @@ foreach my $chapter ( @{ $rec[0]{'docs'} } )
 }
 
 my $OUTPUT_FN   = "queen-padme.screenplay-xml.xml";
-my $output_text = _merge( { inputs => [@sources] } );
+my $output_xml  = _merge( { inputs => [@sources] } );
+my $output_text = $output_xml->{'xml'}->toString();
 path($OUTPUT_FN)->spew_utf8($output_text);
 print "Wrote : $OUTPUT_FN\n";
 my $XHTML_FN = "queen-padme.screenplay-output.xhtml";
