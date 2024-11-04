@@ -11,6 +11,15 @@ use XML::LibXML ();
 my $SCREENPLAY_XML_NS =
 "http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/";
 
+sub _get_xpc
+{
+    my ( $elem, ) = @_;
+
+    my $xpc = XML::LibXML::XPathContext->new($elem);
+    $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+    return $xpc;
+}
+
 sub _merge
 {
     my $args   = shift;
@@ -20,9 +29,8 @@ sub _merge
     my $new_xml = $parser->parse_string(
 qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></document>#
     );
-    my $root     = $new_xml->documentElement();
-    my $root_xpc = XML::LibXML::XPathContext->new($root);
-    $root_xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+    my $root        = $new_xml->documentElement();
+    my $root_xpc    = _get_xpc($root);
     my ($root_body) = $root_xpc->findnodes('./sp:body');
 
     my $id_differentiator_counters = +{};
@@ -33,7 +41,7 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
         my $src_fn           = $src->{filename};
         my $input            = $parser->parse_file($src_fn);
         my $doc              = $input->documentElement();
-        my $xpc              = XML::LibXML::XPathContext->new($doc);
+        my $xpc              = _get_xpc($doc);
         $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
         my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
         my $dest_xml;
@@ -61,8 +69,7 @@ qq#<scene xmlns="$SCREENPLAY_XML_NS" id="chapter_$this_chapter_idx" title="Chapt
         }
         foreach my $el ($dest_xml)
         {
-            my $xpc = XML::LibXML::XPathContext->new($el);
-            $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+            my $xpc   = _get_xpc($el);
             my @idels = $xpc->findnodes("//sp:scene[\@id]");
             foreach my $id_el (@idels)
             {
@@ -106,25 +113,6 @@ foreach my $chapter ( @{ $rec[0]{'docs'} } )
     my $bn     = $chapter->{'base'};
     my $xml_bn = "$bn.xml";
     push @sources, { filename => scalar( $docs_dir_obj->child($xml_bn) ), };
-
-}
-
-if (0)
-{
-    push @sources,
-        {
-        filename => scalar(
-            $docs_dir_obj->child(
-                "Queen-Padme-Tales--Queen-Amidala-vs-the-Klingon-Warriors.xml")
-        ),
-        };
-
-    push @sources,
-        {
-        filename => scalar(
-            $docs_dir_obj->child("Queen-Padme-Tales--Planting-Trees.xml")
-        )
-        };
 
 }
 
