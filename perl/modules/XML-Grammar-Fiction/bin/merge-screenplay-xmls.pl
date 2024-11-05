@@ -18,6 +18,7 @@ sub _get_xpc
 
     my $xpc = XML::LibXML::XPathContext->new($elem);
     $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+
     return $xpc;
 }
 
@@ -35,10 +36,10 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
     my ($root_body) = $root_xpc->findnodes('./sp:body');
 
     my $id_differentiator_counters = +{};
-    my $chspter_idx                = 0;
+    my $chapter_idx                = 0;
     foreach my $src (@$inputs)
     {
-        my $this_chapter_idx = ( ++$chspter_idx );
+        my $this_chapter_idx = ( ++$chapter_idx );
         my $src_type         = $src->{type};
         if ( $src_type ne 'file' )
         {
@@ -48,8 +49,7 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
         my $input  = $parser->parse_file($src_fn);
         my $doc    = $input->documentElement();
         my $xpc    = _get_xpc($doc);
-        $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
-        my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+        my @el     = $xpc->findnodes("//sp:document/sp:body/sp:scene");
         my $dest_xml;
 
         if ( not @el )
