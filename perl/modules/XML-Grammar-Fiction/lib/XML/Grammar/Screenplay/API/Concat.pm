@@ -126,6 +126,8 @@ XML::Grammar::Screenplay::API::Concat - concatenate several screenplay-xml files
 
 =head2 my $rec = $obj->concat({ inputs => [@inputs] })
 
-=head2
+=head1 THANKS
+
+L<https://stackoverflow.com/questions/1074233/how-can-i-combine-two-xml-files-with-perl> and L<https://github.com/robinsmidsrod/xml-merge> .
 
 =cut
