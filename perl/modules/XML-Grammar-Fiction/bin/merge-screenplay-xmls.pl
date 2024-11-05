@@ -5,6 +5,7 @@ use warnings;
 use autodie;
 use 5.014;
 
+use Carp        ();
 use Path::Tiny  qw/ cwd path tempdir tempfile /;
 use XML::LibXML ();
 
@@ -38,10 +39,15 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
     foreach my $src (@$inputs)
     {
         my $this_chapter_idx = ( ++$chspter_idx );
-        my $src_fn           = $src->{filename};
-        my $input            = $parser->parse_file($src_fn);
-        my $doc              = $input->documentElement();
-        my $xpc              = _get_xpc($doc);
+        my $src_type         = $src->{type};
+        if ( $src_type ne 'file' )
+        {
+            Carp::confess(qq#Unknown input type "$src_type"#);
+        }
+        my $src_fn = $src->{filename};
+        my $input  = $parser->parse_file($src_fn);
+        my $doc    = $input->documentElement();
+        my $xpc    = _get_xpc($doc);
         $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
         my @el = $xpc->findnodes("//sp:document/sp:body/sp:scene");
         my $dest_xml;
@@ -102,22 +108,26 @@ my ($yaml) = YAML::XS::LoadFile($yaml_fn);
 my @rec = ( grep { "QUEEN_PADME_TALES" eq $_->{'base'} } @$yaml );
 if ( @rec != 1 )
 {
-    die;
+    Carp::confess(qq#There are more than 1, or fewer, matching records!#);
 }
 my $docs_dir_obj =
     path("/home/shlomif/Docs/homepage/homepage/trunk/lib/screenplay-xml/xml/");
 
-my @sources;
+my @inputs;
 foreach my $chapter ( @{ $rec[0]{'docs'} } )
 {
     my $bn     = $chapter->{'base'};
     my $xml_bn = "$bn.xml";
-    push @sources, { filename => scalar( $docs_dir_obj->child($xml_bn) ), };
+    push @inputs,
+        {
+        type     => "file",
+        filename => scalar( $docs_dir_obj->child($xml_bn) ),
+        };
 
 }
 
 my $OUTPUT_FN   = "queen-padme.screenplay-xml.xml";
-my $output_xml  = _merge( { inputs => [@sources] } );
+my $output_xml  = _merge( { inputs => [@inputs] } );
 my $output_text = $output_xml->{'xml'}->toString();
 path($OUTPUT_FN)->spew_utf8($output_text);
 print "Wrote : $OUTPUT_FN\n";
