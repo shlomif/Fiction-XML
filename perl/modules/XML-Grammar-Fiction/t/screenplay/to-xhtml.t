@@ -277,7 +277,7 @@ SKIP:
         },
         {
             type     => "file",
-            filename => "t/screenplay/data/xml/nested-s.xml",
+            filename => "t/screenplay/data/xml/main-title.xml",
         },
     );
     my $output_xml = XML::Grammar::Screenplay::API::Concat->new()
@@ -290,8 +290,10 @@ SKIP:
 # './t/screenplay/data/proto-text/a-tag-followed-by-inlinedesc.screenplay-text.txt'
     );
     {
-        my $r = $xpc->find( q{.//x:p[contains(text(), 'the name of Allah')]},
-            $doc );
+        my $r = $xpc->find(
+q{.//x:p[contains(text(), 'the name of Allah')]/following::x:p/*[contains(text(), 'Joshua')]},
+            $doc
+        );
 
         # TEST
         is( $r->size(), 1, "concatenate XMLs: Found one title", );
