@@ -35,9 +35,9 @@ foreach my $chapter ( @{ $rec[0]{'docs'} } )
 }
 
 my $OUTPUT_FN  = "queen-padme.screenplay-xml.xml";
-my $output_xml = XML::Grammar::Screenplay::API::Concat->new()
+my $output_rec = XML::Grammar::Screenplay::API::Concat->new()
     ->concat( { inputs => [@inputs] } );
-my $output_text = $output_xml->{'xml'}->toString();
+my $output_text = $output_rec->{'string'};
 path($OUTPUT_FN)->spew_utf8($output_text);
 print "Wrote : $OUTPUT_FN\n";
 my $XHTML_FN = "queen-padme.screenplay-output.xhtml";
