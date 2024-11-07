@@ -13,7 +13,7 @@ use XML::LibXML ();
 my $SCREENPLAY_XML_NS =
 "http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/";
 
-sub _get_xpc
+sub _calc_xpc
 {
     my $xpc = XML::LibXML::XPathContext->new();
     $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
@@ -31,7 +31,7 @@ sub concat
 qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></document>#
     );
     my $root        = $new_xml->documentElement();
-    my $xpc         = _get_xpc();
+    my $xpc         = _calc_xpc();
     my ($root_body) = $xpc->findnodes( './sp:body', $root );
 
     my $id_differentiator_counters = +{};
