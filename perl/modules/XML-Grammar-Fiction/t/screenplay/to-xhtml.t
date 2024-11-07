@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 37;
+use Test::More tests => 38;
 
 use XML::LibXML                                      qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::API::Concat            ();
@@ -33,8 +33,23 @@ my $converter = XML::Grammar::Screenplay::ToHTML->new(
     }
 );
 
+my $SCREENPLAY_XML_NS =
+"http://web-cpan.berlios.de/modules/XML-Grammar-Screenplay/screenplay-xml-0.2/";
+
 my $xpc = XML::LibXML::XPathContext->new();
-$xpc->registerNs( 'x', q{http://www.w3.org/1999/xhtml} );
+$xpc->registerNs( 'x',  q{http://www.w3.org/1999/xhtml} );
+$xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
+
+sub _calc_source_xml__from_xml_fn
+{
+    my ($fn) = @_;
+
+    my $xml = path($fn)->slurp_utf8();
+
+    my $source_xml = $converter->_xml_parser()->parse_string( $xml, );
+
+    return $source_xml;
+}
 
 sub _calc_doc__from_xml_fn
 {
@@ -280,10 +295,21 @@ SKIP:
             filename => "t/screenplay/data/xml/main-title.xml",
         },
     );
-    my $output_xml = XML::Grammar::Screenplay::API::Concat->new()
+    my $output_rec = XML::Grammar::Screenplay::API::Concat->new()
         ->concat( { inputs => [@inputs] } );
-    my $output_text = $output_xml->{'xml'}->toString();
+    my $output_xml  = $output_rec->{'xml'};
+    my $output_text = $output_xml->toString();
     path($OUTPUT_FN)->spew_utf8($output_text);
+    {
+        my $srcxml = _calc_source_xml__from_xml_fn($OUTPUT_FN);
+        my $r      = $xpc->find(
+q{.//sp:para[contains(text(), 'the name of Allah')]/following::sp:saying[@character='Joshua']},
+            $srcxml,
+        );
+
+        # TEST
+        is( $r->size(), 1, "concatenate XMLs source-xml: Found one title", );
+    }
     my ($doc) = _calc_doc__from_xml_fn(
         $OUTPUT_FN,
 
