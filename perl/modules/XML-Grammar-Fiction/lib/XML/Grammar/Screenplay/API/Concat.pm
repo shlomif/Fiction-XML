@@ -102,7 +102,9 @@ qq#<scene xmlns="$SCREENPLAY_XML_NS" id="chapter_$this_chapter_idx" title="Chapt
         );
     }
 
-    return +{ xml => $new_xml, };
+    my $output_str = $new_xml->toString();
+    my $output_dom = $parser->parse_string( $output_str, );
+    return +{ 'dom' => $output_dom, 'string' => $output_str, };
 }
 
 1;

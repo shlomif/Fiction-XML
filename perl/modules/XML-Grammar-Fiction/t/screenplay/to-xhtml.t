@@ -42,9 +42,11 @@ $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
 
 sub _calc_source_xml__from_xml
 {
-    my ( $xml, ) = @_;
+    my ( $output_rec, ) = @_;
 
-    my $source_xml = $converter->_xml_parser()->parse_string( $xml, );
+    my $output_str = $output_rec->{'string'};
+
+    my $source_xml = $converter->_xml_parser()->parse_string( $output_str, );
 
     return $source_xml;
 }
@@ -295,11 +297,11 @@ SKIP:
     );
     my $output_rec = XML::Grammar::Screenplay::API::Concat->new()
         ->concat( { inputs => [@inputs] } );
-    my $output_xml  = $output_rec->{'xml'};
+    my $output_xml  = $output_rec->{'dom'};
     my $output_text = $output_xml->toString();
     path($OUTPUT_FN)->spew_utf8($output_text);
     {
-        my $source_xml = _calc_source_xml__from_xml( $output_text, );
+        my $source_xml = _calc_source_xml__from_xml( $output_rec, );
         my $r          = $xpc->find(
 q{.//sp:para[contains(text(), 'the name of Allah')]/following::sp:saying[@character='Joshua']},
             $source_xml,
