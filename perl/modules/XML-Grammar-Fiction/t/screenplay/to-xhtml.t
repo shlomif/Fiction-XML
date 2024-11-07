@@ -284,7 +284,8 @@ SKIP:
 {
     my $TEMP      = tempdir();
     my $OUTPUT_FN = $TEMP->child("test.screenplay-xml.xml");
-    my @inputs    = (
+
+    my @inputs = (
         {
             type     => "file",
             filename =>
@@ -297,9 +298,7 @@ SKIP:
     );
     my $output_rec = XML::Grammar::Screenplay::API::Concat->new()
         ->concat( { inputs => [@inputs] } );
-    my $output_xml  = $output_rec->{'dom'};
-    my $output_text = $output_xml->toString();
-    path($OUTPUT_FN)->spew_utf8($output_text);
+
     {
         my $source_xml = _calc_source_xml__from_xml( $output_rec, );
         my $r          = $xpc->find(
@@ -310,6 +309,10 @@ q{.//sp:para[contains(text(), 'the name of Allah')]/following::sp:saying[@charac
         # TEST
         is( $r->size(), 1, "concatenate XMLs source-xml: Found one title", );
     }
+
+    my $output_xml  = $output_rec->{'dom'};
+    my $output_text = $output_xml->toString();
+    path($OUTPUT_FN)->spew_utf8($output_text);
     my ($doc) = _calc_doc__from_xml_fn(
         $OUTPUT_FN,
 
