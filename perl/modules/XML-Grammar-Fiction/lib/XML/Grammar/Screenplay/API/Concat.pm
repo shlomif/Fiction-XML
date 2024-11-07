@@ -15,9 +15,7 @@ my $SCREENPLAY_XML_NS =
 
 sub _get_xpc
 {
-    my ( $elem, ) = @_;
-
-    my $xpc = XML::LibXML::XPathContext->new($elem);
+    my $xpc = XML::LibXML::XPathContext->new();
     $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
 
     return $xpc;
@@ -33,8 +31,8 @@ sub concat
 qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></document>#
     );
     my $root        = $new_xml->documentElement();
-    my $root_xpc    = _get_xpc($root);
-    my ($root_body) = $root_xpc->findnodes('./sp:body');
+    my $xpc         = _get_xpc();
+    my ($root_body) = $xpc->findnodes( './sp:body', $root );
 
     my $id_differentiator_counters = +{};
     my $chapter_idx                = 0;
@@ -49,8 +47,7 @@ qq#<document xmlns="$SCREENPLAY_XML_NS"><head></head><body id="index"></body></d
         my $src_fn = $src->{filename};
         my $input  = $parser->parse_file($src_fn);
         my $doc    = $input->documentElement();
-        my $xpc    = _get_xpc($doc);
-        my @el     = $xpc->findnodes("//sp:document/sp:body/sp:scene");
+        my @el     = $xpc->findnodes( "//sp:document/sp:body/sp:scene", $doc, );
         my $dest_xml;
 
         if ( not @el )
@@ -77,8 +74,7 @@ qq#<scene xmlns="$SCREENPLAY_XML_NS" id="chapter_$this_chapter_idx" title="Chapt
 
         foreach my $el ($dest_xml)
         {
-            my $xpc   = _get_xpc($el);
-            my @idels = $xpc->findnodes("//sp:scene[\@id]");
+            my @idels = $xpc->findnodes( "//sp:scene[\@id]", $el, );
             foreach my $id_el (@idels)
             {
                 my $old_id = $id_el->getAttribute('id');
