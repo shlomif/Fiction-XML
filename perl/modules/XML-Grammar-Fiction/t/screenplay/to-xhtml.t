@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use lib './t/lib';
-use Test::More tests => 38;
+use Test::More tests => 39;
 
 use XML::LibXML                                      qw(XML_TEXT_NODE);
 use XML::Grammar::Screenplay::API::Concat            ();
@@ -42,8 +42,8 @@ $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
 
 sub _calc_source_xml__from_xml
 {
-    my ( $output_rec, ) = @_;
-
+    my ( $output_rec, $from_str, ) = @_;
+    return $output_rec->{'dom'} if not $from_str;
     my $output_str = $output_rec->{'string'};
 
     my $source_xml = $converter->_xml_parser()->parse_string( $output_str, );
@@ -299,15 +299,20 @@ SKIP:
     my $output_rec = XML::Grammar::Screenplay::API::Concat->new()
         ->concat( { inputs => [@inputs] } );
 
+    foreach my $from_str ( 0, 1 )
     {
-        my $source_xml = _calc_source_xml__from_xml( $output_rec, );
+        my $source_xml = _calc_source_xml__from_xml( $output_rec, $from_str, );
         my $r          = $xpc->find(
 q{.//sp:para[contains(text(), 'the name of Allah')]/following::sp:saying[@character='Joshua']},
             $source_xml,
         );
 
-        # TEST
-        is( $r->size(), 1, "concatenate XMLs source-xml: Found one title", );
+        # TEST*2
+        is(
+            $r->size(),
+            1,
+            "concatenate XMLs source-xml: Found one title [from_str=$from_str]",
+        );
     }
 
     my $output_xml  = $output_rec->{'dom'};
