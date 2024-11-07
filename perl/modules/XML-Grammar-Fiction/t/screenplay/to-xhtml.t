@@ -40,11 +40,9 @@ my $xpc = XML::LibXML::XPathContext->new();
 $xpc->registerNs( 'x',  q{http://www.w3.org/1999/xhtml} );
 $xpc->registerNs( "sp", $SCREENPLAY_XML_NS );
 
-sub _calc_source_xml__from_xml_fn
+sub _calc_source_xml__from_xml
 {
-    my ($fn) = @_;
-
-    my $xml = path($fn)->slurp_utf8();
+    my ( $xml, ) = @_;
 
     my $source_xml = $converter->_xml_parser()->parse_string( $xml, );
 
@@ -301,10 +299,10 @@ SKIP:
     my $output_text = $output_xml->toString();
     path($OUTPUT_FN)->spew_utf8($output_text);
     {
-        my $srcxml = _calc_source_xml__from_xml_fn($OUTPUT_FN);
-        my $r      = $xpc->find(
+        my $source_xml = _calc_source_xml__from_xml( $output_text, );
+        my $r          = $xpc->find(
 q{.//sp:para[contains(text(), 'the name of Allah')]/following::sp:saying[@character='Joshua']},
-            $srcxml,
+            $source_xml,
         );
 
         # TEST
