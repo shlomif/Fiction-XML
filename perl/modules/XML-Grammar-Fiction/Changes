@@ -1,5 +1,10 @@
 Revision history for XML-Grammar-Fiction.
 
+0.32.0       2024-11-08
+
+    - Add lib/XML/Grammar/Screenplay/API/Concat.pm
+    - Cleanups and possible speed-ups
+
 0.30.0       2022-04-06
 
     - add the <q> element to screenplays.
