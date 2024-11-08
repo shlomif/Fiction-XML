@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use File::Find::Object ();
-use IO::All            qw/ io /;
+use Path::Tiny         qw/ path /;
 
 my $tree = File::Find::Object->new( {}, 'lib/' );
 
@@ -23,12 +23,12 @@ while ( my $r = $tree->next() )
     }
     elsif ( $r =~ m{\.pm\z} )
     {
-        my @lines = io->file($r)->getlines();
-        foreach (@lines)
+        my @lines = path($r)->lines_utf8();
+        foreach my $l (@lines)
         {
-s#(\$VERSION = '|^Version )\d+\.\d+(?:\.\d+)?('|)#$1 . $version_n . $2#e;
+            $l =~ s#(\$VERSION = '|^Version )\d+\.\d+(?:\.\d+)?('|)#$1 . $version_n . $2#e;
         }
-        io->file($r)->print(@lines);
+        path($r)->spew_utf8(@lines);
     }
 }
 
